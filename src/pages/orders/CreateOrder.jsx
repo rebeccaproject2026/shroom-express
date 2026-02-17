@@ -432,7 +432,7 @@ const CreateOrder = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-2 flex-1 min-h-0 overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-2 flex-1 min-h-0 overflow-hidden px-2.5 py-3">
       {/* Left column – Create Order form (scrollable on its own) */}
       <div className="flex-1 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden space-y-2 pr-1 hide-scrollbar">
         {/* Back arrow */}

@@ -44,7 +44,7 @@ Kush Kraft's Blue Gelato pre-rolls combine fresh flavour with premium craftsmans
     };
 
     return (
-        <div className="flex flex-col gap-2 p-1 min-w-0">
+        <div className="flex flex-col gap-2 px-2.5 py-3 min-w-0">
             {/* Header Section */}
             <div className='flex items-center justify-between'>
                 <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ Kush Kraft's Blue Gelato pre-rolls combine fresh flavour with premium craftsmans
                     </Link>
                     <h1 className="text-lg font-bold text-gray-800">{product.name}</h1>
                 </div>
-                <Link to={`/inventory/edit/${id}`} className="flex items-center gap-2 bg-[var(--color-primary)] text-white px-4 py-2 rounded-sm text-sm font-semibold hover:bg-[#0e8a1d]">
+                <Link to={`/inventory/edit/${id}`} className="flex items-center gap-2 bg-[var(--color-primary)] text-white px-4 py-2 rounded-sm text-sm font-semibold">
                     <Edit className="w-4 h-4" />
                     Edit Inventory
                 </Link>

@@ -421,7 +421,7 @@ const CustomerDetails = () => {
     setFilters((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <div className="flex flex-col gap-4 min-w-0 pb-4">
+    <div className="flex flex-col gap-4 min-w-0 px-2.5 py-3">
       {/* Header: Back, Customer, avatar, name, join date | All Complains, Delete Client */}
       <div className="flex flex-wrap items-center justify-between gap-3 ">
         <div className="flex items-center gap-3 min-w-0">

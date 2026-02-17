@@ -370,7 +370,7 @@ const Drivers = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <div className="flex flex-col gap-3 min-w-0">
+    <div className="flex flex-col gap-2 min-w-0 px-2.5 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <DatePickerMap defaultItem={2} onUpdate={onDateUpdate} className="h-10 sm:*:w-76" />
         <div className="flex items-center gap-2">

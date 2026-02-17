@@ -629,7 +629,7 @@ const Tracking = () => {
     import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
   return (
-    <div className="flex flex-col gap-2 min-h-0">
+    <div className="flex flex-col gap-2 min-h-0 px-2.5 py-3">
       <h1 className="text-lg font-semibold text-gray-900 sr-only">Tracking</h1>
 
       {/* Global filters – 6 dropdowns */}
@@ -728,7 +728,7 @@ const Tracking = () => {
       </div>
 
       {/* Map section */}
-      <div className="flex-1 min-h-[560px] flex flex-col bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
+      <div className="flex-1 min-h-140 flex flex-col bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
         {/* Map container with overlays */}
         <div className="relative flex-1 min-h-[520px]">
           {/* Top Control Bar: Map Toggle | Status Cards | Delivery Toggle */}
