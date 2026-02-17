@@ -189,11 +189,11 @@ const Dashboard = () => {
 
   // Top Selling Products data
   const topSellingProductsData = [
-    { id: 1, name: "Gas Mask", price: "$4,321" },
-    { id: 2, name: "Chocolope", price: "$1,025" },
-    { id: 3, name: "Kush Kraft Blue Gelato", price: "$565" },
-    { id: 4, name: "Willo Grape Ape", price: "$520" },
-    { id: 5, name: "White Widow", price: "$499" },
+    { id: 1, name: "Blue Meanies (Dried)", price: "$4,321" },
+    { id: 2, name: "Melmac (Dried)", price: "$1,025" },
+    { id: 3, name: "Albino Penis Envy (Dried)", price: "$565" },
+    { id: 4, name: "Mango Peach", price: "$520" },
+    { id: 5, name: "Aztec God", price: "$499" },
   ];
 
   // Driver Performance data

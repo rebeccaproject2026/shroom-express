@@ -166,7 +166,7 @@ const getInventoryColumns = (onView, onDelete) => [
 const INVENTORY_DATA = [
   {
     id: "1",
-    product: "Backwoods Honey",
+    product: "Melmac (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
     status: "Active",
@@ -180,7 +180,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "2",
-    product: "Backwoods Banana",
+    product: "Blue Pulaski (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
     status: "Active",
@@ -194,7 +194,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "3",
-    product: "Raw King Slim Rolling Paper",
+    product: "Blue Meanies (Dried)",
     category: "Accessory",
     subcategory: "Rolling Paper",
     status: "Active",
@@ -208,7 +208,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "4",
-    product: "Backwoods Honey Berry",
+    product: "Albino Penis Envy (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
     status: "Active",
@@ -222,7 +222,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "5",
-    product: "Raw Single Wide Rolling Paper",
+    product: "Mango Peach",
     category: "Accessory",
     subcategory: "Rolling Paper",
     status: "Active",
@@ -236,7 +236,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "6",
-    product: "Backwoods Honey Bourbon	",
+    product: "Aztec God",
     category: "Accessory",
     subcategory: "Blunt Wrap",
     status: "Active",
@@ -250,7 +250,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "7",
-    product: "Elements Distillate Girl Scout Cookies",
+    product: "EBlue Meanies (Dried)",
     category: "Concentrate",
     subcategory: "Distillate",
     status: "Active",
@@ -264,7 +264,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "8",
-    product: "Willo Wild Sherbet (Shatter)",
+    product: "Jesus Christ Super Strain (JCSS)",
     category: "Concentrate",
     subcategory: "Shatter",
     status: "Active",
@@ -278,7 +278,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "9",
-    product: "Willo Tropical Punch",
+    product: "Hillbilly",
     category: "Edible",
     subcategory: "Gummies",
     status: "Active",
@@ -292,7 +292,7 @@ const INVENTORY_DATA = [
   },
   {
     id: "10",
-    product: "Euphoria Extractions Shatter Chews",
+    product: "Golden Teacher",
     category: "Edible",
     subcategory: "Gummies",
     status: "Active",

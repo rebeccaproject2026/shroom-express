@@ -16,7 +16,10 @@ const PRICE_UNIT_OPTIONS = [
 ];
 
 const PRODUCT_OPTIONS = [
-  { value: "buddabomb", label: "Buddabomb Taro Taro 500mg" },
+  { value: "blueMeanies", label: "Blue Meanies (Dried)" },
+  { value: "melmac", label: "Melmac (Dried)" },
+  { value: "albinoPenis", label: "Albino Penis Envy (Dried)" },
+  { value: "mangoPeach", label: "Mango Peach" },
   { value: "other", label: "Other Product" },
 ];
 
@@ -53,7 +56,7 @@ const AddInventory = () => {
   const { id } = useParams();
   const isEditMode = Boolean(id);
   const [searchProduct, setSearchProduct] = useState("");
-  const [productName, setProductName] = useState("Buddabomb Taro Taro 500mg");
+  const [productName, setProductName] = useState("Blue Meanies (Dried)");
   const [productOrder, setProductOrder] = useState("298");
   const [thcCbdUnit, setThcCbdUnit] = useState("MG");
   const [thcMg, setThcMg] = useState("100");
@@ -66,7 +69,7 @@ const AddInventory = () => {
   const [salePrice, setSalePrice] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState("");
   const [lowStockAlert, setLowStockAlert] = useState("");
-  const [selectProduct, setSelectProduct] = useState("buddabomb");
+  const [selectProduct, setSelectProduct] = useState("blueMeanies");
   const [genetic, setGenetic] = useState("Hybrid");
   const [category, setCategory] = useState("Weed");
   const [stock, setStock] = useState("In-Stock");
