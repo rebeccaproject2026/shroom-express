@@ -45,67 +45,62 @@ const Marketing = () => {
       <div className="flex items-center justify-between bg-white">
         <button
           onClick={() => setActiveTab("email-campaign")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${
-            activeTab === "email-campaign"
-              ? "text-[#109F22]"
-              : "text-[#464646] hover:text-gray-900"
-          }`}
+          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "email-campaign"
+            ? "text-[var(--color-primary)]"
+            : "text-[#464646] hover:text-gray-900"
+            }`}
         >
           Email Campaign
           {activeTab === "email-campaign" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#109F22]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("sms-campaign")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${
-            activeTab === "sms-campaign"
-              ? "text-[#109F22]"
-              : "text-[#464646] hover:text-gray-900"
-          }`}
+          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "sms-campaign"
+            ? "text-[var(--color-primary)]"
+            : "text-[#464646] hover:text-gray-900"
+            }`}
         >
           SMS Campaign
           {activeTab === "sms-campaign" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#109F22]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("follow-up")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${
-            activeTab === "follow-up"
-              ? "text-[#109F22]"
-              : "text-[#464646] hover:text-gray-900"
-          }`}
+          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "follow-up"
+            ? "text-[var(--color-primary)]"
+            : "text-[#464646] hover:text-gray-900"
+            }`}
         >
           Follow Up
           {activeTab === "follow-up" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#109F22]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("coupons")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${
-            activeTab === "coupons"
-              ? "text-[#109F22]"
-              : "text-[#464646] hover:text-gray-900"
-          }`}
+          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "coupons"
+            ? "text-[var(--color-primary)]"
+            : "text-[#464646] hover:text-gray-900"
+            }`}
         >
           Coupons
           {activeTab === "coupons" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#109F22]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("featured-ads")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${
-            activeTab === "featured-ads"
-              ? "text-[#109F22]"
-              : "text-[#464646] hover:text-gray-900"
-          }`}
+          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "featured-ads"
+            ? "text-[var(--color-primary)]"
+            : "text-[#464646] hover:text-gray-900"
+            }`}
         >
           Featured Ads
           {activeTab === "featured-ads" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#109F22]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
           )}
         </button>
       </div>
@@ -170,11 +165,10 @@ const Marketing = () => {
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${
-                          campaignStatsTab === tab.id
-                            ? "text-[#109F22]"
-                            : "text-gray-600 hover:text-gray-900"
-                        }`}
+                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                          ? "text-[#109F22]"
+                          : "text-gray-600 hover:text-gray-900"
+                          }`}
                       >
                         {tab.label}
                         {campaignStatsTab === tab.id && (
@@ -267,11 +261,10 @@ const Marketing = () => {
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${
-                          campaignStatsTab === tab.id
-                            ? "text-[#109F22]"
-                            : "text-gray-600 hover:text-gray-900"
-                        }`}
+                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                          ? "text-[#109F22]"
+                          : "text-gray-600 hover:text-gray-900"
+                          }`}
                       >
                         {tab.label}
                         {campaignStatsTab === tab.id && (
@@ -338,7 +331,7 @@ const Marketing = () => {
                     <h3 className="text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                     <div>
+                    <div>
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -363,11 +356,10 @@ const Marketing = () => {
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${
-                          campaignStatsTab === tab.id
-                            ? "text-[#109F22]"
-                            : "text-gray-600 hover:text-gray-900"
-                        }`}
+                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                          ? "text-[#109F22]"
+                          : "text-gray-600 hover:text-gray-900"
+                          }`}
                       >
                         {tab.label}
                         {campaignStatsTab === tab.id && (
@@ -434,7 +426,7 @@ const Marketing = () => {
                     <h3 className="text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                     <div>
+                    <div>
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -459,11 +451,10 @@ const Marketing = () => {
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${
-                          campaignStatsTab === tab.id
-                            ? "text-[#109F22]"
-                            : "text-gray-600 hover:text-gray-900"
-                        }`}
+                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                          ? "text-[#109F22]"
+                          : "text-gray-600 hover:text-gray-900"
+                          }`}
                       >
                         {tab.label}
                         {campaignStatsTab === tab.id && (
@@ -531,7 +522,7 @@ const Marketing = () => {
                     <h3 className="text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                     <div>
+                    <div>
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -556,11 +547,10 @@ const Marketing = () => {
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${
-                          campaignStatsTab === tab.id
-                            ? "text-[#109F22]"
-                            : "text-gray-600 hover:text-gray-900"
-                        }`}
+                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                          ? "text-[#109F22]"
+                          : "text-gray-600 hover:text-gray-900"
+                          }`}
                       >
                         {tab.label}
                         {campaignStatsTab === tab.id && (

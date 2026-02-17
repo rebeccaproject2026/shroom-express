@@ -165,7 +165,7 @@ const AddDriver = () => {
               onClick={() => setActiveTab("portrider")}
               className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
       ${activeTab === "portrider"
-                  ? "bg-[#1FAE3D] text-white"
+                  ? "bg-[var(--color-primary)] text-white"
                   : "bg-transparent text-gray-600"
                 }`}
             >
@@ -177,7 +177,7 @@ const AddDriver = () => {
               onClick={() => setActiveTab("own")}
               className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
       ${activeTab === "own"
-                  ? "bg-[#1FAE3D] text-white"
+                  ? "bg-[var(--color-primary)] text-white"
                   : "bg-transparent text-gray-600"
                 }`}
             >
@@ -262,8 +262,8 @@ const AddDriver = () => {
                       type="button"
                       onClick={() => setHireDuration("day")}
                       className={`px-3 py-2.5 text-sm font-medium rounded-sm transition-colors border ${hireDuration === "day"
-                          ? "border-[#969696] bg-white text-gray-900"
-                          : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
+                        ? "border-[#969696] bg-white text-gray-900"
+                        : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
                     >
                       Day
@@ -272,8 +272,8 @@ const AddDriver = () => {
                       type="button"
                       onClick={() => setHireDuration("week")}
                       className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "week"
-                          ? "border-[#969696] bg-white text-gray-900"
-                          : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
+                        ? "border-[#969696] bg-white text-gray-900"
+                        : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
                     >
                       Week
@@ -282,8 +282,8 @@ const AddDriver = () => {
                       type="button"
                       onClick={() => setHireDuration("month")}
                       className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "month"
-                          ? "border-[#969696] bg-white text-gray-900"
-                          : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
+                        ? "border-[#969696] bg-white text-gray-900"
+                        : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
                     >
                       Month
@@ -296,8 +296,8 @@ const AddDriver = () => {
                       type="button"
                       onClick={() => setHireDuration("year")}
                       className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "year"
-                          ? "border-[#969696] bg-white text-gray-900"
-                          : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
+                        ? "border-[#969696] bg-white text-gray-900"
+                        : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
                     >
                       Year
@@ -306,8 +306,8 @@ const AddDriver = () => {
                       type="button"
                       onClick={() => setHireDuration("custom-duration")}
                       className={`px-3 py-2.5 text-sm font-semibold rounded-sm transition-colors ${hireDuration === "custom-duration"
-                          ? "bg-[#0066FF] text-white shadow-sm"
-                          : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
+                        ? "bg-[#0066FF] text-white shadow-sm"
+                        : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
                         }`}
                     >
                       Custom Duration{" "}
@@ -493,7 +493,7 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={handleSave}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[#1FAE3D] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity"
                     >
                       <ArrowUp className="w-4 h-4" />
                       Save

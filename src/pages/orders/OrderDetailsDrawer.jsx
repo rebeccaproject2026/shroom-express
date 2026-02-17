@@ -1458,7 +1458,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                                     onClick={() => handleStepChange(step.key, !isCompleted)}
                                     className={`w-4 h-4 rounded-full flex items-center justify-center border
                                      ${isCompleted
-                                        ? "bg-[var(--color-primary)] border-green-600"
+                                        ? "bg-green-600 border-green-600"
                                         : "bg-white border-gray-300"
                                       }
                                      ${!isDisabled ? "cursor-pointer" : "cursor-not-allowed"}
@@ -1487,7 +1487,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                                   {isCompleted &&
                                     step.key === "Ordered" &&
                                     selectedOrder?.date && (
-                                      <div className="text-xs text-[var(--color-primary)] flex items-center gap-1 mt-1">
+                                      <div className="text-xs text-green-600 flex items-center gap-1 mt-1">
                                         <Icon
                                           icon="mdi:check-circle"
                                           className="w-3 h-3"

@@ -96,7 +96,7 @@ const DashboardAverageOrders = ({ data, onViewAll, title = "Average Orders", rig
         ) : onViewAll ? (
           <button
             onClick={onViewAll}
-            className="text-(--color-primary) hover:text-green-600 text-xs font-semibold bg-[#D4FFDA] py-1.5 px-4 rounded-2xl items-center justify-center"
+            className="text-(--color-primary) text-xs font-semibold bg-[var(--color-primary-soft)]  py-1.5 px-4 rounded-2xl items-center justify-center cursor-pointer"
           >
             View All
           </button>

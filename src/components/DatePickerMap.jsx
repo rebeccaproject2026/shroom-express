@@ -202,7 +202,7 @@ const DatePickerMap = ({
               type="button"
               onClick={() => handleSelect(option)}
               className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 transition-colors first:rounded-t-lg last:rounded-b-lg ${selected.title === option.title
-                ? "bg-green-50 text-[var(--color-primary)] font-medium"
+                ? "bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-medium"
                 : "text-gray-700"
                 }`}
             >

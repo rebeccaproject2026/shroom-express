@@ -456,7 +456,7 @@ const Order = () => {
         <div className="flex gap-4">
           <button
             onClick={() => navigate("/orders/create")}
-            className="flex items-center gap-2 px-2 py-2.5 cursor-pointer bg-[var(--color-primary)] text-white rounded-sm hover:bg-green-600 transition-colors font-semibold text-sm"
+            className="flex items-center gap-2 px-2 py-2.5 cursor-pointer bg-[var(--color-primary)] text-white rounded-sm hover:bg-[var(--color-primary)] transition-colors font-semibold text-sm"
           >
             + Create Order
           </button>
