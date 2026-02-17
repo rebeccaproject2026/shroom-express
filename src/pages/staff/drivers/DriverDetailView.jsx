@@ -332,11 +332,11 @@ const DriverDetailView = ({ data }) => {
             </div>
             <div>
               <h1 className="text-base font-medium text-[#424143] flex items-center gap-6">
-                David Doe (M2X 3X0) - Driver by Potrider
+                David Doe (M2X 3X0) - Driver by Shroom-express
                 <MessageCircleMore className="h-4 w-4 stroke-2" />
               </h1>
               <div className="flex items-center gap-4">
-                <button 
+                <button
                   onClick={() => setIsContactDrawerOpen(true)}
                   className="text-sm border-b text-black font-semibold flex items-center gap-1 cursor-pointer"
                 >
@@ -527,120 +527,120 @@ const DriverDetailView = ({ data }) => {
         {(activeTab === "log-activity" || activeTab === "payroll-history" || activeTab === "performance") && (
           <div className="bg-white rounded-sm border border-gray-200 p-4">
             {activeTab === "log-activity" && (
-            <div className="">
-              {/* Summary Cards */}
-              <div className="grid grid-cols-2 gap-2.5 mb-4">
-                <div className="bg-[#CEF1E0] p-2 rounded-sm text-center">
-                  <p className="text-sm font-semibold text-[#00B159]">
-                    Online Time
-                  </p>
-                  <p className="text-lg font-bold text-[#00B159]">112.5 hrs</p>
-                </div>
-                <div className="bg-[#FFF5E5] p-2 rounded-sm text-center">
-                  <p className="text-sm font-semibold text-[#FF9800]">
-                    Offline Time
-                  </p>
-                  <p className="text-lg font-bold text-[#FF9800]">30 hrs</p>
-                </div>
-              </div>
-
-              {/* Activity Log */}
               <div className="">
-                {LOG_ACTIVITY.map((log, index) => {
-                  const isExpanded = expandedLogIds.includes(log.id);
-                  return (
-                    <div key={index} className="relative flex  gap-4">
-                      {/* Left side: Vertical line and dot */}
-                      <div className="relative flex flex-col items-center">
-                        {/* Dot */}
-                        <div className="relative z-10 w-3 h-3 bg-[#E3EEFF] rounded-full ring-2 ring-white shrink-0"></div>
-                        {/* Vertical line extending down */}
-                        {index < LOG_ACTIVITY.length - 1 && (
-                          <div className="w-[1.6px] bg-[#E3EEFF] grow h-6"></div>
-                        )}
-                      </div>
+                {/* Summary Cards */}
+                <div className="grid grid-cols-2 gap-2.5 mb-4">
+                  <div className="bg-[#CEF1E0] p-2 rounded-sm text-center">
+                    <p className="text-sm font-semibold text-[#00B159]">
+                      Online Time
+                    </p>
+                    <p className="text-lg font-bold text-[#00B159]">112.5 hrs</p>
+                  </div>
+                  <div className="bg-[#FFF5E5] p-2 rounded-sm text-center">
+                    <p className="text-sm font-semibold text-[#FF9800]">
+                      Offline Time
+                    </p>
+                    <p className="text-lg font-bold text-[#FF9800]">30 hrs</p>
+                  </div>
+                </div>
 
-                      {/* Right side: Content */}
-                      <div className="flex-1 -mt-2">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-[15px] font-medium text-gray-900">
-                              {log.date}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-gray-900">
-                              {log.totalHours}
-                            </span>
-                            <button
-                              onClick={() => toggleLogExpand(log.id)}
-                              className="p-1 hover:bg-gray-100 rounded transition-colors"
-                            >
-                              <ChevronDown
-                                className={`w-5 h-5 text-[#C2C6CE] transition-transform duration-200 ${isExpanded ? "rotate-180" : ""
-                                  }`}
-                              />
-                            </button>
-                          </div>
+                {/* Activity Log */}
+                <div className="">
+                  {LOG_ACTIVITY.map((log, index) => {
+                    const isExpanded = expandedLogIds.includes(log.id);
+                    return (
+                      <div key={index} className="relative flex  gap-4">
+                        {/* Left side: Vertical line and dot */}
+                        <div className="relative flex flex-col items-center">
+                          {/* Dot */}
+                          <div className="relative z-10 w-3 h-3 bg-[#E3EEFF] rounded-full ring-2 ring-white shrink-0"></div>
+                          {/* Vertical line extending down */}
+                          {index < LOG_ACTIVITY.length - 1 && (
+                            <div className="w-[1.6px] bg-[#E3EEFF] grow h-6"></div>
+                          )}
                         </div>
 
-                        {/* Expanded Content */}
-                        {isExpanded && log.activities.length > 0 && (
-                          <div className="mt-3 pb-2">
-                            <div className="grid grid-cols-2 gap-2">
-                              <div className="space-y-1">
-                                {log.activities.map((activity, idx) => (
-                                  <p key={idx} className="text-xs text-gray-600">
-                                    {activity.time}
-                                  </p>
-                                ))}
-                              </div>
-                              <div className="space-y-1 text-right">
-                                {log.activities_hr.map((activity, idx) => (
-                                  <p key={idx} className="text-xs text-gray-600">
-                                    {activity.hour}
-                                  </p>
-                                ))}
-                              </div>
+                        {/* Right side: Content */}
+                        <div className="flex-1 -mt-2">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-[15px] font-medium text-gray-900">
+                                {log.date}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-semibold text-gray-900">
+                                {log.totalHours}
+                              </span>
+                              <button
+                                onClick={() => toggleLogExpand(log.id)}
+                                className="p-1 hover:bg-gray-100 rounded transition-colors"
+                              >
+                                <ChevronDown
+                                  className={`w-5 h-5 text-[#C2C6CE] transition-transform duration-200 ${isExpanded ? "rotate-180" : ""
+                                    }`}
+                                />
+                              </button>
                             </div>
                           </div>
-                        )}
+
+                          {/* Expanded Content */}
+                          {isExpanded && log.activities.length > 0 && (
+                            <div className="mt-3 pb-2">
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-1">
+                                  {log.activities.map((activity, idx) => (
+                                    <p key={idx} className="text-xs text-gray-600">
+                                      {activity.time}
+                                    </p>
+                                  ))}
+                                </div>
+                                <div className="space-y-1 text-right">
+                                  {log.activities_hr.map((activity, idx) => (
+                                    <p key={idx} className="text-xs text-gray-600">
+                                      {activity.hour}
+                                    </p>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {activeTab === "payroll-history" && (
-            <div className="space-y-4">
-              {PAYROLL_HISTORY.map((payment) => (
-                <div
-                  key={payment.id}
-                  className="flex items-center justify-between bg-white border-b border-[#F0F1F3] pb-4"
-                >
-                  <p className="text-sm text-black font-medium">
-                    {payment.description}
-                  </p>
-                  <span className="text-sm font-bold text-black">
-                    {payment.amount}
-                  </span>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            )}
 
-          {activeTab === "performance" && (
-            <div className="py-4">
-              <Chart
-                options={chartOptions}
-                series={chartData.series}
-                type="bar"
-                height={350}
-              />
-            </div>
-          )}
+            {activeTab === "payroll-history" && (
+              <div className="space-y-4">
+                {PAYROLL_HISTORY.map((payment) => (
+                  <div
+                    key={payment.id}
+                    className="flex items-center justify-between bg-white border-b border-[#F0F1F3] pb-4"
+                  >
+                    <p className="text-sm text-black font-medium">
+                      {payment.description}
+                    </p>
+                    <span className="text-sm font-bold text-black">
+                      {payment.amount}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === "performance" && (
+              <div className="py-4">
+                <Chart
+                  options={chartOptions}
+                  series={chartData.series}
+                  type="bar"
+                  height={350}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>

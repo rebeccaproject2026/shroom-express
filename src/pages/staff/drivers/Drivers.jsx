@@ -55,7 +55,7 @@ const DRIVERS_DATA = [
     startingDate: "12 Dec 2023",
     startingDateISO: "2023-12-12T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "Online",
@@ -68,7 +68,7 @@ const DRIVERS_DATA = [
     startingDate: "12 Dec 2023",
     startingDateISO: "2023-12-12T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "New",
@@ -107,7 +107,7 @@ const DRIVERS_DATA = [
     startingDate: "20 Feb 2024",
     startingDateISO: "2024-02-20T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "Online",
@@ -120,7 +120,7 @@ const DRIVERS_DATA = [
     startingDate: "05 Jan 2025",
     startingDateISO: "2025-01-05T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "Online",
@@ -146,7 +146,7 @@ const DRIVERS_DATA = [
     startingDate: "09 Feb 2026",
     startingDateISO: "2026-02-09T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "Online",
@@ -172,7 +172,7 @@ const DRIVERS_DATA = [
     startingDate: "01 Feb 2026",
     startingDateISO: "2026-02-01T00:00:00.000Z",
     delivered: "110 Orders",
-    driverBy: "Potrider",
+    driverBy: "Shroom-express",
     pendingDeliveries: 50,
     paidSalary: "$5,020.00",
     status: "Online",
@@ -222,9 +222,9 @@ const Drivers = () => {
       });
     }
 
-    // Filter by driver type (All Drivers / Potrider / You)
+    // Filter by driver type (All Drivers / Shroom-express / You)
     if (selectedDriverFilter === "potrider") {
-      result = result.filter((r) => r.driverBy === "Potrider");
+      result = result.filter((r) => r.driverBy === "Shroom-express");
     } else if (selectedDriverFilter === "you") {
       result = result.filter((r) => r.driverBy === "You");
     }
@@ -276,8 +276,8 @@ const Drivers = () => {
         cell: ({ getValue, row }) => (
           <div className="flex items-center gap-2">
             <span className="text-[#3F4753] text-[12px] font-normal">{getValue()}</span>
-            <Eye 
-              className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer" 
+            <Eye
+              className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer"
               onClick={() => {
                 setSelectedDriver(row.original);
                 setIsAreaCodesDrawerOpen(true);
@@ -381,7 +381,7 @@ const Drivers = () => {
             className="h-10"
             options={[
               { value: "all", label: "All Drivers" },
-              { value: "potrider", label: "Potrider Drivers" },
+              { value: "potrider", label: "Shroom-express Drivers" },
               { value: "you", label: "Your Drivers" },
             ]}
             customStyle="sm:w-[220px]"
@@ -556,7 +556,7 @@ const Drivers = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Area Codes Drawer */}
       <AreaCodesDrawer
         isOpen={isAreaCodesDrawerOpen}
@@ -574,7 +574,7 @@ const Drivers = () => {
           // Add hire logic here
         }}
       />
-      
+
       {/* Driver Details Drawer */}
       <DriverDetailsDrawer
         isOpen={isDriverDetailsDrawerOpen}

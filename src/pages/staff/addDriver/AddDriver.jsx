@@ -164,24 +164,22 @@ const AddDriver = () => {
               type="button"
               onClick={() => setActiveTab("portrider")}
               className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
-      ${
-        activeTab === "portrider"
-          ? "bg-[#1FAE3D] text-white"
-          : "bg-transparent text-gray-600"
-      }`}
+      ${activeTab === "portrider"
+                  ? "bg-[#1FAE3D] text-white"
+                  : "bg-transparent text-gray-600"
+                }`}
             >
-              Add Driver From Potrider
+              Add Driver From Shroom-express
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("own")}
               className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
-      ${
-        activeTab === "own"
-          ? "bg-[#1FAE3D] text-white"
-          : "bg-transparent text-gray-600"
-      }`}
+      ${activeTab === "own"
+                  ? "bg-[#1FAE3D] text-white"
+                  : "bg-transparent text-gray-600"
+                }`}
             >
               Add Your Own Driver
             </button>
@@ -263,33 +261,30 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={() => setHireDuration("day")}
-                      className={`px-3 py-2.5 text-sm font-medium rounded-sm transition-colors border ${
-                        hireDuration === "day"
+                      className={`px-3 py-2.5 text-sm font-medium rounded-sm transition-colors border ${hireDuration === "day"
                           ? "border-[#969696] bg-white text-gray-900"
                           : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       Day
                     </button>
                     <button
                       type="button"
                       onClick={() => setHireDuration("week")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${
-                        hireDuration === "week"
+                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "week"
                           ? "border-[#969696] bg-white text-gray-900"
                           : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       Week
                     </button>
                     <button
                       type="button"
                       onClick={() => setHireDuration("month")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${
-                        hireDuration === "month"
+                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "month"
                           ? "border-[#969696] bg-white text-gray-900"
                           : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       Month
                     </button>
@@ -300,22 +295,20 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={() => setHireDuration("year")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${
-                        hireDuration === "year"
+                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "year"
                           ? "border-[#969696] bg-white text-gray-900"
                           : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       Year
                     </button>
                     <button
                       type="button"
                       onClick={() => setHireDuration("custom-duration")}
-                      className={`px-3 py-2.5 text-sm font-semibold rounded-sm transition-colors ${
-                        hireDuration === "custom-duration"
+                      className={`px-3 py-2.5 text-sm font-semibold rounded-sm transition-colors ${hireDuration === "custom-duration"
                           ? "bg-[#0066FF] text-white shadow-sm"
                           : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
-                      }`}
+                        }`}
                     >
                       Custom Duration{" "}
                       {hireDuration === "custom-duration" && "✓"}
@@ -782,7 +775,7 @@ const AddDriver = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {/* Front Side Upload */}
-                    <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-sm px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
+                      <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-sm px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
                         <div className="flex flex-col items-center gap-3">
                           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
                             <svg

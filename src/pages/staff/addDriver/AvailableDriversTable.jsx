@@ -75,7 +75,7 @@ const AvailableDriversTable = ({
             {/* Header Section */}
             <div className="p-3 border-b border-gray-200">
                 <h2 className="text-[15px] font-bold text-[#212121] mb-3">
-                    Available Drivers From Potrider
+                    Available Drivers From Shroom-express
                 </h2>
 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">

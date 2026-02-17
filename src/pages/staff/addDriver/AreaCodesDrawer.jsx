@@ -47,7 +47,7 @@ const AreaCodesDrawer = ({ isOpen, onClose, driver, onViewMoreDetails, onHire })
           <h2 className="text-xl font-semibold text-black">
             {driver?.driverName || "Driver"}
           </h2>
-          <p className="text-sm text-[#424143]">Driver From Potrider</p>
+          <p className="text-sm text-[#424143]">Driver From Shroom-express</p>
         </div>
         <button
           onClick={onClose}

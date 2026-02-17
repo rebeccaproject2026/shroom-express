@@ -210,7 +210,7 @@ const DriverDetailsDrawer = ({ isOpen, onClose, driver }) => {
               <span className="font-semibold">
                 {driver?.driverName || "N/A"}
               </span>{" "}
-              - Driver by Potrider
+              - Driver by Shroom-express
             </h2>
             <p className="text-md text-[#424143]">
               Delivery Areas - M2X 3X0, M2X 3X1, A1A 1A1

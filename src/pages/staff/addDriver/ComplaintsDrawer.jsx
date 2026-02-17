@@ -40,7 +40,7 @@ const ComplaintsDrawer = ({ isOpen, onClose, driverName }) => {
           <h2 className="text-lg font-semibold text-black">
             Complaints for {driverName || "Driver"}
           </h2>
-          <p className="text-sm text-[#424143]">Driver From Potrider</p>
+          <p className="text-sm text-[#424143]">Driver From Shroom-express</p>
         </div>
         <button
           onClick={onClose}

@@ -13,7 +13,7 @@ import marketingIocon from "../assets/images/marketing.svg";
 import staffIocon from "../assets/images/staff.svg";
 import supportIocon from "../assets/images/support.svg";
 import settingIocon from "../assets/images/settings.svg";
-import portriderLogo from "../assets/images/potrider-logo.svg";
+import portriderLogo from "../assets/images/Logo.png";
 
 const navItems = [
   { to: "/", label: "Dashboard", Icon: dashboardIocon },
