@@ -30,9 +30,16 @@ const GENETIC_OPTIONS = [
 ];
 
 const CATEGORY_OPTIONS = [
-  { value: "Weed", label: "Weed" },
-  { value: "Edible", label: "Edible" },
-  { value: "Gummies", label: "Gummies" },
+  { value: "Mushrooms", label: "Mushrooms" },
+  { value: "Microdose", label: "Microdose" },
+  { value: "Edibles", label: "Edibles" },
+  { value: "Cannabis", label: "Cannabis" },
+  { value: "DMT", label: "DMT" },
+  { value: "Tobbaco", label: "Tobbaco" },
+];
+const SUB_CATEGORY_OPTIONS = [
+  { value: "ClassicStrains", label: "Classic Strains" },
+  { value: "PremiumStrains", label: "Premium Strains" },
 ];
 
 const STOCK_OPTIONS = [
@@ -59,10 +66,8 @@ const AddInventory = () => {
   const [productName, setProductName] = useState("Blue Meanies (Dried)");
   const [productOrder, setProductOrder] = useState("298");
   const [thcCbdUnit, setThcCbdUnit] = useState("MG");
-  const [thcMg, setThcMg] = useState("100");
-  const [cbdMg, setCbdMg] = useState("200");
-  const [cbnMg, setCbnMg] = useState("500");
-  const [priceUnit, setPriceUnit] = useState("Grams");
+  const [thcMg, setThcMg] = useState("");
+  const [cbdMg, setCbdMg] = useState("");
   const [description, setDescription] = useState("");
   const [purchaseQty, setPurchaseQty] = useState("");
   const [purchaseCost, setPurchaseCost] = useState("");
@@ -70,23 +75,19 @@ const AddInventory = () => {
   const [discountedPrice, setDiscountedPrice] = useState("");
   const [lowStockAlert, setLowStockAlert] = useState("");
   const [selectProduct, setSelectProduct] = useState("blueMeanies");
-  const [genetic, setGenetic] = useState("Hybrid");
-  const [category, setCategory] = useState("Weed");
+  const [category, setCategory] = useState("Mushrooms");
+  const [subCategory, setSubCategory] = useState("ClassicStrains");
   const [stock, setStock] = useState("In-Stock");
-  const [status, setStatus] = useState("Active");
-  const [isBestSelling, setIsBestSelling] = useState("yes");
 
   useEffect(() => {
     if (isEditMode) {
       // Mock data pre-fill for edit mode
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setProductName("Buddabomb Taro Taro 500mg");
+      setProductName("Blue Meanies (Dried)");
       setProductOrder("298");
-      setThcCbdUnit("MG");
-      setThcMg("100");
-      setCbdMg("200");
-      setCbnMg("500");
-      setPriceUnit("Grams");
+      setThcCbdUnit("10");
+      setThcMg("2");
+      setCbdMg("10");
       setDescription(`Kush Kraft Premium Pre-Rolls – Blue Gelato
 Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse. This balanced hybrid blends the sweet berry notes of Blueberry with the citrusy richness of Gelato, creating a flavour profile that's both smooth and invigorating.`);
       setPurchaseQty("1023");
@@ -94,12 +95,9 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
       setSalePrice("10999.00");
       setDiscountedPrice("10979.00");
       setLowStockAlert("23");
-      setSelectProduct("buddabomb");
-      setGenetic("Hybrid");
-      setCategory("Weed");
+      setSelectProduct("blueMeanies");
+      setCategory("Mushrooms");
       setStock("In-Stock");
-      setStatus("Active");
-      setIsBestSelling("yes");
     }
   }, [isEditMode]);
 
@@ -193,54 +191,34 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    THC/CBD/CBN Unit
-                  </label>
-                  <Select
+                  <Input
+                    label="Psilocybin"
                     value={thcCbdUnit}
                     onChange={(e) => setThcCbdUnit(e.target.value)}
                     options={THC_CBD_UNIT_OPTIONS}
-                    placeholder="Unit"
+                    placeholder="Psilocybin"
                     compact
+                    type="number"
                   />
                 </div>
                 <div>
                   <Input
-                    label="THC MG"
+                    label="Psilocin"
                     value={thcMg}
                     onChange={(e) => setThcMg(e.target.value)}
-                    placeholder="THC"
+                    placeholder="Psilocin"
                     compact
+                    type="number"
                   />
                 </div>
                 <div>
                   <Input
-                    label="CBD MG"
+                    label="Active Compound"
                     value={cbdMg}
                     onChange={(e) => setCbdMg(e.target.value)}
-                    placeholder="CBD"
+                    placeholder="Active Compound"
                     compact
-                  />
-                </div>
-                <div>
-                  <Input
-                    label="CBN MG"
-                    value={cbnMg}
-                    onChange={(e) => setCbnMg(e.target.value)}
-                    placeholder="CBN"
-                    compact
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Price Unit
-                  </label>
-                  <Select
-                    value={priceUnit}
-                    onChange={(e) => setPriceUnit(e.target.value)}
-                    options={PRICE_UNIT_OPTIONS}
-                    placeholder="Unit"
-                    compact
+                    type="number"
                   />
                 </div>
               </div>
@@ -420,28 +398,29 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                   disabled={isEditMode}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Genetic
-                </label>
-                <Select
-                  value={genetic}
-                  onChange={(e) => setGenetic(e.target.value)}
-                  options={GENETIC_OPTIONS}
-                  placeholder="Genetic"
-                  compact
-                  disabled={isEditMode}
-                />
-              </div>
+
               <div>
                 <label className="block text-sm font-semibold text-[#212121] mb-0.5">
                   Category
                 </label>
                 <Select
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setSubCategory(e.target.value)}
                   options={CATEGORY_OPTIONS}
                   placeholder="Category"
+                  compact
+                  disabled={isEditMode}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                  Subcategory
+                </label>
+                <Select
+                  value={subCategory}
+                  onChange={(e) => setCategory(e.target.value)}
+                  options={SUB_CATEGORY_OPTIONS}
+                  placeholder="Subcategory"
                   compact
                   disabled={isEditMode}
                 />
@@ -455,32 +434,6 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                   onChange={(e) => setStock(e.target.value)}
                   options={STOCK_OPTIONS}
                   placeholder="Stock"
-                  compact
-                  disabled={isEditMode}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Status
-                </label>
-                <Select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  options={STATUS_OPTIONS}
-                  placeholder="Status"
-                  compact
-                  disabled={isEditMode}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Is Best Selling?
-                </label>
-                <Select
-                  value={isBestSelling}
-                  onChange={(e) => setIsBestSelling(e.target.value)}
-                  options={BEST_SELLING_OPTIONS}
-                  placeholder="Yes/No"
                   compact
                   disabled={isEditMode}
                 />

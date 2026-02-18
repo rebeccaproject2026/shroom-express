@@ -5,14 +5,14 @@ import shroomLogo from "../assets/images/Logo.png";
 import { Icon } from "@iconify/react";
 
 const navItems = [
-  { to: "/", label: "Dashboard", Icon: <Icon icon="solar:widget-2-outline" width="24" height="24" /> },
-  { to: "/orders", label: "Orders", Icon: <Icon icon="solar:documents-linear" width="24" height="24" /> },
+  { to: "/", label: "Dashboard", Icon: <Icon icon="solar:widget-2-outline" width="24" height="24" className="*:stroke-[1.4px]" /> },
+  { to: "/orders", label: "Orders", Icon: <Icon icon="solar:documents-linear" width="24" height="24" className="*:stroke-[1.4px]" /> },
   { to: "/tracking", label: "Tracking", Icon: <Icon icon="hugeicons:shipment-tracking" width="24" height="24" /> },
-  { to: "/inventory", label: "Inventory", Icon: <Icon icon="streamline-ultimate:drugs-cannabis" width="24" height="24" /> },
+  { to: "/inventory", label: "Inventory", Icon: <Icon icon="streamline-ultimate:drugs-cannabis" width="24" height="24" className="*:stroke-[1.2px]" /> },
   { to: "/finances", label: "Finances", Icon: <Icon icon="fluent:wallet-credit-card-16-regular" width="24" height="24" /> },
   { to: "/customers", label: "Customers", Icon: <Icon icon="mynaui:users-group" width="24" height="24" /> },
-  { to: "/ai-agent", label: "AI Agent", Icon: <Icon icon="tabler:messages" width="24" height="24" /> },
-  { to: "/marketing", label: "Marketing", Icon: <Icon icon="tabler:speakerphone" width="24" height="24" /> },
+  { to: "/ai-agent", label: "AI Agent", Icon: <Icon icon="tabler:messages" width="24" height="24" className="*:stroke-[1.4px]" /> },
+  { to: "/marketing", label: "Marketing", Icon: <Icon icon="tabler:speakerphone" width="24" height="24" className="*:stroke-[1.1px]" /> },
 ];
 
 const Sidebar = ({ setSidebar }) => {
