@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const user = {
-    fullName: "Chillin Cheetah",
+    fullName: "Shroom express",
   };
 
   // eslint-disable-next-line no-unused-vars

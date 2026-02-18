@@ -111,7 +111,7 @@ const STATIC_CUSTOMER_STATS = [
   { label: "Processing Orders", value: "1" },
   { label: "Total Spending", value: "$258.75" },
   { label: "Total Quantity", value: "85kg" },
-  { label: "Used CHEETAH CA$H", value: "$95.65" },
+  { label: "Used SHROOM CA$H", value: "$95.65" },
   { label: "Coupons Used So Far", value: "165" },
   { label: "Same Day Deliveries", value: "69" },
   { label: "Express Deliveries", value: "35" },
@@ -265,7 +265,7 @@ const STATIC_INVOICE = {
     grandTotal: "$98.45",
   },
   paymentMethod: "Cash on Delivery",
-  brandName: "CHILLIN CHEETAH",
+  brandName: "Shroom Express",
 };
 
 const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
@@ -1055,7 +1055,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                   )}
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-semibold text-gray-900">CHEETAH CA$H</span>
+                  <span className="font-semibold text-gray-900">SHROOM CA$H</span>
                   <span>{o.savedText ?? "—"}</span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -1188,7 +1188,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                   )}
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold text-gray-900">Available CHEETAH CA$H</span>
+                  <span className="font-semibold text-gray-900">Available SHROOM CA$H</span>
                   {isEditMode ? (
                     <div className="flex items-center gap-1 border bg-gray-100 border-gray-400 rounded">
                       <button
@@ -1644,7 +1644,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                           <span className="text-sm font-semibold text-gray-900">{STATIC_INVOICE.summary.discount}</span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-gray-200">
-                          <span className="text-xs font-medium text-gray-800">CHEETAH CA$H</span>
+                          <span className="text-xs font-medium text-gray-800">SHROOM CA$H</span>
                           <span className="text-sm font-normal text-gray-900">{STATIC_INVOICE.summary.cheetahCash}</span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-gray-200">

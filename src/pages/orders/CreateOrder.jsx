@@ -114,60 +114,121 @@ const PAYMENT_OPTIONS = [
   },
 ];
 
-// Product options for Select dropdown (with avatar and product info)
+// Product options for Shroom Express
 const PRODUCT_OPTIONS = [
   {
     value: "1",
-    label: "Gorilla Glue",
-    image: "",
-    priceRange: "$10.00 - $205.00",
-    stockStatus: "In-stock: 3 - Low Stock",
-    meta: "Category: Weed • Genetics: Hybrid • THC: 22 - 25% • CBD: 0 - 1% • CBN: 0 - 0.5%",
+    label: "Golden Teacher",
+    image: "", // Placeholder or use an asset if available
+    category: "Shrooms",
+    subCategory: "Premium",
+    stockStatus: "In-stock: 450g",
+    meta: "Category: Dried Shrooms • Potency: Medium • Effects: Visual, Euphoric",
+    details: {
+      type: "Dried Shrooms",
+      prices: {
+        "3.5g": 30.00,
+        "7g": 55.00,
+        "14g": 100.00,
+        "28g": 180.00,
+      }
+    }
   },
   {
     value: "2",
-    label: "Kush Kraft Black Gas",
+    label: "Blue Meanie",
     image: "",
-    priceRange: "$37.00",
-    stockStatus: "In-stock: 99",
-    meta: "Category: Weed • Genetics: Indica • THC: 20 - 25% • CBD: 0 - 1% • CBN: 0 - 1%",
+    category: "Shrooms",
+    subCategory: "Exotic",
+    stockStatus: "In-stock: 200g",
+    meta: "Category: Dried Shrooms • Potency: High • Effects: Intense, Introspective",
+    details: {
+      type: "Dried Shrooms",
+      prices: {
+        "3.5g": 35.00,
+        "7g": 65.00,
+        "14g": 120.00,
+        "28g": 210.00,
+      }
+    }
   },
   {
     value: "3",
-    label: "Buudabomb Taro Taro 500mg",
+    label: "Microdose Capsules (100mg)",
     image: "",
-    priceRange: "$40.00",
-    stockStatus: "In-stock: 0 - Out of Stock",
-    meta: "Category: Edible • Genetics: Hybrid • THC: 500MG • CBD: 20MG • CBN: 10MG",
+    category: "Microdose",
+    subCategory: "Capsules",
+    stockStatus: "In-stock: 50 bottles",
+    meta: "Category: Microdose • Potency: Low • Effects: Focus, Creativity",
+    details: {
+      type: "Capsules",
+      prices: {
+        "15 Caps": 25.00,
+        "30 Caps": 45.00,
+        "60 Caps": 80.00,
+      }
+    }
+  },
+  {
+    value: "4",
+    label: "Shroom Chocolate Bar",
+    image: "",
+    category: "Edibles",
+    subCategory: "Chocolates",
+    stockStatus: "In-stock: 20 bars",
+    meta: "Category: Edibles • Potency: Medium • Effects: Body High, Relaxing",
+    details: {
+      type: "Edible",
+      prices: {
+        "1 Bar": 25.00,
+        "3 Bars": 65.00,
+      }
+    }
   },
 ];
 
-// Static selected products (matches image – API pending)
+const FILTER_CATEGORY_OPTIONS = [
+  { value: "", label: "All Categories" },
+  { value: "Shrooms", label: "Dried Shrooms" },
+  { value: "Microdose", label: "Microdose" },
+  { value: "Edibles", label: "Edibles" },
+];
+
+const FILTER_SUBCATEGORY_OPTIONS = [
+  { value: "", label: "All Sub-Categories" },
+  { value: "Premium", label: "Premium" },
+  { value: "Exotic", label: "Exotic" },
+  { value: "Capsules", label: "Capsules" },
+  { value: "Chocolates", label: "Chocolates" },
+  { value: "Gummies", label: "Gummies" },
+];
+
+// Static selected products (Empty initially)
+// Static selected products (Initialized with one product)
 const STATIC_SELECTED_PRODUCTS = [
-  // {
-  //   id: "1",
-  //   name: "Buudabomb Taro Taro 500mg",
-  //   image: "",
-  //   price: "$40.00",
-  //   stockStatus: "In-stock: 0 - Out of Stock",
-  //   meta: "Category: Edible · Genetics: Hybrid · THC: 500MG · CBD: 20MG · CBN: 10MG",
-  //   sizeOptions: ["1 Gram", "1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-  //   selectedSize: "1 Gram",
-  //   quantity: 10,
-  //   itemTotal: "$250.23",
-  // },
-  // {
-  //   id: "2",
-  //   name: "Kush Kraft Black Gas",
-  //   image: "",
-  //   price: "$37.00",
-  //   stockStatus: "In-stock: 99",
-  //   meta: "Category: Weed · Genetics: Indica · THC: 20 - 25% · CBD: 0 - 1% · CBN: 0 - 1%",
-  //   sizeOptions: ["1 Gram", "1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-  //   selectedSize: "1/4 OZ",
-  //   quantity: 2,
-  //   itemTotal: "$74.00",
-  // },
+  {
+    id: "default-1",
+    productId: "1",
+    name: "Golden Teacher",
+    image: "",
+    price: "$30.00",
+    unitPrice: 30.00,
+    stockStatus: "In-stock: 450g",
+    meta: "Category: Dried Shrooms • Potency: Medium • Effects: Visual, Euphoric",
+    sizeOptions: ["3.5g", "7g", "14g", "28g"],
+    selectedSize: "3.5g",
+    quantity: 1,
+    itemTotal: "$30.00",
+    details: {
+      type: "Dried Shrooms",
+      prices: {
+        "3.5g": 30.00,
+        "7g": 55.00,
+        "14g": 100.00,
+        "28g": 180.00,
+      }
+    }
+  }
 ];
 
 // Invoice preview static data
@@ -206,7 +267,7 @@ const STATIC_CUSTOMER_STATS = [
   { label: "Processing Orders", value: "1" },
   { label: "Total Spending", value: "$258.75" },
   { label: "Total Quantity", value: "85kg" },
-  { label: "Used CHEETAH CA$H", value: "$95.65" },
+  { label: "Used SHROOM CA$H", value: "$95.65" },
   { label: "Coupons Used So Far", value: "165" },
   { label: "Same Day Deliveries", value: "69" },
   { label: "Express Deliveries", value: "35" },
@@ -279,17 +340,22 @@ const STATIC_PAST_ORDERS = [
   },
 ];
 
+// Helper function to format currency
+const formatMoney = (amount) => {
+  return `$${Number(amount).toFixed(2)}`;
+};
+
 const CreateOrder = () => {
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(STATIC_CUSTOMER);
   const [selectedProducts, setSelectedProducts] = useState(STATIC_SELECTED_PRODUCTS);
   const [selectedProductValue, setSelectedProductValue] = useState("");
-  const [selectedCoupon, setSelectedCoupon] = useState("");
+  // Filter state
   const [filterCategory, setFilterCategory] = useState("");
-  const [filterGenetics, setFilterGenetics] = useState("");
-  const [filterCBD, setFilterCBD] = useState("");
-  const [filterCBN, setFilterCBN] = useState("");
-  const [filterTHC, setFilterTHC] = useState("");
+  const [filterSubCategory, setFilterSubCategory] = useState("");
+
+  // Other states...
+  const [selectedCoupon, setSelectedCoupon] = useState("");
   const [cheetahCashAmount, setCheetahCashAmount] = useState(5.00);
   const [ownerDiscountAmount, setOwnerDiscountAmount] = useState("");
   const [ownerDiscountPercentage, setOwnerDiscountPercentage] = useState("");
@@ -298,6 +364,21 @@ const CreateOrder = () => {
   const [paymentDrawerOpen, setPaymentDrawerOpen] = useState(false);
   const [activePaymentMethod, setActivePaymentMethod] = useState("");
   const couponSliderRef = useRef(null);
+
+  // Invoice Calculations
+  const invoiceSubtotal = selectedProducts.reduce((sum, p) => {
+    return sum + (p.unitPrice * p.quantity);
+  }, 0);
+
+  const invoiceDiscount = 0; // Placeholder for logic
+  const invoiceDelivery = selectedDeliveryMethod === 'local' ? 0 : 15; // Simplified logic
+  const invoiceGrandTotal = invoiceSubtotal + invoiceDelivery - invoiceDiscount;
+
+  // Filter products based on category and sub-category
+  const filteredProductOptions = PRODUCT_OPTIONS.filter(p =>
+    (!filterCategory || p.category === filterCategory) &&
+    (!filterSubCategory || p.subCategory === filterSubCategory)
+  );
 
   const handleCustomerChange = useCallback((field, value) => {
     setCustomer((prev) => ({ ...prev, [field]: value }));
@@ -313,18 +394,25 @@ const CreateOrder = () => {
     if (!productId) return;
     const product = PRODUCT_OPTIONS.find((p) => p.value === productId);
     if (!product) return;
-    // Allow duplicates - add same product multiple times
+
+    // Determine initial size and price
+    const initialSize = Object.keys(product.details.prices)[0]; // Default to first available size
+    const initialPrice = product.details.prices[initialSize];
+
     const newProduct = {
-      id: `${productId}-${Date.now()}`, // Unique ID for each addition (allows duplicates)
+      id: `${productId}-${Date.now()}`,
+      productId: product.value, // Keep ref to original
       name: product.label,
       image: product.image,
-      price: product.priceRange.split(" - ")[0] || product.priceRange,
+      price: formatMoney(initialPrice), // Store formatted
+      unitPrice: initialPrice, // Store numeric for calcs
       stockStatus: product.stockStatus,
       meta: product.meta,
-      sizeOptions: ["1 Gram", "1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-      selectedSize: "1 Gram",
+      sizeOptions: Object.keys(product.details.prices), // Dropdown options
+      selectedSize: initialSize,
       quantity: 1,
-      itemTotal: product.priceRange.split(" - ")[0] || product.priceRange,
+      itemTotal: formatMoney(initialPrice),
+      details: product.details // Keep details for price lookups
     };
     setSelectedProducts((prev) => [...prev, newProduct]);
     setSelectedProductValue(""); // Reset selection
@@ -336,15 +424,34 @@ const CreateOrder = () => {
 
   const handleQuantityChange = (id, delta) => {
     setSelectedProducts((prev) =>
-      prev.map((p) =>
-        p.id === id ? { ...p, quantity: Math.max(0, p.quantity + delta) } : p
-      )
+      prev.map((p) => {
+        if (p.id !== id) return p;
+        const newQty = Math.max(1, p.quantity + delta);
+        return {
+          ...p,
+          quantity: newQty,
+          itemTotal: formatMoney(p.unitPrice * newQty)
+        };
+      })
     );
   };
 
-  const handleSizeSelect = (id, size) => {
+  const handleSizeSelect = (id, newSize) => {
     setSelectedProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, selectedSize: size } : p))
+      prev.map((p) => {
+        if (p.id !== id) return p;
+
+        // Lookup new price for the size
+        const newPrice = p.details.prices[newSize];
+
+        return {
+          ...p,
+          selectedSize: newSize,
+          unitPrice: newPrice,
+          price: formatMoney(newPrice),
+          itemTotal: formatMoney(newPrice * p.quantity)
+        };
+      })
     );
   };
 
@@ -546,7 +653,7 @@ const CreateOrder = () => {
         {/* Summary cards – white boxes, rounded corners, shadow */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Available CHEETAH CA$H", value: STATIC_SUMMARY.availableCheetahCash },
+            { label: "Available SHROOM CA$H", value: STATIC_SUMMARY.availableCheetahCash },
             { label: "Coupon Discounts Used", value: STATIC_SUMMARY.couponDiscountsUsed },
             { label: "Owner Discounts Received", value: STATIC_SUMMARY.ownerDiscountsReceived },
             { label: "Total Orders", value: STATIC_SUMMARY.totalOrders, underline: true },
@@ -572,76 +679,43 @@ const CreateOrder = () => {
         <div className="p-1 mb-0">
           <h3 className="text-lg font-semibold text-gray-900 mb-1">Add Products</h3>
           <hr className=" border-gray-400" />
-          {/* Add Product */}
-          {/* <h3 className="text-sm font-semibold text-gray-900 mb-3">Add Product</h3> */}
-          <div className="flex items-center gap-2 col-span-2 mt-5">
-            <div className="w-[50%]">
-              <label className="block text-sm font-semibold text-[#212121] mb-1">Select Category</label>
+
+          {/* UPDATED: Simplified Filters for Shroom Express */}
+          <div className="grid grid-cols-2 gap-3 mt-5 mb-4">
+            <div>
+              <label className="block text-sm font-semibold text-[#212121] mb-1">Category</label>
               <Select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                options={FILTER_OPTIONS}
+                options={FILTER_CATEGORY_OPTIONS}
                 placeholder="Select Category"
-                minWidth="50%"
+                className="w-full"
+                minWidth="100%"
               />
             </div>
-            <div className="w-[50%]">
-              <label className="block text-sm font-semibold text-[#212121] mb-1">
-                Select Genetics</label>
+            <div>
+              <label className="block text-sm font-semibold text-[#212121] mb-1">Subcategory</label>
               <Select
-                value={filterGenetics}
-                onChange={(e) => setFilterGenetics(e.target.value)}
-                options={FILTER_OPTIONS}
-                placeholder="Select Genetics"
-                minWidth="50%"
+                value={filterSubCategory}
+                onChange={(e) => setFilterSubCategory(e.target.value)}
+                options={FILTER_SUBCATEGORY_OPTIONS}
+                placeholder="Select Sub-Category"
+                className="w-full"
+                minWidth="100%"
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 col-span-2 mb-2 mt-2">
-            <div className="w-full">
-              <label className="block text-sm font-semibold text-[#212121] mb-1">
-                Select CBD </label>
-              <Select
-                value={filterCBD}
-                onChange={(e) => setFilterCBD(e.target.value)}
-                options={FILTER_OPTIONS}
-                placeholder="Select CBD"
-                minWidth="100px"
-              />
-            </div>
-            <div className="w-full">
-              <label className="block text-sm font-semibold text-[#212121] mb-1">
-                Select CBN  </label>
 
-              <Select
-                value={filterCBN}
-                onChange={(e) => setFilterCBN(e.target.value)}
-                options={FILTER_OPTIONS}
-                placeholder="Select CBN"
-                minWidth="100px"
-              />
-            </div>
-            <div className="w-full">
-              <label className="block text-sm font-semibold text-[#212121] mb-1">
-                Select THC </label>
-              <Select
-                value={filterTHC}
-                onChange={(e) => setFilterTHC(e.target.value)}
-                options={FILTER_OPTIONS}
-                placeholder="Select THC"
-                minWidth="100px"
-              />
-            </div>
-          </div>
+          {/* Product Select */}
           <div>
             <label className="block text-sm font-semibold text-[#212121] mb-1">Select Product</label>
             <Select
               showSearch
-              searchPlaceholder="Select a product"
+              searchPlaceholder="Search for a product..."
               placeholder="Select a product"
               value={selectedProductValue}
               onChange={handleAddProduct}
-              options={PRODUCT_OPTIONS}
+              options={filteredProductOptions}
               showAvatar
               showProductInfo
               className="w-full"
@@ -670,7 +744,7 @@ const CreateOrder = () => {
                       />
                     ) : (
                       <Icon
-                        icon="mdi:package-variant"
+                        icon="mdi:mushroom-outline"
                         className="w-8 h-8 text-gray-400"
                       />
                     )}
@@ -691,84 +765,62 @@ const CreateOrder = () => {
                       </span>
                     </p>
 
-                    {/* Meta + Quantity + Price + Delete (ONE ROW) */}
-                    <div className="flex items-center justify-between gap-4">
-                      {/* Category / Meta */}
+                    {/* Meta + Variant + Quantity + Pricing */}
+                    <div className="flex items-center justify-between gap-4 ">
+                      {/* Metadata */}
                       <p className="text-[12.3px] font-medium text-[#212529bf] line-clamp-2 flex-1">
                         {product.meta}
                       </p>
 
-                      {/* Right Controls */}
-                      <div className="flex items-center gap-4 shrink-0">
-                        {/* Quantity */}
-                        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-sm h-8 px-1">
+                      <div className="flex items-center gap-3 shrink-0">
+                        {/* VARIANT DROPDOWN (Replaces buttons) */}
+                        <div className="w-[100px]">
+                          <Select
+                            value={product.selectedSize}
+                            onChange={(e) => handleSizeSelect(product.id, e.target.value)}
+                            options={product.sizeOptions.map(s => ({ value: s, label: s }))}
+                            className="w-full text-xs h-[38px]"
+                            minWidth="100px"
+                          />
+                        </div>
+
+                        {/* Quantity Counter */}
+                        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-sm h-[38px] px-1">
                           <button
                             type="button"
-                            onClick={() =>
-                              handleQuantityChange(product.id, -1)
-                            }
+                            onClick={() => handleQuantityChange(product.id, -1)}
                             disabled={product.quantity <= 1}
                             className="w-8 text-lg font-medium text-gray-700 disabled:text-gray-400"
                           >
                             −
                           </button>
-
                           <span className="w-8 text-center text-sm font-semibold text-gray-900">
                             {product.quantity}
                           </span>
-
                           <button
                             type="button"
-                            onClick={() =>
-                              handleQuantityChange(product.id, 1)
-                            }
+                            onClick={() => handleQuantityChange(product.id, 1)}
                             className="w-8 text-lg font-medium text-gray-700"
                           >
                             +
                           </button>
                         </div>
 
-                        {/* Item Total */}
-                        <p className="font-semibold text-sm text-gray-900 min-w-[60px] text-right">
+                        {/* Total Price for this line */}
+                        <p className="font-semibold text-sm text-gray-900 min-w-[70px] text-right">
                           {product.itemTotal}
                         </p>
 
-                        {/* Remove */}
+                        {/* Remove Button */}
                         <button
                           type="button"
-                          onClick={() =>
-                            handleRemoveProduct(product.id)
-                          }
-                          className="text-red-600 hover:bg-red-50 p-1 rounded"
+                          onClick={() => handleRemoveProduct(product.id)}
+                          className="text-red-600 hover:bg-red-50 p-1.5 rounded"
                           aria-label="Remove"
                         >
-                          <Icon
-                            icon="mdi:trash-can-outline"
-                            className="w-5 h-5"
-                          />
+                          <Icon icon="mdi:trash-can-outline" className="w-5 h-5" />
                         </button>
                       </div>
-                    </div>
-
-                    {/* Size Options */}
-                    <div className="flex flex-wrap gap-2 ">
-                      {product.sizeOptions.map((size) => (
-                        <button
-                          key={size}
-                          type="button"
-                          onClick={() =>
-                            handleSizeSelect(product.id, size)
-                          }
-                          className={`px-3 py-1 text-xs font-medium rounded-xs border transition
-                    ${product.selectedSize === size
-                              ? "bg-[var(--color-primary)] text-white border-green-600"
-                              : "bg-white text-[#000] border-gray-300 hover:bg-gray-100"
-                            }
-                  `}
-                        >
-                          {size}
-                        </button>
-                      ))}
                     </div>
                   </div>
                 </div>
@@ -845,12 +897,12 @@ const CreateOrder = () => {
           })}
         </div>
 
-        {/* Discount section: Use CHEETAH CA$H + Owner's Discount */}
+        {/* Discount section: Use SHROOM CA$H + Owner's Discount */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 items-end mb-6">
-          {/* CHEETAH CASH */}
+          {/* SHROOM CASH */}
           <div>
             <label className="block text-sm font-semibold text-gray-900 mb-1.5 pl-1">
-              Use CHEETAH CA$H
+              Use SHROOM CA$H
             </label>
 
             <div className="flex  border border-[#DDDDDD] overflow-hidden bg-white rounded-sm">
@@ -1119,32 +1171,28 @@ const CreateOrder = () => {
               <thead>
                 <tr className="border-b border-gray-300">
                   <th className="py-2 text-left font-semibold text-gray-900">Product</th>
-                  <th className="py-2 text-center font-semibold text-gray-900">Quantity</th>
+                  <th className="py-2 text-center font-semibold text-gray-900">Qty</th>
                   <th className="py-2 text-right font-semibold text-gray-900">Price</th>
                   <th className="py-2 text-right font-semibold text-gray-900">Total</th>
                 </tr>
               </thead>
               <tbody>
-                {STATIC_INVOICE.products.map((row, idx) => (
+                {selectedProducts.map((row, idx) => (
                   <tr key={idx} className="border-b border-gray-200">
                     <td className="py-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded bg-gray-200 shrink-0 flex items-center justify-center overflow-hidden">
-                          {row.image ? (
-                            <img src={row.image} alt={row.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <Icon icon="mdi:package-variant" className="w-4 h-4 text-gray-400" />
-                          )}
+                        <div className="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                          {row.image ? <img src={row.image} className="w-full h-full object-cover" alt={row.name} /> : null}
                         </div>
                         <div>
                           <p className="font-bold text-gray-900">{row.name}</p>
-                          <p className="text-xs text-gray-500">Qty: {row.qtyUnit}</p>
+                          <p className="text-xs text-gray-500">{row.selectedSize}</p>
                         </div>
                       </div>
                     </td>
                     <td className="py-2 text-center text-gray-800">{row.quantity}</td>
                     <td className="py-2 text-right text-gray-800">{row.price}</td>
-                    <td className="py-2 text-right font-bold text-gray-900">{row.total}</td>
+                    <td className="py-2 text-right font-bold text-gray-900">{row.itemTotal}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1153,13 +1201,13 @@ const CreateOrder = () => {
 
           <div className="rounded-lg bg-gray-100 p-3 space-y-2">
             {[
-              { label: "Subtotal", value: STATIC_INVOICE.summary.subtotal, bold: true },
-              { label: "Promo Code", value: STATIC_INVOICE.summary.promoCode, bold: false },
-              { label: "Discount", value: STATIC_INVOICE.summary.discount, bold: false },
-              { label: "POT CA$H", value: STATIC_INVOICE.summary.potCash, bold: false },
-              { label: "Delivery Fee", value: STATIC_INVOICE.summary.deliveryFee, bold: false },
-              { label: "Total Savings", value: STATIC_INVOICE.summary.totalSavings, bold: false },
-              { label: "Grand Total", value: STATIC_INVOICE.summary.grandTotal, bold: true },
+              { label: "Subtotal", value: formatMoney(invoiceSubtotal), bold: true },
+              { label: "Promo Code", value: "Did not Redeem", bold: false },
+              { label: "Discount", value: "$0.00", bold: false },
+              { label: "POT CA$H", value: "$0.00", bold: false },
+              { label: "Delivery Fee", value: formatMoney(invoiceDelivery), bold: false },
+              { label: "Total Savings", value: "$0.00", bold: false },
+              { label: "Grand Total", value: formatMoney(invoiceGrandTotal), bold: true },
             ].map((row) => (
               <div key={row.label} className="flex justify-between text-sm">
                 <span className={row.bold ? "font-bold text-gray-900" : "text-gray-800"}>{row.label}</span>

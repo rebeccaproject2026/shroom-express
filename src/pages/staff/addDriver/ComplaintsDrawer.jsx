@@ -6,7 +6,7 @@ const COMPLAINTS_DATA = [
   {
     id: 1,
     complaint: "David was late for 3 orders in a row in last 5 hours",
-    complaintBy: "John Doe - Chillin Cheetah",
+    complaintBy: "John Doe - Shroom express",
     time: "09:30 PM - 20 Aug, 2025",
   },
   {

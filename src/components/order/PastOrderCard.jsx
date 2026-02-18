@@ -40,7 +40,7 @@ const PastOrderCard = ({ order }) => {
             <span className="text-gray-700 block mt-0.5">{order.coupon}</span>
           </div>
           <div className="block">
-            <span className="font-semibold text-gray-900 block">CHEETAH CA$H Redeemed</span>
+            <span className="font-semibold text-gray-900 block">SHROOM CA$H Redeemed</span>
             <span className="text-gray-700 block mt-0.5">{order.cheetahCashRedeemed}</span>
           </div>
           {/* Row 2: four sets in one line */}

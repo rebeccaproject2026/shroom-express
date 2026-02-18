@@ -50,7 +50,7 @@ const CUSTOMER_STATS = [
     { label: "Processing Orders", value: "10" },
     { label: "Total Spending", value: "$9,825" },
     { label: "Total Quantity", value: "85kg" },
-    { label: "Available CHEETAH CA$H", value: "$9,903" },
+    { label: "Available SHROOM CA$H", value: "$9,903" },
     { label: "Amount Due", value: "$1000.95" },
 ];
 

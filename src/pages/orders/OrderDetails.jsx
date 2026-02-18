@@ -223,7 +223,7 @@ const OrderDetails = () => {
               <span>{order.discount}</span>
             </div>
             <div className="flex justify-between mb-2">
-              <strong>Cheetah CA$H</strong>
+              <strong>Shroom CA$H</strong>
               <span>{order.cheetahCash}</span>
             </div>
             <div className="flex justify-between mb-2">
