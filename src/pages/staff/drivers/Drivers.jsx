@@ -387,11 +387,11 @@ const Drivers = () => {
             customStyle="sm:w-[220px]"
           />
           <Link
-            to="/staff/add-driver"
-            className="inline-flex items-center gap-2 px-4 w-auto max-w-50 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
+            to="/staff/drivers/add-driver"
+            className="inline-flex items-center gap-2 px-3 w-auto max-w-50 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
           >
             <span className="text-lg leading-none">+</span>
-            Add Driver
+            Add New Driver
           </Link>
         </div>
       </div>
@@ -565,7 +565,7 @@ const Drivers = () => {
           setTimeout(() => setSelectedDriver(null), 300);
         }}
         driver={selectedDriver}
-        onViewMoreDetails={(driver) => {
+        onViewMoreDetails={() => {
           setIsAreaCodesDrawerOpen(false);
           setIsDriverDetailsDrawerOpen(true);
         }}

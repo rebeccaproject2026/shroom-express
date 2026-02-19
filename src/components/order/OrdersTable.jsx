@@ -29,9 +29,9 @@ const OrdersTable = ({
   filters = {},
   onFilterChange,
   onStatusClick,
-  onCustomerClick,
-  onCourierClick,
-  onPaymentStatusClick,
+  // onCustomerClick,
+  // onCourierClick,
+  // onPaymentStatusClick,
   // onView,
   // onDelete,
 }) => {
@@ -173,11 +173,11 @@ const OrdersTable = ({
 
     // Verify data structure (for debugging - can be removed in production)
     if (excelData.length > 0) {
-      console.log("Exporting data:", {
-        rowCount: excelData.length,
-        headers: Object.keys(excelData[0]),
-        firstRow: excelData[0],
-      });
+      // console.log("Exporting data:", {
+      //   rowCount: excelData.length,
+      //   headers: Object.keys(excelData[0]),
+      //   firstRow: excelData[0],
+      // });
     }
 
     // Create a new workbook

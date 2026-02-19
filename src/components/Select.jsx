@@ -49,6 +49,7 @@ const Select = ({
   compact = false,
   className = "",
   disabled = false,
+  name = "",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -102,12 +103,12 @@ const Select = ({
       const next = isSelected(item)
         ? selectedValues.filter((v) => v !== val)
         : [...selectedValues, val];
-      if (onChange) onChange({ target: { value: next } });
+      if (onChange) onChange({ target: { name, value: next } });
       return;
     }
 
     if (isValueOnChangeMode) {
-      onChange({ target: { value: val } });
+      onChange({ target: { name, value: val } });
     } else if (onSelect) {
       onSelect(label);
     }

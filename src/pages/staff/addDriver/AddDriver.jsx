@@ -190,10 +190,29 @@ const AddDriver = () => {
             <div className="flex flex-col gap-4">
               {/* Search Available Driver In Area */}
               <div>
-                <h2 className="text-base font-semibold text-[#212121] mb-3">
-                  Search Available Driver In Area
-                </h2>
-
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-base font-semibold text-[#212121] ">
+                    Search Available Driver In Area
+                  </h2>
+                  <div className="flex gap-2 mt-1.5">
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-sm hover:bg-gray-50 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSave}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity"
+                    >
+                      <ArrowUp className="w-4 h-4" />
+                      Save
+                    </button>
+                  </div>
+                </div>
                 {/* Main Card */}
                 <div className="border border-[#D6D6D6] rounded-sm bg-white p-4">
                   {/* Top Controls */}

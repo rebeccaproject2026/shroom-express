@@ -86,29 +86,7 @@ const Sidebar = ({ setSidebar }) => {
 
           {staffOpen && (
             <div className="ml-8 mt-1 space-y-1 text-sm">
-              <NavLink
-                to="/staff/ai-admin"
-                className={({ isActive }) =>
-                  `block px-3 py-1.5 rounded ${isActive
-                    ? "bg-(--color-primary-soft) text-[var(--color-primary)]"
-                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-                  }`
-                }
-              >
-                AI Administrator
-              </NavLink>
 
-              <NavLink
-                to="/staff/add-driver"
-                className={({ isActive }) =>
-                  `block px-3 py-1.5 rounded ${isActive
-                    ? "bg-(--color-primary-soft) text-[var(--color-primary)]"
-                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-                  }`
-                }
-              >
-                Add Driver
-              </NavLink>
 
               <NavLink
                 to="/staff/drivers"
@@ -119,7 +97,30 @@ const Sidebar = ({ setSidebar }) => {
                   }`
                 }
               >
-                Drivers
+                Driver
+              </NavLink>
+              <NavLink
+                to="/staff/dispatcher"
+                className={({ isActive }) =>
+                  `block px-3 py-1.5 rounded ${isActive
+                    ? "bg-(--color-primary-soft) text-[var(--color-primary)]"
+                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
+                  }`
+                }
+              >
+                Dispatcher
+              </NavLink>
+
+              <NavLink
+                to="/staff/employee"
+                className={({ isActive }) =>
+                  `block px-3 py-1.5 rounded ${isActive
+                    ? "bg-(--color-primary-soft) text-[var(--color-primary)]"
+                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
+                  }`
+                }
+              >
+                Employee
               </NavLink>
             </div>
           )}

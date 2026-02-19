@@ -23,8 +23,9 @@ const specificPathTitles = {
   "/inventory/add": "Add Inventory",
   "/customers/add": "Add Customer",
   "/staff/ai-admin": "AI Administrator",
-  "/staff/add-driver": "Add Driver",
   "/staff/drivers": "Drivers",
+  "/staff/drivers/add-driver": "Add Driver",
+
 };
 
 const getDisplayTitle = (pathname) => {
