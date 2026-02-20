@@ -24,6 +24,7 @@ import AddDriver from "./pages/staff/addDriver/AddDriver";
 import Drivers from "./pages/staff/drivers/Drivers";
 import DriverDetailView from "./pages/staff/drivers/DriverDetailView";
 import Dispatcher from "./pages/staff/dispatcher/Dispatcher";
+import DispatcherDetails from "./pages/staff/dispatcher/DispatcherDetails";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
 
           <Route path="staff" element={<Staff />}>
             <Route path="dispatcher" element={<Dispatcher />} />
+            <Route path="dispatcher/:id" element={<DispatcherDetails />} />
             <Route path="employee" element={<AIAdministrator />} />
             <Route path="drivers" element={<Drivers />} />
             <Route path="drivers/add-driver" element={<AddDriver />} />

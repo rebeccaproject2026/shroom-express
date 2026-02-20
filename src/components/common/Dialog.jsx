@@ -6,6 +6,7 @@ const Dialog = ({
     title,
     children,
     actions = [],
+    maxWidth = "max-w-4xl",
 }) => {
     if (!isOpen) return null;
 
@@ -19,7 +20,9 @@ const Dialog = ({
             />
 
             {/* Modal */}
-            <div className="relative bg-white w-[95%] max-w-4xl max-h-[90vh] rounded-lg shadow-xl overflow-hidden flex flex-col">
+            <div
+                className={`relative bg-white w-[95%] ${maxWidth} h-[90vh] rounded-lg shadow-xl flex flex-col`}
+            >
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-[#DDDDDD]">
@@ -55,7 +58,7 @@ const Dialog = ({
                 </div>
 
                 {/* Body */}
-                <div className="p-6 overflow-y-auto flex-1">
+                <div className="p-3 overflow-y-auto flex-1">
                     {children}
                 </div>
             </div>

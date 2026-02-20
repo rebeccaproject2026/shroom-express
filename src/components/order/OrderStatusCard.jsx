@@ -3,6 +3,7 @@ import InfoBox from './InfoBox';
 import OrderMapSection from './OrderMapSection';
 import { getDeliveryBadgeIcon } from '../../utils/orderUtils';
 import { CircleCheckBig, CircleQuestionMark, PackageCheck, RotateCw, Truck } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 const OrderStatusCard = ({
   orderData,
@@ -10,8 +11,10 @@ const OrderStatusCard = ({
   showActions = true,
   showPaymentSummary = true,
   type = 'PENDING', // 'pending' | 'delivered' | 'cancelled' | 'inprogress'
+  pageContext = 'default', // 'default' | 'dispatcher'
 }) => {
   // Initialize map visibility based on showMap prop and type
+  // By default, show map for inprogress, hide for others
   const [isMapVisible, setIsMapVisible] = useState(showMap && type === 'inprogress');
   // Get color scheme based on type
   const getTypeColors = () => {
@@ -46,10 +49,38 @@ const OrderStatusCard = ({
 
   const colors = getTypeColors();
 
-  // Get action buttons based on type
+  // Get action buttons based on type and page context
   const getActionButtons = () => {
     if (!showActions) return null;
 
+    // Dispatcher page buttons
+    if (pageContext === 'dispatcher') {
+      return (
+        <>
+          <button className=" text-gray-700 rounded-sm transition-colors cursor-pointer">
+            <Icon icon="fluent:chat-16-regular" style={{ fontSize: "32px", color: "#000" }} />
+          </button>
+          <button className="p-2.5 bg-[#FF9800] text-white rounded-sm hover:bg-orange-600 transition-colors cursor-pointer">
+            <Icon icon="akar-icons:chat-question" className="w-5 h-5" />
+          </button>
+          <button className="px-4 py-2.5 bg-[#0066FF] text-white rounded-sm text-[14px] font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+            Assign for Collection
+          </button>
+          <button className="px-4 py-2.5 bg-[#FF9800] text-white rounded-sm text-[14px] font-semibold hover:bg-orange-600 transition-colors cursor-pointer">
+
+            Complaint
+          </button>
+          <button className="px-4 py-2.5 bg-[#F44336] text-white rounded-sm text-[14px] font-semibold hover:bg-red-600 transition-colors cursor-pointer">
+            Cancel Order
+          </button>
+          <button className="px-4 py-2.5 bg-white border-2 border-[#0066FF] text-[#0066FF] rounded-sm text-[14px] font-semibold hover:bg-blue-50 transition-colors cursor-pointer">
+            Edit Order
+          </button>
+        </>
+      );
+    }
+
+    // Default page buttons
     const buttons = {
       pending: (
         <>
@@ -273,15 +304,13 @@ const OrderStatusCard = ({
               {orderData?.deliveryStarted || '12/14/2024 at 06:53 pm'}
             </div>
 
-            {/* Show/Hide Map Link */}
-            {type === 'inprogress' && (
-              <button
-                onClick={() => setIsMapVisible(!isMapVisible)}
-                className="text-blue-600 cursor-pointer underline text-[14px] font-medium mt-3"
-              >
-                {isMapVisible ? 'Hide Map' : 'Show Map'}
-              </button>
-            )}
+            {/* Show/Hide Map Link - Show for ALL order types */}
+            <button
+              onClick={() => setIsMapVisible(!isMapVisible)}
+              className="text-blue-600 cursor-pointer underline text-[14px] font-medium mt-3 hover:text-blue-700"
+            >
+              {isMapVisible ? 'Hide Map' : 'Show Map'}
+            </button>
           </div>
 
           {/* Dotted Line - Horizontal Center */}
@@ -340,8 +369,8 @@ const OrderStatusCard = ({
           </div>
         </div>
 
-        {/* Map Section - Only show for inprogress and when visible */}
-        {type === 'inprogress' && isMapVisible && (
+        {/* Map Section - Show for ALL order types when visible */}
+        {isMapVisible && (
           <div className="mt-5">
             <OrderMapSection orderData={orderData} />
           </div>

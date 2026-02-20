@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePickerMap from "../../../components/DatePickerMap";
 import FinanceSummaryCard from "../../../components/finances/FinanceSummaryCard";
 import { Search, Eye, Download } from "lucide-react";
@@ -17,7 +17,7 @@ import AddDispatcher from "./AddDispatcher";
 const CARD_DATA = [
   { title: "Total Salary", value: "$10,650", change: "+ 22%", isPositive: true },
   { title: "Total Orders", value: "9825", change: "- 12%", isPositive: false },
-  { title: "Total Sold Amount", value: "102", change: "+ 22%", isPositive: true },
+  { title: "Received Amount", value: "102", change: "+ 22%", isPositive: true },
   { title: "Product Sold Qty", value: "135", change: "+ 22%", isPositive: true },
   { title: "Added Product", value: "135", change: "+ 22%", isPositive: true },
 ];
@@ -183,6 +183,7 @@ const Dispatcher = () => {
   const [search, setSearch] = useState("");
   const [statusTab, setStatusTab] = useState("all");
   const [isAddDispatcherOpen, setIsAddDispatcherOpen] = useState(false);
+  const navigate = useNavigate();
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 7,
@@ -228,7 +229,7 @@ const Dispatcher = () => {
       },
       {
         accessorKey: "areaCode",
-        header: "Area Code",
+        header: "Area",
         cell: ({ getValue }) => (
           <div className="flex items-center gap-2">
             <span className="text-[#3F4753] text-[12px]">{getValue()}</span>
@@ -248,7 +249,7 @@ const Dispatcher = () => {
       },
       {
         accessorKey: "lastActivityDate",
-        header: "Last Activity",
+        header: "Log in Activity",
         cell: ({ row }) => (
           <div className="flex flex-col text-[12px]">
             <span className="text-[#3F4753]">
@@ -262,7 +263,7 @@ const Dispatcher = () => {
       },
       {
         accessorKey: "startingDate",
-        header: "Starting Date",
+        header: "Logout Activity",
         cell: ({ getValue }) => (
           <span className="text-[#3F4753] text-[12px]">
             {getValue()}
@@ -333,13 +334,18 @@ const Dispatcher = () => {
       {
         id: "action",
         header: "Action",
-        cell: () => (
+        cell: ({ row }) => (
           <div className="flex items-center gap-3 justify-center">
-            <Eye className="w-4 h-4 text-[#0066FF] cursor-pointer" />
+            <Eye
+              className="w-4 h-4 text-[#0066FF] cursor-pointer"
+              onClick={() =>
+                navigate(`/staff/dispatcher/${row.original.id}`)
+              }
+            />
             <span className="text-red-500 cursor-pointer text-sm">🗑</span>
           </div>
         ),
-      },
+      }
     ],
     []
   );

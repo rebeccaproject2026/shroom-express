@@ -25,6 +25,8 @@ const specificPathTitles = {
   "/staff/ai-admin": "AI Administrator",
   "/staff/drivers": "Drivers",
   "/staff/drivers/add-driver": "Add Driver",
+  "/staff/dispatcher": "Dispatchers",
+
 
 };
 
@@ -33,6 +35,7 @@ const getDisplayTitle = (pathname) => {
   if (/^\/orders\/[^/]+$/.test(pathname)) return "Order Details";
   if (/^\/customers\/[^/]+$/.test(pathname)) return "Customer Details";
   if (/^\/staff\/drivers\/\d+$/.test(pathname)) return "Driver Details";
+  if (/^\/staff\/dispatcher\/\d+$/.test(pathname)) return "Dispatcher Details";
   const matchedPath = Object.keys(routeTitleMap).find(
     (path) => pathname === path
   );

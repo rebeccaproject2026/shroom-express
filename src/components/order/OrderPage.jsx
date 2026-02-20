@@ -7,6 +7,7 @@ const OrderPage = ({
   showMap = false,
   pageType = 'pending', // 'pending' | 'delivered' | 'cancelled' | 'inprogress' | 'all'
   orders = [],
+  pageContext = 'default', // 'default' | 'dispatcher'
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -148,6 +149,7 @@ const OrderPage = ({
             showMap={showMap}
             showActions={true}
             type={order.type}
+            pageContext={pageContext}
           />
         ))}
 

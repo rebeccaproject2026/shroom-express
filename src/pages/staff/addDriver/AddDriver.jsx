@@ -36,6 +36,8 @@ import {
   getDriversData,
   DriversDataWithDrawer,
 } from "./driversData";
+import WorkingAreaManager from "../../../components/common/WorkingArea";
+import DriverLicenseUpload from "../../../components/common/DriverLicenseUpload";
 
 const AddDriver = () => {
   const navigate = useNavigate();
@@ -43,8 +45,6 @@ const AddDriver = () => {
   const mapRef = useRef(null);
   const ownDriverMapContainerRef = useRef(null);
   const ownDriverMapRef = useRef(null);
-  const secondAreaMapContainerRef = useRef(null);
-  const secondAreaMapRef = useRef(null);
 
   const [activeTab, setActiveTab] = useState("portrider");
   const [city, setCity] = useState("");
@@ -61,9 +61,17 @@ const AddDriver = () => {
   const [salaryPeriod, setSalaryPeriod] = useState("monthly");
   const [country, setCountry] = useState("");
   const [province, setProvince] = useState("");
+  const [workingAreas, setWorkingAreas] = useState([""]);
+  // eslint-disable-next-line no-unused-vars
+  const [frontLicense, setFrontLicense] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [backLicense, setBackLicense] = useState(null);
 
   // Table Data
   const driversData = getDriversData();
+  const hasMapToken =
+    typeof import.meta.env.VITE_MAPBOX_ACCESS_TOKEN !== "undefined" &&
+    import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
   const handleCancel = () => navigate("/staff/drivers");
   const handleSave = () => {
@@ -122,37 +130,6 @@ const AddDriver = () => {
     };
   }, [activeTab]);
 
-  useEffect(() => {
-    if (
-      activeTab !== "own" ||
-      !secondAreaMapContainerRef.current ||
-      secondAreaMapRef.current
-    )
-      return;
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-    if (!token) return;
-
-    secondAreaMapRef.current = new mapboxgl.Map({
-      container: secondAreaMapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-79.3832, 43.6532],
-      zoom: 14,
-    });
-
-    secondAreaMapRef.current.addControl(
-      new mapboxgl.NavigationControl({ showCompass: false }),
-      "bottom-right",
-    );
-
-    return () => {
-      secondAreaMapRef.current?.remove();
-      secondAreaMapRef.current = null;
-    };
-  }, [activeTab]);
-
-  const hasMapToken =
-    typeof import.meta.env.VITE_MAPBOX_ACCESS_TOKEN !== "undefined" &&
-    import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
   return (
     <div className="flex flex-col flex-1 min-h-0 min-w-0 bg-gray-100 overflow-y-auto px-2.5 py-3">
@@ -705,82 +682,10 @@ const AddDriver = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Working Area Section */}
-                <div className="flex flex-col gap-2.5 mt-4">
-                  <h2 className="text-base font-semibold text-[#212121]">
-                    Working Area
-                  </h2>
-
-                  <div className="border border-[#C5C5C5] rounded-md p-3 flex flex-col gap-2.5">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-[#212121]">
-                        Area Code
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="M2N 3X1"
-                        className="w-full px-3 py-2 text-sm border border-[#D9D9D9] rounded-sm bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      />
-                    </div>
-
-                    {/* Map */}
-                    <div className="w-full h-62.5 rounded-sm overflow-hidden bg-[#EEF1F4] border border-[#DDDDDD]">
-                      {hasMapToken ? (
-                        <div
-                          ref={ownDriverMapContainerRef}
-                          className="w-full h-full"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">
-                          Map preview
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Additional Area Code Section */}
-                <div className="flex flex-col gap-2 p-3 rounded-md border border-[#C5C5C5]">
-                  <div className="relative">
-                    <label className="text-sm font-medium text-[#212121]">
-                      Area Code
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter Postal code"
-                      className="w-full px-3 py-2 text-sm border border-[#D9D9D9] rounded-sm bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 mt-1"
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-0 text-white bg-red-500 rounded-full p-0.5 cursor-pointer"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-
-                  {/* Map */}
-                  <div className="w-full h-62.5 rounded-sm overflow-hidden bg-[#EEF1F4] border border-[#DDDDDD]">
-                    {hasMapToken ? (
-                      <div
-                        ref={secondAreaMapContainerRef}
-                        className="w-full h-full"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">
-                        Map preview
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="text-start text-[13px] text-[#0066FF] font-semibold cursor-pointer flex gap-1 items-center"
-                >
-                  <Plus className="stroke-2 w-5 h-5" /> Add more...
-                </button>
-
+                <WorkingAreaManager
+                  value={workingAreas}
+                  onChange={(areas) => setWorkingAreas(areas)}
+                />
                 {/* Personal Identification Section */}
                 <div className="flex flex-col gap-3 mt-4">
                   <h2 className="text-base font-semibold text-[#212121]">
@@ -792,65 +697,13 @@ const AddDriver = () => {
                       Upload Driver License (Front and back side)
                     </label>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Front Side Upload */}
-                      <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-sm px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
-                            <svg
-                              className="w-12 h-12 text-[#D9D9D9]"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                              />
-                            </svg>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-sm text-gray-600">
-                              Select your file or drag and drop it here
-                            </p>
-                          </div>
-                          <p className="text-xs text-gray-500 font-medium">
-                            Front side
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Back Side Upload */}
-                      <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-sm px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
-                        <div className="flex flex-col items-center gap-3">
-                          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
-                            <svg
-                              className="w-12 h-12 text-[#D9D9D9]"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                              />
-                            </svg>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-sm text-gray-600">
-                              Select your file or drag and drop it here
-                            </p>
-                          </div>
-                          <p className="text-xs text-gray-500 font-medium">
-                            Back side
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    <DriverLicenseUpload
+                      driverId="" // leave empty for now (static mode)
+                      currentFront=""
+                      currentBack=""
+                      onUploadFront={(file) => setFrontLicense(file)}
+                      onUploadBack={(file) => setBackLicense(file)}
+                    />
                   </div>
                 </div>
               </div>
