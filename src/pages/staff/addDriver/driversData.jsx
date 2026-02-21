@@ -6,6 +6,7 @@ import AreaCodesDrawer from "./AreaCodesDrawer";
 /**
  * Drivers table columns definition matching the screenshot but using OrdersTable typography
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const getDriversColumns = (onView, onHire, onViewAreaCodes) => [
     {
         accessorKey: "driverName",
@@ -128,6 +129,7 @@ export const getDriversColumns = (onView, onHire, onViewAreaCodes) => [
 /**
  * Dummy drivers data matching the screenshot
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const getDriversData = () => [
     {
         id: "1",

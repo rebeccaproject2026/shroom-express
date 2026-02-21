@@ -8,12 +8,155 @@ import ManageDrivers from "../../../components/dispatcher/ManageDrivers";
 import DispatcherAreaMap from "../../../components/dispatcher/DispatcherAreaMap";
 import LogActivityTimeline from "../../../components/dispatcher/LogActivityTimeline";
 import OrderPage from "../../../components/order/OrderPage";
+import DeliveryChatDrawer from "../../../components/tracking/DeliveryChatDrawer";
+import ComplaintsDrawer from "../../../components/common/ComplaintsDrawer";
+import AssignCollectionModal from "../../../components/dispatcher/AssignCollectionModal";
+import ComplaintModal from "../../../components/dispatcher/ComplaintModal";
+import CancelReason from "../../../components/dispatcher/CancelReason";
+import PaySalaryModal from "../../../components/dispatcher/PaySalaryModal";
+import SuspensionReason from "../../../components/dispatcher/SuspensionReason";
 const DispatcherDetails = () => {
     // const { id } = useParams();
     const navigate = useNavigate();
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("drivers");
     const [expandedLogIds, setExpandedLogIds] = useState([]);
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    // const [isEditOrderOpen, setIsEditOrderOpen] = useState(false);
+    const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
+    const [selectedOrderForComplaint, setSelectedOrderForComplaint] = useState(null);
+    const [isAssignCollectionOpen, setIsAssignCollectionOpen] = useState(false);
+    const [selectedOrderForCollection, setSelectedOrderForCollection] = useState(null);
+    const [isComplaintOpen, setIsComplaintOpen] = useState(false);
+    const [isCancelReasonOpen, setIsCancelReasonOpen] = useState(false);
+    const [isPaySalaryOpen, setIsPaySalaryOpen] = useState(false);
+    const [isSuspensionOpen, setIsSuspensionOpen] = useState(false);
+    // Sample orders data - Replace with API call later
+    const sampleOrders = [
+        {
+            id: 1,
+            type: 'pending',
+            address: '123 Main Street, Toronto, ON M5J 2N8',
+            orderId: '302011',
+            driver: 'Bob Johnson',
+            orderAmount: '1325.26',
+            orderQuantity: '10 Items',
+            orderCreated: '5 Mar 2024',
+            orderCreatedTime: '10:30 pm',
+            eta: '11:30pm, Today',
+            soldQuantity: '2.36g',
+            receivedAmount: '1025.35',
+            unpaidCollection: '1025.35',
+            paidCollection: '25.35',
+            deliveryStarted: '12/14/2024 at 06:53 pm',
+            approximateArrival: '12/14/2024, 08:12 PM',
+        },
+        {
+            id: 2,
+            type: 'delivered',
+            address: '456 Oak Avenue, Toronto, ON M5K 3B2',
+            orderId: '302012',
+            driver: 'Sarah Smith',
+            orderAmount: '825.50',
+            orderQuantity: '5 Items',
+            orderCreated: '5 Mar 2024',
+            orderCreatedTime: '10:30 pm',
+            deliveredAt: '11:30pm, 12 Dec 2024',
+            soldQuantity: '1.50g',
+            receivedAmount: '825.50',
+            unpaidCollection: '0.00',
+            paidCollection: '825.50',
+            deliveryStarted: '12/14/2024 at 06:53 pm',
+            deliveredTime: '12/14/2024, 08:12 PM',
+        },
+        {
+            id: 3,
+            type: 'cancelled',
+            address: '789 Pine Road, Toronto, ON M5L 4C3',
+            orderId: '302013',
+            driver: 'Mike Wilson',
+            orderAmount: '550.75',
+            orderQuantity: '2 Items',
+            orderCreated: '5 Mar 2024',
+            orderCreatedTime: '10:30 pm',
+            cancelledAt: '11:30pm, 14 Jan 2025',
+            cancelReason: 'the requested item is out of stock',
+            soldQuantity: '0.75g',
+            receivedAmount: '0.00',
+            unpaidCollection: '0.00',
+            paidCollection: '0.00',
+            deliveryStarted: '12/14/2024 at 06:53 pm',
+            cancelledTime: '12/14/2024, 08:12 PM',
+        },
+        {
+            id: 4,
+            type: 'inprogress',
+            address: '321 Maple Street, Toronto, ON M5M 5D4',
+            orderId: '302014',
+            driver: 'Jack Benson',
+            orderAmount: '1125.00',
+            orderQuantity: '8 Items',
+            orderCreated: '5 Mar 2024',
+            orderCreatedTime: '10:30 pm',
+            deliveryDate: '15 Jan 2025 Today',
+            eta: '11:30 pm',
+            soldQuantity: '2.00g',
+            receivedAmount: '1125.00',
+            unpaidCollection: '0.00',
+            paidCollection: '1125.00',
+            deliveryStarted: '12/14/2024 at 06:53 pm',
+            approximateArrival: '12/14/2024, 08:12 PM',
+        },
+    ];
+
+    // Handler for order actions - will be connected to API later
+    const handleOrderAction = (action, order) => {
+        console.log(`Action: ${action}, Order ID: ${order.orderId}`, order);
+
+        switch (action) {
+            case 'chat':
+                // Open chat drawer with order details
+                setSelectedOrder(order);
+                setIsChatOpen(true);
+                break;
+            case 'complaints':
+                setSelectedOrderForComplaint(order);
+                setIsComplaintsOpen(true);
+                break;
+            case 'assignCollection':
+                setSelectedOrderForCollection(order);
+                setIsAssignCollectionOpen(true);
+                break;
+            case 'complaint':
+                setSelectedOrderForComplaint(order);
+                setIsComplaintOpen(true);
+                break;
+            case 'cancelOrder':
+                setIsCancelReasonOpen(true);
+                setSelectedOrderForComplaint(order);
+                break;
+            case 'editOrder':
+                // Open edit order drawer
+                setSelectedOrder(order);
+                // setIsEditOrderOpen(true);
+                break;
+            case 'reorder':
+                // TODO: Create new order from existing
+                console.log('Reordering:', order.orderId);
+                break;
+            default:
+                console.log('Unknown action:', action);
+        }
+    };
+
+    // Handler for saving edited order
+    // const handleSaveOrder = (updatedOrder) => {
+    //     console.log('Saving updated order:', updatedOrder);
+    //     // TODO: API call to update order
+    //     // Example: await updateOrderAPI(updatedOrder);
+    //     // Then refresh orders list
+    // };
 
     const toggleLogExpand = (id) => {
         setExpandedLogIds((prev) =>
@@ -203,11 +346,16 @@ const DispatcherDetails = () => {
 
                 {/* RIGHT SIDE */}
                 <div className="flex gap-3">
-                    <button className="flex px-5 py-2.5 bg-blue-600 text-white rounded-sm text-sm font-semibold gap-2 cursor-pointer">
+                    <button
+                        onClick={() => setIsPaySalaryOpen(true)}
+                        className="flex px-5 py-2.5 bg-blue-600 text-white rounded-sm text-sm font-semibold gap-2 cursor-pointer"
+                    >
                         <Icon icon="fa6-solid:coins" width="18" height="18" />
                         Pay Salary
                     </button>
-                    <button className="flex px-3 py-2.5 bg-red-500 text-white rounded-sm text-sm font-semibold gap-1 cursor-pointer">
+                    <button
+                        onClick={() => setIsSuspensionOpen(true)}
+                        className="flex px-3 py-2.5 bg-red-500 text-white rounded-sm text-sm font-semibold gap-1 cursor-pointer">
                         <Icon icon="mingcute:user-x-fill" width="20" height="20" />
                         Suspend Dispatcher
                     </button>
@@ -299,19 +447,23 @@ const DispatcherDetails = () => {
 
             </div>
             {activeTab === "drivers" && <ManageDrivers />}
-            {activeTab === "area" && < DispatcherAreaMap
-                areas={[
-                    "M2N 3X1",
-                    "M2N 3X3",
-                    "M2N 3X5",
-                    "M2N 3X1",
-                    "M2N 3X3",
-                    "M2N 3X5",
-                    "M2N 3X1",
-                    "M2N 3X3",
-                    "M2N 3X5"
-                ]}
-            />}
+            {activeTab === "area" && (
+                <div className="space-y-3">
+                    <DispatcherAreaMap
+                        areas={[
+                            "M2N 3X1",
+                            "M2N 3X3",
+                            "M2N 3X5",
+                            "M2N 3X1",
+                            "M2N 3X3",
+                            "M2N 3X5",
+                            "M2N 3X1",
+                            "M2N 3X3",
+                            "M2N 3X5"
+                        ]}
+                    />
+                </div>
+            )}
             {activeTab === "log" &&
                 <LogActivityTimeline
                     logData={LOG_ACTIVITY}
@@ -355,12 +507,15 @@ const DispatcherDetails = () => {
                     ))}
                 </div>
             </div>}
-            {activeTab === "orders" && <OrderPage
-                showFilters={true}
-                showMap={true}
-                pageType="all"
-                pageContext="dispatcher"
-            />}
+            {activeTab === "orders" &&
+                <OrderPage
+                    showFilters={true}
+                    showMap={true}
+                    pageType="all"
+                    context="dispatcher"
+                    orders={sampleOrders}
+                    onOrderAction={handleOrderAction}
+                />}
 
 
 
@@ -373,6 +528,115 @@ const DispatcherDetails = () => {
                     dispatcherData={dispatcher}
                 />
             </>
+
+            {/* Chat Drawer */}
+            {selectedOrder && (
+                <DeliveryChatDrawer
+                    open={isChatOpen}
+                    onClose={() => {
+                        setIsChatOpen(false);
+                        setSelectedOrder(null);
+                    }}
+                    driverName={selectedOrder.driver || 'Driver'}
+                    avatar={null}
+                    isOnline={selectedOrder.type === 'inprogress'}
+                    eta={selectedOrder.eta || selectedOrder.approximateArrival || 'N/A'}
+                    status={
+                        selectedOrder.type === 'delivered' ? 'Delivered' :
+                            selectedOrder.type === 'cancelled' ? 'Cancelled' :
+                                selectedOrder.type === 'inprogress' ? 'In-progress' :
+                                    'Pending'
+                    }
+                    address={selectedOrder.address}
+                    orderQuantity={parseInt(selectedOrder.orderQuantity) || 0}
+                    orderAmount={parseFloat(selectedOrder.orderAmount) || 0}
+                    paymentMethod="Cash on Delivery"
+                    orderType="Same Day"
+                />
+            )}
+            {/* ... other drawers like DeliveryChatDrawer */}
+
+            <ComplaintsDrawer
+                isOpen={isComplaintsOpen}
+                onClose={() => {
+                    setIsComplaintsOpen(false);
+                    setSelectedOrderForComplaint(null);
+                }}
+                orderId={selectedOrderForComplaint?.orderId || 'N/A'}
+            />
+
+            <AssignCollectionModal
+                isOpen={isAssignCollectionOpen}
+                onClose={() => {
+                    setIsAssignCollectionOpen(false);
+                    setSelectedOrderForCollection(null);
+                }}
+                onConfirm={(payload) => {
+                    console.log('Assign collection payload:', payload);
+                    // TODO: Call your API here
+                    // e.g. axios.post('/api/assign-collection', payload)
+                    // Then show success toast, refresh orders, etc.
+                }}
+                order={selectedOrderForCollection}
+            />
+            <ComplaintModal
+                isOpen={isComplaintOpen}
+                onClose={() => {
+                    setIsComplaintOpen(false);
+                    setSelectedOrderForComplaint(null);
+                }}
+                onSubmit={(payload) => {
+                    console.log('Submitting complaint:', payload);
+                    // → Call your API here (POST /complaints)
+                    // Show success toast, refresh list, etc.
+                }}
+                order={selectedOrderForComplaint}
+            />
+            <CancelReason
+                isOpen={isCancelReasonOpen}
+                onClose={() => {
+                    setIsCancelReasonOpen(false);
+                }}
+                onSubmit={(payload) => {
+                    console.log('Submitting complaint:', payload);
+                    // → Call your API here (POST /complaints)
+                    // Show success toast, refresh list, etc.
+                }}
+                order={selectedOrderForComplaint}
+            />
+
+            <PaySalaryModal
+                isOpen={isPaySalaryOpen}
+                onClose={() => setIsPaySalaryOpen(false)}
+                onConfirm={(payload) => {
+                    console.log('Pay salary payload:', payload);
+                    // TODO: Call your API here
+                    // e.g. axios.post('/api/pay-salary', payload)
+                    // Then show success toast, refresh data, etc.
+                }}
+                driver={dispatcher}
+            />
+            <SuspensionReason
+                isOpen={isSuspensionOpen}
+                onClose={() => setIsSuspensionOpen(false)}
+                onSubmit={(payload) => {
+                    console.log('Suspension reason submitted:', payload);
+                    // TODO: Call your API here to suspend dispatcher
+                    // e.g. axios.post('/api/dispatchers/suspend', payload)
+                    // Then show toast, refresh data, etc.
+                }}
+                order={dispatcher}  // passing dispatcher object (since it's for dispatcher)
+            />
+            {/* Edit Order Drawer */}
+            {/* <EditOrderDrawer
+                isOpen={isEditOrderOpen}
+                onClose={() => {
+                    setIsEditOrderOpen(false);
+                    setSelectedOrder(null);
+                }}
+                orderData={selectedOrder}
+                onSave={handleSaveOrder}
+            /> */}
         </div>
     );
 };

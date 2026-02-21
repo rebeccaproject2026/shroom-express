@@ -1,109 +1,49 @@
 import React, { useState } from 'react';
 import OrderStatusCard from './OrderStatusCard';
 import { Search, ChevronDown } from 'lucide-react';
+import { getActionButtons, createOrderHandlers } from './OrderActionButtons';
 
 const OrderPage = ({
   showFilters = true,
   showMap = false,
   pageType = 'pending', // 'pending' | 'delivered' | 'cancelled' | 'inprogress' | 'all'
-  orders = [],
-  pageContext = 'default', // 'default' | 'dispatcher'
+  orders = [], // Orders from API or parent component
+  context = 'default', // 'dispatcher' | 'customer' | 'admin' | 'default'
+  onOrderAction = null, // Callback for order actions (optional)
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // Sample order data for demonstration
-  const sampleOrders = [
-    {
-      id: 1,
-      type: 'pending',
-      address: '123 Main Street, Toronto, ON M5J 2N8',
-      orderId: '302011',
-      driver: 'Bob Johnson',
-      orderAmount: '1325.26',
-      orderQuantity: '10 Items',
-      orderCreated: '5 Mar 2024',
-      orderCreatedTime: '10:30 pm',
-      eta: '11:30pm, Today',
-      soldQuantity: '2.36g',
-      receivedAmount: '1025.35',
-      unpaidCollection: '1025.35',
-      paidCollection: '25.35',
-      deliveryStarted: '12/14/2024 at 06:53 pm',
-      approximateArrival: '12/14/2024, 08:12 PM',
-    },
-    {
-      id: 2,
-      type: 'delivered',
-      address: '123 Main Street, Toronto, ON M5J 2N8',
-      orderId: '302011',
-      driver: 'Bob Johnson',
-      orderAmount: '1325.26',
-      orderQuantity: '5 Items',
-      orderCreated: '5 Mar 2024',
-      orderCreatedTime: '10:30 pm',
-      deliveredAt: '11:30pm, 12 Dec 2024',
-      soldQuantity: '2.36g',
-      receivedAmount: '1025.35',
-      unpaidCollection: '1025.35',
-      paidCollection: '25.35',
-      deliveryStarted: '12/14/2024 at 06:53 pm',
-      deliveredTime: '12/14/2024, 08:12 PM',
-    },
-    {
-      id: 3,
-      type: 'cancelled',
-      address: '123 Main Street, Toronto, ON M5J 2N8',
-      orderId: '302011',
-      driver: 'Bob Johnson',
-      orderAmount: '1325.26',
-      orderQuantity: '2 Items',
-      orderCreated: '5 Mar 2024',
-      orderCreatedTime: '10:30 pm',
-      cancelledAt: '11:30pm, 14 Jan 2025',
-      cancelReason: 'the requested item is out of stock',
-      soldQuantity: '2.36g',
-      receivedAmount: '1025.35',
-      unpaidCollection: '1025.35',
-      paidCollection: '25.35',
-      deliveryStarted: '12/14/2024 at 06:53 pm',
-      cancelledTime: '12/14/2024, 08:12 PM',
-    },
-    {
-      id: 4,
-      type: 'inprogress',
-      address: '123 Main Street, Toronto, ON M5J 2N8',
-      orderId: '302011',
-      driver: 'Jack Benson',
-      orderAmount: '1325.26',
-      orderQuantity: '10 Items',
-      orderCreated: '5 Mar 2024',
-      orderCreatedTime: '10:30 pm',
-      deliveryDate: '15 Jan 2025 Today',
-      eta: '11:30 pm',
-      soldQuantity: '2.36g',
-      receivedAmount: '1025.35',
-      unpaidCollection: '1025.35',
-      paidCollection: '25.35',
-      deliveryStarted: '12/14/2024 at 06:53 pm',
-      approximateArrival: '12/14/2024, 08:12 PM',
-    },
-  ];
-
-  const ordersToDisplay = orders.length > 0 ? orders : sampleOrders;
-
   // Filter orders based on pageType or statusFilter
-  const filteredOrders = ordersToDisplay.filter((order) => {
+  const filteredOrders = orders.filter((order) => {
     const matchesType = pageType === 'all' || order.type === pageType;
     const matchesFilter = statusFilter === 'all' || order.type === statusFilter;
     const matchesSearch =
       searchValue === '' ||
-      order.orderId.toLowerCase().includes(searchValue.toLowerCase()) ||
-      order.driver.toLowerCase().includes(searchValue.toLowerCase()) ||
-      order.address.toLowerCase().includes(searchValue.toLowerCase());
-
+      order.orderId?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      order.driver?.toLowerCase().includes(searchValue.toLowerCase()) ||
+      order.address?.toLowerCase().includes(searchValue.toLowerCase());
     return matchesType && matchesFilter && matchesSearch;
   });
+
+  // Generate action buttons for each order based on context and status
+  const getOrderActionButtons = (order) => {
+    // Create handlers for this specific order
+    const handlers = onOrderAction
+      ? {
+        onChat: () => onOrderAction('chat', order),
+        onComplaints: () => onOrderAction('complaints', order),
+        onAssignCollection: () => onOrderAction('assignCollection', order),
+        onComplaint: () => onOrderAction('complaint', order),
+        onCancelOrder: () => onOrderAction('cancelOrder', order),
+        onEditOrder: () => onOrderAction('editOrder', order),
+        onReorder: () => onOrderAction('reorder', order),
+      }
+      : createOrderHandlers(order.orderId, order);
+
+    return getActionButtons(context, order.type, handlers);
+  };
+
 
   return (
     <div className="w-full">
@@ -149,7 +89,7 @@ const OrderPage = ({
             showMap={showMap}
             showActions={true}
             type={order.type}
-            pageContext={pageContext}
+            actionButtons={getOrderActionButtons(order)}
           />
         ))}
 

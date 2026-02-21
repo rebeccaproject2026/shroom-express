@@ -97,6 +97,83 @@ const PAYROLL_HISTORY = [
   },
 ];
 
+const SAMPLE_ORDERS = [
+  {
+    id: 1,
+    type: 'pending',
+    address: '123 Main Street, Toronto, ON M5J 2N8',
+    orderId: '302011',
+    driver: 'Bob Johnson',
+    orderAmount: '1325.26',
+    orderQuantity: '10 Items',
+    orderCreated: '5 Mar 2024',
+    orderCreatedTime: '10:30 pm',
+    eta: '11:30pm, Today',
+    soldQuantity: '2.36g',
+    receivedAmount: '1025.35',
+    unpaidCollection: '1025.35',
+    paidCollection: '25.35',
+    deliveryStarted: '12/14/2024 at 06:53 pm',
+    approximateArrival: '12/14/2024, 08:12 PM',
+  },
+  {
+    id: 2,
+    type: 'delivered',
+    address: '456 Oak Avenue, Toronto, ON M5K 3B2',
+    orderId: '302012',
+    driver: 'Bob Johnson',
+    orderAmount: '825.50',
+    orderQuantity: '5 Items',
+    orderCreated: '5 Mar 2024',
+    orderCreatedTime: '10:30 pm',
+    deliveredAt: '11:30pm, 12 Dec 2024',
+    soldQuantity: '1.50g',
+    receivedAmount: '825.50',
+    unpaidCollection: '0.00',
+    paidCollection: '825.50',
+    deliveryStarted: '12/14/2024 at 06:53 pm',
+    deliveredTime: '12/14/2024, 08:12 PM',
+  },
+  {
+    id: 3,
+    type: 'cancelled',
+    address: '789 Pine Road, Toronto, ON M5L 4C3',
+    orderId: '302013',
+    driver: 'Bob Johnson',
+    orderAmount: '550.75',
+    orderQuantity: '2 Items',
+    orderCreated: '5 Mar 2024',
+    orderCreatedTime: '10:30 pm',
+    cancelledAt: '11:30pm, 14 Jan 2025',
+    cancelReason: 'the requested item is out of stock',
+    soldQuantity: '0.75g',
+    receivedAmount: '0.00',
+    unpaidCollection: '0.00',
+    paidCollection: '0.00',
+    deliveryStarted: '12/14/2024 at 06:53 pm',
+    cancelledTime: '12/14/2024, 08:12 PM',
+  },
+  {
+    id: 4,
+    type: 'inprogress',
+    address: '321 Maple Street, Toronto, ON M5M 5D4',
+    orderId: '302014',
+    driver: 'Bob Johnson',
+    orderAmount: '1125.00',
+    orderQuantity: '8 Items',
+    orderCreated: '5 Mar 2024',
+    orderCreatedTime: '10:30 pm',
+    deliveryDate: '15 Jan 2025 Today',
+    eta: '11:30 pm',
+    soldQuantity: '2.00g',
+    receivedAmount: '1125.00',
+    unpaidCollection: '0.00',
+    paidCollection: '1125.00',
+    deliveryStarted: '12/14/2024 at 06:53 pm',
+    approximateArrival: '12/14/2024, 08:12 PM',
+  },
+];
+
 const LOG_ACTIVITY = [
   {
     id: 1,
@@ -306,6 +383,39 @@ const DriverDetailView = ({ data }) => {
   const [activeTab, setActiveTab] = useState("live-status");
   const [expandedLogIds, setExpandedLogIds] = useState([]);
   const [isContactDrawerOpen, setIsContactDrawerOpen] = useState(false);
+
+  // Handler for order actions
+  const handleOrderAction = (action, order) => {
+    console.log(`Action: ${action}, Order ID: ${order.orderId}`, order);
+    
+    switch (action) {
+      case 'chat':
+        // Open chat drawer with order details
+        break;
+      case 'complaint':
+        console.log('Filing complaint for order:', order.orderId);
+        break;
+      case 'cancelOrder':
+        console.log('Cancelling order:', order.orderId);
+        break;
+      case 'editOrder':
+        // Open edit order drawer
+        break;
+      case 'reorder':
+        console.log('Reordering:', order.orderId);
+        break;
+      default:
+        console.log('Unknown action:', action);
+    }
+  };
+
+  // Handler for saving edited order
+  const handleSaveOrder = (updatedOrder) => {
+    console.log('Saving updated order:', updatedOrder);
+    // TODO: API call to update order
+    // Example: await updateOrderAPI(updatedOrder);
+    // Then refresh orders list
+  };
 
   const toggleLogExpand = (logId) => {
     setExpandedLogIds((prev) =>
@@ -524,6 +634,8 @@ const DriverDetailView = ({ data }) => {
             showFilters={true}
             showMap={false}
             pageType="all"
+            orders={SAMPLE_ORDERS}
+            onOrderAction={handleOrderAction}
           />
         )}
         {(activeTab === "log-activity" || activeTab === "payroll-history" || activeTab === "performance") && (

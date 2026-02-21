@@ -7,6 +7,7 @@ const Dialog = ({
     children,
     actions = [],
     maxWidth = "max-w-4xl",
+    maxHeight = "max-h-[90vh]",
 }) => {
     if (!isOpen) return null;
 
@@ -21,12 +22,12 @@ const Dialog = ({
 
             {/* Modal */}
             <div
-                className={`relative bg-white w-[95%] ${maxWidth} h-[90vh] rounded-lg shadow-xl flex flex-col`}
+                className={`relative bg-white w-[95%] ${maxWidth} h-[90vh] ${maxHeight} rounded-sm shadow-xl flex flex-col`}
             >
 
                 {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-[#DDDDDD]">
-                    <h2 className="text-base font-semibold text-[#212121]">
+                <div className="flex items-center justify-between px-4 py-4 border-b border-[#DDDDDD]">
+                    <h2 className="text-xl font-semibold text-[#212121]">
                         {title}
                     </h2>
 
@@ -41,14 +42,13 @@ const Dialog = ({
                                         key={index}
                                         type={action.type || "button"}
                                         onClick={action.onClick}
-                                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm font-semibold text-sm transition-colors cursor-pointer ${action.variant === "primary"
-                                            ? "bg-[var(--color-primary)] text-white hover:opacity-90 transition-opacity"
-                                            : action.variant === "danger"
-                                                ? "bg-red-600 text-white hover:bg-red-700"
-                                                : "bg-white border border-gray-400 text-[#212121] hover:bg-gray-50"
+                                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm font-semibold text-sm transition-colors cursor-pointer ${action.className ||
+                                            (action.variant === "primary" ? "bg-[var(--color-primary)] text-white hover:opacity-90" :
+                                                action.variant === "danger" ? "bg-red-600 text-white hover:bg-red-700" :
+                                                    "bg-white border border-gray-400 text-[#212121] hover:bg-gray-50")
                                             }`}
                                     >
-                                        {Icon && <Icon className="w-4 h-4" />}
+                                        {Icon && <Icon className={`w-4 h-4 ${action.iconClassName}`} />}
                                         {action.label}
                                     </button>
                                 );

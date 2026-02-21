@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DatePickerMap from "../../../components/DatePickerMap";
 import FinanceSummaryCard from "../../../components/finances/FinanceSummaryCard";
-import { Search, Eye, Download } from "lucide-react";
+import { Search, Eye, Download, Trash2 } from "lucide-react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -13,6 +13,14 @@ import {
 } from "@tanstack/react-table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import AddDispatcher from "./AddDispatcher";
+import DriversDrawer from "../../../components/dispatcher/DriversDrawer";
+
+// Import avatar images
+import avatar1 from "../../../assets/images/self-portrait-beautiful-chinese-girl 1.png";
+import avatar2 from "../../../assets/images/self-portrait-beautiful-chinese-girl2.png";
+import avatar3 from "../../../assets/images/self-portrait-beautiful-chinese-girl3.png";
+import avatar4 from "../../../assets/images/self-portrait-beautiful-chinese-girl4.png";
+import DispatcherAreaCodesDrawer from "../../../components/dispatcher/DispatcherAreaCodesDrawer";
 
 const CARD_DATA = [
   { title: "Total Salary", value: "$10,650", change: "+ 22%", isPositive: true },
@@ -36,7 +44,20 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "5+",
+    areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5", "N3O 4Y2", "O4P 5Z3"],
     drivers: "10+",
+    driversList: [
+      { id: 1, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5"], avatar: avatar1 },
+      { id: 2, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar2 },
+      { id: 3, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5"], avatar: avatar3 },
+      { id: 4, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 5, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5"], avatar: avatar1 },
+      { id: 6, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar2 },
+      { id: 7, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5"], avatar: avatar3 },
+      { id: 8, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 9, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar1 },
+      { id: 10, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar2 },
+    ],
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
     startingDate: "12 Dec 2023",
@@ -52,7 +73,17 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "2+",
+    areaCodes: ["P5Q 6A4", "Q6R 7B5"],
     drivers: "7+",
+    driversList: [
+      { id: 1, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar3 },
+      { id: 2, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 3, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar1 },
+      { id: 4, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar2 },
+      { id: 5, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar3 },
+      { id: 6, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 7, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar1 },
+    ],
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
     startingDate: "12 Dec 2023",
@@ -68,7 +99,18 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "4+",
+    areaCodes: ["R7S 8C6", "M2N 3X1", "M2N 3X3", "N3O 4Y2"],
     drivers: "8+",
+    driversList: [
+      { id: 1, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5"], avatar: avatar2 },
+      { id: 2, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar3 },
+      { id: 3, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 4, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar1 },
+      { id: 5, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar2 },
+      { id: 6, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar3 },
+      { id: 7, name: "Driver Name", isOnline: true, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar4 },
+      { id: 8, name: "Driver Name", isOnline: false, areaCodes: ["M2N 3X1", "M2N 3X3"], avatar: avatar1 },
+    ],
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
     startingDate: "12 Dec 2023",
@@ -84,6 +126,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "5+",
+    areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5", "N3O 4Y2", "O4P 5Z3"],
     drivers: "10+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -100,6 +143,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "2+",
+    areaCodes: ["P5Q 6A4", "Q6R 7B5"],
     drivers: "7+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -116,6 +160,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "4+",
+    areaCodes: ["R7S 8C6", "M2N 3X1", "M2N 3X3", "N3O 4Y2"],
     drivers: "8+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -132,6 +177,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "5+",
+    areaCodes: ["M2N 3X1", "M2N 3X3", "M2N 3X5", "N3O 4Y2", "O4P 5Z3"],
     drivers: "10+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -148,6 +194,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "2+",
+    areaCodes: ["P5Q 6A4", "Q6R 7B5"],
     drivers: "7+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -164,6 +211,7 @@ const DISPATCHER_DATA = [
     name: "John Henry",
     phone: "+1 8796574653",
     areaCode: "4+",
+    areaCodes: ["R7S 8C6", "M2N 3X1", "M2N 3X3", "N3O 4Y2"],
     drivers: "8+",
     lastActivityDate: "15 Jan 2025",
     lastActivityTime: "Today at 11:30 am",
@@ -183,6 +231,9 @@ const Dispatcher = () => {
   const [search, setSearch] = useState("");
   const [statusTab, setStatusTab] = useState("all");
   const [isAddDispatcherOpen, setIsAddDispatcherOpen] = useState(false);
+  const [isAreaCodesOpen, setIsAreaCodesOpen] = useState(false);
+  const [isDriversOpen, setIsDriversOpen] = useState(false);
+  const [selectedDispatcher, setSelectedDispatcher] = useState(null);
   const navigate = useNavigate();
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -230,20 +281,32 @@ const Dispatcher = () => {
       {
         accessorKey: "areaCode",
         header: "Area",
-        cell: ({ getValue }) => (
+        cell: ({ getValue, row }) => (
           <div className="flex items-center gap-2">
             <span className="text-[#3F4753] text-[12px]">{getValue()}</span>
-            <Eye className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer" />
+            <Eye
+              className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer hover:text-blue-700"
+              onClick={() => {
+                setSelectedDispatcher(row.original);
+                setIsAreaCodesOpen(true);
+              }}
+            />
           </div>
         ),
       },
       {
         accessorKey: "drivers",
         header: "Drivers",
-        cell: ({ getValue }) => (
+        cell: ({ getValue, row }) => (
           <div className="flex items-center gap-2">
             <span className="text-[#3F4753] text-[12px]">{getValue()}</span>
-            <Eye className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer" />
+            <Eye
+              className="w-3.5 h-3.5 text-[#0066FF] cursor-pointer hover:text-blue-700"
+              onClick={() => {
+                setSelectedDispatcher(row.original);
+                setIsDriversOpen(true);
+              }}
+            />
           </div>
         ),
       },
@@ -342,7 +405,14 @@ const Dispatcher = () => {
                 navigate(`/staff/dispatcher/${row.original.id}`)
               }
             />
-            <span className="text-red-500 cursor-pointer text-sm">🗑</span>
+            <button
+              type="button"
+              // onClick={() => onDelete?.(info.row.original)}
+              className="p-1.5 text-red-500 hover:bg-red-50 rounded"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
           </div>
         ),
       }
@@ -432,17 +502,23 @@ const Dispatcher = () => {
               <thead className="bg-white border-b border-[#CDCDCD]">
                 {table.getHeaderGroups().map((hg) => (
                   <tr key={hg.id}>
-                    {hg.headers.map((header) => (
-                      <th
-                        key={header.id}
-                        className="py-2.5 text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap text-left"
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                      </th>
-                    ))}
+                    {hg.headers.map((header) => {
+                      const colId = header.column.id ?? header.column.accessorKey;
+                      const isRight =
+                        colId === "action"
+                      return (
+                        < th
+                          key={header.id}
+                          className={`py-2.5 text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isRight ? "text-center" : "text-left"
+                            }`}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                        </th>
+                      )
+                    })}
                   </tr>
                 ))}
               </thead>
@@ -536,11 +612,33 @@ const Dispatcher = () => {
           </div>
         </div>
 
-      </div>
+      </div >
 
       <AddDispatcher
         isOpen={isAddDispatcherOpen}
         onClose={() => setIsAddDispatcherOpen(false)}
+      />
+
+      {/* Area Codes Drawer */}
+      <DispatcherAreaCodesDrawer
+        isOpen={isAreaCodesOpen}
+        onClose={() => {
+          setIsAreaCodesOpen(false);
+          setSelectedDispatcher(null);
+        }}
+        areaCodes={selectedDispatcher?.areaCodes || []}
+        title={`Area Codes - ${selectedDispatcher?.name || 'Dispatcher'}`}
+      />
+
+      {/* Drivers Drawer */}
+      <DriversDrawer
+        isOpen={isDriversOpen}
+        onClose={() => {
+          setIsDriversOpen(false);
+          setSelectedDispatcher(null);
+        }}
+        drivers={selectedDispatcher?.driversList || []}
+        dispatcherName={selectedDispatcher?.name || 'Dispatcher'}
       />
     </>
   );
