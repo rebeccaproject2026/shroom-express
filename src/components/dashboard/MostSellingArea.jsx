@@ -58,20 +58,20 @@ const MostSellingArea = ({ data, onViewAll }) => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-1 text-xs font-semibold text-[#3E3834]">Area Code</th>
-              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834]">Drivers</th>
-              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834]">Total Sales</th>
-              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834]">Collection</th>
-              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834]">Unpaid Collection</th>
-              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834]">Orders</th>
+              <th className="text-left py-3 px-1 text-xs font-semibold text-[#3E3834] truncate">Area Code</th>
+              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834] truncate">Drivers</th>
+              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834] truncate">Total Sales</th>
+              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834] truncate">Collection</th>
+              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834] truncate">Unpaid Collection</th>
+              <th className="text-left py-3 px-2 text-xs font-semibold text-[#3E3834] truncate">Orders</th>
             </tr>
           </thead>
           <tbody>
             {tableData.map((item, index) => (
               <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td className="py-3 px-2 text-sm font-medium text-[#969696]">{item.areaCode}</td>
+                <td className="py-3 px-2 text-sm font-medium text-[#969696] truncate">{item.areaCode}</td>
                 <td className="py-3 px-2 text-sm ">
-                  <a href="#" className="text-[#0066FF] hover:text-blue-800 hover:underline">
+                  <a href="#" className="text-[#0066FF] hover:text-blue-800 hover:underline truncate">
                     {item.driver}
                   </a>
                 </td>

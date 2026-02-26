@@ -9,12 +9,12 @@ const Layout = () => {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      <div className="hidden sm:block flex-shrink-0">
+      <div className="hidden lg:block shrink-0">
         <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
       </div>
 
       {sidebar && (
-        <div className="fixed inset-0 z-40 sm:hidden">
+        <div className="fixed inset-0 z-40 lg:hidden">
           <div
             className="absolute inset-0 bg-[#D9D9D9]"
             onClick={() => setSidebar(false)}

@@ -21,7 +21,7 @@ const RecentAd = () => {
 
   return (
     <div className="bg-white rounded-sm px-4 pt-4">
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex esm:flex-row flex-col esm:items-center esm:gap-0 gap-2 justify-between mb-2">
         <h3 className="text-base font-semibold text-black">Recent Ad</h3>
         <div>
           <DatePickerMap
@@ -32,7 +32,7 @@ const RecentAd = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[30%_70%] gap-2">
+      <div className="grid md:grid-cols-[30%_70%] sm:gap-2">
         <div>
           {/* Ad Selector */}
           <div className="mb-2">

@@ -32,7 +32,7 @@ const ProductsTable = ({
             {columns.map((col) => (
               <th
                 key={col.key}
-                className={`py-2 px-2 font-medium text-gray-700 ${col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : ""
+                className={`py-2 px-2 truncate font-medium text-gray-700 ${col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : ""
                   }`}
               >
                 {col.header}
@@ -46,7 +46,7 @@ const ProductsTable = ({
               {columns.map((col) => (
                 <td
                   key={col.key}
-                  className={`py-2.5 px-2 text-gray-900 ${col.align === "right" ? "text-right text-gray-700" : col.align === "center" ? "text-center" : ""
+                  className={`py-2.5 px-2 truncate text-gray-900 ${col.align === "right" ? "text-right text-gray-700" : col.align === "center" ? "text-center" : ""
                     }`}
                 >
                   {col.render ? col.render(row, rowIndex) : row[col.key]}

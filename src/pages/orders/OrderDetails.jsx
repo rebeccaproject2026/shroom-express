@@ -158,7 +158,7 @@ const OrderDetails = () => {
             <button
               type="button"
               onClick={() => setShowDeleteModal(true)}
-              className="inline-flex items-center gap-1 px-3 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-sm hover:bg-red-700"
+              className="inline-flex items-center gap-1 px-3 py-2.5 bg-red-600 text-white text-sm justify-center font-semibold rounded-sm hover:bg-red-700"
             >
               <Icon icon="mdi:trash-can" className="w-5 h-5" />
 
@@ -171,8 +171,9 @@ const OrderDetails = () => {
           {order.items.map((item, idx) => (
             <div
               key={idx}
-              className="flex flex-wrap items-center gap-2 py-3 border-b border-gray-100 last:border-0"
+              className="flex flex-wrap items-center justify-between gap-2 py-3 border-b border-gray-100 last:border-0"
             >
+              <div className="flex items-center gap-2">
               <div className="w-14 h-14 rounded-sm bg-gray-100 shrink-0 overflow-hidden">
                 {item.image ? (
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -183,10 +184,11 @@ const OrderDetails = () => {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <a href="#" className="text-base font-semibold text-[#000] underline">
+                <a href="#" className="text-base font-semibold text-black underline">
                   {item.name}
                 </a>
                 <p className="text-sm text-gray-500">Qty: {item.qty}</p>
+              </div>
               </div>
               <div className="flex gap-12 text-sm">
                 <span className="text-gray-600">

@@ -23,7 +23,7 @@ const RecentlyAddedCoupon = () => {
 
   return (
     <div className="bg-white rounded-sm p-4">
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex sm:flex-row flex-col sm:items-center justify-between sm:gap-0 gap-2 mb-2">
         <h3 className="text-base font-semibold text-black">
           Recently Added Coupon
         </h3>
@@ -58,15 +58,15 @@ const RecentlyAddedCoupon = () => {
         </div>
 
         {/* Coupon Details */}
-        <div className="flex items-center gap-10">
-          <div className="flex items-center gap-4 text-sm">
+        <div className="flex sm:flex-row flex-col sm:items-center gap-2 sm:gap-10">
+          <div className="flex lg:flex-row sm:flex-col flex-row lg:items-center gap-2 lg:gap-4 text-sm">
             <span className="text-black font-medium text-[15px]">Detail :</span>
             <span className="text-[#464646] font-medium">
               {selectedCoupon.detail}
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex lg:flex-row sm:flex-col flex-row lg:items-center gap-2 lg:gap-4 text-sm">
             <span className="text-black font-medium text-[15px]">
               Added on :
             </span>
@@ -75,7 +75,7 @@ const RecentlyAddedCoupon = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
+          <div className="flex lg:flex-row sm:flex-col flex-row lg:items-center gap-2 lg:gap-4 text-sm">
             <span className="text-black font-medium text-[15px]">
               Expired on :
             </span>

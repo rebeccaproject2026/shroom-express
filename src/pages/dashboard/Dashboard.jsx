@@ -272,7 +272,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="p-4 md:p-4 min-h-screen">
+    <div className="p-2 md:p-4 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
         <h1 className="text-2xl font-bold text-[#212121] mb-4 md:mb-0">

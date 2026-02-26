@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DatePickerMap from "../../../components/DatePickerMap";
 import FinanceSummaryCard from "../../../components/finances/FinanceSummaryCard";
 import { Search, Eye, Download, Trash2 } from "lucide-react";
@@ -438,10 +438,10 @@ const Dispatcher = () => {
 
         {/* Top Section */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <DatePickerMap defaultItem={2} />
+          <DatePickerMap defaultItem={2} className="esm*:min-w-48! sm:*:min-w-60!" />
           <button
             onClick={() => setIsAddDispatcherOpen(true)}
-            className="inline-flex items-center gap-2 px-3 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm cursor-pointer"
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-(--color-primary) esm:w-fit w-full text-white rounded-sm hover:opacity-90 font-semibold text-sm cursor-pointer"
           >
             <span className="text-lg leading-none">+</span>
             Add Dispatcher
@@ -460,8 +460,9 @@ const Dispatcher = () => {
         <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden p-4">
 
           {/* Search + Tabs + Export */}
-          <div className="flex items-center gap-2">
-            <div className="w-full relative">
+          <div className="flex lg:flex-row flex-col items-center gap-2">
+            <div className="w-full flex items-center gap-2">
+              <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
@@ -470,6 +471,16 @@ const Dispatcher = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 text-sm border border-[#DDDDDD] rounded-sm bg-white focus:outline-none"
               />
+              </div>
+
+              <div>
+                  <button
+              type="button"
+              className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90 lg:hidden block"
+            >
+              <Download className="w-4 h-4" />
+            </button>
+              </div>
             </div>
 
             <div className="flex w-full rounded-sm overflow-hidden border border-[#969696] bg-white">
@@ -478,7 +489,7 @@ const Dispatcher = () => {
                   key={tab.key}
                   type="button"
                   onClick={() => setStatusTab(tab.key)}
-                  className={`px-2 py-1.5 w-full text-sm m-1 rounded font-medium whitespace-nowrap ${statusTab === tab.key
+                  className={`px-2 py-1.5 w-full text-xs esm:text-sm m-1 rounded font-medium whitespace-nowrap ${statusTab === tab.key
                     ? "bg-(--color-secondary) text-white"
                     : "text-gray-600 hover:bg-gray-50"
                     }`}
@@ -490,7 +501,7 @@ const Dispatcher = () => {
 
             <button
               type="button"
-              className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90"
+              className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90 lg:block hidden"
             >
               <Download className="w-4 h-4" />
             </button>
@@ -509,7 +520,7 @@ const Dispatcher = () => {
                       return (
                         < th
                           key={header.id}
-                          className={`py-2.5 text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isRight ? "text-center" : "text-left"
+                          className={`py-2.5 truncate text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isRight ? "text-center" : "text-left"
                             }`}
                         >
                           {flexRender(
@@ -529,7 +540,7 @@ const Dispatcher = () => {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-1.5 py-2 text-[12px] text-[#3F4753] align-middle"
+                        className="px-1.5 truncate py-2 text-[12px] text-[#3F4753] align-middle"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -586,7 +597,7 @@ const Dispatcher = () => {
                   <button
                     key={pageNum}
                     onClick={() => table.setPageIndex(pageNum - 1)}
-                    className={`min-w-[28px] px-1.5 py-1 text-[12px] rounded ${table.getState().pagination.pageIndex + 1 === pageNum
+                    className={`min-w-7 px-1.5 py-1 text-[12px] rounded ${table.getState().pagination.pageIndex + 1 === pageNum
                       ? "bg-blue-600 text-white border border-blue-600"
                       : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
                       }`}

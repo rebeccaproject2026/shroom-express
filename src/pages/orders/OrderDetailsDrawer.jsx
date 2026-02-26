@@ -652,56 +652,56 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
       <Drawer
         isOpen={isOpen}
         onClose={onClose}
-        width="w-[88vw] max-w-[100vw]"
+        width="w-full lg:w-[88vw] max-w-[100vw]"
       >
         {/* Unified view - fields become editable when isEditMode is true */}
         <>
           {/* Blue header bar: Order # left, X right */}
-          <div className="shrink-0 bg-[var(--color-secondary)] text-white flex items-center justify-between px-4 py-2">
-            <span className="text-lg font-semibold truncate min-w-0">Order #{orderId}</span>
+          <div className="shrink-0 bg-(--color-secondary) text-white flex items-center justify-between px-3 esm:px-4 py-2 esm:py-2.5">
+            <span className="text-base esm:text-lg font-semibold truncate min-w-0">Order #{orderId}</span>
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 p-2 text-white hover:bg-white/20 rounded transition-colors"
+              className="shrink-0 p-1.5 esm:p-2 text-white hover:bg-white/20 rounded transition-colors"
               aria-label="Close"
             >
-              <Icon icon="mdi:close" className="w-6 h-6" />
+              <Icon icon="mdi:close" className="w-5 h-5 esm:w-6 esm:h-6" />
             </button>
           </div>
 
           {/* Two columns: left 70% scrollable, right 30% sticky */}
-          <div className="flex-1 flex min-h-0 p-2.5">
+          <div className="flex-1 flex flex-col lg:flex-row min-h-0 p-2 esm:p-2.5 overflow-y-auto lg:overflow-hidden">
             {/* LEFT column 70%: order details, product, pricing, payment, address, stats */}
-            <div className="overflow-y-auto min-h-0  w-[65%] shrink-0 hide-scrollbar pl-2">
+            <div className="w-full lg:w-[65%] shrink-0 pl-0 lg:pl-2 lg:overflow-y-auto lg:min-h-0 hide-scrollbar">
               {/* Items + Date + Action buttons */}
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div className="flex flex-col esm:flex-row esm:flex-wrap items-start esm:items-center justify-between gap-2 esm:gap-2 mb-3">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">1 Items</p>
-                  <p className="text-sm text-gray-600">Date: {dateTime}</p>
+                  <p className="text-xs esm:text-sm font-semibold text-gray-900">1 Items</p>
+                  <p className="text-xs esm:text-sm text-gray-600">Date: {dateTime}</p>
                 </div>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1 esm:gap-1">
                   {!isEditMode ? (
                     <>
                       <button
                         type="button"
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded transition-colors"
+                        className="inline-flex items-center gap-1 esm:gap-1.5 px-2 esm:px-3 py-1.5 esm:py-2 text-xs esm:text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded transition-colors"
                       >
-                        <Icon icon="mdi:trash-can-outline" className="w-4 h-4 shrink-0" />
+                        <Icon icon="mdi:trash-can-outline" className="w-3.5 h-3.5 esm:w-4 esm:h-4 shrink-0" />
                         Delete Order
                       </button>
                       <button
                         type="button"
                         onClick={() => setIsEditMode(true)}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded transition-colors"
+                        className="inline-flex items-center gap-1 esm:gap-1.5 px-2 esm:px-3 py-1.5 esm:py-2 text-xs esm:text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded transition-colors"
                       >
-                        <Icon icon="mdi:pencil-outline" className="w-4 h-4 shrink-0" />
+                        <Icon icon="mdi:pencil-outline" className="w-3.5 h-3.5 esm:w-4 esm:h-4 shrink-0" />
                         Edit Order
                       </button>
                       <button
                         type="button"
-                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052CC] rounded transition-colors"
+                        className="inline-flex items-center gap-1 esm:gap-1.5 px-2 esm:px-3 py-1.5 esm:py-2 text-xs esm:text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052CC] rounded transition-colors"
                       >
-                        <Icon icon="mdi:refresh" className="w-4 h-4 shrink-0" />
+                        <Icon icon="mdi:refresh" className="w-3.5 h-3.5 esm:w-4 esm:h-4 shrink-0" />
                         Reorder
                       </button>
                     </>
@@ -710,17 +710,17 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                       <button
                         type="button"
                         onClick={handleCloseEdit}
-                        className="inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium text-white bg-red-500  rounded-sm transition-colors"
+                        className="inline-flex items-center gap-1 px-2 esm:px-2.5 py-1.5 esm:py-2 text-xs esm:text-sm font-medium text-white bg-red-500 rounded-sm transition-colors"
                       >
-                        <Icon icon="mdi:close" className="w-4 h-4 shrink-0" />
+                        <Icon icon="mdi:close" className="w-3.5 h-3.5 esm:w-4 esm:h-4 shrink-0" />
                         Cancel
                       </button>
                       <button
                         type="button"
                         onClick={handleSubmit}
-                        className="inline-flex items-center gap-1 px-2.5 py-2 text-sm font-medium text-white bg-[var(--color-primary)] hover:bg-green-600 rounded-sm transition-colors"
+                        className="inline-flex items-center gap-1 px-2 esm:px-2.5 py-1.5 esm:py-2 text-xs esm:text-sm font-medium text-white bg-(--color-primary) hover:bg-green-600 rounded-sm transition-colors"
                       >
-                        <Icon icon="mdi:content-save-outline" className="w-4 h-4 shrink-0" />
+                        <Icon icon="mdi:content-save-outline" className="w-3.5 h-3.5 esm:w-4 esm:h-4 shrink-0" />
                         Save
                       </button>
 
@@ -739,8 +739,9 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                 return (
                   <div
                     key={idx}
-                    className="flex flex-wrap items-center gap-2 py-2"
+                    className="flex flex-col esm:flex-row flex-wrap items-center gap-2 py-2"
                   >
+                    <div className=" flex items-center gap-2">
                     <div className="w-14 h-14 rounded-sm bg-gray-100 shrink-0 overflow-hidden flex items-center justify-center">
                       {item.image ? (
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -753,6 +754,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                         {item.name}
                       </a>
                       <p className="text-sm text-gray-500">Qty: {item.qty}</p>
+                    </div>
                     </div>
                     <div className="flex gap-8 sm:gap-12 text-sm items-center">
                       <span className="text-gray-600">
@@ -968,7 +970,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                                     </div>
 
                                     {/* Item Total */}
-                                    <p className="font-semibold text-sm text-gray-900 min-w-[60px] text-right">
+                                    <p className="font-semibold text-sm text-gray-900 min-w-15 text-right">
                                       {product.itemTotal}
                                     </p>
 
@@ -996,8 +998,8 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                                       onClick={() => handleSizeSelect(product.id, size)}
                                       className={`px-3 py-1 text-xs font-medium rounded-xs border transition
                                         ${product.selectedSize === size
-                                          ? "bg-[var(--color-primary)] text-white border-green-600"
-                                          : "bg-white text-[#000] border-gray-300 hover:bg-gray-100"
+                                          ? "bg-(--color-primary) text-white border-green-600"
+                                          : "bg-white text-black border-gray-300 hover:bg-gray-100"
                                         }
                                       `}
                                     >
@@ -1100,7 +1102,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                             onClick={() => handlePaymentMethodClick(option.id)}
                             className={`
               flex items-center justify-center gap-2
-              px-[5px] py-[12px]
+              px-1.25 py-3
               rounded-[5px]
               border border-[#a4a4a4]
               bg-white
@@ -1197,7 +1199,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                           const current = parseFloat(editFormData.availableCash) || 0;
                           setEditFormData({ ...editFormData, availableCash: Math.max(0, current - 1).toFixed(2) });
                         }}
-                        className="px-2 py-1 text-[#000]  text-lg"
+                        className="px-2 py-1 text-black  text-lg"
                       >
                         –
                       </button>
@@ -1215,7 +1217,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                           const current = parseFloat(editFormData.availableCash) || 0;
                           setEditFormData({ ...editFormData, availableCash: (current + 1).toFixed(2) });
                         }}
-                        className="px-2 py-1 text-[#000]  text-lg"
+                        className="px-2 py-1 text-black  text-lg"
                       >
                         +
                       </button>
@@ -1259,23 +1261,23 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                     className=" bg-gray-100 border-gray-400"
                     compact
                   />
-                  <a href="#" className="text-[var(--color-secondary)] hover:underline text-sm block">
+                  <a href="#" className="text-(--color-secondary) hover:underline text-sm block">
                     {editFormData.address || "—"}
                   </a>
                 </div>
               ) : (
                 <div className="text-sm text-gray-700 space-y-0.5 mb-6">
                   <p>
-                    <a href="#" className="text-[var(--color-secondary)] font-semibold hover:underline">{customerName}</a>
+                    <a href="#" className="text-(--color-secondary) font-semibold hover:underline">{customerName}</a>
                   </p>
                   <p>
-                    <a href={`tel:${o.phone ?? ""}`} className="text-[#000] hover:underline">{o.phone ?? "—"}</a>
+                    <a href={`tel:${o.phone ?? ""}`} className="text-black hover:underline">{o.phone ?? "—"}</a>
                   </p>
                   <p>
-                    <a href={`mailto:${o.email ?? ""}`} className="text-[#000] hover:underline">{o.email ?? "—"}</a>
+                    <a href={`mailto:${o.email ?? ""}`} className="text-black hover:underline">{o.email ?? "—"}</a>
                   </p>
                   <p>
-                    <a href="#" className="text-[var(--color-secondary)] hover:underline">
+                    <a href="#" className="text-(--color-secondary) hover:underline">
                       {[o.address, o.city, o.province].filter(Boolean).join(", ") || "—"}
                     </a>
                   </p>
@@ -1304,7 +1306,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                       header: "Product Name",
                       align: "left",
                       render: (row) => (
-                        <a href="#" className="text-[var(--color-secondary)] text-[12px] underline font-extralight">
+                        <a href="#" className="text-(--color-secondary) text-[12px] underline font-extralight">
                           {row.productName}
                         </a>
                       ),
@@ -1321,7 +1323,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                           onClick={() => {
                             setTimelineDrawerOpen(true);
                           }}
-                          className="text-[var(--color-secondary)] hover:underline text-xs font-semibold"
+                          className="text-(--color-secondary) hover:underline text-xs font-semibold"
                         >
                           View Recent Order
                         </button>
@@ -1341,13 +1343,13 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
             </div>
 
             {/* RIGHT column: tabs separate at top, then details panel below */}
-            <div className="w-[35%] shrink-0 flex flex-col bg-white min-w-0">
-              <div className="flex flex-col h-full overflow-hidden pl-3">
-                <div className="shrink-0 flex gap-3 mb-2 ">
+            <div className="w-full lg:w-[35%] shrink-0 flex flex-col bg-white min-w-0 mt-4 lg:mt-0">
+              <div className="flex flex-col lg:h-full overflow-hidden pl-0 lg:pl-3">
+                <div className="shrink-0 flex gap-2 esm:gap-3 mb-2">
                   <button
                     type="button"
                     onClick={() => setActiveTab("Order Tracking")}
-                    className={`flex-1 py-2 text-sm font-medium transition-colors rounded-sm ${activeTab === "Order Tracking"
+                    className={`flex-1 py-1.5 esm:py-2 text-xs esm:text-sm font-medium transition-colors rounded-sm ${activeTab === "Order Tracking"
                       ? "bg-[#212529] text-white border-none"
                       : "bg-white text-gray-600 border border-gray-800 hover:bg-gray-50"
                       }`}
@@ -1357,7 +1359,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                   <button
                     type="button"
                     onClick={() => setActiveTab("Invoice Preview")}
-                    className={`flex-1 py-2 text-sm font-medium transition-colors rounded-sm ${activeTab === "Invoice Preview"
+                    className={`flex-1 py-1.5 esm:py-2 text-xs esm:text-sm font-medium transition-colors rounded-sm ${activeTab === "Invoice Preview"
                       ? "bg-[#212529] text-white border-none"
                       : "bg-white text-gray-600 border border-gray-800 hover:bg-gray-50"
                       }`}
@@ -1366,7 +1368,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                   </button>
                 </div>
                 {/* Details panel: Order header, assignment, Delivery Process – separate block below */}
-                <div className="flex-1 overflow-y-auto min-h-0 rounded-sm border border-gray-200 bg-white  hide-scrollbar">
+                <div className="rounded-sm border border-gray-200 bg-white lg:flex-1 lg:overflow-y-auto lg:min-h-0 hide-scrollbar">
                   {activeTab === "Order Tracking" && (
                     <div className="p-3 pb-4">
                       {/* Order # and Customer - same row */}
@@ -1386,14 +1388,14 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                               onChange={(e) => setSelectedDriver(e.target.value)}
                               options={DRIVER_OPTIONS}
                               placeholder="Select driver"
-                              className="w-full h-[30px] min-h-[35px] text-sm"
+                              className="w-full h-7.5 min-h-8.75 text-sm"
                               compact
                             />
                           </div>
                           <button
                             type="button"
                             disabled={!selectedDriver}
-                            className="shrink-0 h-8.5 px-10 mb-0.5 text-sm font-medium text-white rounded-sm bg-[var(--color-secondary)]"
+                            className="shrink-0 h-8.5 px-10 mb-0.5 text-sm font-medium text-white rounded-sm bg-(--color-secondary)"
                           >
                             Assign
                           </button>
@@ -1401,7 +1403,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                       </div>
 
                       {/* Company and Handler - side by side with one Assign button */}
-                      <div className="flex gap-2 items-end">
+                      <div className="flex sm:flex-row flex-col gap-2 sm:items-end">
                         <div className="flex-1 min-w-0">
                           <label className="text-sm font-bold text-gray-900 block mb-1.5">Company:</label>
                           <Select
@@ -1409,7 +1411,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                             onChange={(e) => setSelectedCompany(e.target.value)}
                             options={COMPANY_OPTIONS}
                             placeholder="Select company"
-                            className="w-full h-[30px] min-h-[35px] text-sm"
+                            className="w-full h-7.5 min-h-8.75 text-sm"
                             compact
                           />
                         </div>
@@ -1420,14 +1422,14 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                             onChange={(e) => setSelectedHandler(e.target.value)}
                             options={HANDLER_OPTIONS}
                             placeholder="Select handler"
-                            className="w-full h-[30px] min-h-[35px] text-sm"
+                            className="w-full h-7.5 min-h-8.75 text-sm"
                             compact
                           />
                         </div>
                         <button
                           type="button"
                           disabled={!selectedCompany && !selectedHandler}
-                          className="shrink-0 h-8.5 px-10 mb-0.5 text-sm font-medium text-white rounded-sm bg-[var(--color-secondary)]"
+                          className="shrink-0 h-8.5 px-10 mb-0.5 text-sm font-medium text-white rounded-sm bg-(--color-secondary)"
                         >
                           Assign
                         </button>
@@ -1516,7 +1518,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                         </button>
                         <button
                           type="button"
-                          className="inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-white bg-[var(--color-secondary)] hover:bg-[#0052CC] rounded-sm transition-colors"
+                          className="inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-white bg-(--color-secondary) hover:bg-[#0052CC] rounded-sm transition-colors"
                         >
                           <Icon icon="mdi:content-save-outline" className="w-4 h-4 shrink-0" />
                           Save Changes
@@ -1530,16 +1532,16 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                       <div className="flex gap-2 mb-6">
                         <button
                           type="button"
-                          className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 text-sm font-medium text-[#000] bg-[#f8f9fa] hover:bg-[#d3d4d5] rounded-sm transition-colors border border-[#bfc4c8]"
+                          className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 text-sm font-medium text-black bg-[#f8f9fa] hover:bg-[#d3d4d5] rounded-sm transition-colors border border-[#bfc4c8]"
                         >
-                          <Icon icon="mdi:share-variant-outline" className="w-4 h-4 shrink-0 text-[#000]" />
+                          <Icon icon="mdi:share-variant-outline" className="w-4 h-4 shrink-0 text-black" />
                           Share Invoice
                         </button>
                         <button
                           type="button"
-                          className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 text-sm font-medium text-[#000] bg-[#f8f9fa] hover:bg-[#d3d4d5] rounded-sm transition-colors border border-[#bfc4c8]"
+                          className="flex-1 inline-flex items-center justify-center gap-2 py-2 px-3 text-sm font-medium text-black bg-[#f8f9fa] hover:bg-[#d3d4d5] rounded-sm transition-colors border border-[#bfc4c8]"
                         >
-                          <Icon icon="mdi:download-outline" className="w-4 h-4 shrink-0 text-[#000]" />
+                          <Icon icon="mdi:download-outline" className="w-4 h-4 shrink-0 text-black" />
                           Download Invoice
                         </button>
                       </div>

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import DatePickerMap from "../../components/DatePickerMap";
 import FinanceSummaryCard from "../../components/finances/FinanceSummaryCard";
 import MultiSeriesLineChart from "../../components/charts/MultiSeriesLineChart";
@@ -70,6 +70,29 @@ function generateSeriesData(days = 30) {
 }
 
 const Finances = () => {
+  const [chartHeight, setChartHeight] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 640 ? 350 : window.innerWidth < 1024 ? 400 : 460;
+    }
+    return 460;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setChartHeight(350);
+      } else if (width < 1024) {
+        setChartHeight(400);
+      } else {
+        setChartHeight(460);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const onDateUpdate = useCallback(({ start, end }) => {
     // Optional: fetch data based on start/end
   }, []);
@@ -84,7 +107,7 @@ const Finances = () => {
   );
 
   return (
-    <div className="flex flex-col gap-2 min-w-0 px-2.5 py-3">
+    <div className="flex flex-col gap-2 min-w-0 px-2.5 py-3 w-full">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <DatePickerMap defaultItem={2} onUpdate={onDateUpdate} />
       </div>
@@ -101,13 +124,17 @@ const Finances = () => {
         ))}
       </div>
 
-      <div className="bg-white rounded-sm shadow-sm p-4 h-full border border-gray-200 min-h-125">
-        <MultiSeriesLineChart
-          series={chartSeries}
-          colors={CHART_COLORS}
-          height={460}
-          yaxis={{ min: 0, max: 1000, tickAmount: 4 }}
-        />
+      <div className="bg-white rounded-sm shadow-sm p-2 sm:p-4 border border-gray-200 w-full overflow-hidden">
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[600px]">
+            <MultiSeriesLineChart
+              series={chartSeries}
+              colors={CHART_COLORS}
+              height={chartHeight}
+              yaxis={{ min: 0, max: 1000, tickAmount: 4 }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

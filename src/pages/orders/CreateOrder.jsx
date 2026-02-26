@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -539,22 +539,22 @@ const CreateOrder = () => {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-2 flex-1 min-h-0 overflow-hidden px-2.5 py-3">
+    <div className="flex flex-col lg:flex-row gap-2 lg:gap-2 flex-1 px-2 esm:px-2.5 py-2 esm:py-3 lg:min-h-0 lg:overflow-hidden">
       {/* Left column – Create Order form (scrollable on its own) */}
-      <div className="flex-1 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden space-y-2 pr-1 hide-scrollbar">
+      <div className="flex-1 min-w-0 space-y-2 pr-1 hide-scrollbar lg:overflow-y-auto lg:overflow-x-hidden lg:min-h-0">
         {/* Back arrow */}
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="flex items-center cursor-pointer gap-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+          className="flex items-center cursor-pointer gap-2 text-gray-700 hover:text-gray-900 focus:outline-none mb-2"
           aria-label="Go back"
         >
-          <Icon icon="mdi:arrow-left" className="w-6 h-6" />
+          <Icon icon="mdi:arrow-left" className="w-5 h-5 esm:w-6 esm:h-6" />
         </button>
 
         {/* Customer and contact information – three-column grid */}
-        <div className="p-1 mb-1.5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="p-0.5 esm:p-1 mb-1.5">
+          <div className="grid grid-cols-1 esm:grid-cols-2 lg:grid-cols-3 gap-2 esm:gap-3">
             <div>
               <div>
                 <label className="block text-sm font-semibold text-[#212121] mb-1">Customer Name </label>
@@ -651,7 +651,7 @@ const CreateOrder = () => {
         </div>
 
         {/* Summary cards – white boxes, rounded corners, shadow */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 esm:gap-3">
           {[
             { label: "Available SHROOM CA$H", value: STATIC_SUMMARY.availableCheetahCash },
             { label: "Coupon Discounts Used", value: STATIC_SUMMARY.couponDiscountsUsed },
@@ -660,10 +660,10 @@ const CreateOrder = () => {
           ].map((item) => (
             <div
               key={item.label}
-              className="bg-white rounded-sm border border-gray-200 p-2 shadow-sm"
+              className="bg-white rounded-sm border border-gray-200 p-1.5 esm:p-2 shadow-sm"
             >
               <p
-                className={`text-sm font-medium text-gray-600 ${item.underline ? "underline cursor-pointer hover:text-gray-900" : ""}`}
+                className={`text-xs esm:text-sm font-medium text-gray-600 ${item.underline ? "underline cursor-pointer hover:text-gray-900" : ""}`}
                 onClick={item.underline ? () => navigate("/orders") : undefined}
                 onKeyDown={item.underline ? (e) => e.key === "Enter" && navigate("/orders") : undefined}
                 role={item.underline ? "button" : undefined}
@@ -671,17 +671,17 @@ const CreateOrder = () => {
               >
                 {item.label}
               </p>
-              <p className="text-base font-bold text-gray-900 mt-1">{item.value}</p>
+              <p className="text-sm esm:text-base font-bold text-gray-900 mt-0.5 esm:mt-1">{item.value}</p>
             </div>
           ))}
         </div>
 
-        <div className="p-1 mb-0">
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">Add Products</h3>
+        <div className="p-0.5 esm:p-1 mb-0">
+          <h3 className="text-base esm:text-lg font-semibold text-gray-900 mb-1">Add Products</h3>
           <hr className=" border-gray-400" />
 
           {/* UPDATED: Simplified Filters for Shroom Express */}
-          <div className="grid grid-cols-2 gap-3 mt-5 mb-4">
+          <div className="grid grid-cols-1 esm:grid-cols-2 gap-2 esm:gap-3 mt-3 esm:mt-5 mb-3 esm:mb-4">
             <div>
               <label className="block text-sm font-semibold text-[#212121] mb-1">Category</label>
               <Select
@@ -723,19 +723,19 @@ const CreateOrder = () => {
           </div>
         </div>
         {/* Selected Products */}
-        <div className="p-1">
+        <div className="p-0.5 esm:p-1">
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Selected Products</h3>
           {selectedProducts.length === 0 ? (
-            <p className="text-sm text-gray-500">No Products Selected</p>
+            <p className="text-xs esm:text-sm text-gray-500">No Products Selected</p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 esm:space-y-3">
               {selectedProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="flex items-start gap-3 p-1.5 border border-gray-200 rounded-sm bg-white"
+                  className="flex flex-col esm:flex-row items-start gap-2 esm:gap-3 p-2 esm:p-1.5 border border-gray-200 rounded-sm bg-white"
                 >
                   {/* Product Image */}
-                  <div className="w-24 h-24 rounded-sm bg-gray-100 shrink-0 overflow-hidden flex items-center justify-center">
+                  <div className="w-20 h-20 esm:w-24 esm:h-24 rounded-sm bg-gray-100 shrink-0 overflow-hidden flex items-center justify-center">
                     {product.image ? (
                       <img
                         src={product.image}
@@ -745,69 +745,69 @@ const CreateOrder = () => {
                     ) : (
                       <Icon
                         icon="mdi:mushroom-outline"
-                        className="w-8 h-8 text-gray-400"
+                        className="w-7 h-7 esm:w-8 esm:h-8 text-gray-400"
                       />
                     )}
                   </div>
 
                   {/* Product Content */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 w-full">
                     {/* Name */}
                     <p className="font-semibold text-sm text-gray-900">
                       {product.name}
                     </p>
 
                     {/* Price + Stock */}
-                    <p className="text-sm font-semibold  text-[#212529bf] mt-0.5">
+                    <p className="text-xs esm:text-sm font-semibold text-[#212529bf] mt-0.5">
                       {product.price}
-                      <span className="text-xs font-semibold text-[#212529bf] ml-1">
+                      <span className="text-[10px] esm:text-xs font-semibold text-[#212529bf] ml-1">
                         ({product.stockStatus})
                       </span>
                     </p>
 
                     {/* Meta + Variant + Quantity + Pricing */}
-                    <div className="flex items-center justify-between gap-4 ">
+                    <div className="flex flex-col esm:flex-row esm:items-center esm:justify-between gap-2 esm:gap-4 mt-2">
                       {/* Metadata */}
-                      <p className="text-[12.3px] font-medium text-[#212529bf] line-clamp-2 flex-1">
+                      <p className="text-[11px] esm:text-[12.3px] font-medium text-[#212529bf] line-clamp-2 flex-1">
                         {product.meta}
                       </p>
 
-                      <div className="flex items-center gap-3 shrink-0">
+                      <div className="flex items-center gap-2 esm:gap-3 shrink-0 flex-wrap">
                         {/* VARIANT DROPDOWN (Replaces buttons) */}
-                        <div className="w-[100px]">
+                        <div className="w-22.5 esm:w-25">
                           <Select
                             value={product.selectedSize}
                             onChange={(e) => handleSizeSelect(product.id, e.target.value)}
                             options={product.sizeOptions.map(s => ({ value: s, label: s }))}
-                            className="w-full text-xs h-[38px]"
-                            minWidth="100px"
+                            className="w-full text-xs h-9 esm:h-9.5"
+                            minWidth="90px"
                           />
                         </div>
 
                         {/* Quantity Counter */}
-                        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-sm h-[38px] px-1">
+                        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-sm h-9 esm:h-9.5 px-1">
                           <button
                             type="button"
                             onClick={() => handleQuantityChange(product.id, -1)}
                             disabled={product.quantity <= 1}
-                            className="w-8 text-lg font-medium text-gray-700 disabled:text-gray-400"
+                            className="w-7 esm:w-8 text-base esm:text-lg font-medium text-gray-700 disabled:text-gray-400"
                           >
                             −
                           </button>
-                          <span className="w-8 text-center text-sm font-semibold text-gray-900">
+                          <span className="w-7 esm:w-8 text-center text-xs esm:text-sm font-semibold text-gray-900">
                             {product.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => handleQuantityChange(product.id, 1)}
-                            className="w-8 text-lg font-medium text-gray-700"
+                            className="w-7 esm:w-8 text-base esm:text-lg font-medium text-gray-700"
                           >
                             +
                           </button>
                         </div>
 
                         {/* Total Price for this line */}
-                        <p className="font-semibold text-sm text-gray-900 min-w-[70px] text-right">
+                        <p className="font-semibold text-sm text-gray-900 min-w-15 esm:min-w-17.5 text-right">
                           {product.itemTotal}
                         </p>
 
@@ -815,10 +815,10 @@ const CreateOrder = () => {
                         <button
                           type="button"
                           onClick={() => handleRemoveProduct(product.id)}
-                          className="text-red-600 hover:bg-red-50 p-1.5 rounded"
+                          className="text-red-600 hover:bg-red-50 p-1 esm:p-1.5 rounded"
                           aria-label="Remove"
                         >
-                          <Icon icon="mdi:trash-can-outline" className="w-5 h-5" />
+                          <Icon icon="mdi:trash-can-outline" className="w-4 h-4 esm:w-5 esm:h-5" />
                         </button>
                       </div>
                     </div>
@@ -830,29 +830,29 @@ const CreateOrder = () => {
         </div>
 
         {/* Select Coupon */}
-        <div className="flex items-center justify-between mb-1">
-          <h3 className="text-sm font-semibold text-gray-900  pl-1">Select Coupon</h3>
+        <div className="flex items-center justify-between mb-1 px-0.5 esm:px-0">
+          <h3 className="text-sm font-semibold text-gray-900 pl-0 esm:pl-1">Select Coupon</h3>
           <div className="flex gap-1">
             <button
               type="button"
               onClick={() => scrollCouponSlider("left")}
-              className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white text-[#000] hover:bg-gray-200 transition-colors"
+              className="w-8 h-8 esm:w-9 esm:h-9 flex items-center justify-center border border-gray-300 rounded bg-white text-black hover:bg-gray-200 transition-colors"
             >
-              <Icon icon="mdi:chevron-left" className="w-6 h-6" />
+              <Icon icon="mdi:chevron-left" className="w-5 h-5 esm:w-6 esm:h-6" />
             </button>
             <button
               type="button"
               onClick={() => scrollCouponSlider("right")}
-              className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded bg-white text-[#000] hover:bg-gray-200 transition-colors"
+              className="w-8 h-8 esm:w-9 esm:h-9 flex items-center justify-center border border-gray-300 rounded bg-white text-black hover:bg-gray-200 transition-colors"
             >
-              <Icon icon="mdi:chevron-right" className="w-6 h-6" />
+              <Icon icon="mdi:chevron-right" className="w-5 h-5 esm:w-6 esm:h-6" />
             </button>
           </div>
         </div>
 
         <div
           ref={couponSliderRef}
-          className="flex gap-3 overflow-x-auto hide-scrollbar pb-1"
+          className="flex gap-2 esm:gap-3 overflow-x-auto hide-scrollbar pb-1"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {COUPON_OPTIONS.map((coupon) => {
@@ -861,33 +861,33 @@ const CreateOrder = () => {
               <div
                 key={coupon.id}
                 onClick={() => setSelectedCoupon(isApplied ? "" : coupon.id)}
-                className={`relative min-w-[180px] max-w-[220px] rounded-sm border border-gray-200 bg-white shadow-sm cursor-pointer transition-all hover:border-gray-300 flex flex-col`}
+                className={`relative min-w-40 esm:min-w-45 max-w-50 esm:max-w-55 rounded-sm border border-gray-200 bg-white shadow-sm cursor-pointer transition-all hover:border-gray-300 flex flex-col`}
               >
                 {isApplied && (
-                  <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[var(--color-primary)] flex items-center justify-center z-10">
-                    <Icon icon="mdi:check" className="w-4 h-4 text-white" />
+                  <span className="absolute top-2 right-2 w-4 h-4 esm:w-5 esm:h-5 rounded-full bg-(--color-primary) flex items-center justify-center z-10">
+                    <Icon icon="mdi:check" className="w-3 h-3 esm:w-4 esm:h-4 text-white" />
                   </span>
                 )}
                 {/* Top row: placeholder + blue offer text */}
-                <div className="p-3 flex gap-2 items-start flex-1">
-                  <div className="w-12 h-12 rounded-lg bg-gray-100 shrink-0 flex items-center justify-center text-gray-400">
-                    <Icon icon="mdi:tag-outline" className="w-6 h-6" />
+                <div className="p-2 esm:p-3 flex gap-2 items-start flex-1">
+                  <div className="w-10 h-10 esm:w-12 esm:h-12 rounded-lg bg-gray-100 shrink-0 flex items-center justify-center text-gray-400">
+                    <Icon icon="mdi:tag-outline" className="w-5 h-5 esm:w-6 esm:h-6" />
                   </div>
-                  <p className="text-sm font-medium text-blue-600 leading-snug flex-1 min-w-0 pr-6">
+                  <p className="text-xs esm:text-sm font-medium text-blue-600 leading-snug flex-1 min-w-0 pr-5 esm:pr-6">
                     {coupon.title}
                   </p>
                 </div>
                 {/* Bottom: title, code, applied text */}
-                <div className="px-3 pb-3 pt-0 space-y-1">
-                  <p className="text-sm font-bold text-gray-900 leading-snug">
+                <div className="px-2 esm:px-3 pb-2 esm:pb-3 pt-0 space-y-1">
+                  <p className="text-xs esm:text-sm font-bold text-gray-900 leading-snug">
                     {coupon.title}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-[10px] esm:text-xs text-gray-500">
                     Coupon Code:{" "}
                     <span className="font-semibold text-gray-900">{coupon.code}</span>
                   </p>
                   {isApplied && (
-                    <p className="text-xs font-semibold text-green-600">
+                    <p className="text-[10px] esm:text-xs font-semibold text-green-600">
                       $999.99 Discount Applied!
                     </p>
                   )}
@@ -898,18 +898,18 @@ const CreateOrder = () => {
         </div>
 
         {/* Discount section: Use SHROOM CA$H + Owner's Discount */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 items-end mb-6">
+        <div className="grid grid-cols-1 esm:grid-cols-2 md:grid-cols-3 gap-3 esm:gap-4 mt-3 esm:mt-4 items-end mb-4 esm:mb-6">
           {/* SHROOM CASH */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-1.5 pl-1">
+            <label className="block text-xs esm:text-sm font-semibold text-gray-900 mb-1 esm:mb-1.5 pl-0.5 esm:pl-1">
               Use SHROOM CA$H
             </label>
 
-            <div className="flex  border border-[#DDDDDD] overflow-hidden bg-white rounded-sm">
+            <div className="flex border border-[#DDDDDD] overflow-hidden bg-white rounded-sm">
               <button
                 type="button"
                 onClick={() => handleCheetahCashChange(-1)}
-                className="w-10 flex items-center justify-center  font-bold cursor-pointer"
+                className="w-9 esm:w-10 flex items-center justify-center font-bold cursor-pointer text-sm esm:text-base"
               >
                 −
               </button>
@@ -918,13 +918,13 @@ const CreateOrder = () => {
                 type="text"
                 readOnly
                 value={cheetahCashAmount.toFixed(2)}
-                className="text-center border-0 focus:ring-0 rounded-none"
+                className="text-center border-0 focus:ring-0 rounded-none text-sm esm:text-base"
               />
 
               <button
                 type="button"
                 onClick={() => handleCheetahCashChange(1)}
-                className="w-10 flex items-center justify-center font-bold cursor-pointer"
+                className="w-9 esm:w-10 flex items-center justify-center font-bold cursor-pointer text-sm esm:text-base"
               >
                 +
               </button>
@@ -957,9 +957,9 @@ const CreateOrder = () => {
         </div>
 
         {/* Delivery Method */}
-        <h1 className="text-[18.5px] font-semibold text-gray-900 mb-2">Delivery Method</h1>
-        <hr className=" border-gray-300 mb-6" />
-        <div className="grid grid-cols-2 gap-3 mb-2">
+        <h1 className="text-base esm:text-[18.5px] font-semibold text-gray-900 mb-2">Delivery Method</h1>
+        <hr className=" border-gray-300 mb-4 esm:mb-6" />
+        <div className="grid grid-cols-1 esm:grid-cols-2 gap-2 esm:gap-3 mb-2">
           {DELIVERY_METHODS.filter((method) => {
             // If "ship" is selected, show "local" and "ship" (hide "sameday" and "express")
             if (selectedDeliveryMethod === "ship") {
@@ -981,25 +981,25 @@ const CreateOrder = () => {
                 key={method.id}
                 type="button"
                 onClick={() => handleDeliveryMethodChange(method.id)}
-                className={`flex items-center gap-2 p-3 border rounded-sm bg-white shadow-sm transition-all text-left ${isSelected
+                className={`flex items-center gap-2 p-2.5 esm:p-3 border rounded-sm bg-white shadow-sm transition-all text-left ${isSelected
                   ? "border-2 border-gray-900"
                   : "border border-gray-200 hover:border-gray-300"
                   }`}
               >
-                <Icon icon={method.icon} className="w-5 h-5 shrink-0 text-gray-700" />
-                <span className="text-sm font-medium text-gray-900">{method.label}</span>
+                <Icon icon={method.icon} className="w-4 h-4 esm:w-5 esm:h-5 shrink-0 text-gray-700" />
+                <span className="text-xs esm:text-sm font-medium text-gray-900">{method.label}</span>
               </button>
             );
           })}
         </div>
         {/* Only show delivery fee info when "local" is NOT selected */}
         {selectedDeliveryMethod !== "local" && (
-          <div className="border border-gray-200 rounded-xs bg-white p-2">
-            <div className="border-2 border-gray-900 rounded-sm bg-white p-2 space-y-1">
+          <div className="border border-gray-200 rounded-xs bg-white p-1.5 esm:p-2">
+            <div className="border-2 border-gray-900 rounded-sm bg-white p-1.5 esm:p-2 space-y-1">
               {getDeliveryFeeInfo().lines.map((line, index) => {
                 const parts = line.text.split(line.highlight);
                 return (
-                  <p key={index} className="text-sm text-gray-900">
+                  <p key={index} className="text-xs esm:text-sm text-gray-900">
                     {parts[0]}
                     <span className="font-bold">{line.highlight}</span>
                     {parts[1] && <>{parts[1]}</>}
@@ -1011,19 +1011,19 @@ const CreateOrder = () => {
           </div>
         )}
         {/* Payment */}
-        <div className="mt-8">
-          <h1 className="text-[18.5px] font-semibold text-gray-900 mb-2">Payment</h1>
-          <hr className=" border-gray-300 mb-6" />
-          <div className="grid grid-cols-4 gap-3">
+        <div className="mt-6 esm:mt-8">
+          <h1 className="text-base esm:text-[18.5px] font-semibold text-gray-900 mb-2">Payment</h1>
+          <hr className=" border-gray-300 mb-4 esm:mb-6" />
+          <div className="grid grid-cols-2 esm:grid-cols-4 gap-2 esm:gap-3">
             {PAYMENT_OPTIONS.map((option) => (
               <button
                 key={option.id}
                 type="button"
                 onClick={() => handlePaymentMethodClick(option.id)}
                 className={`
-    relative z-[1]
-    flex items-center justify-center gap-2
-    px-[5px] py-[12px]
+    relative z-1
+    flex items-center justify-center gap-1.5 esm:gap-2
+    px-1 esm:px-1.25 py-2.5 esm:py-3
     rounded-[5px]
     border border-[#a4a4a4]
     bg-white
@@ -1037,8 +1037,8 @@ const CreateOrder = () => {
                   }
   `}
               >
-                <Icon icon={option.icon} className="w-7 h-7 shrink-0 text-gray-700" />
-                <span className="text-base font-medium text-gray-900">{option.label}</span>
+                <Icon icon={option.icon} className="w-6 h-6 esm:w-7 esm:h-7 shrink-0 text-gray-700" />
+                <span className="text-sm esm:text-base font-medium text-gray-900">{option.label}</span>
               </button>
             ))}
           </div>
@@ -1065,12 +1065,12 @@ const CreateOrder = () => {
         />
 
         {/* Create & Save Order */}
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-4">
           <button
             type="button"
-            className="inline-flex items-center gap-2 px-2 py-2.5 bg-[var(--color-secondary)] text-white text-sm font-semibold rounded-sm hover:bg-blue-700 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 esm:gap-2 px-3 esm:px-2 py-2 esm:py-2.5 bg-(--color-secondary) text-white text-xs esm:text-sm font-semibold rounded-sm hover:bg-blue-700 disabled:opacity-50"
           >
-            <Icon icon="mdi:content-save-outline" className="w-5 h-5" />
+            <Icon icon="mdi:content-save-outline" className="w-4 h-4 esm:w-5 esm:h-5" />
             Create & Save Order
           </button>
         </div>
@@ -1097,7 +1097,7 @@ const CreateOrder = () => {
                   header: "Product Name",
                   align: "left",
                   render: (row) => (
-                    <a href="#" className="text-[var(--color-secondary)] text-[12px] underline font-extralight">
+                    <a href="#" className="text-(--color-secondary) text-[12px] underline font-extralight">
                       {row.productName}
                     </a>
                   ),
@@ -1109,7 +1109,7 @@ const CreateOrder = () => {
                   header: "Action",
                   align: "left",
                   render: () => (
-                    <a href="#" className="text-[var(--color-secondary)] hover:underline text-xs font-semibold">
+                    <a href="#" className="text-(--color-secondary) hover:underline text-xs font-semibold">
                       View Recent Order
                     </a>
                   ),
@@ -1130,76 +1130,76 @@ const CreateOrder = () => {
       </div>
 
       {/* Right column – Invoice Preview (fixed height, scroll inside panel only) */}
-      <div className="w-full lg:w-[400px] shrink-0 flex flex-col min-h-0 lg:min-h-full bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
-        <div className="bg-blue-600 text-white px-4 py-3 flex items-center justify-between shrink-0">
-          <h3 className="text-base font-semibold">Invoice Preview</h3>
-          <div className="flex gap-2">
-            <button type="button" className="p-1.5 hover:bg-blue-500 rounded transition-colors">
-              <Icon icon="mdi:share-variant-outline" className="w-5 h-5" />
+      <div className="w-full lg:w-100 shrink-0 flex flex-col bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden lg:min-h-0">
+        <div className="bg-blue-600 text-white px-3 esm:px-4 py-2.5 esm:py-3 flex items-center justify-between shrink-0">
+          <h3 className="text-sm esm:text-base font-semibold">Invoice Preview</h3>
+          <div className="flex gap-1.5 esm:gap-2">
+            <button type="button" className="p-1 esm:p-1.5 hover:bg-blue-500 rounded transition-colors">
+              <Icon icon="mdi:share-variant-outline" className="w-4 h-4 esm:w-5 esm:h-5" />
             </button>
-            <button type="button" className="p-1.5 hover:bg-blue-500 rounded transition-colors">
-              <Icon icon="mdi:download-outline" className="w-5 h-5" />
+            <button type="button" className="p-1 esm:p-1.5 hover:bg-blue-500 rounded transition-colors">
+              <Icon icon="mdi:download-outline" className="w-4 h-4 esm:w-5 esm:h-5" />
             </button>
           </div>
         </div>
-        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 space-y-4 hide-scrollbar">
-          <div className="flex items-start justify-between gap-4">
+        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3 esm:p-4 space-y-3 esm:space-y-4 hide-scrollbar">
+          <div className="flex items-start justify-between gap-3 esm:gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-amber-200 flex items-center justify-center shrink-0">
-                <Icon icon="mdi:bear" className="w-6 h-6 text-amber-800" />
+              <div className="w-9 h-9 esm:w-10 esm:h-10 rounded-full bg-amber-200 flex items-center justify-center shrink-0">
+                <Icon icon="mdi:bear" className="w-5 h-5 esm:w-6 esm:h-6 text-amber-800" />
               </div>
-              <span className="text-sm font-bold text-gray-900">{STATIC_INVOICE.brandName}</span>
+              <span className="text-xs esm:text-sm font-bold text-gray-900">{STATIC_INVOICE.brandName}</span>
             </div>
             <div className="text-left">
-              <p className="text-sm font-bold text-gray-900">Invoice</p>
-              <p className="text-xs text-gray-700">Order #{STATIC_INVOICE.orderId}</p>
-              <p className="text-xs text-gray-600">Date: {STATIC_INVOICE.date}</p>
+              <p className="text-xs esm:text-sm font-bold text-gray-900">Invoice</p>
+              <p className="text-[10px] esm:text-xs text-gray-700">Order #{STATIC_INVOICE.orderId}</p>
+              <p className="text-[10px] esm:text-xs text-gray-600">Date: {STATIC_INVOICE.date}</p>
             </div>
           </div>
 
           <div>
-            <p className="text-sm font-bold text-gray-900 mb-1">Delivery Address</p>
-            <p className="text-xs text-gray-900">
+            <p className="text-xs esm:text-sm font-bold text-gray-900 mb-1">Delivery Address</p>
+            <p className="text-[10px] esm:text-xs text-gray-900">
               {STATIC_INVOICE.deliveryAddress.name} - {STATIC_INVOICE.deliveryAddress.phone}
             </p>
-            <p className="text-xs text-gray-800 mt-0.5">{STATIC_INVOICE.deliveryAddress.address}</p>
-            <p className="text-xs text-gray-800">{STATIC_INVOICE.deliveryAddress.email}</p>
+            <p className="text-[10px] esm:text-xs text-gray-800 mt-0.5">{STATIC_INVOICE.deliveryAddress.address}</p>
+            <p className="text-[10px] esm:text-xs text-gray-800">{STATIC_INVOICE.deliveryAddress.email}</p>
           </div>
 
           <div>
-            <table className="w-full text-sm">
+            <table className="w-full text-xs esm:text-sm">
               <thead>
                 <tr className="border-b border-gray-300">
-                  <th className="py-2 text-left font-semibold text-gray-900">Product</th>
-                  <th className="py-2 text-center font-semibold text-gray-900">Qty</th>
-                  <th className="py-2 text-right font-semibold text-gray-900">Price</th>
-                  <th className="py-2 text-right font-semibold text-gray-900">Total</th>
+                  <th className="py-1.5 esm:py-2 text-left font-semibold text-gray-900 text-[10px] esm:text-sm">Product</th>
+                  <th className="py-1.5 esm:py-2 text-center font-semibold text-gray-900 text-[10px] esm:text-sm">Qty</th>
+                  <th className="py-1.5 esm:py-2 text-right font-semibold text-gray-900 text-[10px] esm:text-sm">Price</th>
+                  <th className="py-1.5 esm:py-2 text-right font-semibold text-gray-900 text-[10px] esm:text-sm">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {selectedProducts.map((row, idx) => (
                   <tr key={idx} className="border-b border-gray-200">
-                    <td className="py-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded bg-gray-200 overflow-hidden">
+                    <td className="py-1.5 esm:py-2">
+                      <div className="flex items-center gap-1.5 esm:gap-2">
+                        <div className="w-7 h-7 esm:w-8 esm:h-8 rounded bg-gray-200 overflow-hidden shrink-0">
                           {row.image ? <img src={row.image} className="w-full h-full object-cover" alt={row.name} /> : null}
                         </div>
                         <div>
-                          <p className="font-bold text-gray-900">{row.name}</p>
-                          <p className="text-xs text-gray-500">{row.selectedSize}</p>
+                          <p className="font-bold text-gray-900 text-[10px] esm:text-xs">{row.name}</p>
+                          <p className="text-[9px] esm:text-xs text-gray-500">{row.selectedSize}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-2 text-center text-gray-800">{row.quantity}</td>
-                    <td className="py-2 text-right text-gray-800">{row.price}</td>
-                    <td className="py-2 text-right font-bold text-gray-900">{row.itemTotal}</td>
+                    <td className="py-1.5 esm:py-2 text-center text-gray-800 text-[10px] esm:text-xs">{row.quantity}</td>
+                    <td className="py-1.5 esm:py-2 text-right text-gray-800 text-[10px] esm:text-xs">{row.price}</td>
+                    <td className="py-1.5 esm:py-2 text-right font-bold text-gray-900 text-[10px] esm:text-xs">{row.itemTotal}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <div className="rounded-lg bg-gray-100 p-3 space-y-2">
+          <div className="rounded-lg bg-gray-100 p-2 esm:p-3 space-y-1.5 esm:space-y-2">
             {[
               { label: "Subtotal", value: formatMoney(invoiceSubtotal), bold: true },
               { label: "Promo Code", value: "Did not Redeem", bold: false },
@@ -1209,12 +1209,12 @@ const CreateOrder = () => {
               { label: "Total Savings", value: "$0.00", bold: false },
               { label: "Grand Total", value: formatMoney(invoiceGrandTotal), bold: true },
             ].map((row) => (
-              <div key={row.label} className="flex justify-between text-sm">
+              <div key={row.label} className="flex justify-between text-xs esm:text-sm">
                 <span className={row.bold ? "font-bold text-gray-900" : "text-gray-800"}>{row.label}</span>
                 <span className={row.bold ? "font-bold text-gray-900" : "text-gray-800"}>{row.value}</span>
               </div>
             ))}
-            <div className="pt-2 mt-2 border-t border-gray-200 flex justify-between text-sm text-gray-800">
+            <div className="pt-1.5 esm:pt-2 mt-1.5 esm:mt-2 border-t border-gray-200 flex justify-between text-xs esm:text-sm text-gray-800">
               <span>Payment Method</span>
               <span>{STATIC_INVOICE.paymentMethod}</span>
             </div>

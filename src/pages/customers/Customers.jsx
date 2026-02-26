@@ -113,7 +113,7 @@ const getCustomerColumns = (onView, onDelete) => [
       return (
         <span
           className={`inline-flex px-3 py-1 rounded-full text-[11px] font-medium ${getStatusPillClass(
-            status
+            status,
           )}`}
         >
           {status}
@@ -242,6 +242,7 @@ const Customers = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [filterTab, setFilterTab] = useState("all");
+  const [showFilterModal, setShowFilterModal] = useState(false);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -254,7 +255,12 @@ const Customers = () => {
     items: [],
   });
 
-  const onDateUpdate = useCallback(() => { }, []);
+  const handleFilterSelect = useCallback((key) => {
+    setFilterTab(key);
+    setShowFilterModal(false);
+  }, []);
+
+  const onDateUpdate = useCallback(() => {}, []);
 
   // Handle opening timeline drawer
   const handleOpenTimeline = useCallback((card) => {
@@ -268,27 +274,27 @@ const Customers = () => {
           second: "25",
           details: [
             { first: "John Doe - onboard - At 9:30pm by Dispatcher name" },
-            { first: "Noah John - onboard - At 8:30pm by Dispatcher name" }
-          ]
+            { first: "Noah John - onboard - At 8:30pm by Dispatcher name" },
+          ],
         },
         {
           first: "11 Dec 2023",
           second: "60",
           details: [
             { first: "John Doe - onboard - At 9:30pm by Dispatcher name" },
-            { first: "Noah John - onboard - At 8:30pm by Dispatcher name" }
-          ]
+            { first: "Noah John - onboard - At 8:30pm by Dispatcher name" },
+          ],
         },
         {
           first: "10 Dec 2023",
           second: "100",
-          details: []
+          details: [],
         },
         {
           first: "09 Dec 2023",
           second: "703",
-          details: []
-        }
+          details: [],
+        },
       ];
     } else if (card.title === "Active Customers") {
       timelineItems = [
@@ -297,33 +303,33 @@ const Customers = () => {
           second: "25",
           details: [
             { first: "Client name is active at 9:30 pm" },
-            { first: "Client name is active at 9:30 am" }
-          ]
+            { first: "Client name is active at 9:30 am" },
+          ],
         },
         {
           first: "11 Dec 2023",
           second: "60",
           details: [
             { first: "Client name is active at 9:30 pm" },
-            { first: "Client name is active at 9:30 am" }
-          ]
+            { first: "Client name is active at 9:30 am" },
+          ],
         },
         {
           first: "10 Dec 2023",
           second: "100",
           details: [
             { first: "Client name is active at 9:30 pm" },
-            { first: "Client name is active at 9:30 am" }
-          ]
+            { first: "Client name is active at 9:30 am" },
+          ],
         },
         {
           first: "09 Dec 2023",
           second: "703",
           details: [
             { first: "Client name is active at 9:30 pm" },
-            { first: "Client name is active at 9:30 am" }
-          ]
-        }
+            { first: "Client name is active at 9:30 am" },
+          ],
+        },
       ];
     } else if (card.title === "Inactive Customers") {
       timelineItems = [
@@ -332,27 +338,27 @@ const Customers = () => {
           second: "25",
           details: [
             { first: "Client name is inactive from 9:30 pm" },
-            { first: "Client name is inactive from 9:30 am" }
-          ]
+            { first: "Client name is inactive from 9:30 am" },
+          ],
         },
         {
           first: "11 Dec 2023",
           second: "60",
           details: [
             { first: "Client name is inactive from 9:30 pm" },
-            { first: "Client name is inactive from 9:30 am" }
-          ]
+            { first: "Client name is inactive from 9:30 am" },
+          ],
         },
         {
           first: "10 Dec 2023",
           second: "100",
-          details: []
+          details: [],
         },
         {
           first: "09 Dec 2023",
           second: "703",
-          details: []
-        }
+          details: [],
+        },
       ];
     }
 
@@ -375,9 +381,9 @@ const Customers = () => {
     () =>
       getCustomerColumns(
         (row) => navigate(`/customers/${row.id}`),
-        (row) => { }
+        (row) => {},
       ),
-    [navigate]
+    [navigate],
   );
 
   const filteredData = useMemo(() => {
@@ -388,12 +394,12 @@ const Customers = () => {
         (row) =>
           row.customer?.toLowerCase().includes(searchLower) ||
           row.address?.toLowerCase().includes(searchLower) ||
-          row.status?.toLowerCase().includes(searchLower)
+          row.status?.toLowerCase().includes(searchLower),
       );
     }
     if (filterTab !== "all") {
       list = list.filter(
-        (row) => row.status?.toLowerCase() === filterTab.toLowerCase()
+        (row) => row.status?.toLowerCase() === filterTab.toLowerCase(),
       );
     }
     return list;
@@ -442,51 +448,73 @@ const Customers = () => {
       {/* Same layout as Inventory: single white card with search bar, tabs, filter, download, then table */}
       <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-3 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 rounded-sm bg-white focus:outline-none"
-              />
-            </div>
-            <div className="flex w-full rounded-sm overflow-hidden border border-gray-200 bg-white">
-              {FILTER_TABS.map((tab) => (
+          <div className="flex md:flex-row flex-col items-center gap-2">
+            <div className="w-full flex items-center gap-2">
+              <div className="relative w-full">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 rounded-sm bg-white focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center gap-2 md:hidden">
                 <button
-                  key={tab.key}
                   type="button"
-                  onClick={() => setFilterTab(tab.key)}
-                  className={`px-2 py-1.5 w-full text-sm m-1 rounded font-medium whitespace-nowrap ${filterTab === tab.key
-                    ? "bg-(--color-secondary) text-white"
-                    : "text-gray-600 hover:bg-gray-50"
-                    }`}
+                  onClick={() => setShowFilterModal(true)}
+                  className="p-2.5 rounded-sm bg-gray-700 text-white hover:bg-gray-800"
+                  title="Filter"
                 >
-                  {tab.label}
+                  <Filter className="w-4 h-4" />
                 </button>
-              ))}
+                <button
+                  type="button"
+                  className="p-2.5 rounded-sm bg-(--color-primary) text-white hover:opacity-90"
+                  title="Export"
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <button
-              type="button"
-              className="p-2.5 rounded-sm bg-gray-700 text-white hover:bg-gray-800"
-              title="Filter"
-            >
-              <Filter className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              className="p-2.5 rounded-sm bg-(--color-primary) text-white hover:opacity-90"
-              title="Export"
-            >
-              <Download className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2 w-full">
+              <div className="md:flex hidden w-full rounded-sm overflow-hidden border border-gray-200 bg-white">
+                {FILTER_TABS.map((tab) => (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setFilterTab(tab.key)}
+                    className={`px-2 py-1.5 w-full text-sm m-1 rounded font-medium whitespace-nowrap ${
+                      filterTab === tab.key
+                        ? "bg-(--color-secondary) text-white"
+                        : "text-gray-600 hover:bg-gray-50"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="p-2.5 rounded-sm bg-gray-700 text-white hover:bg-gray-800 md:block hidden"
+                title="Filter"
+              >
+                <Filter className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                className="p-2.5 rounded-sm bg-(--color-primary) text-white hover:opacity-90 md:block hidden"
+                title="Export"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1000px] border-collapse">
+          <table className="w-full min-w-250 border-collapse">
             <thead className="bg-[#ffffff] border-b border-gray-200 sticky top-0 z-10">
               {table.getHeaderGroups().map((hg) => (
                 <tr key={hg.id}>
@@ -502,12 +530,13 @@ const Customers = () => {
                     return (
                       <th
                         key={header.id}
-                        className={`px-3 py-2.5 text-[11px] font-semibold text-[#3F4753] whitespace-nowrap ${isRight ? "text-right" : "text-left"
-                          }`}
+                        className={`px-3 py-2.5 text-[11px] font-semibold text-[#3F4753] whitespace-nowrap ${
+                          isRight ? "text-right" : "text-left"
+                        }`}
                       >
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                       </th>
                     );
@@ -531,12 +560,13 @@ const Customers = () => {
                       return (
                         <td
                           key={cell.id}
-                          className={`px-3 py-2 text-[12px] text-[#3F4753] align-middle ${isRight ? "text-right" : "text-left"
-                            }`}
+                          className={`px-3 py-2 text-[12px] text-[#3F4753] align-middle ${
+                            isRight ? "text-right" : "text-left"
+                          }`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext()
+                            cell.getContext(),
                           )}
                         </td>
                       );
@@ -558,7 +588,11 @@ const Customers = () => {
         </div>
 
         {/* Pagination */}
-        <div id="pagination" className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-2 border-t border-gray-200 bg-gray-50" style={{ margin: "0 auto" }}>
+        <div
+          id="pagination"
+          className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-2 border-t border-gray-200 bg-gray-50"
+          style={{ margin: "0 auto" }}
+        >
           <div className="text-[12px] text-gray-600 order-2 sm:order-1">
             Showing{" "}
             {table.getState().pagination.pageIndex *
@@ -567,8 +601,8 @@ const Customers = () => {
             to{" "}
             {Math.min(
               (table.getState().pagination.pageIndex + 1) *
-              table.getState().pagination.pageSize,
-              filteredData.length
+                table.getState().pagination.pageSize,
+              filteredData.length,
             )}{" "}
             of {filteredData.length} results
           </div>
@@ -600,10 +634,11 @@ const Customers = () => {
                 <button
                   key={pageNum}
                   onClick={() => table.setPageIndex(pageNum - 1)}
-                  className={`min-w-[28px] px-1.5 py-1 text-[12px] rounded ${table.getState().pagination.pageIndex + 1 === pageNum
-                    ? "bg-blue-600 text-white border border-blue-600"
-                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-                    }`}
+                  className={`min-w-[28px] px-1.5 py-1 text-[12px] rounded ${
+                    table.getState().pagination.pageIndex + 1 === pageNum
+                      ? "bg-blue-600 text-white border border-blue-600"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
                 >
                   {pageNum}
                 </button>
@@ -633,6 +668,54 @@ const Customers = () => {
         title={timelineConfig.title}
         items={timelineConfig.items}
       />
+
+      {/* Filter Modal for Mobile */}
+      {showFilterModal && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center md:hidden">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black opacity-50"
+            onClick={() => setShowFilterModal(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full bg-white rounded-t-lg shadow-lg animate-slide-up">
+            <div className="p-2.5 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-800">Filter by Status</h3>
+            </div>
+            <div className="px-4 py-2 space-y-2">
+              {FILTER_TABS.map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => handleFilterSelect(tab.key)}
+                  className={`w-full px-4 py-2 text-left rounded-sm font-medium transition-colors ${
+                    filterTab === tab.key
+                      ? "bg-(--color-secondary) text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{tab.label}</span>
+                    <span className={`text-sm ${filterTab === tab.key ? "text-white" : "text-gray-500"}`}>
+                      {tab.count}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="px-4 py-2 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={() => setShowFilterModal(false)}
+                className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-sm font-medium hover:bg-gray-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

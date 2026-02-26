@@ -730,25 +730,25 @@ const Tracking = () => {
       {/* Map section */}
       <div className="flex-1 min-h-140 flex flex-col bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
         {/* Map container with overlays */}
-        <div className="relative flex-1 min-h-[520px]">
+        <div className="relative flex-1 min-h-130">
           {/* Top Control Bar: Map Toggle | Status Cards | Delivery Toggle */}
-          <div className="absolute top-1 left-4 right-4 z-10 flex items-start justify-between pointer-events-none">
+          <div className="absolute top-1 left-2 esm:left-4 right-2 esm:right-4 z-10 flex flex-col esm:flex-row items-start esm:items-start justify-between gap-2 esm:gap-0 pointer-events-none">
 
             {/* Left: Map/Satellite */}
-            <div className="flex items-center rounded bg-white shadow-sm border border-gray-200 pointer-events-auto h-9 overflow-hidden">
+            <div className="flex items-center rounded bg-white shadow-sm border border-gray-200 pointer-events-auto h-8 esm:h-9 overflow-hidden">
               <button
                 type="button"
                 onClick={() => setMapView("map")}
-                className={`px-4 h-full text-sm font-bold transition-colors ${mapView === "map" ? "text-gray-900 bg-gray-50" : "text-gray-500 hover:bg-gray-50 font-medium"
+                className={`px-3 esm:px-4 h-full text-xs esm:text-sm font-bold transition-colors ${mapView === "map" ? "text-gray-900 bg-gray-50" : "text-gray-500 hover:bg-gray-50 font-medium"
                   }`}
               >
                 Map
               </button>
-              <div className="w-[1px] h-5 bg-gray-200"></div>
+              <div className="w-px h-4 esm:h-5 bg-gray-200"></div>
               <button
                 type="button"
                 onClick={() => setMapView("satellite")}
-                className={`px-4 h-full text-sm font-medium transition-colors ${mapView === "satellite" ? "text-gray-900 bg-gray-50" : "text-gray-500 hover:bg-gray-50"
+                className={`px-3 esm:px-4 h-full text-xs esm:text-sm font-medium transition-colors ${mapView === "satellite" ? "text-gray-900 bg-gray-50" : "text-gray-500 hover:bg-gray-50"
                   }`}
               >
                 Satellite
@@ -756,9 +756,9 @@ const Tracking = () => {
             </div>
 
             {/* Right Group: Status Counts + Delivery/Shipping */}
-            <div className="flex items-center gap-0 min-w-0 justify-end">
+            <div className="flex flex-col esm:flex-row items-start esm:items-center gap-2 esm:gap-0 min-w-0 w-full esm:w-auto esm:justify-end">
               {/* Status Counts */}
-              <div className="flex items-center gap-1 pointer-events-auto overflow-x-auto hide-scrollbar px-2 py-1">
+              <div className="flex items-center gap-1 pointer-events-auto overflow-x-auto hide-scrollbar px-0 esm:px-2 py-1 w-full esm:w-auto">
                 {STATUS_FILTERS.map((filter) => (
                   <button
                     key={filter.key}
@@ -768,15 +768,15 @@ const Tracking = () => {
                         activeStatusFilter === filter.key ? null : filter.key
                       )
                     }
-                    className={`flex items-center justify-between gap-4 px-2 py-1 bg-white rounded-sm shadow-sm border transition-all min-w-[160px] h-11 ${activeStatusFilter === filter.key
+                    className={`flex items-center justify-between gap-2 esm:gap-4 px-1.5 esm:px-2 py-1 bg-white rounded-sm shadow-sm border transition-all min-w-32 esm:min-w-40 h-10 esm:h-11 ${activeStatusFilter === filter.key
                       ? "ring-1 ring-gray-300 border-gray-300"
                       : "border-gray-200 hover:border-gray-300"
                       }`}
                   >
-                    <span className={`text-[13px] font-semibold ${filter.color}`}>
+                    <span className={`text-[11px] esm:text-[13px] font-semibold ${filter.color}`}>
                       {filter.label}
                     </span>
-                    <span className="text-xl font-bold text-gray-900 leading-none">
+                    <span className="text-base esm:text-xl font-bold text-gray-900 leading-none">
                       {filter.count.toLocaleString()}
                     </span>
                   </button>
@@ -784,11 +784,11 @@ const Tracking = () => {
               </div>
 
               {/* Delivery/Shipping */}
-              <div className="flex items-center rounded-sm bg-white shadow-sm border-2 border-[#969696] pointer-events-auto h-10.5 overflow-hidden p-1 gap-1 shrink-0">
+              <div className="flex items-center rounded-sm bg-white shadow-sm border-2 border-[#969696] pointer-events-auto h-9 esm:h-10.5 overflow-hidden p-1 gap-1 shrink-0 w-full esm:w-auto">
                 <button
                   type="button"
                   onClick={() => setDeliveryMode("delivery")}
-                  className={`px-4 h-full text-sm font-semibold cursor-pointer rounded-[5px] transition-colors flex items-center ${deliveryMode === "delivery"
+                  className={`flex-1 esm:px-4 h-full text-xs esm:text-sm font-semibold cursor-pointer rounded-[5px] transition-colors flex items-center justify-center ${deliveryMode === "delivery"
                     ? "bg-[#0066FF] text-white shadow-sm"
                     : "text-[#969696] hover:bg-gray-50 bg-transparent"
                     }`}
@@ -798,7 +798,7 @@ const Tracking = () => {
                 <button
                   type="button"
                   onClick={() => setDeliveryMode("shipping")}
-                  className={`px-4 h-full text-sm font-medium cursor-pointer rounded-[5px] transition-colors flex items-center ${deliveryMode === "shipping"
+                  className={`flex-1 esm:px-4 h-full text-xs esm:text-sm font-medium cursor-pointer rounded-[5px] transition-colors flex items-center justify-center ${deliveryMode === "shipping"
                     ? "bg-[#0066FF] text-white shadow-sm"
                     : "text-[#969696] hover:bg-gray-50 bg-transparent"
                     }`}
@@ -860,38 +860,38 @@ const Tracking = () => {
           </div>
 
           {/* Left bottom: stacked buttons + speech-bubble label (matches reference) */}
-          <div className="absolute bottom-4 left-3 z-10 flex items-start gap-3">
+          <div className="absolute bottom-2 esm:bottom-4 left-2 esm:left-3 z-10 flex items-start gap-2 esm:gap-3">
             {/* Left stack */}
             {/* Left stack of buttons with labels - Modified for dynamic labels */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 esm:gap-3">
 
               {/* Online drivers row */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 esm:gap-3">
                 <button
                   type="button"
                   onClick={() => setShowOnline(!showOnline)}
-                  className={`w-10 h-10 rounded-2xl bg-white border border-gray-200 shadow-md flex items-center justify-center shrink-0 transition-all ${!showOnline ? 'opacity-50 grayscale' : ''
+                  className={`w-9 h-9 esm:w-10 esm:h-10 rounded-2xl bg-white border border-gray-200 shadow-md flex items-center justify-center shrink-0 transition-all ${!showOnline ? 'opacity-50 grayscale' : ''
                     }`}
                   aria-label="Online drivers"
                   title={showOnline ? "Hide Online Drivers" : "Show Online Drivers"}
                 >
-                  <span className="w-10 h-10 rounded-full bg-[#D4FFDA] flex items-center justify-center">
-                    <Icon icon="mdi:radar" className="w-5 h-5 text-gray-900" />
+                  <span className="w-9 h-9 esm:w-10 esm:h-10 rounded-full bg-[#D4FFDA] flex items-center justify-center">
+                    <Icon icon="mdi:radar" className="w-4 h-4 esm:w-5 esm:h-5 text-gray-900" />
                   </span>
                 </button>
 
                 {/* Online Label */}
                 {showOnline && (
-                  <div className="relative bg-white rounded-xl border border-gray-200 shadow-md px-4 py-2 animate-in fade-in slide-in-from-left-2 duration-200">
+                  <div className="relative bg-white rounded-xl border border-gray-200 shadow-md px-3 esm:px-4 py-1.5 esm:py-2 animate-in fade-in slide-in-from-left-2 duration-200">
                     <span
                       className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-white drop-shadow-[0_0_1px_rgba(0,0,0,0.2)]"
                       aria-hidden
                     />
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-sm font-medium text-gray-900">
+                    <div className="flex items-baseline gap-2 esm:gap-3">
+                      <span className="text-xs esm:text-sm font-medium text-gray-900">
                         Online Drivers
                       </span>
-                      <span className="text-sm font-bold text-gray-900">
+                      <span className="text-xs esm:text-sm font-bold text-gray-900">
                         {MOCK_DELIVERY_CARDS.filter(c => c.isOnline).length}
                       </span>
                     </div>
@@ -900,32 +900,32 @@ const Tracking = () => {
               </div>
 
               {/* Offline drivers row */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 esm:gap-3">
                 <button
                   type="button"
                   onClick={() => setShowOffline(!showOffline)}
-                  className={`w-10 h-10 rounded-2xl bg-white border border-gray-200 shadow-md flex items-center justify-center shrink-0 transition-all ${!showOffline ? 'opacity-50 grayscale' : ''
+                  className={`w-9 h-9 esm:w-10 esm:h-10 rounded-2xl bg-white border border-gray-200 shadow-md flex items-center justify-center shrink-0 transition-all ${!showOffline ? 'opacity-50 grayscale' : ''
                     }`}
                   aria-label="Offline drivers"
                   title={showOffline ? "Hide Offline Drivers" : "Show Offline Drivers"}
                 >
-                  <span className="w-10 h-10 rounded-full bg-[#FEECEB] flex items-center justify-center">
-                    <Icon icon="mdi:radar" className="w-5 h-5 text-gray-900" />
+                  <span className="w-9 h-9 esm:w-10 esm:h-10 rounded-full bg-[#FEECEB] flex items-center justify-center">
+                    <Icon icon="mdi:radar" className="w-4 h-4 esm:w-5 esm:h-5 text-gray-900" />
                   </span>
                 </button>
 
                 {/* Offline Label */}
                 {showOffline && (
-                  <div className="relative bg-white rounded-xl border border-gray-200 shadow-md px-4 py-2 animate-in fade-in slide-in-from-left-2 duration-200">
+                  <div className="relative bg-white rounded-xl border border-gray-200 shadow-md px-3 esm:px-4 py-1.5 esm:py-2 animate-in fade-in slide-in-from-left-2 duration-200">
                     <span
                       className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-white drop-shadow-[0_0_1px_rgba(0,0,0,0.2)]"
                       aria-hidden
                     />
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-sm font-medium text-gray-900">
+                    <div className="flex items-baseline gap-2 esm:gap-3">
+                      <span className="text-xs esm:text-sm font-medium text-gray-900">
                         Offline Drivers
                       </span>
-                      <span className="text-sm font-bold text-gray-900">
+                      <span className="text-xs esm:text-sm font-bold text-gray-900">
                         {MOCK_DELIVERY_CARDS.filter(c => !c.isOnline).length}
                       </span>
                     </div>
@@ -936,7 +936,7 @@ const Tracking = () => {
               {/* Layers thumbnail button */}
               <button
                 type="button"
-                className="relative w-10 h-10 rounded-2xl overflow-hidden border border-gray-200 shadow-md shrink-0"
+                className="relative w-9 h-9 esm:w-10 esm:h-10 rounded-2xl overflow-hidden border border-gray-200 shadow-md shrink-0"
                 aria-label="Layers"
               >
                 <div
@@ -947,9 +947,9 @@ const Tracking = () => {
                   }}
                 />
                 <div className="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.6),transparent_45%)]" />
-                <div className="absolute left-2 bottom-2 flex items-center gap-1 text-white">
-                  <Icon icon="mdi:layers-outline" className="w-4 h-4" />
-                  <span className="text-[11px] font-medium">Layers</span>
+                <div className="absolute left-1.5 esm:left-2 bottom-1.5 esm:bottom-2 flex items-center gap-0.5 esm:gap-1 text-white">
+                  <Icon icon="mdi:layers-outline" className="w-3.5 h-3.5 esm:w-4 esm:h-4" />
+                  <span className="text-[10px] esm:text-[11px] font-medium">Layers</span>
                 </div>
               </button>
             </div>
@@ -958,20 +958,20 @@ const Tracking = () => {
 
           {/* Zoom controls – bottom right (only when map is active, mapbox adds its own; we add custom for placeholder) */}
           {!hasMapToken && (
-            <div className="absolute bottom-4 right-3 z-10 flex flex-col rounded-md overflow-hidden border border-gray-200 bg-white shadow-sm">
+            <div className="absolute bottom-2 esm:bottom-4 right-2 esm:right-3 z-10 flex flex-col rounded-md overflow-hidden border border-gray-200 bg-white shadow-sm">
               <button
                 type="button"
-                className="p-2 border-b border-gray-100 hover:bg-gray-50 text-gray-600"
+                className="p-1.5 esm:p-2 border-b border-gray-100 hover:bg-gray-50 text-gray-600"
                 aria-label="Zoom in"
               >
-                <Icon icon="mdi:plus" className="w-5 h-5" />
+                <Icon icon="mdi:plus" className="w-4 h-4 esm:w-5 esm:h-5" />
               </button>
               <button
                 type="button"
-                className="p-2 hover:bg-gray-50 text-gray-600"
+                className="p-1.5 esm:p-2 hover:bg-gray-50 text-gray-600"
                 aria-label="Zoom out"
               >
-                <Icon icon="mdi:minus" className="w-5 h-5" />
+                <Icon icon="mdi:minus" className="w-4 h-4 esm:w-5 esm:h-5" />
               </button>
             </div>
           )}
@@ -982,9 +982,9 @@ const Tracking = () => {
       <div className="min-w-0 shrink-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
         {/* Single row: Search | All Order Status | All/Online/Offline tabs */}
         <div className="shrink-0 p-3 min-w-0">
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
             <div className="relative min-w-0">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-4 text-gray-400 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.75 h-4 text-gray-400 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search..."
@@ -1002,13 +1002,13 @@ const Tracking = () => {
                 minWidth="100%"
               />
             </div>
-            <div className="flex items-center rounded-sm border border-[#969696] bg-white p-1 min-w-0 h-[45.5px]">
+            <div className="flex items-center rounded-sm col-span-2 md:col-span-1 border border-[#969696] bg-white p-1 min-w-0 h-[45.5px]">
               {["all", "online", "offline"].map((key) => (
                 <button
                   key={key}
                   type="button"
                   onClick={() => setTableDriverStatus(key)}
-                  className={`flex-1 px-4 h-full text-sm font-semibold rounded-sm cursor-pointer transition-colors ${tableDriverStatus === key
+                  className={`flex-1  px-4 h-full text-sm font-semibold rounded-sm cursor-pointer transition-colors ${tableDriverStatus === key
                     ? "bg-[#0066FF] text-white shadow-sm"
                     : "text-[#969696] hover:bg-gray-50 bg-transparent"
                     }`}
@@ -1026,7 +1026,7 @@ const Tracking = () => {
 
         {/* Table */}
         <div className="order-list-table-table-container overflow-x-auto">
-          <table className="order-list-table table w-full min-w-[1100px] border-collapse">
+          <table className="order-list-table table w-full min-w-275 border-collapse">
             <thead className="bg-[#ffffff] border-b border-gray-200 sticky top-0 z-10">
               {trackingTable.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -1134,7 +1134,7 @@ const Tracking = () => {
                   key={pageNum}
                   type="button"
                   onClick={() => trackingTable.setPageIndex(pageNum - 1)}
-                  className={`min-w-[28px] px-1.5 py-1 text-[12px] rounded ${trackingTable.getState().pagination.pageIndex + 1 ===
+                  className={`min-w-7 px-1.5 py-1 text-[12px] rounded ${trackingTable.getState().pagination.pageIndex + 1 ===
                     pageNum
                     ? "bg-blue-600 text-white border border-blue-600"
                     : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"

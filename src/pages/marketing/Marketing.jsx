@@ -42,65 +42,65 @@ const Marketing = () => {
   return (
     <div className="flex flex-col gap-2 px-2.5 py-3">
       {/* Tabs */}
-      <div className="flex items-center justify-between bg-white">
+      <div className="flex items-center justify-between bg-white overflow-x-auto hide-scrollbar">
         <button
           onClick={() => setActiveTab("email-campaign")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "email-campaign"
-            ? "text-[var(--color-primary)]"
+          className={`px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-colors relative cursor-pointer w-full whitespace-nowrap ${activeTab === "email-campaign"
+            ? "text-(--color-primary)"
             : "text-[#464646] hover:text-gray-900"
             }`}
         >
           Email Campaign
           {activeTab === "email-campaign" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-(--color-primary)"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("sms-campaign")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "sms-campaign"
-            ? "text-[var(--color-primary)]"
+          className={`px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-colors relative cursor-pointer w-full whitespace-nowrap ${activeTab === "sms-campaign"
+            ? "text-(--color-primary)"
             : "text-[#464646] hover:text-gray-900"
             }`}
         >
           SMS Campaign
           {activeTab === "sms-campaign" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-(--color-primary)"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("follow-up")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "follow-up"
-            ? "text-[var(--color-primary)]"
+          className={`px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-colors relative cursor-pointer w-full whitespace-nowrap ${activeTab === "follow-up"
+            ? "text-(--color-primary)"
             : "text-[#464646] hover:text-gray-900"
             }`}
         >
           Follow Up
           {activeTab === "follow-up" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-(--color-primary)"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("coupons")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "coupons"
-            ? "text-[var(--color-primary)]"
+          className={`px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-colors relative cursor-pointer w-full whitespace-nowrap ${activeTab === "coupons"
+            ? "text-(--color-primary)"
             : "text-[#464646] hover:text-gray-900"
             }`}
         >
           Coupons
           {activeTab === "coupons" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-(--color-primary)"></div>
           )}
         </button>
         <button
           onClick={() => setActiveTab("featured-ads")}
-          className={`px-6 py-3 text-sm font-medium transition-colors relative cursor-pointer w-full ${activeTab === "featured-ads"
-            ? "text-[var(--color-primary)]"
+          className={`px-3 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium transition-colors relative cursor-pointer w-full whitespace-nowrap ${activeTab === "featured-ads"
+            ? "text-(--color-primary)"
             : "text-[#464646] hover:text-gray-900"
             }`}
         >
           Featured Ads
           {activeTab === "featured-ads" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-primary)]"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-(--color-primary)"></div>
           )}
         </button>
       </div>
@@ -136,11 +136,11 @@ const Marketing = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {/* Chart */}
                 <div className="bg-white p-1.5 rounded-sm shadow">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-gray-900">
+                  <div className="flex w-full flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-0">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                    <div>
+                    <div className="w-full sm:w-auto">
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -148,24 +148,26 @@ const Marketing = () => {
                       />
                     </div>
                   </div>
-                  <Chart
-                    options={campaignChartOptions}
-                    series={campaignChartSeries}
-                    type="line"
-                    height={196}
-                    className="min-h-49!"
-                  />
+                  <div className="w-full overflow-hidden">
+                    <Chart
+                      options={campaignChartOptions}
+                      series={campaignChartSeries}
+                      type="line"
+                      height={196}
+                      className="min-h-49!"
+                    />
+                  </div>
                 </div>
 
                 {/* Stats Tabs and Details */}
                 <div className="flex flex-col bg-white py-1.5 rounded-sm shadow">
                   {/* Tabs */}
-                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 ">
+                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 overflow-x-auto hide-scrollbar">
                     {CAMPAIGN_STATS_TABS.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                        className={`px-3 sm:px-4 py-2 text-xs font-medium transition-colors relative whitespace-nowrap ${campaignStatsTab === tab.id
                           ? "text-[#109F22]"
                           : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -179,16 +181,16 @@ const Marketing = () => {
                   </div>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-2">
                     {CAMPAIGN_DETAIL_STATS.map((stat, index) => (
                       <div
                         key={index}
-                        className="bg-white border border-gray-200 rounded-sm py-5 px-2"
+                        className="bg-white border border-gray-200 rounded-sm py-3 sm:py-5 px-2"
                       >
-                        <p className="text-xs text-gray-600 mb-1">
+                        <p className="text-xs text-gray-600 mb-1 leading-tight">
                           {stat.label}
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
                           {stat.value}
                         </p>
                       </div>
@@ -232,11 +234,11 @@ const Marketing = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {/* Chart */}
                 <div className="bg-white p-1.5 rounded-sm shadow">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-gray-900">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-0">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                    <div>
+                    <div className="w-full sm:w-auto">
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -244,24 +246,26 @@ const Marketing = () => {
                       />
                     </div>
                   </div>
-                  <Chart
-                    options={campaignChartOptions}
-                    series={smsCampaignChartSeries}
-                    type="line"
-                    height={196}
-                    className="min-h-49!"
-                  />
+                  <div className="w-full overflow-hidden">
+                    <Chart
+                      options={campaignChartOptions}
+                      series={smsCampaignChartSeries}
+                      type="line"
+                      height={196}
+                      className="min-h-49!"
+                    />
+                  </div>
                 </div>
 
                 {/* Stats Tabs and Details */}
                 <div className="flex flex-col bg-white py-1.5 rounded-sm shadow">
                   {/* Tabs */}
-                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 ">
+                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 overflow-x-auto hide-scrollbar">
                     {CAMPAIGN_STATS_TABS.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                        className={`px-3 sm:px-4 py-2 text-xs font-medium transition-colors relative whitespace-nowrap ${campaignStatsTab === tab.id
                           ? "text-[#109F22]"
                           : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -275,16 +279,16 @@ const Marketing = () => {
                   </div>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-2">
                     {SMS_CAMPAIGN_DETAIL_STATS.map((stat, index) => (
                       <div
                         key={index}
-                        className="bg-white border border-gray-200 rounded-sm py-5 px-2"
+                        className="bg-white border border-gray-200 rounded-sm py-3 sm:py-5 px-2"
                       >
-                        <p className="text-xs text-gray-600 mb-1">
+                        <p className="text-xs text-gray-600 mb-1 leading-tight">
                           {stat.label}
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
                           {stat.value}
                         </p>
                       </div>
@@ -327,11 +331,11 @@ const Marketing = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {/* Chart */}
                 <div className="bg-white pt-1.5 px-1.5 rounded-sm shadow">
-                  <div className="flex items-center justify-between ">
-                    <h3 className="text-base font-semibold text-gray-900">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-0">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                    <div>
+                    <div className="w-full sm:w-auto">
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -339,24 +343,26 @@ const Marketing = () => {
                       />
                     </div>
                   </div>
-                  <Chart
-                    options={followUpBarChartOptions}
-                    series={followUpBarChartSeries}
-                    type="bar"
-                    height={200}
-                    className="min-h-50!"
-                  />
+                  <div className="w-full overflow-hidden">
+                    <Chart
+                      options={followUpBarChartOptions}
+                      series={followUpBarChartSeries}
+                      type="bar"
+                      height={200}
+                      className="min-h-50!"
+                    />
+                  </div>
                 </div>
 
                 {/* Stats Tabs and Details */}
                 <div className="flex flex-col bg-white py-1.5 rounded-sm shadow">
                   {/* Tabs */}
-                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 ">
+                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 overflow-x-auto hide-scrollbar">
                     {CAMPAIGN_STATS_TABS.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                        className={`px-3 sm:px-4 py-2 text-xs font-medium transition-colors relative whitespace-nowrap ${campaignStatsTab === tab.id
                           ? "text-[#109F22]"
                           : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -370,16 +376,16 @@ const Marketing = () => {
                   </div>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-2">
                     {FOLLOW_UP_CAMPAIGN_DETAIL_STATS.map((stat, index) => (
                       <div
                         key={index}
-                        className="bg-white border border-gray-200 rounded-sm py-5 px-2"
+                        className="bg-white border border-gray-200 rounded-sm py-3 sm:py-5 px-2"
                       >
-                        <p className="text-xs text-gray-600 mb-1">
+                        <p className="text-xs text-gray-600 mb-1 leading-tight">
                           {stat.label}
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
                           {stat.value}
                         </p>
                       </div>
@@ -422,11 +428,11 @@ const Marketing = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {/* Chart */}
                 <div className="bg-white p-1.5 rounded-sm shadow">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-gray-900">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-0">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                    <div>
+                    <div className="w-full sm:w-auto">
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -434,24 +440,26 @@ const Marketing = () => {
                       />
                     </div>
                   </div>
-                  <Chart
-                    options={campaignChartOptions}
-                    series={couponsCampaignChartSeries}
-                    type="line"
-                    height={196}
-                    className="min-h-49!"
-                  />
+                  <div className="w-full overflow-hidden">
+                    <Chart
+                      options={campaignChartOptions}
+                      series={couponsCampaignChartSeries}
+                      type="line"
+                      height={196}
+                      className="min-h-49!"
+                    />
+                  </div>
                 </div>
 
                 {/* Stats Tabs and Details */}
                 <div className="flex flex-col bg-white py-1.5 rounded-sm shadow">
                   {/* Tabs */}
-                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 ">
+                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 overflow-x-auto hide-scrollbar">
                     {CAMPAIGN_STATS_TABS.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                        className={`px-3 sm:px-4 py-2 text-xs font-medium transition-colors relative whitespace-nowrap ${campaignStatsTab === tab.id
                           ? "text-[#109F22]"
                           : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -465,16 +473,16 @@ const Marketing = () => {
                   </div>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-2">
                     {COUPONS_CAMPAIGN_DETAIL_STATS.map((stat, index) => (
                       <div
                         key={index}
-                        className="bg-white border border-gray-200 rounded-sm py-5 px-2"
+                        className="bg-white border border-gray-200 rounded-sm py-3 sm:py-5 px-2"
                       >
-                        <p className="text-xs text-gray-600 mb-1">
+                        <p className="text-xs text-gray-600 mb-1 leading-tight">
                           {stat.label}
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
                           {stat.value}
                         </p>
                       </div>
@@ -518,11 +526,11 @@ const Marketing = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {/* Chart */}
                 <div className="bg-white p-1.5 rounded-sm shadow">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-gray-900">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-2 sm:mb-0">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900">
                       Campaign Statistics
                     </h3>
-                    <div>
+                    <div className="w-full sm:w-auto">
                       <DatePickerMap
                         defaultItem={2}
                         onUpdate={onDateUpdate}
@@ -530,24 +538,26 @@ const Marketing = () => {
                       />
                     </div>
                   </div>
-                  <Chart
-                    options={campaignChartOptions}
-                    series={featuredAdsCampaignChartSeries}
-                    type="line"
-                    height={196}
-                    className="min-h-49!"
-                  />
+                  <div className="w-full overflow-hidden">
+                    <Chart
+                      options={campaignChartOptions}
+                      series={featuredAdsCampaignChartSeries}
+                      type="line"
+                      height={196}
+                      className="min-h-49!"
+                    />
+                  </div>
                 </div>
 
                 {/* Stats Tabs and Details */}
                 <div className="flex flex-col bg-white py-1.5 rounded-sm shadow">
                   {/* Tabs */}
-                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 ">
+                  <div className="flex items-center gap-1 border-b border-gray-200 mb-3 overflow-x-auto hide-scrollbar">
                     {CAMPAIGN_STATS_TABS.map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => setCampaignStatsTab(tab.id)}
-                        className={`px-4 py-2 text-xs font-medium transition-colors relative ${campaignStatsTab === tab.id
+                        className={`px-3 sm:px-4 py-2 text-xs font-medium transition-colors relative whitespace-nowrap ${campaignStatsTab === tab.id
                           ? "text-[#109F22]"
                           : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -561,16 +571,16 @@ const Marketing = () => {
                   </div>
 
                   {/* Stats Grid */}
-                  <div className="grid grid-cols-3 gap-2 px-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-2">
                     {FEATURED_ADS_CAMPAIGN_DETAIL_STATS.map((stat, index) => (
                       <div
                         key={index}
-                        className="bg-white border border-gray-200 rounded-sm py-5 px-2"
+                        className="bg-white border border-gray-200 rounded-sm py-3 sm:py-5 px-2"
                       >
-                        <p className="text-xs text-gray-600 mb-1">
+                        <p className="text-xs text-gray-600 mb-1 leading-tight">
                           {stat.label}
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-lg sm:text-xl font-bold text-gray-900">
                           {stat.value}
                         </p>
                       </div>
