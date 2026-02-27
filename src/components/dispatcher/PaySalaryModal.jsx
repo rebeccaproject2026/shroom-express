@@ -42,8 +42,8 @@ const PaySalaryModal = ({ isOpen, onClose, onConfirm, driver }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Pay"
-            maxWidth="max-w-[31rem]"
-            maxHeight="max-h-[27vh]"         // narrow like screenshot
+            maxWidth="max-w-[95vw] sm:max-w-[31rem]"
+            maxHeight="max-h-[35vh] lg:max-h-[40vh]"         // narrow like screenshot
             actions={[
                 {
                     icon: X,

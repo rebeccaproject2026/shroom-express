@@ -38,41 +38,41 @@ const CancelReason = ({ isOpen, onClose, onSubmit, order }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Cancel Reason"
-            maxWidth="max-w-[31rem]"
-            maxHeight="max-h-[42vh]"         // narrow like screenshot
+            maxWidth="max-w-[95vw] sm:max-w-[31rem]"
+            maxHeight="max-h-[90vh] sm:max-h-[53vh] lg:max-h-[48vh]"
             actions={[
                 {
                     icon: X,
                     onClick: onClose,
                     className: "!border-0 !bg-transparent !px-0 !py-0",
-                    iconClassName: "w-6 h-6 text-gray-500 stroke-[2.5]",
+                    iconClassName: "w-5 sm:w-6 h-5 sm:h-6 text-gray-500 stroke-[2.5]",
                 },
             ]}
         >
-            <div className="px-1 pb-3.5  space-y-4 text-[16px]  text-[#212121]">
+            <div className="px-1 pb-2 sm:pb-3.5 space-y-3 sm:space-y-4 text-sm sm:text-[16px] text-[#212121]">
                 {/* Complaint by – radio buttons */}
-                <div className="space-y-4">
-                    <div className="font-medium text-[#212529]/75">Cancelled by:</div>
+                <div className="space-y-2 sm:space-y-4">
+                    <div className="font-medium text-sm sm:text-base text-[#212529]/75">Cancelled by:</div>
 
-                    <div className="flex flex-wrap gap-x-6 gap-y-2">
+                    <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
                         {['Client', 'Driver', 'Dispatcher', 'Master'].map((option) => (
-                            <label key={option} className="flex items-center gap-2 cursor-pointer text-[#212529]">
+                            <label key={option} className="flex items-center gap-1.5 sm:gap-2 cursor-pointer text-[#212529]">
                                 <input
                                     type="radio"
                                     name="Please enter cancel reason"
                                     value={option}
                                     checked={selectedBy === option}
                                     onChange={() => handleRadioChange(option)}
-                                    className="w-4 h-4 accent-blue-600"
+                                    className="w-3.5 sm:w-4 h-3.5 sm:h-4 accent-blue-600"
                                 />
-                                <span className="text-[#212529] font-medium">{option}</span>
+                                <span className="text-[#212529] text-sm sm:text-base font-medium">{option}</span>
                             </label>
                         ))}
                     </div>
                 </div>
 
                 {/* Complaint textarea */}
-                <div className="space-y-1.5">
+                <div className="space-y-1 sm:space-y-1.5">
                     <textarea
                         value={cancelReasonText}
                         onChange={(e) => {
@@ -82,33 +82,33 @@ const CancelReason = ({ isOpen, onClose, onSubmit, order }) => {
                         placeholder="Complaint"
                         rows={3}
                         className={`
-              w-full px-3 py-2.5 text-base border border-[#DDDDDD] rounded-sm 
+              w-full px-2 sm:px-3 py-2 sm:py-2.5 text-sm sm:text-base border border-[#DDDDDD] rounded-sm 
               focus:outline-none  resize-y
               ${error ? 'border-red-500' : ''}
             `}
                     />
 
                     {error && (
-                        <p className="text-sm text-red-600">{error}</p>
+                        <p className="text-xs sm:text-sm text-red-600">{error}</p>
                     )}
                 </div>
             </div>
 
             {/* Buttons */}
             {/* Buttons – green & red, full width, rounded, icons */}
-            <div className="flex gap-2 ">
+            <div className="flex gap-1.5 sm:gap-2">
                 <button
                     onClick={handleSubmit}
-                    className="flex-1 py-2.5 bg-[#28a745] hover:bg-[#218838] text-white font-semibold rounded-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 py-2 sm:py-2.5 bg-[#28a745] hover:bg-[#218838] text-white text-sm sm:text-base font-semibold rounded-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
                 >
                     <span>✓</span> Yes
                 </button>
 
                 <button
                     onClick={onClose}
-                    className="flex-1 py-2.5 bg-[#dc3545] hover:bg-[#c82333] text-white font-semibold rounded-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 py-2 sm:py-2.5 bg-[#dc3545] hover:bg-[#c82333] text-white text-sm sm:text-base font-semibold rounded-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
                 >
-                    <Icon icon="ph:x-bold" width="24" height="24" /> No
+                    <Icon icon="ph:x-bold" width="20" height="20" className="sm:w-6 sm:h-6" /> No
                 </button>
             </div>
         </Dialog>

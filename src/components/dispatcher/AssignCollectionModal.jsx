@@ -60,38 +60,38 @@ const AssignCollectionModal = ({ isOpen, onClose, onConfirm, order }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Confirm Collection Assignment"
-            maxWidth="max-w-[52rem]"
-            maxHeight="max-h-[54vh]"
+            maxWidth="max-w-[95vw] sm:max-w-[52rem]"
+            maxHeight="max-h-[90vh] sm:max-h-[62vh]"
             actions={[
                 {
                     icon: X,
                     onClick: onClose,
                     className: "!border-0 !bg-transparent !px-0 !py-0",
-                    iconClassName: "w-6 h-6 text-gray-500 stroke-[2.5]",
+                    iconClassName: "w-5 sm:w-6 h-5 sm:h-6 text-gray-500 stroke-[2.5]",
                 },
             ]}
         >
-            <div className="px-1 pb-3.5  space-y-5 text-[16px]  text-[#212121]">
+            <div className="px-1 pb-2 sm:pb-3.5 space-y-3 sm:space-y-5 text-sm sm:text-[16px] text-[#212121]">
                 {/* Confirmation text */}
-                <p className="font-semibold  leading-relaxed">
+                <p className="font-semibold text-sm sm:text-base leading-relaxed">
                     Are you sure you want to assign this collection to the driver?
                 </p>
 
                 {/* Details list – left aligned with colon */}
-                <div className="space-y-6 font-medium">
+                <div className="space-y-3 sm:space-y-6 font-medium">
                     <div>
-                        <span className="font-medium text-[#212529]/75">Order ID: </span>
-                        <span className=" text-[#212529]">#{order.orderId || order._id || 'N/A'}</span>
+                        <span className="font-medium text-sm sm:text-base text-[#212529]/75">Order ID: </span>
+                        <span className="text-sm sm:text-base text-[#212529]">#{order.orderId || order._id || 'N/A'}</span>
                     </div>
 
                     <div>
-                        <span className="text-[#212529]/75">Client Name: </span>
-                        <span>{order.client?.fullName || 'Current Client Name'}</span>
+                        <span className="text-sm sm:text-base text-[#212529]/75">Client Name: </span>
+                        <span className="text-sm sm:text-base">{order.client?.fullName || 'Current Client Name'}</span>
                     </div>
 
                     <div>
-                        <span className="text-[#212529]/75">Driver Name: </span>
-                        <span>
+                        <span className="text-sm sm:text-base text-[#212529]/75">Driver Name: </span>
+                        <span className="text-sm sm:text-base">
                             {order.driver?.fullName ||
                                 order.driver?.name ||
                                 'Current Driver Name'}
@@ -99,16 +99,16 @@ const AssignCollectionModal = ({ isOpen, onClose, onConfirm, order }) => {
                     </div>
 
                     <div>
-                        <span className="text-[#212529]/75">Unpaid Collection: </span>
-                        <span className=" font-medium">
+                        <span className="text-sm sm:text-base text-[#212529]/75">Unpaid Collection: </span>
+                        <span className="text-sm sm:text-base font-medium">
                             ${unpaid.toFixed(2)}
                         </span>
                     </div>
                 </div>
 
                 {/* Paying Collection field */}
-                <div className="flex">
-                    <div className="font-medium mt-2.5 mr-2 text-[#212529]/75 ">Paying Collection: </div>
+                <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-0">
+                    <div className="font-medium text-sm sm:text-base sm:mt-2.5 sm:mr-2 text-[#212529]/75">Paying Collection: </div>
 
                     <Input
                         type="number"
@@ -120,8 +120,8 @@ const AssignCollectionModal = ({ isOpen, onClose, onConfirm, order }) => {
                         min="0"
                         max={unpaid}
                         error={!!error}
-                        width="w-137"
-                        className="text-base font-medium w-1.5"
+                        width="w-full sm:w-137"
+                        className="text-sm sm:text-base font-medium"
                     // If your Input has compact mode:
                     // compact={true}
                     />
@@ -129,19 +129,19 @@ const AssignCollectionModal = ({ isOpen, onClose, onConfirm, order }) => {
             </div>
 
             {/* Buttons – green & red, full width, rounded, icons */}
-            <div className="flex gap-2 ">
+            <div className="flex gap-1.5 sm:gap-2">
                 <button
                     onClick={handleSubmit}
-                    className="flex-1 py-2.5 bg-[#28a745] hover:bg-[#218838] text-white font-semibold rounded-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 py-2 sm:py-2.5 bg-[#28a745] hover:bg-[#218838] text-white text-sm sm:text-base font-semibold rounded-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
                 >
-                    <span>✓</span> Yes, Assign
+                    <span>✓</span> <span className="hidden sm:inline">Yes, Assign</span><span className="sm:hidden">Assign</span>
                 </button>
 
                 <button
                     onClick={onClose}
-                    className="flex-1 py-2.5 bg-[#dc3545] hover:bg-[#c82333] text-white font-semibold rounded-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 py-2 sm:py-2.5 bg-[#dc3545] hover:bg-[#c82333] text-white text-sm sm:text-base font-semibold rounded-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
                 >
-                    <Icon icon="ph:x-bold" width="24" height="24" /> Cancel
+                    <Icon icon="ph:x-bold" width="20" height="20" className="sm:w-6 sm:h-6" /> Cancel
                 </button>
             </div>
         </Dialog >

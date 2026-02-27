@@ -127,26 +127,26 @@ const DispatcherAreaMap = ({ areas = [] }) => {
     // }, [areas]);
 
     return (
-        <div className="bg-white rounded-xl shadow-sm p-4">
+        <div className="bg-white rounded-xl shadow-sm p-2 sm:p-4">
 
             {/* MAP */}
-            <div className="w-full h-[450px] rounded-sm overflow-hidden border border-[#DDDDDD]">
+            <div className="w-full h-[300px] sm:h-[450px] rounded-sm overflow-hidden border border-[#DDDDDD]">
                 <div ref={mapContainer} className="w-full h-full" />
             </div>
 
             {/* AREA CODES TITLE */}
-            <div className="mt-4">
-                <span className="text-[#212529]/70 text-base font-medium  py-1 rounded-sm">
+            <div className="mt-3 sm:mt-4">
+                <span className="text-[#212529]/70 text-sm sm:text-base font-medium  py-1 rounded-sm">
                     Area Codes
                 </span>
             </div>
 
             {/* BADGES */}
-            <div className="flex flex-wrap gap-2 mt-3">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                 {areas.map((area, index) => (
                     <span
                         key={index}
-                        className="px-3 py-1 text-sm bg-[#f0f1f3] text-[#424143] font-medium rounded-sm"
+                        className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-[#f0f1f3] text-[#424143] font-medium rounded-sm"
                     >
                         {area}
                     </span>

@@ -49,25 +49,25 @@ const OrderPage = ({
     <div className="w-full">
       {/* Header Controls - Inline */}
       {showFilters && (
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-3 sm:mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
           {/* Search Input */}
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
             <input
               type="text"
               placeholder="Search for order ID, customer, order status or something..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-sm text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 bg-white border border-gray-200 rounded-sm text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 
           {/* Status Filter Dropdown */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="appearance-none bg-white border border-gray-200 rounded-sm pl-4 pr-10 py-2.5 text-sm font-medium text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="appearance-none bg-white border border-gray-200 rounded-sm pl-3 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
             >
               <option value="all">All Order Status</option>
               <option value="pending">Pending</option>
@@ -75,13 +75,13 @@ const OrderPage = ({
               <option value="delivered">Delivered</option>
               <option value="cancelled">Cancelled</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+            <ChevronDown className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 w-3.5 sm:w-4 h-3.5 sm:h-4 text-gray-500 pointer-events-none" />
           </div>
         </div>
       )}
 
       {/* Order Cards */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {filteredOrders.map((order) => (
           <OrderStatusCard
             key={order.id}
@@ -94,11 +94,11 @@ const OrderPage = ({
         ))}
 
         {filteredOrders.length === 0 && (
-          <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-            <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white border border-gray-200 rounded-lg p-8 sm:p-12 text-center">
+            <svg className="w-12 sm:w-16 h-12 sm:h-16 mx-auto mb-3 sm:mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
             </svg>
-            <p className="text-gray-500 text-sm">No orders found</p>
+            <p className="text-gray-500 text-xs sm:text-sm">No orders found</p>
           </div>
         )}
       </div>

@@ -489,7 +489,7 @@ const Dispatcher = () => {
                   key={tab.key}
                   type="button"
                   onClick={() => setStatusTab(tab.key)}
-                  className={`px-2 py-1.5 w-full text-xs esm:text-sm m-1 rounded font-medium whitespace-nowrap ${statusTab === tab.key
+                  className={`px-1.5 sm:px-2 py-1.5 w-full text-[10px] sm:text-xs lg:text-sm m-0.5 sm:m-1 rounded font-medium whitespace-nowrap ${statusTab === tab.key
                     ? "bg-(--color-secondary) text-white"
                     : "text-gray-600 hover:bg-gray-50"
                     }`}

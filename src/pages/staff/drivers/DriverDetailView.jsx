@@ -330,7 +330,7 @@ const DriverDetailView = ({ data }) => {
       ),
       labels: {
         style: {
-          fontSize: "11px",
+          fontSize: window.innerWidth < 640 ? "9px" : "11px",
           colors: "#666",
         },
       },
@@ -341,22 +341,22 @@ const DriverDetailView = ({ data }) => {
       tickAmount: 5,
       labels: {
         style: {
-          fontSize: "11px",
+          fontSize: window.innerWidth < 640 ? "9px" : "11px",
           colors: "#666",
         },
       },
     },
     legend: {
       position: "top",
-      horizontalAlign: "right",
-      fontSize: "12px",
+      horizontalAlign: window.innerWidth < 640 ? "center" : "right",
+      fontSize: window.innerWidth < 640 ? "10px" : "12px",
       markers: {
-        width: 10,
-        height: 10,
+        width: window.innerWidth < 640 ? 8 : 10,
+        height: window.innerWidth < 640 ? 8 : 10,
         radius: 10,
       },
       itemMargin: {
-        horizontal: 10,
+        horizontal: window.innerWidth < 640 ? 5 : 10,
         vertical: 0,
       },
     },
@@ -431,80 +431,80 @@ const DriverDetailView = ({ data }) => {
   );
 
   return (
-    <div className="flex flex-col gap-2 min-w-0 px-2.5 py-3">
+    <div className="flex flex-col gap-2 min-w-0 px-2 sm:px-2.5 py-2 sm:py-3">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button onClick={() => navigate("/staff/drivers")}>
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        <div className="flex items-start sm:items-center gap-2 sm:gap-3">
+          <button onClick={() => navigate("/staff/drivers")} className="mt-1 sm:mt-0">
+            <ArrowLeft className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600" />
           </button>
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-              <User className="w-6 h-6 text-gray-500" />
+          <div className="flex esm:flex-row flex-col items-start sm:items-center gap-2 flex-1">
+            <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+              <User className="w-5 sm:w-6 h-5 sm:h-6 text-gray-500" />
             </div>
-            <div>
-              <h1 className="text-base font-medium text-[#424143] flex items-center gap-6">
-                David Doe (M2X 3X0) - Driver by Shroom-express
-                <MessageCircleMore className="h-4 w-4 stroke-2" />
+            <div className="flex-1 min-w-0">
+              <h1 className="text-sm sm:text-base font-medium text-[#424143] flex flex-wrap items-center gap-2 sm:gap-6">
+                <span className="wrap-break-word">David Doe (M2X 3X0) - Driver by Shroom-express</span>
+                <MessageCircleMore className="h-3.5 sm:h-4 w-3.5 sm:w-4 stroke-2 shrink-0" />
               </h1>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-1">
                 <button
                   onClick={() => setIsContactDrawerOpen(true)}
-                  className="text-sm border-b text-black font-semibold flex items-center gap-1 cursor-pointer"
+                  className="text-xs sm:text-sm border-b text-black font-semibold flex items-center gap-1 cursor-pointer whitespace-nowrap"
                 >
-                  <Eye className="w-4 h-4 stroke-2" />
+                  <Eye className="w-3 sm:w-4 h-3 sm:h-4 stroke-2" />
                   Contact Info
                 </button>
-                <button className="text-sm text-[#0066FF] font-semibold border-b flex items-center gap-1">
-                  <Download className="w-4 h-4 stroke-2" />
+                <button className="text-xs sm:text-sm text-[#0066FF] font-semibold border-b flex items-center gap-1 whitespace-nowrap">
+                  <Download className="w-3 sm:w-4 h-3 sm:h-4 stroke-2" />
                   Download APK
                 </button>
-                <button className="text-sm border-b text-black font-semibold flex items-center gap-1">
-                  <KeyRound className="w-4 h-4 stroke-2" /> Generate Password
+                <button className="text-xs sm:text-sm border-b text-black font-semibold flex items-center gap-1 whitespace-nowrap">
+                  <KeyRound className="w-3 sm:w-4 h-3 sm:h-4 stroke-2" /> Generate Password
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-2.5 text-sm ">
+        <div className="esm:flex grid grid-cols-1 flex-wrap items-center justify-start lg:justify-center gap-2 text-xs sm:text-sm">
           <button
             type="button"
-            className="flex items-center cursor-pointer justify-center gap-1 bg-[#FF9800] font-semibold p-2.5 rounded-sm text-white h-10"
+            className="flex items-center cursor-pointer justify-center gap-1 bg-[#FF9800] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm text-white h-9 sm:h-10 whitespace-nowrap"
           >
-            <CircleQuestionMark className="h-4 w-4" /> Complaints
+            <CircleQuestionMark className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Complaints
           </button>
           <button
             type="button"
-            className="flex items-center cursor-pointer justify-center gap-1 bg-[#0066FF] font-semibold p-2.5 rounded-sm text-white h-10"
+            className="flex items-center cursor-pointer justify-center gap-1 bg-[#0066FF] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm text-white h-9 sm:h-10 whitespace-nowrap"
           >
-            <Coins className="h-4 w-4" /> Pay Salary
+            <Coins className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Pay Salary
           </button>
           {!isHired ? (
             <button
               type="button"
               onClick={() => setIsHired(true)}
-              className="flex items-center cursor-pointer justify-center gap-1 bg-[#109F22] font-semibold p-2.5 rounded-sm h-10 text-white"
+              className="flex items-center cursor-pointer justify-center gap-1 bg-[#109F22] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-9 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-4 w-4" /> Hire Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Hire Now
             </button>
           ) : (
             <button
               type="button"
               onClick={() => setIsHired(false)}
-              className="flex items-center cursor-pointer justify-center gap-1 bg-[#F44336] font-semibold p-2.5 rounded-sm h-10 text-white"
+              className="flex items-center cursor-pointer justify-center gap-1 bg-[#F44336] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-9 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-4 w-4" /> Relieve Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Relieve Now
             </button>
           )}
           <DatePickerMap
             defaultItem={2}
             onUpdate={onDateUpdate}
-            className="h-10 sm:*:w-44"
+            className="h-9 sm:h-10 *:w-full sm:w-auto sm:*:w-44"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-2">
         {STATS_DATA.map((card) => (
           <FinanceSummaryCard
             key={card.label}
@@ -517,16 +517,16 @@ const DriverDetailView = ({ data }) => {
       </div>
 
       {/* Detail Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2">
         {DETAIL_STATS.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-3 rounded-sm border border-[#F4F7FE] flex items-center justify-between"
+            className="bg-white p-2 sm:p-3 rounded-sm border border-[#F4F7FE] flex items-center justify-between"
           >
-            <p className="text-[13px] font-semibold text-[#3F4753]">
+            <p className="text-[11px] sm:text-[13px] font-semibold text-[#3F4753]">
               {stat.label}
             </p>
-            <span className="text-base font-semibold text-black">
+            <span className="text-sm sm:text-base font-semibold text-black">
               {stat.value}
             </span>
           </div>
@@ -534,62 +534,67 @@ const DriverDetailView = ({ data }) => {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-semibold text-black">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between mb-3 sm:mb-4 gap-2">
+          <h2 className="text-sm sm:text-base font-semibold text-black">
             Track Deliveries
           </h2>
 
           {/* Tabs */}
-          <div className="flex items-center gap-2 border border-[#969696] bg-white rounded-sm p-0.5">
+          <div className="flex items-center justify-between gap-0.5 sm:gap-2 border border-[#969696] bg-white rounded-sm p-0.5 overflow-x-auto hide-scrollbar">
             <button
               onClick={() => setActiveTab("live-status")}
-              className={`flex items-center gap-2 w-37.5 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors ${activeTab === "live-status"
+              className={`flex items-center gap-1 sm:gap-2 w-auto sm:w-37.5 justify-center px-2 sm:px-3 py-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap ${activeTab === "live-status"
                 ? "bg-[#0066FF] text-white"
                 : "text-[#212121]"
                 }`}
             >
-              <MapPin className="w-4 h-4" />
-              Live Status
+              <MapPin className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+              <span className="hidden sm:inline">Live Status</span>
+              <span className="sm:hidden">Live</span>
             </button>
             <button
               onClick={() => setActiveTab("order-history")}
-              className={`flex items-center gap-2 w-37.5 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors ${activeTab === "order-history"
+              className={`flex items-center gap-1 sm:gap-2 w-auto sm:w-37.5 justify-center px-2 sm:px-3 py-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap ${activeTab === "order-history"
                 ? "bg-[#0066FF] text-white"
                 : "text-[#212121]"
                 }`}
             >
-              <History className="h-4 w-4" />
-              Order History
+              <History className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+              <span className="hidden sm:inline">Order History</span>
+              <span className="sm:hidden">Orders</span>
             </button>
             <button
               onClick={() => setActiveTab("log-activity")}
-              className={`flex items-center gap-2 w-37.5 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors ${activeTab === "log-activity"
+              className={`flex items-center gap-1 sm:gap-2 w-auto sm:w-37.5 justify-center px-2 sm:px-3 py-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap ${activeTab === "log-activity"
                 ? "bg-[#0066FF] text-white"
                 : "text-[#212121]"
                 }`}
             >
-              <ReceiptText className="w-4 h-4" />
-              Log Activity
+              <ReceiptText className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+              <span className="hidden sm:inline">Log Activity</span>
+              <span className="sm:hidden">Log</span>
             </button>
             <button
               onClick={() => setActiveTab("payroll-history")}
-              className={`flex items-center gap-2 w-37.5 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors ${activeTab === "payroll-history"
+              className={`flex items-center gap-1 sm:gap-2 w-auto sm:w-37.5 justify-center px-2 sm:px-3 py-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap ${activeTab === "payroll-history"
                 ? "bg-[#0066FF] text-white"
                 : "text-[#212121]"
                 }`}
             >
-              <BanknoteArrowDown className="h-4 w-4" />
-              Payroll History
+              <BanknoteArrowDown className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+              <span className="hidden sm:inline">Payroll History</span>
+              <span className="sm:hidden">Payroll</span>
             </button>
             <button
               onClick={() => setActiveTab("performance")}
-              className={`flex items-center gap-2 w-37.5 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors ${activeTab === "performance"
+              className={`flex items-center gap-1 sm:gap-2 w-auto sm:w-37.5 justify-center px-2 sm:px-3 py-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap ${activeTab === "performance"
                 ? "bg-[#0066FF] text-white"
                 : "text-[#212121]"
                 }`}
             >
-              <ChartNoAxesColumnIncreasing className="h-4 w-4 stroke-4" />
-              Performance
+              <ChartNoAxesColumnIncreasing className="h-3.5 sm:h-4 w-3.5 sm:w-4 stroke-4" />
+              <span className="hidden sm:inline">Performance</span>
+              <span className="sm:hidden">Perf</span>
             </button>
           </div>
         </div>
@@ -638,49 +643,49 @@ const DriverDetailView = ({ data }) => {
             onOrderAction={handleOrderAction}
           />
         )}
-        {(activeTab === "log-activity" || activeTab === "payroll-history" || activeTab === "performance") && (
-          <>
-            {activeTab === "log-activity" && (
-              <LogActivityTimeline
-                logData={LOG_ACTIVITY}
-                expandedLogIds={expandedLogIds}
-                toggleLogExpand={toggleLogExpand}
-                onlineTime="112.5 hrs"
-                offlineTime="30 hrs"
-              />
-            )}
+        {activeTab === "log-activity" && (
+          <LogActivityTimeline
+            logData={LOG_ACTIVITY}
+            expandedLogIds={expandedLogIds}
+            toggleLogExpand={toggleLogExpand}
+            onlineTime="112.5 hrs"
+            offlineTime="30 hrs"
+          />
+        )}
 
-            <div className="bg-white rounded-sm border border-gray-200 p-4">
-              {activeTab === "payroll-history" && (
-                <div className="space-y-4">
-                  {PAYROLL_HISTORY.map((payment) => (
-                    <div
-                      key={payment.id}
-                      className="flex items-center justify-between bg-white border-b border-[#F0F1F3] pb-4"
-                    >
-                      <p className="text-sm text-black font-medium">
-                        {payment.description}
-                      </p>
-                      <span className="text-sm font-bold text-black">
-                        {payment.amount}
-                      </span>
-                    </div>
-                  ))}
+        {activeTab === "payroll-history" && (
+          <div className="bg-white rounded-sm border border-gray-200 p-2 sm:p-4">
+            <div className="space-y-2 sm:space-y-4">
+              {PAYROLL_HISTORY.map((payment) => (
+                <div
+                  key={payment.id}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between bg-white border-b border-[#F0F1F3] pb-2 sm:pb-4 gap-1 sm:gap-2"
+                >
+                  <p className="text-xs sm:text-sm text-black font-medium wrap-break-word">
+                    {payment.description}
+                  </p>
+                  <span className="text-sm sm:text-base font-bold text-black whitespace-nowrap">
+                    {payment.amount}
+                  </span>
                 </div>
-              )}
-
-              {activeTab === "performance" && (
-                <div className="py-4">
-                  <Chart
-                    options={chartOptions}
-                    series={chartData.series}
-                    type="bar"
-                    height={350}
-                  />
-                </div>
-              )}
+              ))}
             </div>
-          </>
+          </div>
+        )}
+
+        {activeTab === "performance" && (
+          <div className="bg-white rounded-sm border border-gray-200 p-2 sm:p-4">
+            <div className="py-2 sm:py-4 overflow-x-auto">
+              <div className="min-w-75">
+                <Chart
+                  options={chartOptions}
+                  series={chartData.series}
+                  type="bar"
+                  height={window.innerWidth < 640 ? 250 : 350}
+                />
+              </div>
+            </div>
+          </div>
         )}
       </div>
 

@@ -370,10 +370,10 @@ const Drivers = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <div className="flex flex-col gap-2 min-w-0 px-2.5 py-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <DatePickerMap defaultItem={2} onUpdate={onDateUpdate} className="h-10 sm:*:w-76" />
-        <div className="flex items-center gap-2">
+    <div className="flex flex-col gap-2 min-w-0 px-2 sm:px-2.5 py-2 sm:py-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+        <DatePickerMap defaultItem={2} onUpdate={onDateUpdate} className="h-10 *:w-full sm:w-auto sm:*:w-76 sm:*:px-6! *:px-2!" />
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
           <Select
             value={selectedDriverFilter}
             onChange={(e) => setSelectedDriverFilter(e.target.value)}
@@ -384,11 +384,11 @@ const Drivers = () => {
               { value: "potrider", label: "Shroom-express Drivers" },
               { value: "you", label: "Your Drivers" },
             ]}
-            customStyle="sm:w-[220px]"
+            customStyle="w-full sm:w-[220px]"
           />
           <Link
             to="/staff/drivers/add-driver"
-            className="inline-flex items-center gap-2 px-3 w-auto max-w-50 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
+            className="inline-flex items-center justify-center gap-2 px-3 w-full sm:w-auto sm:max-w-50 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm whitespace-nowrap"
           >
             <span className="text-lg leading-none">+</span>
             Add New Driver
@@ -408,8 +408,9 @@ const Drivers = () => {
       </div>
 
       <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden p-4">
-        <div className="flex items-center gap-2">
-          <div className="w-full relative">
+        <div className="flex lg:flex-row flex-col items-center gap-2">
+          <div className="w-full flex items-center gap-2">
+            <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
@@ -418,6 +419,14 @@ const Drivers = () => {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-sm border border-[#DDDDDD] rounded-sm bg-white focus:outline-none"
             />
+            </div>
+            <button
+            type="button"
+            className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90 lg:hidden block"
+            title="Export"
+          >
+            <Download className="w-4 h-4" />
+          </button>
           </div>
           <div className="flex w-full rounded-sm overflow-hidden border border-[#969696] bg-white">
             {STATUS_TABS.map((tab) => (
@@ -437,7 +446,7 @@ const Drivers = () => {
 
           <button
             type="button"
-            className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90"
+            className="p-2.5 rounded-[5px] bg-(--color-primary) text-white hover:opacity-90 lg:block hidden"
             title="Export"
           >
             <Download className="w-4 h-4" />
@@ -454,7 +463,7 @@ const Drivers = () => {
                     return (
                       <th
                         key={header.id}
-                        className={`py-2.5 text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isCenter ? "text-center" : "text-left"}`}
+                        className={`py-2.5 truncate text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isCenter ? "text-center" : "text-left"}`}
                       >
                         {header.isPlaceholder
                           ? null
@@ -474,7 +483,7 @@ const Drivers = () => {
                   {row.getVisibleCells().map((cell) => {
                     const isCenter = cell.column.id === "status" || cell.column.id === "action";
                     return (
-                      <td key={cell.id} className={`px-1.5 py-2 text-[12px] text-[#3F4753] align-middle ${isCenter ? "text-center" : "text-left"}`}>
+                      <td key={cell.id} className={`px-1.5 truncate py-2 text-[12px] text-[#3F4753] align-middle ${isCenter ? "text-center" : "text-left"}`}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

@@ -193,65 +193,70 @@ const DriverDetailsDrawer = ({ isOpen, onClose, driver }) => {
     import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} width="w-[88vw] max-w-[100vw]">
+    <Drawer isOpen={isOpen} onClose={onClose} width="w-full lg:w-[88vw] max-w-[100vw]">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-4 bg-gray-50">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between px-2 sm:px-4 py-2 sm:py-4 bg-gray-50 gap-2 sm:gap-3">
+        <div className="flex items-start sm:items-center gap-2">
           <ArrowLeft
-            className="text-[#969696] h-5 w-5 cursor-pointer hover:text-gray-700 transition-colors"
+            className="text-[#969696] h-4 sm:h-5 w-4 sm:w-5 cursor-pointer hover:text-gray-700 transition-colors mt-1 sm:mt-0"
             onClick={onClose}
           />
           <div className="relative">
-            <Image className="rounded-full border p-1 h-8 w-8" />
-            <div className="bg-[#00B159] h-3 w-3 rounded-full absolute right-0 top-6"></div>
+            <Image className="rounded-full border p-1 h-7 sm:h-8 w-7 sm:w-8" />
+            <div className="bg-[#00B159] h-2.5 sm:h-3 w-2.5 sm:w-3 rounded-full absolute right-0 top-5 sm:top-6"></div>
           </div>
-          <div className="flex flex-col gap-1">
-            <h2 className="text-md  text-black">
+          <div className="flex flex-col gap-0.5 sm:gap-1 flex-1 min-w-0">
+            <h2 className="text-xs sm:text-sm lg:text-md text-black wrap-break-word">
               <span className="font-semibold">
                 {driver?.driverName || "N/A"}
               </span>{" "}
               - Driver by Shroom-express
             </h2>
-            <p className="text-md text-[#424143]">
+            <p className="text-xs sm:text-sm lg:text-md text-[#424143] wrap-break-word">
               Delivery Areas - M2X 3X0, M2X 3X1, A1A 1A1
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-2.5 text-sm ">
+        <div className="flex flex-wrap items-center justify-start lg:justify-center gap-1.5 sm:gap-2.5 text-xs sm:text-sm sm:mb-0 mb-2">
           <button
             type="button"
             onClick={() => setIsComplaintsOpen(true)}
-            className="flex items-center cursor-pointer justify-center gap-1 bg-[#FF9800] font-semibold p-2.5 rounded-sm text-white h-10"
+            className="flex items-center cursor-pointer justify-center gap-1 bg-[#FF9800] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm text-white h-8 sm:h-10 whitespace-nowrap"
           >
-            <CircleQuestionMark className="h-4 w-4" /> Complaints
+            <CircleQuestionMark className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> 
+            <span>Complaints</span>
           </button>
           {!isHired ? (
             <button
               type="button"
               onClick={() => setIsHired(true)}
-              className="flex items-center cursor-pointer justify-center gap-1 bg-[#109F22] font-semibold p-2.5 rounded-sm h-10 text-white"
+              className="flex items-center cursor-pointer justify-center gap-1 bg-[#109F22] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-8 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-4 w-4" /> Hire Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> 
+              <span className="hidden sm:inline">Hire Now</span>
+              <span className="sm:hidden">Hire</span>
             </button>
           ) : (
             <button
               type="button"
               onClick={() => setIsHired(false)}
-              className="flex items-center cursor-pointer justify-center gap-1 bg-[#F44336] font-semibold p-2.5 rounded-sm h-10 text-white"
+              className="flex items-center cursor-pointer justify-center gap-1 bg-[#F44336] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-8 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-4 w-4" /> Relieve Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> 
+              <span className="hidden sm:inline">Relieve Now</span>
+              <span className="sm:hidden">Relieve</span>
             </button>
           )}
           <DatePickerMap
             defaultItem={2}
             onUpdate={onDateUpdate}
-            className="h-10 sm:*:w-44"
+            className="h-8 sm:h-10 *:w-full sm:*:w-44"
           />
         </div>
       </div>
 
-      <div className="px-4 flex flex-col gap-2 overflow-y-auto flex-1 bg-gray-50">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 ">
+      <div className="px-2 sm:px-4 flex flex-col gap-2 overflow-y-auto flex-1 bg-gray-50">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
           {CARD_DATA.map((card) => (
             <FinanceSummaryCard
               key={card.title}
@@ -259,21 +264,21 @@ const DriverDetailsDrawer = ({ isOpen, onClose, driver }) => {
               value={card.value}
               change={card.change}
               isPositive={card.isPositive}
-              className="border! border-[#F4F7FE]! bg-white! shadow-none! py-3! px-2.5! rounded-[5px]!"
+              className="border! border-[#F4F7FE]! bg-white! shadow-none! py-2! sm:py-3! px-2! sm:px-2.5! rounded-[5px]!"
             />
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
           {H_CARD.map((card, index) => (
             <div
               key={index}
-              className="flex items-center justify-between bg-white border border-[#F4F7FE] p-4 rounded-[5px]"
+              className="flex items-center justify-between bg-white border border-[#F4F7FE] p-2 sm:p-4 rounded-[5px]"
             >
-              <p className="text-[13px] font-semibold text-[#3F4753]">
+              <p className="text-[11px] sm:text-[13px] font-semibold text-[#3F4753]">
                 {card.title}
               </p>
-              <span className="text-base font-semibold text-black">
+              <span className="text-sm sm:text-base font-semibold text-black">
                 {card.value}
               </span>
             </div>
@@ -281,67 +286,67 @@ const DriverDetailsDrawer = ({ isOpen, onClose, driver }) => {
         </div>
 
         <div>
-          <div className="flex items-center justify-start pb-2.5 mb-2.5 border-b border-[#C5C5C5]">
-            <h2 className="text-[#212121] text-lg font-semibold">
+          <div className="flex items-center justify-start pb-2 sm:pb-2.5 mb-2 sm:mb-2.5 border-b border-[#C5C5C5]">
+            <h2 className="text-[#212121] text-base sm:text-lg font-semibold">
               Driver Details
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-2 sm:mb-3">
             <img
               src={CardImage}
               alt="image-card"
-              className="w-104.75 h-56 border border-[#C5C5C5] rounded-[10px]"
+              className="w-full h-40 sm:h-48 lg:h-56 border border-[#C5C5C5] rounded-[10px] object-cover"
             />
             <img
               src={CardImage}
               alt="image-card"
-              className="w-104.75 h-56 border border-[#C5C5C5] rounded-[10px]"
+              className="w-full h-40 sm:h-48 lg:h-56 border border-[#C5C5C5] rounded-[10px] object-cover"
             />
             <img
               src={CardImage}
               alt="image-card"
-              className="w-104.75 h-56 border border-[#C5C5C5] rounded-[10px]"
+              className="w-full h-40 sm:h-48 lg:h-56 border border-[#C5C5C5] rounded-[10px] object-cover"
             />
             <img
               src={CardImage}
               alt="image-card"
-              className="w-104.75 h-56 border border-[#C5C5C5] rounded-[10px]"
+              className="w-full h-40 sm:h-48 lg:h-56 border border-[#C5C5C5] rounded-[10px] object-cover"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div className="flex flex-col gap-2">
               {DETAILS_1.map((card, index) => (
-                <div key={index} className="flex flex-col gap-1 text-[#212121]">
-                  <p className="text-sm font-medium">{card.title}</p>
-                  <h3 className="text-sm font-semibold">{card.value}</h3>
+                <div key={index} className="flex flex-col gap-0.5 sm:gap-1 text-[#212121]">
+                  <p className="text-xs sm:text-sm font-medium">{card.title}</p>
+                  <h3 className="text-xs sm:text-sm font-semibold break-words">{card.value}</h3>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-col gap-2">
               {DETAILS_2.map((card, index) => (
-                <div key={index} className="flex flex-col gap-1">
-                  <p className="text-sm font-medium">{card.title}</p>
-                  <h3 className="text-sm font-semibold">{card.value}</h3>
+                <div key={index} className="flex flex-col gap-0.5 sm:gap-1">
+                  <p className="text-xs sm:text-sm font-medium">{card.title}</p>
+                  <h3 className="text-xs sm:text-sm font-semibold break-words">{card.value}</h3>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-col gap-2">
               {DETAILS_3.map((card, index) => (
-                <div key={index} className="flex flex-col gap-1">
-                  <p className="text-sm font-medium">{card.title}</p>
-                  <h3 className="text-sm font-semibold">{card.value}</h3>
+                <div key={index} className="flex flex-col gap-0.5 sm:gap-1">
+                  <p className="text-xs sm:text-sm font-medium">{card.title}</p>
+                  <h3 className="text-xs sm:text-sm font-semibold break-words">{card.value}</h3>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-col gap-2">
               {DETAILS_4.map((card, index) => (
-                <div key={index} className="flex flex-col gap-1">
-                  <p className="text-sm font-medium">{card.title}</p>
-                  <h3 className="text-sm font-semibold">{card.value}</h3>
+                <div key={index} className="flex flex-col gap-0.5 sm:gap-1">
+                  <p className="text-xs sm:text-sm font-medium">{card.title}</p>
+                  <h3 className="text-xs sm:text-sm font-semibold break-words">{card.value}</h3>
                 </div>
               ))}
             </div>
@@ -349,40 +354,40 @@ const DriverDetailsDrawer = ({ isOpen, onClose, driver }) => {
         </div>
 
         <div>
-          <div className="flex items-center justify-start pb-2.5 mb-2.5 border-b border-[#C5C5C5]">
-            <h2 className="text-[#212121] text-lg font-semibold">
+          <div className="flex items-center justify-start pb-2 sm:pb-2.5 mb-2 sm:mb-2.5 border-b border-[#C5C5C5]">
+            <h2 className="text-[#212121] text-base sm:text-lg font-semibold">
               Areas of Delivery
             </h2>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <span className="px-4 py-1.5 bg-[#0066FF] text-white text-sm font-medium rounded-full">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#0066FF] text-white text-xs sm:text-sm font-medium rounded-full">
               M2N 3X1
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               M2N 3X2
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               M3N 3X0
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               Z2N 4X0
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               M2N 3X2
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               Z2N 4X0
             </span>
-            <span className="px-4 py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-sm font-medium rounded-full">
+            <span className="px-3 sm:px-4 py-1 sm:py-1.5 bg-[#E8F1FF] text-[#5A5A5A] text-xs sm:text-sm font-medium rounded-full">
               M2N 3X2
             </span>
           </div>
           {/* Map */}
-          <div className="w-full h-75 rounded-sm overflow-hidden bg-[#EEF1F4] mt-2.5">
+          <div className="w-full h-60 sm:h-75 rounded-sm overflow-hidden bg-[#EEF1F4] mt-2 sm:mt-2.5">
             {hasMapToken ? (
               <div ref={mapContainerRef} className="w-full h-full" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">
+              <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs sm:text-sm">
                 Map preview
               </div>
             )}

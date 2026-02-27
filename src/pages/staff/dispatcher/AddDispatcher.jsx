@@ -296,18 +296,18 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
         <Drawer
             isOpen={isOpen}
             onClose={onClose}
-            width="w-[88vw] max-w-[100vw]"
+            width="w-full sm:w-[95vw] md:w-[90vw] lg:w-[88vw] max-w-[100vw]"
         >
             {/* Fixed Header */}
-            <div className="flex items-center justify-between px-4 py-3.5 border-b border-[#DDDDDD] bg-white">
-                <h2 className="text-xl font-semibold text-[#212121]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-3 sm:px-4 py-3 sm:py-3.5 border-b border-[#DDDDDD] bg-white gap-3 sm:gap-0">
+                <h2 className="text-lg sm:text-xl font-semibold text-[#212121]">
                     {isEdit ? "Edit Dispatcher" : "Add Dispatcher"}
                 </h2>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full sm:w-auto">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-sm hover:bg-gray-50 transition-colors cursor-pointer"
+                        className="inline-flex flex-1 sm:flex-initial items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-xs sm:text-sm hover:bg-gray-50 transition-colors cursor-pointer"
                     >
                         <X className="w-4 h-4" />
                         Close
@@ -315,7 +315,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                     <button
                         type="button"
                         onClick={handleSubmit}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer"
+                        className="inline-flex flex-1 sm:flex-initial items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-xs sm:text-sm hover:opacity-90 transition-opacity cursor-pointer"
                     >
                         <ArrowUp className="w-4 h-4" />
                         Save
@@ -324,15 +324,15 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto px-4 py-2 ">
+            <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-2">
                 {/* Dispatcher Details Section Header */}
-                <h3 className="text-lg font-semibold text-[#212121] mb-4">
+                <h3 className="text-base sm:text-lg font-semibold text-[#212121] mb-3 sm:mb-4">
                     Dispatcher Details
                 </h3>
 
                 <div className="flex flex-col gap-4">
                     {/* Form Grid - 4 columns */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2">
                         {/* Row 1 */}
                         <Input
                             label="Dispatcher Name"
@@ -340,7 +340,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.dispatcherName}
                             onChange={handleChange}
                             placeholder="Enter full name"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -350,7 +350,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.dob}
                             onChange={handleChange}
                             placeholder="DD/MM/YYYY"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -360,7 +360,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="Enter your number"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -370,7 +370,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Enter your email address"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -380,7 +380,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.address}
                             onChange={handleChange}
                             placeholder="Enter Salary"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -390,7 +390,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.address}
                             onChange={handleChange}
                             placeholder="Enter your address"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <Input
@@ -400,7 +400,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.city}
                             onChange={handleChange}
                             placeholder="Enter your city name"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
 
@@ -412,11 +412,11 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             value={formData.postalCode}
                             onChange={handleChange}
                             placeholder="Enter your zip code"
-                            labelClassName="text-sm font-medium text-[#212121]"
+                            labelClassName="text-xs sm:text-sm font-medium text-[#212121]"
                             className="border-[#DDDDDD] rounded-sm text-sm py-2!"
                         />
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-medium text-[#212121]">
+                            <label className="text-xs sm:text-sm font-medium text-[#212121]">
                                 Country
                             </label>
                             <Select
@@ -432,7 +432,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                             />
                         </div>
                         <div className="flex flex-col gap-1">
-                            <label className="text-sm font-medium text-[#212121]">
+                            <label className="text-xs sm:text-sm font-medium text-[#212121]">
                                 Province
                             </label>
                             <Select
@@ -457,25 +457,25 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                     />
                     {/* Work Schedule Section */}
                     <div className="flex flex-col gap-2 mt-2">
-                        <h2 className="text-base font-semibold text-[#212121]">
+                        <h2 className="text-sm sm:text-base font-semibold text-[#212121]">
                             Work Schedule
                         </h2>
 
-                        <p className="text-sm text-gray-500">
+                        <p className="text-xs sm:text-sm text-gray-500">
                             Select Working Days
                         </p>
 
                         {/* Days Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-2.5">
                             {daysOfWeek.map((day) => (
                                 <div
                                     key={day.key}
                                     onClick={() => handleWorkingDayChange(day.key)}
-                                    className={`flex items-center gap-4 px-4 py-3 border rounded-sm cursor-pointer transition-all border border-[#DDDDDD]`}
+                                    className={`flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-2.5 sm:py-3 border rounded-sm cursor-pointer transition-all border border-[#DDDDDD]`}
                                 >
                                     {/* Circle */}
                                     <div
-                                        className={`w-5 h-5 flex items-center justify-center rounded-full 
+                                        className={`w-5 h-5 flex items-center justify-center rounded-full shrink-0
           ${workingDays[day.key]
                                                 ? "bg-[var(--color-secondary)]"
                                                 : "border border-gray-400"
@@ -485,7 +485,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                                         )}
                                     </div>
 
-                                    <span className="text-sm font-medium text-[#212121]">
+                                    <span className="text-xs sm:text-sm font-medium text-[#212121]">
                                         {day.label}
                                     </span>
                                 </div>
@@ -494,12 +494,12 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
 
                         {/* Working Hours (Only show first selected day like screenshot) */}
                         {Object.keys(workingDays).some((d) => workingDays[d]) && (
-                            <div className="mt-4 flex flex-col gap-6">
+                            <div className="mt-3 sm:mt-4 flex flex-col gap-4 sm:gap-6">
                                 {daysOfWeek.map(
                                     (day) =>
                                         workingDays[day.key] && (
                                             <div key={day.key} className="w-full">
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
                                                     {/* START TIME */}
                                                     <Input
                                                         type="time"
@@ -515,7 +515,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                                                         width="full"
                                                         compact
                                                         className="border-gray-300 text-[#212529]/60"
-                                                        labelClassName="text-sm font-medium text-[#212529]/60"
+                                                        labelClassName="text-xs sm:text-sm font-medium text-[#212529]/60"
                                                     />
 
                                                     {/* END TIME */}
@@ -532,7 +532,7 @@ const AddDispatcher = ({ isOpen, onClose, isEdit = false, dispatcherData }) => {
                                                         }
                                                         width="full"
                                                         compact
-                                                        labelClassName="text-sm font-medium text-[#212529]/60"
+                                                        labelClassName="text-xs sm:text-sm font-medium text-[#212529]/60"
                                                         className="border-gray-300 text-[#212529]/60"
                                                     />
 
