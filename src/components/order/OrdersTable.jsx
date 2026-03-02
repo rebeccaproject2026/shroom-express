@@ -32,9 +32,9 @@ const OrdersTable = ({
   onStatusClick,
   onView,
   onDelete,
-  // onCustomerClick,
-  // onCourierClick,
-  // onPaymentStatusClick,
+  onCustomerClick,
+  onCourierClick,
+  onPaymentStatusClick,
 }) => {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -357,6 +357,10 @@ const OrdersTable = ({
               order={order}
               onView={onView}
               onDelete={onDelete}
+              onCustomerClick={onCustomerClick}
+              onCourierClick={onCourierClick}
+              onPaymentMethodClick={onPaymentStatusClick}
+              onStatusClick={onStatusClick}
             />
           ))
         ) : (

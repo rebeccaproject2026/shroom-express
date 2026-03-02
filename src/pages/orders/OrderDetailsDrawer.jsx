@@ -820,7 +820,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-semibold text-gray-900 block mb-1">Select Genetics</label>
+                        <label className="text-sm font-semibold text-gray-900 block mb-1">Sub Category</label>
                         <Select
                           value={selectedGenetics}
                           onChange={(e) => setSelectedGenetics(e.target.value)}
@@ -829,52 +829,7 @@ const OrderDetailsDrawer = ({ isOpen, onClose, selectedOrder }) => {
                             { value: "Genetics 1", label: "Genetics 1" },
                             { value: "Genetics 2", label: "Genetics 2" },
                           ]}
-                          placeholder="Select Genetics"
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 mb-4">
-                      <div>
-                        <label className="text-sm font-semibold text-gray-900 block mb-1">Select CBD:</label>
-                        <Select
-                          value={selectedGenetics}
-                          onChange={(e) => setSelectedCBD(e.target.value)}
-                          options={[
-                            { value: "All", label: "All" },
-                            { value: "Genetics 1", label: "Genetics 1" },
-                            { value: "Genetics 2", label: "Genetics 2" },
-                          ]}
-                          placeholder="Select Genetics"
-                          className="w-full"
-                          minWidth={150}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-semibold text-gray-900 block mb-1">Select CBN:</label>
-                        <Select
-                          value={selectedGenetics}
-                          onChange={(e) => setSelectedCBN(e.target.value)}
-                          options={[
-                            { value: "All", label: "All" },
-                            { value: "Genetics 1", label: "Genetics 1" },
-                            { value: "Genetics 2", label: "Genetics 2" },
-                          ]}
-                          placeholder="Select Genetics"
-                          className="w-full"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-semibold text-gray-900 block mb-1">Select THC:</label>
-                        <Select
-                          value={selectedGenetics}
-                          onChange={(e) => setSelectedTHC(e.target.value)}
-                          options={[
-                            { value: "All", label: "All" },
-                            { value: "Genetics 1", label: "Genetics 1" },
-                            { value: "Genetics 2", label: "Genetics 2" },
-                          ]}
-                          placeholder="Select Genetics"
+                          placeholder="Sub Category"
                           className="w-full"
                         />
                       </div>

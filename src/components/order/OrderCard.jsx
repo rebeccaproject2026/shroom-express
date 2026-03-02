@@ -19,7 +19,12 @@ const getPaymentStatusColor = (status) => {
   return "bg-gray-100 text-gray-700";
 };
 
-const OrderCard = ({ order, onView, onDelete }) => {
+const OrderCard = ({ order, onView, onDelete, onCustomerClick, onCourierClick, onPaymentMethodClick, onStatusClick }) => {
+  const isPaymentMethodLink = 
+    order.paymentMethod === "Credit Card" || 
+    order.paymentMethod === "Paypal" || 
+    order.paymentMethod === "PayPal";
+
   return (
     <div className="bg-white border border-gray-200 rounded-sm p-3 shadow-sm flex flex-col h-full">
       {/* Header: Order ID and Status */}
@@ -30,63 +35,105 @@ const OrderCard = ({ order, onView, onDelete }) => {
         >
           {order.orderId}
         </Link>
-        <span
-          className={`px-2 py-1 rounded-full text-[10px] font-medium ${getStatusColor(
+        <button
+          onClick={() => onStatusClick?.(order)}
+          className={`px-2 py-1 rounded-full text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity ${getStatusColor(
             order.deliveryStatus
           )}`}
         >
           {order.deliveryStatus || "Cancelled"}
-        </span>
+        </button>
       </div>
 
-      {/* Customer Info */}
+      {/* Customer Info - Clickable */}
       <div className="mb-3 flex-shrink-0">
-        <p className="text-sm font-semibold text-gray-900">{order.customer}</p>
+        <button
+          onClick={() => onCustomerClick?.(order)}
+          className="text-sm font-semibold text-blue-600 hover:underline text-left"
+        >
+          {order.customer}
+        </button>
         <p className="text-xs text-gray-600">{order.phone}</p>
-        <p className="text-xs text-gray-600">{order.address || "103 lumen"}</p>
       </div>
 
-      {/* Price Details */}
-      <div className="space-y-1 mb-3 flex-shrink-0">
+      {/* Order Details Grid */}
+      <div className="space-y-2 mb-3 flex-shrink-0">
         <div className="flex justify-between text-xs">
-          <span className="text-gray-600">Item Price:</span>
+          <span className="text-gray-600">Price:</span>
           <span className="font-semibold text-gray-900">{order.price}</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-gray-600">Promocode:</span>
-          <span className="font-semibold text-gray-900">
-            {order.couponCode || "N/A"}
-          </span>
+          <span className="text-gray-600">CA$H:</span>
+          <span className="font-semibold text-gray-900">{order.cash}</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-gray-600">Total Price:</span>
+          <span className="text-gray-600">Coupon Code:</span>
+          <span className="font-semibold text-gray-900">{order.couponCode || "N/A"}</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">Coupon Amount:</span>
+          <span className="font-semibold text-gray-900">{order.couponAmount || "N/A"}</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">Courier:</span>
+          <button
+            onClick={() => onCourierClick?.(order)}
+            className="font-semibold text-blue-600 hover:underline text-right"
+          >
+            {order.courier}
+          </button>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">Courier Tips:</span>
+          <span className="font-semibold text-gray-900">{order.courierTips}</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">Grand Total:</span>
           <span className="font-semibold text-gray-900">{order.grandTotal}</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">Saved:</span>
+          <span className="font-semibold text-green-600">{order.savedText}</span>
         </div>
       </div>
 
       {/* Payment & Order Details */}
-      <div className="space-y-1 mb-3 flex-shrink-0">
+      <div className="space-y-2 mb-3 flex-shrink-0">
         <div className="flex justify-between text-xs">
           <span className="text-gray-600">Payment Method:</span>
-          <span className="font-semibold text-gray-900">{order.paymentMethod}</span>
+          {isPaymentMethodLink ? (
+            <button
+              onClick={() => onPaymentMethodClick?.(order)}
+              className="font-semibold text-blue-600 hover:underline text-right"
+            >
+              {order.paymentMethod}
+            </button>
+          ) : (
+            <span className="font-semibold text-gray-900">{order.paymentMethod}</span>
+          )}
         </div>
         <div className="flex justify-between text-xs">
           <span className="text-gray-600">Payment Status:</span>
-          <span
-            className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${getPaymentStatusColor(
+          <button
+            onClick={() => onPaymentMethodClick?.(order)}
+            className={`px-2 py-0.5 rounded-full text-[10px] font-medium cursor-pointer hover:opacity-80 transition-opacity ${getPaymentStatusColor(
               order.paymentStatus
             )}`}
           >
             {order.paymentStatus}
-          </span>
+          </button>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-gray-600">Order Method:</span>
+          <span className="text-gray-600">Method:</span>
           <span className="font-semibold text-gray-900">{order.method}</span>
         </div>
         <div className="flex justify-between text-xs">
-          <span className="text-gray-600">Order Type:</span>
+          <span className="text-gray-600">Type:</span>
           <span className="font-semibold text-gray-900">{order.type}</span>
+        </div>
+        <div className="flex justify-between text-xs">
+          <span className="text-gray-600">City/Province:</span>
+          <span className="font-semibold text-gray-900">{order.city}, {order.province}</span>
         </div>
       </div>
 

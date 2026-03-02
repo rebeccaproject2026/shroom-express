@@ -529,6 +529,8 @@ const Order = () => {
         onDelete={handleDelete}
         onStatusClick={handleStatusClick}
         onCustomerClick={handleCustomerClick}
+        onCourierClick={handleCourierClick}
+        onPaymentStatusClick={handlePaymentStatusClick}
       />
 
       {/* Order Analytics Component */}
