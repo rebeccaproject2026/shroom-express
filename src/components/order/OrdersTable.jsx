@@ -7,9 +7,10 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, Search, Download, Eye, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, Download } from "lucide-react";
 import * as XLSX from "xlsx";
 import Select from "../Select";
+import OrderCard from "./OrderCard";
 
 /**
  * Reusable Orders Table Component
@@ -29,11 +30,11 @@ const OrdersTable = ({
   filters = {},
   onFilterChange,
   onStatusClick,
+  onView,
+  onDelete,
   // onCustomerClick,
   // onCourierClick,
   // onPaymentStatusClick,
-  // onView,
-  // onDelete,
 }) => {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -258,6 +259,9 @@ const OrdersTable = ({
     ],
   };
 
+  // Get current page data for card view
+  const currentPageData = table.getRowModel().rows.map(row => row.original);
+
   return (
     <div className="min-w-0 max-w-full bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
       {/* Search and filters section */}
@@ -344,8 +348,26 @@ const OrdersTable = ({
         </div>
       </div>
 
-      {/* Table: scrolls horizontally inside, page scrolls vertically */}
-      <div className="order-list-table-table-container overflow-x-auto">
+      {/* Card View for Mobile (below 1024px) */}
+      <div className="lg:hidden p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {currentPageData.length > 0 ? (
+          currentPageData.map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onView={onView}
+              onDelete={onDelete}
+            />
+          ))
+        ) : (
+          <div className="px-4 py-8 text-center text-gray-500 text-sm">
+            No orders found
+          </div>
+        )}
+      </div>
+
+      {/* Table: scrolls horizontally inside, page scrolls vertically - Desktop only */}
+      <div className="order-list-table-table-container overflow-x-auto hidden lg:block">
         <table className="order-list-table table w-full min-w-275 border-collapse">
           <thead className="bg-[#ffffff] border-b border-gray-200 sticky top-0 z-10 text-[3px]!important">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -375,7 +397,7 @@ const OrdersTable = ({
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className={`px-2 py-2 truncate text-[12px] text-[#3F4753] align-middle ${cell.column.id === "action" ? "text-right whitespace-nowrap" : ""
+                      className={`px-2 py-2 text-[12px] text-[#3F4753] align-middle ${cell.column.id === "action" ? "text-right whitespace-nowrap" : ""
                         }`}
                     >
                       {flexRender(
@@ -411,9 +433,9 @@ const OrdersTable = ({
           {Math.min(
             (table.getState().pagination.pageIndex + 1) *
             table.getState().pagination.pageSize,
-            data.length
+            filteredData.length
           )}{" "}
-          of {data.length} results
+          of {filteredData.length} results
         </div>
         <div className="flex items-center gap-1 order-1 sm:order-2">
           <button
