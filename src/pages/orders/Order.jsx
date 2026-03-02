@@ -496,7 +496,7 @@ const Order = () => {
           Shipping
         </h2>
 
-        <div className="grid grid-cols-1 xsm:grid-cols-2 xl:grid-cols-5 gap-2 min-w-0">
+        <div className="grid grid-cols-1 xsm:grid-cols-2 md:grid-cols-6 xl:grid-cols-5 gap-2 min-w-0">
           {Object.values({
             0: ordersSummary.shipping,
             1: ordersSummary.processing,
@@ -509,6 +509,11 @@ const Order = () => {
               item={item}
               onOpenTimeline={handleOpenTimeline}
               onOpenAnalytics={handleOpenAnalytics}
+              className={`
+                ${idx === 4 ? "xsm:col-span-2 md:col-span-3 xl:col-span-1" : ""}
+                ${idx === 3 ? "md:col-span-3 xl:col-span-1" : ""}
+                ${idx < 3 ? "md:col-span-2 xl:col-span-1" : ""}
+              `}
             />
           ))}
         </div>

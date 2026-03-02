@@ -430,8 +430,8 @@ const Customers = () => {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-        {SUMMARY_CARDS.map((card) => (
+      <div className="grid grid-cols-1 xsm:grid-cols-2 sm:grid-cols-3 gap-2">
+        {SUMMARY_CARDS.map((card, idx) => (
           <CustomerSummaryCard
             key={card.title}
             title={card.title}
@@ -441,6 +441,7 @@ const Customers = () => {
             iconColor={card.iconColor}
             titleColor={card.titleColor}
             onView={() => handleOpenTimeline(card)}
+            className={idx === 2 ? "xsm:col-span-2 sm:col-span-1" : ""}
           />
         ))}
       </div>

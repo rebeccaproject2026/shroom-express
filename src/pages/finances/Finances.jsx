@@ -112,14 +112,17 @@ const Finances = () => {
         <DatePickerMap defaultItem={2} onUpdate={onDateUpdate} />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-        {CARD_DATA.map((card) => (
+      <div className="grid grid-cols-1 xsm:grid-cols-2 lg:grid-cols-6 xl:grid-cols-4 gap-2">
+        {CARD_DATA.map((card, idx) => (
           <FinanceSummaryCard
             key={card.title}
             title={card.title}
             value={card.value}
             change={card.change}
             isPositive={card.isPositive}
+            className={`
+              ${idx >= 6 ? "lg:col-span-3 xl:col-span-1" : "lg:col-span-2 xl:col-span-1"}
+            `}
           />
         ))}
       </div>
