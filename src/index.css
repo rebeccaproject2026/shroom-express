@@ -19,6 +19,7 @@
   /* Custom Breakpoint for Extra Small Mobile Screens */
   /* Usage: esm:text-sm, esm:p-2, etc. */
   --breakpoint-esm: 400px;
+  --breakpoint-xsm: 480px;
 }
 
 /* =========================

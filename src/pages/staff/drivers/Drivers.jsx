@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useState, useMemo } from "react";
 import DatePickerMap from "../../../components/DatePickerMap";
@@ -52,8 +51,8 @@ const DRIVERS_DATA = [
     name: "David Doe",
     phone: "+1 123456 7890",
     areaCodes: "5+",
-    startingDate: "12 Dec 2023",
-    startingDateISO: "2023-12-12T00:00:00.000Z",
+    startingDate: "15 Feb 2026",
+    startingDateISO: "2026-02-15T00:00:00.000Z",
     delivered: "110 Orders",
     driverBy: "Shroom-express",
     pendingDeliveries: 50,
@@ -62,132 +61,132 @@ const DRIVERS_DATA = [
   },
   {
     id: 2,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Sarah Johnson",
+    phone: "+1 123456 7891",
     areaCodes: "5+",
-    startingDate: "12 Dec 2023",
-    startingDateISO: "2023-12-12T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "20 Feb 2026",
+    startingDateISO: "2026-02-20T00:00:00.000Z",
+    delivered: "95 Orders",
     driverBy: "Shroom-express",
-    pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    pendingDeliveries: 45,
+    paidSalary: "$4,750.00",
     status: "New",
   },
   {
     id: 3,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Mike Wilson",
+    phone: "+1 123456 7892",
     areaCodes: "5+",
-    startingDate: "12 Dec 2023",
-    startingDateISO: "2023-12-12T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "22 Feb 2026",
+    startingDateISO: "2026-02-22T00:00:00.000Z",
+    delivered: "88 Orders",
     driverBy: "You",
     pendingDeliveries: 5,
-    paidSalary: "$5,020.00",
+    paidSalary: "$4,400.00",
     status: "Suspended",
   },
   {
     id: 4,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Emily Brown",
+    phone: "+1 123456 7893",
     areaCodes: "5+",
-    startingDate: "15 Jan 2024",
-    startingDateISO: "2024-01-15T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "25 Feb 2026",
+    startingDateISO: "2026-02-25T00:00:00.000Z",
+    delivered: "102 Orders",
     driverBy: "You",
     pendingDeliveries: 10,
-    paidSalary: "$5,020.00",
+    paidSalary: "$5,100.00",
     status: "Offline",
   },
   {
     id: 5,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "James Davis",
+    phone: "+1 123456 7894",
     areaCodes: "5+",
-    startingDate: "20 Feb 2024",
-    startingDateISO: "2024-02-20T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "28 Feb 2026",
+    startingDateISO: "2026-02-28T00:00:00.000Z",
+    delivered: "120 Orders",
     driverBy: "Shroom-express",
     pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    paidSalary: "$6,000.00",
     status: "Online",
   },
   {
     id: 6,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Lisa Martinez",
+    phone: "+1 123456 7895",
     areaCodes: "5+",
-    startingDate: "05 Jan 2025",
-    startingDateISO: "2025-01-05T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "01 Mar 2026",
+    startingDateISO: "2026-03-01T00:00:00.000Z",
+    delivered: "75 Orders",
     driverBy: "Shroom-express",
     pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    paidSalary: "$3,750.00",
     status: "Online",
   },
   {
     id: 7,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Robert Garcia",
+    phone: "+1 123456 7896",
     areaCodes: "5+",
-    startingDate: "10 Feb 2026",
-    startingDateISO: "2026-02-10T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "01 Mar 2026",
+    startingDateISO: "2026-03-01T00:00:00.000Z",
+    delivered: "92 Orders",
     driverBy: "You",
     pendingDeliveries: 25,
-    paidSalary: "$5,020.00",
+    paidSalary: "$4,600.00",
     status: "Offline",
   },
   {
     id: 8,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Jennifer Lee",
+    phone: "+1 123456 7897",
     areaCodes: "5+",
-    startingDate: "09 Feb 2026",
-    startingDateISO: "2026-02-09T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "02 Mar 2026",
+    startingDateISO: "2026-03-02T00:00:00.000Z",
+    delivered: "65 Orders",
     driverBy: "Shroom-express",
     pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    paidSalary: "$3,250.00",
     status: "Online",
   },
   {
     id: 9,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "William Taylor",
+    phone: "+1 123456 7898",
     areaCodes: "5+",
-    startingDate: "08 Feb 2026",
-    startingDateISO: "2026-02-08T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "18 Feb 2026",
+    startingDateISO: "2026-02-18T00:00:00.000Z",
+    delivered: "105 Orders",
     driverBy: "You",
     pendingDeliveries: 32,
-    paidSalary: "$5,020.00",
+    paidSalary: "$5,250.00",
     status: "Suspended",
   },
   {
     id: 10,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Amanda White",
+    phone: "+1 123456 7899",
     areaCodes: "5+",
-    startingDate: "01 Feb 2026",
-    startingDateISO: "2026-02-01T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "12 Feb 2026",
+    startingDateISO: "2026-02-12T00:00:00.000Z",
+    delivered: "115 Orders",
     driverBy: "Shroom-express",
     pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    paidSalary: "$5,750.00",
     status: "Online",
   },
   {
     id: 11,
-    name: "David Doe",
-    phone: "+1 123456 7890",
+    name: "Christopher Moore",
+    phone: "+1 123456 7800",
     areaCodes: "5+",
-    startingDate: "15 Jan 2026",
-    startingDateISO: "2026-01-15T00:00:00.000Z",
-    delivered: "110 Orders",
+    startingDate: "10 Feb 2026",
+    startingDateISO: "2026-02-10T00:00:00.000Z",
+    delivered: "98 Orders",
     driverBy: "You",
     pendingDeliveries: 50,
-    paidSalary: "$5,020.00",
+    paidSalary: "$4,900.00",
     status: "Offline",
   },
 ];
@@ -211,15 +210,18 @@ const Drivers = () => {
   const filteredData = useMemo(() => {
     let result = [...DRIVERS_DATA];
 
-    // Filter by date range
+    // Filter by date range - only apply if both start and end are set
     if (period.start && period.end) {
       const startDate = new Date(period.start);
       const endDate = new Date(period.end);
-
-      result = result.filter((r) => {
-        const driverDate = new Date(r.startingDateISO);
-        return driverDate >= startDate && driverDate <= endDate;
-      });
+      
+      // Only filter if dates are valid
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        result = result.filter((r) => {
+          const driverDate = new Date(r.startingDateISO);
+          return driverDate >= startDate && driverDate <= endDate;
+        });
+      }
     }
 
     // Filter by driver type (All Drivers / Shroom-express / You)
@@ -356,7 +358,7 @@ const Drivers = () => {
         ),
       },
     ],
-    [],
+    [navigate, setSelectedDriver, setIsAreaCodesDrawerOpen],
   );
 
   const table = useReactTable({
@@ -407,8 +409,8 @@ const Drivers = () => {
         ))}
       </div>
 
-      <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden p-4">
-        <div className="flex lg:flex-row flex-col items-center gap-2">
+      <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm p-4">
+        <div className="flex lg:flex-row flex-col items-center gap-2 mb-4">
           <div className="w-full flex items-center gap-2">
             <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -453,9 +455,9 @@ const Drivers = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-white border-b border-[#CDCDCD] sticky top-0 z-10">
+        <div className="overflow-x-auto -mx-4">
+          <table className="w-full min-w-[900px]">
+            <thead className="bg-white border-b border-[#CDCDCD]">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -463,7 +465,7 @@ const Drivers = () => {
                     return (
                       <th
                         key={header.id}
-                        className={`py-2.5 truncate text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isCenter ? "text-center" : "text-left"}`}
+                        className={`px-4 py-3 text-[11px] font-semibold text-[#3F4753] tracking-wider whitespace-nowrap ${isCenter ? "text-center" : "text-left"}`}
                       >
                         {header.isPlaceholder
                           ? null
@@ -478,21 +480,29 @@ const Drivers = () => {
               ))}
             </thead>
             <tbody className="divide-y divide-gray-100 bg-white">
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                  {row.getVisibleCells().map((cell) => {
-                    const isCenter = cell.column.id === "status" || cell.column.id === "action";
-                    return (
-                      <td key={cell.id} className={`px-1.5 truncate py-2 text-[12px] text-[#3F4753] align-middle ${isCenter ? "text-center" : "text-left"}`}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    );
-                  })}
+              {table.getRowModel().rows.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="px-4 py-8 text-center text-sm text-gray-500">
+                    No drivers found
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                table.getRowModel().rows.map((row) => (
+                  <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                    {row.getVisibleCells().map((cell) => {
+                      const isCenter = cell.column.id === "status" || cell.column.id === "action";
+                      return (
+                        <td key={cell.id} className={`px-4 py-3 text-[12px] text-[#3F4753] align-middle ${isCenter ? "text-center" : "text-left"}`}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

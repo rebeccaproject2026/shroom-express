@@ -479,7 +479,7 @@ const Order = () => {
       {/* Delivery Section - fixed */}
       <div className="shrink-0 mb-4 min-w-0">
         <h2 className="text-sm font-semibold text-gray-800 mb-2 ml-1">Delivery</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 min-w-0">
+        <div className="grid grid-cols-1 xsm:grid-cols-2 xl:grid-cols-4 gap-2 min-w-0">
           {Object.values(deliveryOrders).map((item, idx) => (
             <OrderSummaryCard
               key={idx}
@@ -496,7 +496,7 @@ const Order = () => {
           Shipping
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 min-w-0">
+        <div className="grid grid-cols-1 xsm:grid-cols-2 xl:grid-cols-5 gap-2 min-w-0">
           {Object.values({
             0: ordersSummary.shipping,
             1: ordersSummary.processing,

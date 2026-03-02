@@ -35,7 +35,7 @@ const AudienceOverview = ({ showLabels = true, title = "Audience Overview", cust
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-3 sm:gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[30%_70%] gap-3 sm:gap-2">
         {/* Gender Section */}
         <div className="border border-[#EEEEEE] py-2 px-2 sm:px-3">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-4">

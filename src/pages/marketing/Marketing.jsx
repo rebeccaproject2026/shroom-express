@@ -117,7 +117,7 @@ const Marketing = () => {
               />
             </div>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
               {EMAIL_STATS_1.map((stat) => (
                 <MarketingStatsCard
                   key={stat.id}
@@ -216,7 +216,7 @@ const Marketing = () => {
                 className="h-10 sm:*:w-76"
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl  :grid-cols-4 gap-2">
               {EMAIL_STATS_2.map((stat) => (
                 <MarketingStatsCard
                   key={stat.id}
@@ -313,7 +313,7 @@ const Marketing = () => {
                 className="h-10 sm:*:w-76"
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
               {EMAIL_STATS_3.map((stat) => (
                 <MarketingStatsCard
                   key={stat.id}
@@ -410,7 +410,7 @@ const Marketing = () => {
                 className="h-10 sm:*:w-76"
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
               {EMAIL_STATS_4.map((stat) => (
                 <MarketingStatsCard
                   key={stat.id}
@@ -508,7 +508,7 @@ const Marketing = () => {
                 className="h-10 sm:*:w-76"
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
               {EMAIL_STATS_5.map((stat) => (
                 <MarketingStatsCard
                   key={stat.id}

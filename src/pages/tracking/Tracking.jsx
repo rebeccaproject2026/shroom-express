@@ -679,7 +679,7 @@ const Tracking = () => {
       </div>
 
       {/* Summary cards – same size and design as order page delivery card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 min-w-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 min-w-0">
         {SUMMARY_CARDS.map((card) => (
           <div
             key={card.key}
