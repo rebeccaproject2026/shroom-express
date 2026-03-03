@@ -485,7 +485,7 @@ const DriverDetailView = ({ data }) => {
               onClick={() => setIsHired(true)}
               className="flex items-center cursor-pointer justify-center gap-1 bg-[#109F22] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-9 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Hire Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Activate
             </button>
           ) : (
             <button
@@ -493,7 +493,7 @@ const DriverDetailView = ({ data }) => {
               onClick={() => setIsHired(false)}
               className="flex items-center cursor-pointer justify-center gap-1 bg-[#F44336] font-semibold px-2 sm:px-2.5 py-2 sm:py-2.5 rounded-sm h-9 sm:h-10 text-white whitespace-nowrap"
             >
-              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Relieve Now
+              <Handshake className="h-3.5 sm:h-4 w-3.5 sm:w-4" /> Suspend
             </button>
           )}
           <DatePickerMap
