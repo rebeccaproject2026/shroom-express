@@ -225,7 +225,7 @@ const Drivers = () => {
     }
 
     // Filter by driver type (All Drivers / Shroom-express / You)
-    if (selectedDriverFilter === "potrider") {
+    if (selectedDriverFilter === "shroom") {
       result = result.filter((r) => r.driverBy === "Shroom-express");
     } else if (selectedDriverFilter === "you") {
       result = result.filter((r) => r.driverBy === "You");
@@ -383,7 +383,7 @@ const Drivers = () => {
             className="h-10"
             options={[
               { value: "all", label: "All Drivers" },
-              { value: "potrider", label: "Shroom-express Drivers" },
+              { value: "shroom", label: "Shroom-express Drivers" },
               { value: "you", label: "Your Drivers" },
             ]}
             customStyle="w-full sm:w-[220px]"
