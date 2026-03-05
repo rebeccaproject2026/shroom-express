@@ -8,28 +8,28 @@ const topStats = [
     value: "$15.25",
     iconBg: "bg-[#E6F8F0]",
     iconColor: "text-[#10B981]",
-    icon: "solar:wallet-linear"
+    icon: "fluent:wallet-credit-card-24-regular"
   },
   {
     title: "Deliveries Assigned Today",
     value: "5",
     iconBg: "bg-[#E0F2FE]",
     iconColor: "text-[#3B82F6]",
-    icon: "solar:clipboard-list-linear"
+    icon: "solar:documents-linear"
   },
   {
     title: "Pending Deliveries",
     value: "1",
     iconBg: "bg-[#FEF3C7]",
     iconColor: "text-[#F59E0B]",
-    icon: "solar:restart-circle-linear"
+    icon: "tabler:progress"
   },
   {
     title: "Deliveries Completed",
     value: "4",
     iconBg: "bg-[#E6F8F0]",
     iconColor: "text-[#10B981]",
-    icon: "solar:box-linear"
+    icon: "hugeicons:package-delivered"
   }
 ];
 
@@ -120,7 +120,7 @@ const Dashboard = () => {
 
         <div className="bg-white px-6 py-4 rounded-md border border-[#E5E7EB] w-full  md:items-center  gap-6">
 
-          <div className="shrink-1 flex items-center mb-2.5">
+          <div className="shrink flex items-center mb-2.5">
             <p className="text-base font-semibold text-[#222222]">
               Today , Feb 25 2026 Wednesday
             </p>
@@ -171,9 +171,9 @@ const Dashboard = () => {
               key={index}
               className={`
         bg-white rounded-lg shadow-[0_1px_4px_rgba(0,0,0,0.06)]
-        border-l-[4px] ${delivery.priorityBorder}
-        pl-5 pr-5 pt-3 pb-3 min-h-[100px]     
-        lg:min-h-[100px]
+        border-l-4 ${delivery.priorityBorder}
+        pl-5 pr-5 pt-3 pb-3 min-h-25     
+        lg:min-h-25
         flex flex-col lg:flex-row lg:items-stretch gap-5 lg:gap-6
       `}
             >
@@ -247,7 +247,7 @@ const Dashboard = () => {
               </div>
 
               {/* Right - buttons column */}
-              <div className="flex flex-row lg:flex-col gap-1.5 lg:w-36 lg:min-w-[9rem] lg:justify-center mt-2 lg:mt-0">
+              <div className="flex flex-row lg:flex-col gap-1.5 lg:w-36 lg:min-w-36 lg:justify-center mt-2 lg:mt-0">
                 {delivery.status === "ASSIGNED" && (
                   <>
                     <button
