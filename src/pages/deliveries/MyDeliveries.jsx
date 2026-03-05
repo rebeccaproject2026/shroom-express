@@ -187,11 +187,11 @@ const MyDeliveries = () => {
                 <div className="w-full bg-[#E8E8E8] h-0.5"></div>
               <div className="flex gap-4 mb-4">
                 <button className="flex-1 bg-[#1142D4] text-white py-3 rounded-md font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                  <span>✓</span>
+                  <Icon icon="material-symbols:check-circle-outline-rounded" width="24" height="24" />
                   Mark as Delivered
                 </button>
                 <button className="px-6 bg-[#1E293B] text-white py-3 rounded-md font-medium hover:bg-gray-900 transition-colors flex items-center justify-center gap-2">
-                  <span>⬆</span>
+                 <Icon icon="tabler:upload" width="24" height="24" />
                   Upload Proof
                 </button>
               </div>
