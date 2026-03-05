@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import DashboardAverageOrders from "../../components/dashboard/DashboardAverageOrders";
 import Select from "../../components/Select";
-import complaint from "../../assets/images/Button (1).png";
 import { Icon } from "@iconify/react";
 // Mock customer details by id (in real app would come from API)
 const getCustomerById = (id) => {
@@ -421,10 +420,10 @@ const CustomerDetails = () => {
     setFilters((prev) => ({ ...prev, [key]: value }));
 
   return (
-    <div className="flex flex-col gap-4 min-w-0 px-2.5 py-3">
+    <div className="flex flex-col gap-4 min-w-0 px-2.5 py-3 w-full">
       {/* Header: Back, Customer, avatar, name, join date | All Complains, Delete Client */}
-      <div className="flex flex-wrap items-center justify-between gap-3 ">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0 w-full sm:w-auto">
           <button
             type="button"
             onClick={handleBack}
@@ -447,32 +446,34 @@ const CustomerDetails = () => {
               </span>
             )}
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <h1 className="text-xs font-medium text-[#3F4753] shrink-0">
               Customer
             </h1>
-            <h1 className="text-lg font-bold text-[#212121] truncate">
+            <h1 className="text-base sm:text-lg font-bold text-[#212121] truncate">
               {customer.fullName}
             </h1>
             <p className="text-xs text-gray-500">{customer.joinDate}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
           <button
             type="button"
             onClick={handleAllComplains}
-            className="inline-flex items-center gap-2 px-3 py-2.5 bg-[#FF9800] text-white rounded-sm font-medium text-sm "
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-[#FF9800] text-white rounded-sm font-medium text-xs sm:text-sm flex-1 sm:flex-initial"
           >
-            <Icon icon="akar-icons:chat-question" className="w-5 h-5" />
-            All Complains
+            <Icon icon="akar-icons:chat-question" className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">All Complains</span>
+            <span className="sm:hidden">Complains</span>
           </button>
           <button
             type="button"
             onClick={handleDeleteClient}
-            className="inline-flex items-center gap-2 px-3 py-2.5 bg-[#F44336] text-white rounded-sm font-medium text-sm "
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 bg-[#F44336] text-white rounded-sm font-medium text-xs sm:text-sm flex-1 sm:flex-initial"
           >
             <Trash2 className="w-4 h-4" />
-            Delete Client
+            <span className="hidden sm:inline">Delete Client</span>
+            <span className="sm:hidden">Delete</span>
           </button>
         </div>
       </div>
@@ -486,15 +487,15 @@ const CustomerDetails = () => {
           return (
             <div
               key={config.key}
-              className="bg-white rounded-sm border border-gray-200 shadow-sm p-4"
+              className="bg-white rounded-sm border border-gray-200 shadow-sm p-3 sm:p-4"
             >
-              <p className="text-sm font-semibold text-[#3F4753] mb-1">
+              <p className="text-xs sm:text-sm font-semibold text-[#3F4753] mb-1 leading-tight">
                 {config.label}
               </p>
-              <div className="flex justify-between items-center gap-2">
-                <p className="text-xl font-bold text-[#000]">{value}</p>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+                <p className="text-lg sm:text-xl font-bold text-[#000]">{value}</p>
                 <p
-                  className={`text-xs font-semibold mt-1 ${isPositive ? "text-green-600" : "text-red-600"
+                  className={`text-xs font-semibold ${isPositive ? "text-green-600" : "text-red-600"
                     }`}
                 >
                   {change}
@@ -506,30 +507,30 @@ const CustomerDetails = () => {
       </div>
 
       {/* Contact info */}
-      <div className="bg-white rounded-sm border border-gray-200 shadow-sm p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-sm border border-gray-200 shadow-sm p-3 sm:p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <div>
-            <p className="text-sm font-semibold text-[#212121] mb-0.5">
+            <p className="text-xs sm:text-sm font-semibold text-[#212121] mb-0.5">
               Full Name
             </p>
-            <p className="text-sm font-medium text-[#3F4753]">
+            <p className="text-xs sm:text-sm font-medium text-[#3F4753]">
               {customer.fullName}
             </p>
           </div>
           <div>
-            <p className="text-sm font-semibold text-[#212121] mb-0.5">
+            <p className="text-xs sm:text-sm font-semibold text-[#212121] mb-0.5">
               Phone Number
             </p>
-            <p className="text-sm font-medium text-[#3F4753]">
+            <p className="text-xs sm:text-sm font-medium text-[#3F4753]">
               {customer.phone}
             </p>
           </div>
-          <div className="md:col-span-2 flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-[#212121] mb-0.5">
+          <div className="sm:col-span-2 flex items-start justify-between gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-semibold text-[#212121] mb-0.5">
                 Address
               </p>
-              <p className="text-sm font-medium text-[#3F4753]">
+              <p className="text-xs sm:text-sm font-medium text-[#3F4753] break-words">
                 {customer.address}
               </p>
             </div>
@@ -551,10 +552,11 @@ const CustomerDetails = () => {
         rightContent={
           <button
             type="button"
-            className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-sm text-sm text-[#3F4753] hover:bg-gray-50"
+            className="flex items-center gap-2 px-2 sm:px-3 py-2 bg-white border border-gray-300 rounded-sm text-xs sm:text-sm text-[#3F4753] hover:bg-gray-50"
           >
             <Calendar className="w-4 h-4 text-gray-500" />
-            <span>{chartDateRangeLabel}</span>
+            <span className="hidden sm:inline">{chartDateRangeLabel}</span>
+            <span className="sm:hidden">Date Range</span>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </button>
         }
@@ -562,7 +564,7 @@ const CustomerDetails = () => {
 
       {/* Orders table - search + filters design from reference */}
       <div className="min-w-0 bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-gray-200 space-y-4">
+        <div className="p-3 sm:p-4 border-b border-gray-200 space-y-3 sm:space-y-4">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             <input
@@ -573,8 +575,8 @@ const CustomerDetails = () => {
               className="w-full pl-10 pr-4 py-2.5 text-sm text-[#3F4753] placeholder-gray-400 bg-white border border-[#D9D9D9] rounded-sm focus:outline-none focus:border-gray-400 transition-colors"
             />
           </div>
-          {/* Five filter dropdowns in a horizontal row, consistent spacing */}
-          <div className="flex flex-wrap items-center gap-3">
+          {/* Five filter dropdowns - responsive grid */}
+          <div className="grid esm:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
             <Select
               value={filters.orderMethod}
               onChange={(e) =>
@@ -582,7 +584,7 @@ const CustomerDetails = () => {
               }
               options={FILTER_OPTIONS.orderMethod}
               placeholder="Order Method"
-              customStyle="flex-1"
+              customStyle="w-full"
               compact
             />
             <Select
@@ -592,7 +594,7 @@ const CustomerDetails = () => {
               }
               options={FILTER_OPTIONS.orderStatus}
               placeholder="Order Status"
-              customStyle="flex-1"
+              customStyle="w-full"
               compact
             />
             <Select
@@ -600,7 +602,7 @@ const CustomerDetails = () => {
               onChange={(e) => handleFilterChange("orderType", e.target.value)}
               options={FILTER_OPTIONS.orderType}
               placeholder="Order Type"
-              customStyle="flex-1"
+              customStyle="w-full"
               compact
             />
             <Select
@@ -610,7 +612,7 @@ const CustomerDetails = () => {
               }
               options={FILTER_OPTIONS.paymentMethod}
               placeholder="Payment Method"
-              customStyle="flex-1 "
+              customStyle="w-full"
               compact
             />
             <Select
@@ -620,14 +622,14 @@ const CustomerDetails = () => {
               }
               options={FILTER_OPTIONS.paymentStatus}
               placeholder="Payment Status"
-              customStyle="flex-1"
+              customStyle="w-full"
               compact
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1100px] border-collapse">
+          <table className="w-full min-w-275 border-collapse">
             <thead className="bg-white border-b border-gray-200 sticky top-0 z-10 text-[3px]!important">
               {table.getHeaderGroups().map((hg) => (
                 <tr key={hg.id}>
@@ -686,8 +688,8 @@ const CustomerDetails = () => {
           </table>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 border-t border-gray-200 bg-gray-50">
-          <span className="text-xs text-gray-600">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-2 border-t border-gray-200 bg-gray-50">
+          <span className="text-xs text-gray-600 order-2 sm:order-1">
             Showing{" "}
             {filteredOrders.length === 0
               ? 0
@@ -702,7 +704,7 @@ const CustomerDetails = () => {
             )}{" "}
             of {filteredOrders.length} results
           </span>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 order-1 sm:order-2">
             <button
               type="button"
               onClick={() => table.previousPage()}

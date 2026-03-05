@@ -272,7 +272,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="p-4 md:p-4 min-h-screen">
+    <div className="p-2 md:p-4 min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
         <h1 className="text-2xl font-bold text-[#212121] mb-4 md:mb-0">
@@ -285,7 +285,7 @@ const Dashboard = () => {
       </div>
 
       {/* Top Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 mb-2">
         {topStats.map((stat, index) => (
           <DashboardChart
             key={index}

@@ -305,20 +305,20 @@ const DispatcherDetails = () => {
     ];
     return (
         <div className="flex flex-col gap-2 p-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
                 {/* LEFT SIDE */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full sm:w-auto">
 
                     <button
                         onClick={() => navigate(-1)}
-                        className="rounded-full hover:bg-gray-100 cursor-pointer"
+                        className="rounded-full hover:bg-gray-100 cursor-pointer shrink-0"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </button>
 
-                    <div className="flex items-start gap-3">
-                        <div className="w-13 h-13 rounded-full bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
+                    <div className="flex items-start gap-2 sm:gap-3 min-w-0 flex-1">
+                        <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
                             {dispatcher.avatar ? (
                                 <img
                                     src={dispatcher.avatar}
@@ -326,14 +326,14 @@ const DispatcherDetails = () => {
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                <span className="text-gray-500 text-lg font-semibold">
+                                <span className="text-gray-500 text-base sm:text-lg font-semibold">
                                     {dispatcher.name.charAt(0)}
                                 </span>
                             )}
                         </div>
 
-                        <div className="flex flex-col">
-                            <h3 className="text-lg font-semibold text-[#424143] leading-tight">
+                        <div className="flex flex-col min-w-0 flex-1">
+                            <h3 className="text-base sm:text-lg font-semibold text-[#424143] leading-tight truncate">
                                 {dispatcher.name}
                             </h3>
                             <p className="text-xs text-[#3f4753] font-medium mt-1">
@@ -345,33 +345,35 @@ const DispatcherDetails = () => {
                 </div>
 
                 {/* RIGHT SIDE */}
-                <div className="flex gap-3">
+                <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
                     <button
                         onClick={() => setIsPaySalaryOpen(true)}
-                        className="flex px-5 py-2.5 bg-blue-600 text-white rounded-sm text-sm font-semibold gap-2 cursor-pointer"
+                        className="flex flex-1 sm:flex-initial items-center justify-center px-3 sm:px-5 py-2.5 bg-blue-600 text-white rounded-sm text-xs sm:text-sm font-semibold gap-1 sm:gap-2 cursor-pointer"
                     >
-                        <Icon icon="fa6-solid:coins" width="18" height="18" />
-                        Pay Salary
+                        <Icon icon="fa6-solid:coins" width="16" height="16" className="sm:w-[18px] sm:h-[18px]" />
+                        <span className="hidden sm:inline">Pay Salary</span>
+                        <span className="sm:hidden">Pay</span>
                     </button>
                     <button
                         onClick={() => setIsSuspensionOpen(true)}
-                        className="flex px-3 py-2.5 bg-red-500 text-white rounded-sm text-sm font-semibold gap-1 cursor-pointer">
-                        <Icon icon="mingcute:user-x-fill" width="20" height="20" />
-                        Suspend Dispatcher
+                        className="flex flex-1 sm:flex-initial items-center justify-center px-3 py-2.5 bg-red-500 text-white rounded-sm text-xs sm:text-sm font-semibold gap-1 cursor-pointer">
+                        <Icon icon="mingcute:user-x-fill" width="18" height="18" className="sm:w-[20px] sm:h-[20px]" />
+                        <span className="hidden sm:inline">Suspend Dispatcher</span>
+                        <span className="sm:hidden">Suspend</span>
                     </button>
                 </div>
 
             </div>
 
             {/* Information Card */}
-            <div className="bg-white rounded-sm border border-gray-200 p-4">
+            <div className="bg-white rounded-sm border border-gray-200 p-3 sm:p-4">
 
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Information</h3>
-                    <Icon onClick={() => setIsEditOpen(true)} icon="fa6-solid:pencil" width="20" color="var(--color-secondary)" className="cursor-pointer" />
+                <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold">Information</h3>
+                    <Icon onClick={() => setIsEditOpen(true)} icon="fa6-solid:pencil" width="18" height="18" className="sm:w-[20px] sm:h-[20px]" color="var(--color-secondary)" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 sm:gap-y-6 gap-x-6 sm:gap-x-10 text-sm">
 
                     <InfoItem label="Phone Number" value={dispatcher.phone} />
                     <InfoItem label="Email Address" value={dispatcher.email} />
@@ -394,7 +396,7 @@ const DispatcherDetails = () => {
                 </div>
             </div>
             {/* Tabs Navigation */}
-            <div className="flex justify-between items-center gap-2 border border-[#969696] bg-white rounded-sm p-1.5">
+            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 border border-[#969696] bg-white rounded-sm p-1.5 overflow-x-auto hide-scrollbar">
 
                 <TabButton
                     label="Managing Drivers"
@@ -473,34 +475,34 @@ const DispatcherDetails = () => {
                     offlineTime="30 hrs"
                 />}
             {activeTab === "payroll" &&
-                <div className="bg-white rounded-sm border border-gray-200 p-4">
-                    <div className="space-y-4">
+                <div className="bg-white rounded-sm border border-gray-200 p-3 sm:p-4">
+                    <div className="space-y-3 sm:space-y-4">
                         {PAYROLL_HISTORY.map((payment) => (
                             <div
                                 key={payment.id}
-                                className="flex items-center justify-between bg-white border-b border-[#212529]/30 pb-4"
+                                className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white border-b border-[#212529]/30 pb-3 sm:pb-4 gap-2 sm:gap-0"
                             >
-                                <p className="text-sm text-black font-medium">
+                                <p className="text-xs sm:text-sm text-black font-medium break-words flex-1">
                                     {payment.description}
                                 </p>
-                                <span className="text-sm font-bold text-black">
+                                <span className="text-sm font-bold text-black shrink-0">
                                     {payment.amount}
                                 </span>
                             </div>
                         ))}
                     </div>
                 </div>}
-            {activeTab === "inventory" && <div className="bg-white rounded-sm border border-gray-200 p-4">
-                <div className="space-y-4">
+            {activeTab === "inventory" && <div className="bg-white rounded-sm border border-gray-200 p-3 sm:p-4">
+                <div className="space-y-3 sm:space-y-4">
                     {INVENTORY_ACTIVITY.map((payment) => (
                         <div
                             key={payment.id}
-                            className="flex items-center justify-between bg-white border-b border-[#212529]/30 pb-4"
+                            className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white border-b border-[#212529]/30 pb-3 sm:pb-4 gap-2 sm:gap-0"
                         >
-                            <p className="text-sm text-black font-medium">
+                            <p className="text-xs sm:text-sm text-black font-medium break-words flex-1">
                                 {payment.description}
                             </p>
-                            <span className="text-sm font-bold text-black">
+                            <span className="text-sm font-bold text-black shrink-0">
                                 {payment.amount}
                             </span>
                         </div>
@@ -643,8 +645,8 @@ const DispatcherDetails = () => {
 
 const InfoItem = ({ label, value }) => (
     <div className="flex flex-col">
-        <span className="text-base text-[#212529]/70 font-medium mb-0.5">{label}</span>
-        <span className="font-medium text-[#212529]">{value}</span>
+        <span className="text-sm sm:text-base text-[#212529]/70 font-medium mb-0.5">{label}</span>
+        <span className="font-medium text-sm sm:text-base text-[#212529] break-words">{value}</span>
     </div>
 );
 const TabButton = ({ label, icon, value, activeTab, setActiveTab, iconClassName }) => {
@@ -653,14 +655,14 @@ const TabButton = ({ label, icon, value, activeTab, setActiveTab, iconClassName 
     return (
         <button
             onClick={() => setActiveTab(value)}
-            className={`flex items-center gap-1 w-55 justify-center py-2 rounded-sm text-sm font-medium cursor-pointer transition-colors
+            className={`flex items-center gap-1 w-full sm:w-55 justify-center py-2 px-2 rounded-sm text-xs sm:text-sm font-medium cursor-pointer transition-colors whitespace-nowrap
         ${isActive
                     ? "bg-[#0066FF] text-white"
                     : "text-[#212121] hover:bg-gray-100"
                 }`}
         >
-            <Icon icon={icon} className={`w-6 h-6 ${iconClassName}`} />
-            {label}
+            <Icon icon={icon} className={`w-5 h-5 sm:w-6 sm:h-6 shrink-0 ${iconClassName}`} />
+            <span className="truncate">{label}</span>
         </button>
     );
 };

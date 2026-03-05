@@ -12,9 +12,10 @@ const CustomerSummaryCard = ({
   iconColor = "text-blue-600",
   titleColor = "text-blue-600",
   onView,
+  className = "",
 }) => {
   return (
-    <div className="bg-white rounded-sm shadow-md p-2.5 border border-gray-100">
+    <div className={`bg-white rounded-sm shadow-md p-2.5 border border-gray-100 ${className}`}>
       <p className={`text-xs font-semibold ${titleColor} mb-2`}>{title}</p>
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2">

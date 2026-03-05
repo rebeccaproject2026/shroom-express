@@ -7,9 +7,10 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { ChevronLeft, ChevronRight, Search, Download, Eye, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, Download } from "lucide-react";
 import * as XLSX from "xlsx";
 import Select from "../Select";
+import OrderCard from "./OrderCard";
 
 /**
  * Reusable Orders Table Component
@@ -29,11 +30,11 @@ const OrdersTable = ({
   filters = {},
   onFilterChange,
   onStatusClick,
-  // onCustomerClick,
-  // onCourierClick,
-  // onPaymentStatusClick,
-  // onView,
-  // onDelete,
+  onView,
+  onDelete,
+  onCustomerClick,
+  onCourierClick,
+  onPaymentStatusClick,
 }) => {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -258,13 +259,16 @@ const OrdersTable = ({
     ],
   };
 
+  // Get current page data for card view
+  const currentPageData = table.getRowModel().rows.map(row => row.original);
+
   return (
     <div className="min-w-0 max-w-full bg-white rounded-sm border border-gray-200 shadow-sm overflow-hidden">
       {/* Search and filters section */}
       <div className="shrink-0 p-3 min-w-0">
         {/* Top row: Full width search bar */}
-        <div className="mb-2">
-          <div className="relative w-full">
+        <div className="mb-2 flex items-center gap-2">
+          <div className="relative w-full ">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[15px] h-4 text-gray-400 pointer-events-none" />
             <input
               type="text"
@@ -274,10 +278,17 @@ const OrdersTable = ({
               className="search-input w-full pl-9 pr-4 py-2.5 text-[15px] border border-gray-300 rounded-sm bg-white focus:outline-none shadow-none h-full"
             />
           </div>
+          <button
+              onClick={handleExportToExcel}
+              className="p-2 bg-(--color-primary) lg:hidden block text-white rounded-sm hover:opacity-90 transition-colors shrink-0 h-[32px] flex items-center justify-center"
+              title="Export to Excel"
+            >
+              <Download className="w-4 h-4" />
+            </button>
         </div>
 
         {/* Bottom row: Filter dropdowns starting with Driver */}
-        <div className="flex items-center gap-2 col-span-2">
+        <div className="lg:flex grid sm:grid-cols-3 esm:grid-cols-2 items-center gap-2 col-span-2">
           <Select
             value={filters.driver || ""}
             onChange={(e) => onFilterChange?.("driver", e.target.value)}
@@ -328,7 +339,7 @@ const OrdersTable = ({
             />
             <button
               onClick={handleExportToExcel}
-              className="p-2 bg-(--color-primary) text-white rounded-sm hover:opacity-90 transition-colors shrink-0 h-[32px] flex items-center justify-center"
+              className="p-2 bg-(--color-primary) lg:block hidden text-white rounded-sm hover:opacity-90 transition-colors shrink-0 h-[32px] flex items-center justify-center"
               title="Export to Excel"
             >
               <Download className="w-4 h-4" />
@@ -337,8 +348,30 @@ const OrdersTable = ({
         </div>
       </div>
 
-      {/* Table: scrolls horizontally inside, page scrolls vertically */}
-      <div className="order-list-table-table-container overflow-x-auto">
+      {/* Card View for Mobile (below 1024px) */}
+      <div className="lg:hidden p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {currentPageData.length > 0 ? (
+          currentPageData.map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onView={onView}
+              onDelete={onDelete}
+              onCustomerClick={onCustomerClick}
+              onCourierClick={onCourierClick}
+              onPaymentMethodClick={onPaymentStatusClick}
+              onStatusClick={onStatusClick}
+            />
+          ))
+        ) : (
+          <div className="px-4 py-8 text-center text-gray-500 text-sm">
+            No orders found
+          </div>
+        )}
+      </div>
+
+      {/* Table: scrolls horizontally inside, page scrolls vertically - Desktop only */}
+      <div className="order-list-table-table-container overflow-x-auto hidden lg:block">
         <table className="order-list-table table w-full min-w-275 border-collapse">
           <thead className="bg-[#ffffff] border-b border-gray-200 sticky top-0 z-10 text-[3px]!important">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -404,9 +437,9 @@ const OrdersTable = ({
           {Math.min(
             (table.getState().pagination.pageIndex + 1) *
             table.getState().pagination.pageSize,
-            data.length
+            filteredData.length
           )}{" "}
-          of {data.length} results
+          of {filteredData.length} results
         </div>
         <div className="flex items-center gap-1 order-1 sm:order-2">
           <button

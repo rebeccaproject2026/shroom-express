@@ -214,16 +214,16 @@ const DispatcherAreaCodesDrawer = ({ isOpen, onClose, areaCodes = [], title = "A
 
       {/* Drawer */}
       <div
-        className={`fixed right-0 top-0 h-full w-[450px] bg-white shadow-2xl flex flex-col z-50 border-l border-gray-200 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed right-0 top-0 h-full w-full sm:w-[90vw] md:w-[500px] lg:w-[450px] bg-white shadow-2xl flex flex-col z-50 border-l border-gray-200 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <div className="px-4 sm:px-5 py-3 sm:py-4 border-b border-gray-200 flex items-center justify-between">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900">{title}</h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors shrink-0"
             title="Close"
           >
             <X className="w-5 h-5 text-gray-600" />
@@ -231,21 +231,21 @@ const DispatcherAreaCodesDrawer = ({ isOpen, onClose, areaCodes = [], title = "A
         </div>
 
         {/* Map Container */}
-        <div className="px-5 py-4 border-b border-gray-200">
+        <div className="px-4 sm:px-5 py-3 sm:py-4 border-b border-gray-200">
           <div
             ref={mapContainerRef}
-            className="w-full h-[300px] rounded-sm overflow-hidden border border-gray-200"
+            className="w-full h-[250px] sm:h-[300px] rounded-sm overflow-hidden border border-gray-200"
           />
         </div>
 
         {/* Area Codes List */}
-        <div className="flex-1 overflow-y-auto px-5 py-4">
-          <p className="text-base font-semibold text-[#212121]/60 mb-3">Area Codes</p>
-          <div className="space-y-2">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-3 sm:py-4">
+          <p className="text-sm sm:text-base font-semibold text-[#212121]/60 mb-2 sm:mb-3">Area Codes</p>
+          <div className="space-y-1.5 sm:space-y-2">
             {areaCodes.map((code, index) => (
               <p
                 key={index}
-                className="text-sm font-medium text-gray-900 uppercase py-1"
+                className="text-xs sm:text-sm font-medium text-gray-900 uppercase py-1"
               >
                 {code}
               </p>

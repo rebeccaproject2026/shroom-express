@@ -132,33 +132,35 @@ const AddDriver = () => {
 
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 min-w-0 bg-gray-100 overflow-y-auto px-2.5 py-3">
+    <div className="flex flex-col flex-1 min-h-0 min-w-0 bg-gray-100 overflow-y-auto px-2 sm:px-2.5 py-2 sm:py-3">
       <div className="flex-1 full-width w-full flex flex-col">
-        <div className="bg-white rounded-sm border border-gray-200 shadow-sm p-2.5 flex-1 min-h-0 flex flex-col w-full max-w-none">
+        <div className="bg-white rounded-sm border border-gray-200 shadow-sm p-2 sm:p-2.5 flex-1 min-h-0 flex flex-col w-full max-w-none">
           {/* Tab Navigation */}
           <div className="flex items-center w-full rounded-sm bg-white border border-[#CFCFCF] h-10.5 p-0.5 mb-2">
             <button
               type="button"
               onClick={() => setActiveTab("portrider")}
-              className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
+              className={`flex-1 h-full text-xs sm:text-sm font-semibold transition-all rounded-sm
       ${activeTab === "portrider"
                   ? "bg-[var(--color-primary)] text-white"
                   : "bg-transparent text-gray-600"
                 }`}
             >
-              Add Driver From Shroom-express
+              <span className="hidden sm:inline">Add Driver From Shroom-express</span>
+              <span className="sm:hidden">Shroom-express</span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("own")}
-              className={`flex-1 h-full text-sm font-semibold transition-all rounded-sm
+              className={`flex-1 h-full text-xs sm:text-sm font-semibold transition-all rounded-sm
       ${activeTab === "own"
                   ? "bg-[var(--color-primary)] text-white"
                   : "bg-transparent text-gray-600"
                 }`}
             >
-              Add Your Own Driver
+              <span className="hidden sm:inline">Add Your Own Driver</span>
+              <span className="sm:hidden">Own Driver</span>
             </button>
           </div>
 
@@ -167,33 +169,33 @@ const AddDriver = () => {
             <div className="flex flex-col gap-4">
               {/* Search Available Driver In Area */}
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-base font-semibold text-[#212121] ">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-3 sm:mb-4 gap-2">
+                  <h2 className="text-sm sm:text-base font-semibold text-[#212121]">
                     Search Available Driver In Area
                   </h2>
-                  <div className="flex gap-2 mt-1.5">
+                  <div className="flex gap-2 w-full sm:w-auto">
                     <button
                       type="button"
                       onClick={handleCancel}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-sm hover:bg-gray-50 transition-colors"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-xs sm:text-sm hover:bg-gray-50 transition-colors"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                       Cancel
                     </button>
                     <button
                       type="button"
                       onClick={handleSave}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-xs sm:text-sm hover:opacity-90 transition-opacity"
                     >
-                      <ArrowUp className="w-4 h-4" />
+                      <ArrowUp className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                       Save
                     </button>
                   </div>
                 </div>
                 {/* Main Card */}
-                <div className="border border-[#D6D6D6] rounded-sm bg-white p-4">
+                <div className="border border-[#D6D6D6] rounded-sm bg-white p-2 sm:p-4">
                   {/* Top Controls */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
                     <div>
                       <label className="block text-xs font-medium text-[#212121] mb-1">
                         City
@@ -232,11 +234,11 @@ const AddDriver = () => {
                   </div>
 
                   {/* Map */}
-                  <div className="w-full h-75 rounded-sm overflow-hidden bg-[#EEF1F4]">
+                  <div className="w-full h-60 sm:h-75 rounded-sm overflow-hidden bg-[#EEF1F4]">
                     {hasMapToken ? (
                       <div ref={mapContainerRef} className="w-full h-full" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">
+                      <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs sm:text-sm">
                         Map preview
                       </div>
                     )}
@@ -245,19 +247,19 @@ const AddDriver = () => {
               </div>
 
               {/* Two Column Layout: Left (Hire Duration) | Right (Pricing, Hours, Tips) */}
-              <div className="grid grid-cols-1 lg:grid-cols-[480px_1fr] gap-2">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] xl:grid-cols-[480px_1fr] gap-2">
                 {/* Left Column: Hire Duration - Fixed width */}
-                <div className="border rounded-sm border-[#E5E5E5] p-2.5">
-                  <h2 className="text-base font-semibold text-[#212121] mb-3">
+                <div className="border rounded-sm border-[#E5E5E5] p-2 sm:p-2.5">
+                  <h2 className="text-sm sm:text-base font-semibold text-[#212121] mb-2 sm:mb-3">
                     Hire Driver For A
                   </h2>
 
                   {/* Duration Buttons Grid - 3 columns */}
-                  <div className="grid grid-cols-3 gap-2 mb-2">
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-2">
                     <button
                       type="button"
                       onClick={() => setHireDuration("day")}
-                      className={`px-3 py-2.5 text-sm font-medium rounded-sm transition-colors border ${hireDuration === "day"
+                      className={`px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-sm transition-colors border ${hireDuration === "day"
                         ? "border-[#969696] bg-white text-gray-900"
                         : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
@@ -267,7 +269,7 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={() => setHireDuration("week")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "week"
+                      className={`px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-sm transition-colors border ${hireDuration === "week"
                         ? "border-[#969696] bg-white text-gray-900"
                         : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
@@ -277,7 +279,7 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={() => setHireDuration("month")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "month"
+                      className={`px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-sm transition-colors border ${hireDuration === "month"
                         ? "border-[#969696] bg-white text-gray-900"
                         : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
@@ -287,11 +289,11 @@ const AddDriver = () => {
                   </div>
 
                   {/* Year and Custom Duration - 2 columns */}
-                  <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                     <button
                       type="button"
                       onClick={() => setHireDuration("year")}
-                      className={`px-3 py-2.5 text-sm  font-medium rounded-sm transition-colors border ${hireDuration === "year"
+                      className={`px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-medium rounded-sm transition-colors border ${hireDuration === "year"
                         ? "border-[#969696] bg-white text-gray-900"
                         : "border-[#969696] bg-white text-gray-900 hover:bg-gray-50"
                         }`}
@@ -301,45 +303,46 @@ const AddDriver = () => {
                     <button
                       type="button"
                       onClick={() => setHireDuration("custom-duration")}
-                      className={`px-3 py-2.5 text-sm font-semibold rounded-sm transition-colors ${hireDuration === "custom-duration"
+                      className={`px-2 sm:px-3 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-sm transition-colors ${hireDuration === "custom-duration"
                         ? "bg-[#0066FF] text-white shadow-sm"
                         : "bg-white text-gray-900 border border-gray-300 hover:bg-gray-50"
                         }`}
                     >
-                      Custom Duration{" "}
+                      <span className="hidden sm:inline">Custom Duration{" "}</span>
+                      <span className="sm:hidden">Custom{" "}</span>
                       {hireDuration === "custom-duration" && "✓"}
                     </button>
                   </div>
 
                   {/* Date Range */}
-                  <div className="space-y-3 grid grid-cols-2 gap-2 mb-3">
+                  <div className="space-y-3 grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2 sm:mb-3">
                     <div className="w-full">
-                      <label className="block text-sm font-medium text-[#212121] mb-1">
+                      <label className="block text-xs sm:text-sm font-medium text-[#212121] mb-1">
                         From
                       </label>
                       <input
                         type="text"
                         value={fromDate}
                         onChange={(e) => setFromDate(e.target.value)}
-                        className="w-full px-3 py-2.5 text-[12.5px] border border-[#D9D9D9] rounded-sm bg-white font-medium focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full px-2 sm:px-3 py-2 sm:py-2.5 text-[11px] sm:text-[12.5px] border border-[#D9D9D9] rounded-sm bg-white font-medium focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
                     <div className="w-full">
-                      <label className="block text-sm font-medium text-[#212121] mb-1">
+                      <label className="block text-xs sm:text-sm font-medium text-[#212121] mb-1">
                         To
                       </label>
                       <input
                         type="text"
                         value={toDate}
                         onChange={(e) => setToDate(e.target.value)}
-                        className="w-full px-3 py-2.5 text-[12.5px] border border-[#D9D9D9] rounded-sm bg-white font-medium focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full px-2 sm:px-3 py-2 sm:py-2.5 text-[11px] sm:text-[12.5px] border border-[#D9D9D9] rounded-sm bg-white font-medium focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
                   </div>
                 </div>
 
                 {/* Right Column */}
-                <div className="border border-[#E5E5E5] rounded-sm bg-white p-2.5 space-y-4">
+                <div className="border border-[#E5E5E5] rounded-sm bg-white p-2 sm:p-2.5 space-y-3 sm:space-y-4">
                   {/* Delivery Pricing */}
                   <div className="grid grid-cols-2 gap-2">
                     <label className="flex items-center gap-2 px-2 py-2 border border-[#DADADA] rounded-sm cursor-pointer">
@@ -472,33 +475,33 @@ const AddDriver = () => {
           {/* Add Your Own Driver Tab */}
           {activeTab === "own" && (
             <>
-              <div className="flex flex-col gap-4 mt-2">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-base font-semibold text-[#212121]">
+              <div className="flex flex-col gap-3 sm:gap-4 mt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+                  <h2 className="text-sm sm:text-base font-semibold text-[#212121]">
                     Driver Details
                   </h2>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full sm:w-auto">
                     <button
                       type="button"
                       onClick={handleCancel}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-sm hover:bg-gray-50 transition-colors"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-white border border-gray-400 text-[#212121] rounded-sm font-semibold text-xs sm:text-sm hover:bg-gray-50 transition-colors"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                       Cancel
                     </button>
                     <button
                       type="button"
                       onClick={handleSave}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-sm hover:opacity-90 transition-opacity"
+                      className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[var(--color-primary)] text-white rounded-sm font-semibold text-xs sm:text-sm hover:opacity-90 transition-opacity"
                     >
-                      <ArrowUp className="w-4 h-4" />
+                      <ArrowUp className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                       Save
                     </button>
                   </div>
                 </div>
 
                 {/* Form Grid - 4 columns */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                   {/* Row 1 */}
                   <Input
                     label="Driver Name"
@@ -687,13 +690,13 @@ const AddDriver = () => {
                   onChange={(areas) => setWorkingAreas(areas)}
                 />
                 {/* Personal Identification Section */}
-                <div className="flex flex-col gap-3 mt-4">
-                  <h2 className="text-base font-semibold text-[#212121]">
+                <div className="flex flex-col gap-2 sm:gap-3 mt-3 sm:mt-4">
+                  <h2 className="text-sm sm:text-base font-semibold text-[#212121]">
                     Personal Identification
                   </h2>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-[#212121]">
+                    <label className="text-xs sm:text-sm font-medium text-[#212121]">
                       Upload Driver License (Front and back side)
                     </label>
 

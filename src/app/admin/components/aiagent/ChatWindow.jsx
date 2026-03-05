@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
-import { MoreVertical, Send, Mic, Download, VolumeX, Trash2, Ban, Flag } from "lucide-react";
+import { MoreVertical, Send, Mic, Download, VolumeX, Trash2, Ban, Flag, ArrowLeft, Info } from "lucide-react";
 import ChatMessageBubble from "./ChatMessageBubble";
 import OrderSummaryCard from "./OrderSummaryCard";
 
 /**
  * Center panel: chat header (avatar, name, Last Active, pill, menu), messages, order summary card, input.
  */
-const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inputValue, onInputChange }) => {
+const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inputValue, onInputChange, onBack, onToggleDetails, showBackButton = false }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const menuRef = useRef(null);
@@ -117,7 +117,19 @@ const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inpu
       <div className="flex flex-col rounded-sm overflow-hidden bg-white min-w-0 flex-1 shadow-sm relative z-0">
         {/* Header */}
         <div className="shrink-0 flex items-center justify-between gap-3 px-4 py-3 bg-white border-b border-gray-200 z-50 relative">
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            {/* Back button for mobile */}
+            {showBackButton && (
+              <button
+                type="button"
+                onClick={onBack}
+                className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-sm shrink-0"
+                title="Back to conversations"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            )}
+            
             <div className="w-10 h-10 rounded-sm bg-gray-200 shrink-0 overflow-hidden flex items-center justify-center">
               {customer?.avatar ? (
                 <img src={customer.avatar} alt="" className="w-full h-full object-cover" />
@@ -125,10 +137,10 @@ const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inpu
                 <span className="text-gray-500 font-semibold text-sm">{customer?.name?.charAt(0) || "?"}</span>
               )}
             </div>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="font-semibold text-[17px] mt-0.5 text-black truncate">{customer?.name || "Customer"}</h2>
-                <span className="inline-flex px-1 py-1 rounded-full text-[11px] font-semibold bg-[#555] text-white w-fit">
+                <h2 className="font-semibold text-base sm:text-[17px] mt-0.5 text-black truncate">{customer?.name || "Customer"}</h2>
+                <span className="inline-flex px-1 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold bg-[#555] text-white w-fit">
                   {customer?.roleLabel || "Existing Customer"}
                 </span>
               </div>
@@ -136,16 +148,28 @@ const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inpu
             </div>
           </div>
 
-          {/* Three-dot menu */}
-          <div className="relative z-50">
-            <button type="button" ref={buttonRef} onClick={handleToggleMenu} className="p-2 text-gray-500 bg-gray-100 rounded-sm cursor-pointer">
-              <MoreVertical className="w-5 h-5" />
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Info button for mobile/tablet */}
+            <button
+              type="button"
+              onClick={onToggleDetails}
+              className="xl:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-sm"
+              title="Customer details"
+            >
+              <Info className="w-5 h-5" />
             </button>
+
+            {/* Three-dot menu */}
+            <div className="relative z-50">
+              <button type="button" ref={buttonRef} onClick={handleToggleMenu} className="p-2 text-gray-500 bg-gray-100 rounded-sm cursor-pointer">
+                <MoreVertical className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
           {messages.map((msg, i) => {
             // Show date separator after 2nd message (index 1)
             const showDateSeparator = i === 2;
@@ -196,7 +220,7 @@ const ChatWindow = ({ customer, messages = [], orderSummary, onSendMessage, inpu
               value={inputValue}
               onChange={(e) => onInputChange(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && onSendMessage?.()}
-              className="flex-1 min-w-0 py-2  text-sm text-[#212121] placeholder-gray-400 focus:outline-none bg-transparent"
+              className="flex-1 min-w-0 py-2 text-sm text-[#212121] placeholder-gray-400 focus:outline-none bg-transparent"
             />
             <button
               type="button"

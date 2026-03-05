@@ -222,6 +222,8 @@ const AIAgents = () => {
   const [search, setSearch] = useState("");
   const [activeId, setActiveId] = useState("1");
   const [chatInput, setChatInput] = useState("");
+  const [showConversationList, setShowConversationList] = useState(true);
+  const [showCustomerDetails, setShowCustomerDetails] = useState(false);
 
   const filteredConversations = useMemo(() => {
     if (!search.trim()) return MOCK_CONVERSATIONS;
@@ -267,29 +269,78 @@ const AIAgents = () => {
     if (customerId) navigate(`/customers/${customerId}`);
   };
 
+  const handleSelectConversation = (conv) => {
+    setActiveId(conv.id);
+    setShowConversationList(false);
+    setShowCustomerDetails(false);
+  };
+
+  const handleToggleCustomerDetails = () => {
+    setShowCustomerDetails(!showCustomerDetails);
+  };
+
   return (
-    <div className="flex flex-1 min-h-0 min-w-0 bg-[#F2F2F2]  gap-2 px-2.5 py-3">
-      <ConversationList
-        search={search}
-        onSearchChange={setSearch}
-        conversations={filteredConversations}
-        activeId={activeId}
-        onSelect={(conv) => setActiveId(conv.id)}
-      />
+    <div className="flex flex-1 min-h-0 min-w-0 bg-[#F2F2F2] lg:gap-2 px-2.5 py-3 relative overflow-hidden">
+      {/* Mobile/Tablet: Only show one panel at a time */}
+      {/* Desktop (lg+): Show conversation + chat, Desktop (xl+): Show all three */}
+      
+      {/* Conversation List */}
+      <div 
+        className={`
+          flex-col rounded-sm overflow-hidden min-w-0 shrink-0
+          ${showConversationList && !showCustomerDetails ? 'flex' : 'hidden'}
+          lg:flex lg:w-[320px]
+          ${showCustomerDetails ? 'xl:flex' : ''}
+          w-full lg:w-[320px]
+        `}
+      >
+        <ConversationList
+          search={search}
+          onSearchChange={setSearch}
+          conversations={filteredConversations}
+          activeId={activeId}
+          onSelect={handleSelectConversation}
+        />
+      </div>
 
-      <ChatWindow
-        customer={chatCustomer}
-        messages={activeId === "1" ? MOCK_MESSAGES : []}
-        orderSummary={activeId === "1" ? MOCK_ORDER_SUMMARY : null}
-        onSendMessage={handleSendMessage}
-        inputValue={chatInput}
-        onInputChange={setChatInput}
-      />
+      {/* Chat Window */}
+      <div 
+        className={`
+          flex-col rounded-sm overflow-hidden bg-white min-w-0 flex-1 shadow-sm
+          ${!showConversationList && !showCustomerDetails ? 'flex' : 'hidden'}
+          lg:flex
+          ${showCustomerDetails ? 'xl:flex' : ''}
+        `}
+      >
+        <ChatWindow
+          customer={chatCustomer}
+          messages={activeId === "1" ? MOCK_MESSAGES : []}
+          orderSummary={activeId === "1" ? MOCK_ORDER_SUMMARY : null}
+          onSendMessage={handleSendMessage}
+          inputValue={chatInput}
+          onInputChange={setChatInput}
+          onBack={() => setShowConversationList(true)}
+          onToggleDetails={handleToggleCustomerDetails}
+          showBackButton={true}
+        />
+      </div>
 
-      <CustomerDetailsPanel
-        customer={customerDetails}
-        onViewFullProfile={handleViewFullProfile}
-      />
+      {/* Customer Details Panel */}
+      <div 
+        className={`
+          flex-col rounded-sm overflow-hidden bg-white min-w-0 shrink-0 shadow-sm
+          ${showCustomerDetails ? 'flex' : 'hidden'}
+          xl:flex xl:w-[400px]
+          w-full xl:w-[400px]
+        `}
+      >
+        <CustomerDetailsPanel
+          customer={customerDetails}
+          onViewFullProfile={handleViewFullProfile}
+          onClose={() => setShowCustomerDetails(false)}
+          showCloseButton={true}
+        />
+      </div>
     </div>
   );
 };

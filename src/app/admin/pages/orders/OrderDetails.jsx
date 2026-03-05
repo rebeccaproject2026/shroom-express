@@ -144,24 +144,22 @@ const OrderDetails = () => {
       <div className="order-details-cols flex flex-col xl:flex-row gap-4">
         {/* Left column - Order summary */}
         <div className="order-details-col-left flex-1 min-w-0 bg-white rounded-sm border border-gray-200 p-3 md:p-4">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-2">
-            <div>
-              <h2 className="text-base font-semibold text-gray-900 flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-sm sm:text-base font-semibold text-gray-900 flex items-center gap-2">
                 <Link to="/orders" className="text-gray-600 hover:text-gray-900">
-                  <Icon icon="material-symbols:arrow-left-alt-rounded" className="w-6 h-6 " />
+                  <Icon icon="material-symbols:arrow-left-alt-rounded" className="w-5 h-5 sm:w-6 sm:h-6" />
                 </Link>
-
-                Order Number: {order.orderId}
+                <span className="truncate">Order Number: {order.orderId}</span>
               </h2>
-              <p className="text-sm text-gray-600 mt-1">Date: {order.date}</p>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1">Date: {order.date}</p>
             </div>
             <button
               type="button"
               onClick={() => setShowDeleteModal(true)}
-              className="inline-flex items-center gap-1 px-3 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-sm hover:bg-red-700"
+              className="inline-flex items-center gap-1 px-3 py-2 sm:py-2.5 bg-red-600 text-white text-xs sm:text-sm justify-center font-semibold rounded-sm hover:bg-red-700 w-full sm:w-auto"
             >
-              <Icon icon="mdi:trash-can" className="w-5 h-5" />
-
+              <Icon icon="mdi:trash-can" className="w-4 h-4 sm:w-5 sm:h-5" />
               Delete Order
             </button>
           </div>
@@ -171,31 +169,33 @@ const OrderDetails = () => {
           {order.items.map((item, idx) => (
             <div
               key={idx}
-              className="flex flex-wrap items-center gap-2 py-3 border-b border-gray-100 last:border-0"
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 border-b border-gray-100 last:border-0"
             >
-              <div className="w-14 h-14 rounded-sm bg-gray-100 shrink-0 overflow-hidden">
-                {item.image ? (
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                    —
-                  </div>
-                )}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-sm bg-gray-100 shrink-0 overflow-hidden">
+                  {item.image ? (
+                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                      —
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <a href="#" className="text-sm sm:text-base font-semibold text-black underline truncate block">
+                    {item.name}
+                  </a>
+                  <p className="text-xs sm:text-sm text-gray-500">Qty: {item.qty}</p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <a href="#" className="text-base font-semibold text-[#000] underline">
-                  {item.name}
-                </a>
-                <p className="text-sm text-gray-500">Qty: {item.qty}</p>
-              </div>
-              <div className="flex gap-12 text-sm">
+              <div className="flex gap-6 sm:gap-12 text-xs sm:text-sm justify-between sm:justify-start">
                 <span className="text-gray-600">
                   Items<br />
                   <span className="font-medium flex justify-center text-gray-900">{item.items}</span>
                 </span>
                 <span className="text-gray-600">
                   Price<br />
-                  <span className="font-medium text-sm text-gray-900">{item.price}</span>
+                  <span className="font-medium text-gray-900">{item.price}</span>
                 </span>
                 <span className="text-gray-600">
                   Total<br />
@@ -206,10 +206,10 @@ const OrderDetails = () => {
           ))}
 
           <hr className="my-3 border-gray-200" />
-          <div className="space-y-1 text-sm ">
+          <div className="space-y-1 text-xs sm:text-sm">
             <div className="flex justify-between items-center mb-2">
               <strong>Subtotal</strong>
-              <div className="flex gap-10">
+              <div className="flex gap-6 sm:gap-10">
                 <span className="font-semibold">{order.subtotalItems}</span>
                 <span className="font-semibold">{order.subtotalAmount}</span>
               </div>
@@ -224,20 +224,20 @@ const OrderDetails = () => {
             </div>
             <div className="flex justify-between mb-2">
               <strong>Shroom CA$H</strong>
-              <span>{order.cheetahCash}</span>
+              <span className="text-right">{order.cheetahCash}</span>
             </div>
             <div className="flex justify-between mb-2">
               <strong>Delivery Fee</strong>
               <span>{order.deliveryFee}</span>
             </div>
-            <div className="flex justify-between font-bold ">
+            <div className="flex justify-between font-bold">
               <strong>Total</strong>
               <span>{order.total}</span>
             </div>
           </div>
 
           <hr className="my-3 border-gray-200" />
-          <div className="space-y-1 text-sm">
+          <div className="space-y-1 text-xs sm:text-sm">
             <div className="flex justify-between">
               <strong>Payment Method</strong>
               <span>{order.paymentMethod}</span>
@@ -260,8 +260,8 @@ const OrderDetails = () => {
           </div>
 
           <hr className="my-3 border-gray-200" />
-          <p className="text-sm font-semibold text-gray-900 mb-1">Delivery Address & Client Info</p>
-          <p className="text-sm text-gray-700">
+          <p className="text-xs sm:text-sm font-semibold text-gray-900 mb-1">Delivery Address & Client Info</p>
+          <p className="text-xs sm:text-sm text-gray-700">
             <a href="#" className="font-semibold text-blue-600 hover:underline">
               {order.clientName} - {order.clientPhone}
             </a>
@@ -278,7 +278,7 @@ const OrderDetails = () => {
             } xl:block`}
         >
           <div className="bg-[var(--color-secondary)] text-white px-2.5 py-2 flex justify-between items-center shrink-0">
-            <h3 className="text-lg font-semibold">Order Tracking</h3>
+            <h3 className="text-base sm:text-lg font-semibold">Order Tracking</h3>
             <button
               type="button"
               onClick={() => setTrackingOpen(false)}
@@ -289,22 +289,21 @@ const OrderDetails = () => {
             </button>
           </div>
           <div className="p-3 border-b border-gray-200 flex items-center justify-between">
-            <div>
-              <div className="text-sm font-medium text-gray-900">
+            <div className="flex-1 min-w-0">
+              <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                 Order #{order.orderId}
               </div>
-              <div className="text-xs text-gray-500 mt-0.5">
+              <div className="text-xs text-gray-500 mt-0.5 truncate">
                 Customer: {order.clientName?.replace(/\.$/, "")}
               </div>
             </div>
-            <span className="inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium bg-[#E3EEFF] text-[#0066FF]">
+            <span className="inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium bg-[#E3EEFF] text-[#0066FF] ml-2">
               {order.currentStatus}
             </span>
           </div>
           <div className="p-3">
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Delivery Process</h4>
-            <div className="relative ">
-              {/* <div className="absolute left-[11px] top-0 bottom-0 w-px bg-gray-200" /> */}
+            <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-4">Delivery Process</h4>
+            <div className="relative">
               {DELIVERY_STEPS.map((step, idx) => (
                 <div key={step.key} className="relative flex items-start gap-3 pb-4 last:pb-0">
                   <div className="relative z-10 flex items-center justify-center mt-0.5">
@@ -320,15 +319,15 @@ const OrderDetails = () => {
                   <div className="flex-1 min-w-0">
                     <label
                       htmlFor={`step-${step.key}`}
-                      className="text-sm font-semibold text-gray-900 cursor-pointer block"
+                      className="text-xs sm:text-sm font-semibold text-gray-900 cursor-pointer block"
                     >
                       {step.label}:
                     </label>
-                    <p className="text-sm text-gray-500">{step.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{step.description}</p>
                     {stepChecked[step.key] && step.key === "Ordered" && order.completedAt && (
                       <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
                         <Icon icon="mdi:check-circle-outline" className="w-3 h-3" />
-                        Completed on {order.completedAt}
+                        <span className="truncate">Completed on {order.completedAt}</span>
                       </p>
                     )}
                   </div>
@@ -336,22 +335,22 @@ const OrderDetails = () => {
               ))}
             </div>
           </div>
-          <div className="p-3 pt-4 flex flex-wrap justify-end gap-2 border-t border-gray-200">
+          <div className="p-3 pt-4 flex flex-col sm:flex-row sm:flex-wrap justify-end gap-2 border-t border-gray-200">
             <button
               type="button"
               onClick={handleCancelOrder}
-              className="inline-flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white text-sm font-semibold rounded-sm hover:bg-red-700"
+              className="inline-flex items-center justify-center gap-2 px-3 py-2 sm:py-2.5 bg-red-600 text-white text-xs sm:text-sm font-semibold rounded-sm hover:bg-red-700"
             >
-              <Icon icon="mdi:content-save-outline" className="w-5 h-5" />
+              <Icon icon="mdi:content-save-outline" className="w-4 h-4 sm:w-5 sm:h-5" />
               Cancel Order
             </button>
             <button
               type="button"
               onClick={handleSaveChanges}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-3 py-2.5 bg-[var(--color-secondary)] text-white text-sm font-semibold rounded-sm hover:bg-blue-700 disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 px-3 py-2 sm:py-2.5 bg-[var(--color-secondary)] text-white text-xs sm:text-sm font-semibold rounded-sm hover:bg-blue-700 disabled:opacity-50"
             >
-              <Icon icon="mdi:content-save-outline" className="w-5 h-5" />
+              <Icon icon="mdi:content-save-outline" className="w-4 h-4 sm:w-5 sm:h-5" />
               Save Changes
             </button>
           </div>
@@ -364,7 +363,7 @@ const OrderDetails = () => {
           <button
             type="button"
             onClick={() => setTrackingOpen(true)}
-            className="w-full py-2 bg-[#0066FF] text-white font-medium rounded-lg"
+            className="w-full py-2.5 bg-[#0066FF] text-white font-medium rounded-sm text-sm"
           >
             Open Order Tracking
           </button>
@@ -378,23 +377,23 @@ const OrderDetails = () => {
             className="fixed inset-0 bg-black/40 z-40"
             onClick={() => setShowDeleteModal(false)}
           />
-          <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md bg-white rounded-xl shadow-xl p-4">
-            <h5 className="text-lg font-semibold text-gray-900">Confirm Delete</h5>
-            <p className="text-sm text-gray-600 mt-2">
+          <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[90%] max-w-md bg-white rounded-xl shadow-xl p-4">
+            <h5 className="text-base sm:text-lg font-semibold text-gray-900">Confirm Delete</h5>
+            <p className="text-xs sm:text-sm text-gray-600 mt-2">
               Are you sure you want to delete this order? This action cannot be undone.
             </p>
-            <div className="flex justify-end gap-2 mt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
               <button
                 type="button"
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleDeleteOrder}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
               >
                 Delete
               </button>

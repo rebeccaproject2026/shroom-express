@@ -21,12 +21,12 @@ const RecentlySentCampaigns = () => {
   );
 
   return (
-    <div className="bg-white rounded-sm p-4">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-base font-semibold text-black">
+    <div className="bg-white rounded-sm p-3 sm:p-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3 sm:mb-2">
+        <h3 className="text-sm sm:text-base font-semibold text-black">
           Recently Sent Campaigns
         </h3>
-        <div>
+        <div className="w-full sm:w-auto">
           <DatePickerMap
             defaultItem={2}
             onUpdate={onDateUpdate}
@@ -35,12 +35,12 @@ const RecentlySentCampaigns = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[30%_70%] gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] sm:gap-4 lg:gap-2">
         <div>
           {/* Campaign Selector */}
           <div className="mb-4">
             <select
-              className="w-fit px-2 py-2 text-[13px] border border-[#F3F3F3] rounded-sm font-semibold bg-[#F3F3F3] focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full sm:w-fit px-2 py-2 text-xs sm:text-[13px] border border-[#F3F3F3] rounded-sm font-semibold bg-[#F3F3F3] focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={selectedCampaign.id}
               onChange={(e) => {
                 const campaign = RECENT_CAMPAIGNS.find(
@@ -58,30 +58,30 @@ const RecentlySentCampaigns = () => {
           </div>
 
           {/* Campaign Details */}
-          <div className="grid grid-cols-1 gap-x-8 gap-y-4 mb-6 text-sm">
-            <div className="flex">
-              <span className="text-black font-medium w-32">Sent to :</span>
-              <span className="text-gray-600 font-medium">
+          <div className="grid grid-cols-1 gap-x-4 sm:gap-x-8 gap-y-3 sm:gap-y-4  sm:mb-6 text-xs sm:text-sm">
+            <div className="flex flex-col sm:flex-row">
+              <span className="text-black font-medium sm:w-32 mb-1 sm:mb-0">Sent to :</span>
+              <span className="text-gray-600 font-medium wrap-break-word">
                 {selectedCampaign.sentTo}
               </span>
             </div>
 
-            <div className="flex">
-              <span className="text-black font-medium w-32">From :</span>
-              <span className="text-gray-600 font-medium">
+            <div className="flex flex-col sm:flex-row">
+              <span className="text-black font-medium sm:w-32 mb-1 sm:mb-0">From :</span>
+              <span className="text-gray-600 font-medium wrap-break-word">
                 {selectedCampaign.from}
               </span>
             </div>
 
-            <div className="flex">
-              <span className="text-black font-medium w-32">Subject :</span>
-              <span className="text-gray-600 font-medium">
+            <div className="flex flex-col sm:flex-row">
+              <span className="text-black font-medium sm:w-32 mb-1 sm:mb-0">Subject :</span>
+              <span className="text-gray-600 font-medium wrap-break-word">
                 {selectedCampaign.subject}
               </span>
             </div>
 
-            <div className="flex">
-              <span className="text-black font-medium w-32">
+            <div className="flex flex-col sm:flex-row">
+              <span className="text-black font-medium sm:w-32 mb-1 sm:mb-0">
                 Scheduled at :
               </span>
               <span className="text-gray-600 font-medium">
@@ -89,8 +89,8 @@ const RecentlySentCampaigns = () => {
               </span>
             </div>
 
-            <div className="flex">
-              <span className="text-black font-medium w-32">Delivery at :</span>
+            <div className="flex flex-col sm:flex-row">
+              <span className="text-black font-medium sm:w-32 mb-1 sm:mb-0">Delivery at :</span>
               <span className="text-gray-600 font-medium">
                 {selectedCampaign.deliveryAt || "-"}
               </span>
@@ -98,14 +98,16 @@ const RecentlySentCampaigns = () => {
           </div>
         </div>
 
-        <div>
+        <div className="w-full overflow-hidden">
           {/* Stats Bars Chart */}
-          <Chart
-            options={campaignStatsChartOptions}
-            series={campaignStatsChartSeries}
-            type="bar"
-            height={250}
-          />
+          <div className="min-w-[300px]">
+            <Chart
+              options={campaignStatsChartOptions}
+              series={campaignStatsChartSeries}
+              type="bar"
+              height={250}
+            />
+          </div>
         </div>
       </div>
     </div>

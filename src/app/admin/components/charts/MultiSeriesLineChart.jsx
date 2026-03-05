@@ -51,23 +51,30 @@ const MultiSeriesLineChart = ({
         horizontalAlign: "center",
         fontSize: "10px",
         fontWeight: 500,
-        itemMargin: { horizontal: 12 },
+        itemMargin: { horizontal: 8, vertical: 4 },
         markers: {
           size: 10,
           shape: "square",
           radius: 0,
         },
+        offsetY: 0,
       },
       grid: {
         borderColor: "#E5E7EB",
         strokeDashArray: 4,
         xaxis: { lines: { show: false } },
         yaxis: { lines: { show: true } },
+        padding: {
+          left: 10,
+          right: 10,
+        },
       },
       xaxis: {
         categories,
         labels: {
           style: { colors: "#6B7280", fontSize: "11px" },
+          rotate: 0,
+          hideOverlappingLabels: true,
         },
         axisBorder: { show: false },
         axisTicks: { show: false },
@@ -91,7 +98,34 @@ const MultiSeriesLineChart = ({
       tooltip: {
         shared: true,
         intersect: false,
+        x: {
+          show: true,
+        },
       },
+      responsive: [
+        {
+          breakpoint: 640,
+          options: {
+            legend: {
+              fontSize: "9px",
+              itemMargin: { horizontal: 6, vertical: 3 },
+              markers: {
+                size: 8,
+              },
+            },
+            xaxis: {
+              labels: {
+                style: { fontSize: "10px" },
+              },
+            },
+            yaxis: {
+              labels: {
+                style: { fontSize: "10px" },
+              },
+            },
+          },
+        },
+      ],
       ...optionsOverride,
     }),
     [

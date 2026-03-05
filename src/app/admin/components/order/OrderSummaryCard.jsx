@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from "@iconify/react";
 
-const OrderSummaryCard = ({ item, onOpenTimeline, onOpenAnalytics }) => {
+const OrderSummaryCard = ({ item, onOpenTimeline, onOpenAnalytics, className = "" }) => {
     return (
-        <div className="bg-white rounded-md border border-gray-200 p-3 flex items-center justify-between gap-3 min-w-0">
+        <div className={`bg-white rounded-md border border-gray-200 p-3 flex items-center justify-between gap-3 min-w-0 ${className}`}>
             {/* Left */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
                 <div className="min-w-0 flex-1">
