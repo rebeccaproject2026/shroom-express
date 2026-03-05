@@ -53,8 +53,8 @@ const DashboardHeader = ({ sidebar, setSidebar, user = {
   // const navigate = useNavigate();
   useEffect(() => {
     const pageTitle =
-      displayTitle || (pathname.startsWith("/staff") ? "Staff" : "Potrider");
-    document.title = pageTitle ? `${pageTitle} | Potrider` : "Potrider";
+      displayTitle || (pathname.startsWith("/staff") ? "Staff" : "shroom express");
+    document.title = pageTitle ? `${pageTitle} | shroom express` : "shroom express";
   }, [displayTitle, pathname]);
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
