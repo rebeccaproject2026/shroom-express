@@ -208,22 +208,22 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6">
                   {[
                     {
-                      icon: "solar:shop-outline",
+                      icon: "iconamoon:store-light",
                       label: "PICKUP LOCATION",
                       value: delivery.pickup,
                     },
                     {
-                      icon: "solar:map-point-outline",
+                      icon: "hugeicons:location-05",
                       label: "DROP LOCATION",
                       value: delivery.drop,
                     },
                     {
-                      icon: "solar:clock-circle-outline",
+                      icon: "mynaui:clock-5",
                       label: "DELIVERY WINDOW",
                       value: delivery.window,
                     },
                     {
-                      icon: "solar:box-outline",
+                      icon: "hugeicons:package-open",
                       label: "PACKAGE DETAILS",
                       value: delivery.packageDetails,
                     },
@@ -231,7 +231,7 @@ const Dashboard = () => {
                     <div key={i} className="flex items-start gap-2.5">
                       <Icon
                         icon={item.icon}
-                        className="w-4.5 h-4.5 text-gray-400 shrink-0 mt-0.5"
+                        className="w-5 h-5 text-[#636363] shrink-0 mt-0.5"
                       />
                       <div className="flex flex-col gap-0.5">
                         <span className="text-xs font-medium uppercase text-[#777777] tracking-wide leading-none">
