@@ -1,51 +1,49 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { LogOut } from "lucide-react";
 import shroomLogo from "../assets/images/Logo.png";
 import { Icon } from "@iconify/react";
 
 const navItems = [
   { to: "/", label: "Dashboard", Icon: <Icon icon="solar:widget-2-outline" width="24" height="24" className="*:stroke-[1.4px]" /> },
-  { to: "/orders", label: "Orders", Icon: <Icon icon="solar:documents-linear" width="24" height="24" className="*:stroke-[1.4px]" /> },
-  { to: "/tracking", label: "Tracking", Icon: <Icon icon="hugeicons:shipment-tracking" width="24" height="24" /> },
-  { to: "/inventory", label: "Inventory", Icon: <Icon icon="streamline-ultimate:drugs-cannabis" width="24" height="24" className="*:stroke-[1.2px]" /> },
-  { to: "/finances", label: "Finances", Icon: <Icon icon="fluent:wallet-credit-card-16-regular" width="24" height="24" /> },
-  { to: "/customers", label: "Customers", Icon: <Icon icon="mynaui:users-group" width="24" height="24" /> },
-  { to: "/ai-agent", label: "AI Agent", Icon: <Icon icon="tabler:messages" width="24" height="24" className="*:stroke-[1.4px]" /> },
-  { to: "/marketing", label: "Marketing", Icon: <Icon icon="tabler:speakerphone" width="24" height="24" className="*:stroke-[1.1px]" /> },
+  { to: "/deliveries", label: "My Deliveries", Icon: <Icon icon="hugeicons:truck-delivery" width="24" height="24" className="*:stroke-[1.4px]" /> },
+  { to: "/history", label: "Delivery History", Icon: <Icon icon="iconamoon:history-light" width="24" height="24" /> },
+  { to: "/earnings", label: "Earnings", Icon: <Icon icon="fluent:wallet-credit-card-16-regular" width="24" height="24" /> },
+  { to: "/documents", label: "Documents", Icon: < Icon icon="solar:documents-linear" width="24" height="24" className="*:stroke-[1.4px]" /> },
+  { to: "/profile", label: "Profile", Icon: <Icon icon="proicons:person-2" width="24" height="24" /> },
+  { to: "/support", label: "Support", Icon: <Icon icon="hugeicons:customer-support" width="24" height="24" /> },
+
 ];
-
 const Sidebar = ({ setSidebar }) => {
-  const [staffOpen, setStaffOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
-
-  const handleStaffClick = () => {
-    setStaffOpen(!staffOpen);
-    setActiveMenu("staff");
-  };
-
   const handleNavClick = () => {
-    setStaffOpen(false);
-    setActiveMenu(null);
     setSidebar(false);
   };
 
   return (
-    <div
-      className={`w-45 h-screen bg-white flex flex-col transition-all duration-300 ease-in-out`}
-    >
-      <div className="my-2 w-full h-full flex flex-col">
-        {/* Logo */}
-        <div className="flex justify-center my-2">
+
+    <div className="w-57 h-screen bg-white flex flex-col transition-all duration-300 ease-in-out border-r border-[#E5E7EB]">
+
+      <div className="flex flex-col h-full overflow-hidden">
+        {/* Logo and Profile Section */}
+        <div className="flex flex-col items-center pt-8 pb-6 px-4">
           <img
             src={shroomLogo}
-            alt="Portrider"
-            className="h-12 w-auto cursor-pointer"
+            alt="Shroom Express"
+            className="h-14 w-auto object-contain cursor-pointer mb-2"
           />
+
+          {/* Profile snippet in sidebar from Figma */}
+          <div className="flex flex-col items-center">
+            {/* The profile image circle */}
+            <h3 className="text-[#222222] font-semibold text-base">David Doe</h3>
+            <div className="flex items-center gap-1 mt-0.5">
+              <span className="w-2 h-2 rounded-full bg-[#16A34A]"></span>
+              <span className="text-[#16A34A] text-[12px] font-semibold">Online</span>
+            </div>
+          </div>
         </div>
 
-        {/* Main nav */}
-        <div className="px-2 space-y-1 text-[#212121]  flex-1 overflow-y-auto">
+        {/* Main nav items */}
+        <div className="px-2 space-y-1 flex-1 overflow-y-auto">
           {navItems.map(({ to, label, Icon }) => (
             <NavLink
               key={to}
@@ -53,110 +51,28 @@ const Sidebar = ({ setSidebar }) => {
               end={to === "/"}
               onClick={handleNavClick}
               className={({ isActive }) =>
-                `px-3 py-2 flex items-center gap-3 rounded-sm transition-colors ${isActive && activeMenu === null
-                  ? "bg-(--color-primary) text-white"
-                  : "text-[#212121] font-medium tracking-wide hover:bg-(--color-primary-soft)"
+                `px-6 py-2 flex items-center gap-2.5 rounded-sm transition-colors ${isActive
+                  ? "text-[#E93E2A] font-medium bg-[#FDF0EE] relative "
+                  : "text-[#222222] font-medium hover:bg-[#FDF0EE] hover:text-[#E93E2A] "
 
                 }`
               }
             >
               {Icon}
-              {label}
+              <span className="text-[14px]">{label}</span>
             </NavLink>
           ))}
-
-          {/* staff manu */}
-          <button
-            onClick={handleStaffClick}
-            className={`w-full px-3 py-2 flex items-center justify-between rounded-sm transition-colors ${activeMenu === "staff"
-              ? "bg-(--color-primary-soft) text-(--color-primary)"
-              : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-              }`}
-          >
-            <div className="flex items-center gap-3">
-              <Icon icon="fluent:people-team-20-regular" width="24" height="24" />
-              Staff
-            </div>
-            {staffOpen ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
-          </button>
-
-          {staffOpen && (
-            <div className="ml-8 mt-1 space-y-1 text-sm">
-
-
-              <NavLink
-                to="/staff/drivers"
-                className={({ isActive }) =>
-                  `block px-3 py-1.5 rounded ${isActive
-                    ? "bg-(--color-primary-soft) text-(--color-primary)"
-                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-                  }`
-                }
-              >
-                Driver
-              </NavLink>
-              <NavLink
-                to="/staff/dispatcher"
-                className={({ isActive }) =>
-                  `block px-3 py-1.5 rounded ${isActive
-                    ? "bg-(--color-primary-soft) text-(--color-primary)"
-                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-                  }`
-                }
-              >
-                Dispatcher
-              </NavLink>
-              {/* 
-              <NavLink
-                to="/staff/employee"
-                className={({ isActive }) =>
-                  `block px-3 py-1.5 rounded ${isActive
-                    ? "bg-(--color-primary-soft) text-[var(--color-primary)]"
-                    : "text-[#212121] font-medium hover:bg-(--color-primary-soft)"
-                  }`
-                }
-              >
-                Employee
-              </NavLink> */}
-            </div>
-          )}
         </div>
 
         {/* Bottom Menu Items */}
-        <div className="px-2 text-[#212121] font-medium space-y-1 pt-2 pb-2">
-          {/* support menu */}
-          <NavLink
-            to="/support"
-            onClick={handleNavClick}
-            className={({ isActive }) =>
-              `px-3 py-1.5 flex items-center gap-3 rounded transition-colors ${isActive && activeMenu === null
-                ? "bg-(--color-primary) text-white"
-                : "text-[#212121] hover:bg-(--color-primary-soft)"
-              }`
-            }
-          >
-            <Icon icon="hugeicons:customer-support" width="24" height="24" />
-            Support
-          </NavLink>
+        <div className="p-2">
+          <button
 
-          {/* setting menu */}
-          <NavLink
-            to="/setting"
-            onClick={handleNavClick}
-            className={({ isActive }) =>
-              `px-3 py-1.5 flex items-center gap-3 rounded transition-colors ${isActive && activeMenu === null
-                ? "bg-(--color-primary) text-white"
-                : "text-[#212121] hover:bg-(--color-primary-soft)"
-              }`
-            }
+            className="w-full px-6 py-2 flex items-center gap-2.5 rounded-sm transition-colors text-[#E93E2A] font-medium bg-[#FDF0EE]"
           >
-            <Icon icon="lucide:settings" width="24" height="24" />
-            Setting
-          </NavLink>
+            <Icon icon="mynaui:logout" height={24} width={24} />
+            <span className="text-[14px]">Log Out</span>
+          </button>
         </div>
       </div>
     </div>

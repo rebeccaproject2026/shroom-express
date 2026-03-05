@@ -1,363 +1,302 @@
-import { useState } from "react";
-import DatePickerMap from "../../components/DatePickerMap";
-import DashboardChart from "../../components/dashboard/DashboardChart";
-import InventoryHealth from "../../components/dashboard/InventoryHealth";
-import OrderHealth from "../../components/dashboard/OrderHealth";
-import DashboardAverageOrders from "../../components/dashboard/DashboardAverageOrders";
-import DashboardDriverStatus from "../../components/dashboard/DashboardDriverStatus";
-import DashboardDeliveries from "../../components/dashboard/DashboardDeliveries";
-import GeoPerformance from "../../components/dashboard/GeoPerformance";
-import MostSellingArea from "../../components/dashboard/MostSellingArea";
-import TopSellingProducts from "../../components/dashboard/TopSellingProducts";
-import DriverPerformance from "../../components/dashboard/DriverPerformance";
-import NewClients from "../../components/dashboard/NewClients";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Icon } from "@iconify/react";
+import Select from "../../components/Select";
 
+const topStats = [
+  {
+    title: "Today Earning",
+    value: "$15.25",
+    iconBg: "bg-[#E6F8F0]",
+    iconColor: "text-[#10B981]",
+    icon: "solar:wallet-linear"
+  },
+  {
+    title: "Deliveries Assigned Today",
+    value: "5",
+    iconBg: "bg-[#E0F2FE]",
+    iconColor: "text-[#3B82F6]",
+    icon: "solar:clipboard-list-linear"
+  },
+  {
+    title: "Pending Deliveries",
+    value: "1",
+    iconBg: "bg-[#FEF3C7]",
+    iconColor: "text-[#F59E0B]",
+    icon: "solar:restart-circle-linear"
+  },
+  {
+    title: "Deliveries Completed",
+    value: "4",
+    iconBg: "bg-[#E6F8F0]",
+    iconColor: "text-[#10B981]",
+    icon: "solar:box-linear"
+  }
+];
+
+const assignedDeliveries = [
+  {
+    id: "#302011",
+    priority: "HIGH PRIORITY",
+    priorityColor: "text-[#E93E2A]",
+    priorityBg: "bg-[#FEE2E2]",
+    priorityBorder: "border-[#DC2626]", // Red
+    status: "ASSIGNED",
+    statusBg: "bg-[#DBEAFE]",
+    statusColor: "text-[#1142D4]",
+    pickup: "Central Warehouse, Dock 4",
+    drop: "42 Silicon Valley Ave, CA",
+    window: "2 PM - 4 PM (Today)",
+    packageDetails: "3 Items | COD: $45.00",
+  },
+  {
+    id: "#302012",
+    priority: "MEDIUM PRIORITY",
+    priorityColor: "text-[#F59E0B]",
+    priorityBg: "bg-[#FFF4E5]",
+    priorityBorder: "border-[#F59E0B]", // Yellow
+    status: "PICKED UP",
+    statusBg: "bg-[#E0E7FF]",
+    statusColor: "text-[#6366F1]",
+    pickup: "Central Warehouse, Dock 4",
+    drop: "42 Silicon Valley Ave, CA",
+    window: "2 PM - 4 PM (Today)",
+    packageDetails: "3 Items | COD: $45.00",
+  },
+  {
+    id: "#302013",
+    priority: "MEDIUM PRIORITY",
+    priorityColor: "text-[#F59E0B]",
+    priorityBg: "bg-[#FFF4E5]",
+    priorityBorder: "border-[#F59E0B]", // Yellow
+    status: "OUT FOR DELIVERY",
+    statusBg: "bg-[#FFEDD5]",
+    statusColor: "text-[#EA580C]",
+    pickup: "Central Warehouse, Dock 4",
+    drop: "42 Silicon Valley Ave, CA",
+    window: "2 PM - 4 PM (Today)",
+    packageDetails: "3 Items | COD: $45.00",
+  },
+  {
+    id: "#302014",
+    priority: "LOW PRIORITY",
+    priorityColor: "text-[#6B7280]",
+    priorityBg: "bg-[#F3F4F6]",
+    priorityBorder: "border-[#4B5563]", // Dark gray
+    status: "DELIVERD",
+    statusBg: "bg-[#DCFCE7]",
+    statusColor: "text-[#16A34A]",
+    pickup: "Central Warehouse, Dock 4",
+    drop: "42 Silicon Valley Ave, CA",
+    window: "2 PM - 4 PM (Today)",
+    packageDetails: "3 Items | COD: $45.00",
+  }
+];
+
+const priorityOptions = [
+  { value: "all", label: "Priority: All priority" },
+  { value: "high", label: "Priority: High" },
+  { value: "medium", label: "Priority: Medium" },
+  { value: "low", label: "Priority: Low" }
+];
+
+const statusOptions = [
+  { value: "assigned", label: "Status: Assigned" },
+  { value: "picked", label: "Status: Picked Up" },
+  { value: "out", label: "Status: Out for Delivery" },
+  { value: "delivered", label: "Status: Delivered" }
+];
 
 const Dashboard = () => {
-  const user = {
-    fullName: "Shroom express",
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const [dateRange, setDateRange] = useState({ start: null, end: null });
-  const navigate = useNavigate();
-  // Top stat cards data
-  const topStats = [
-    {
-      title: "Total Sales",
-      value: "$7,825",
-      change: "+32%",
-      isPositive: true,
-      color: "#a78bfa",
-      colorOffset0: "#C5ACFF",
-      colorOffset100: "#D4C1FF",
-      chartData: [30, 32, 35, 40, 35, 40, 50, 60, 45],
-    },
-    {
-      title: "Total Products Listed",
-      value: "99",
-      change: "+22%",
-      isPositive: true,
-      color: "#60a5fa",
-      colorOffset0: "#7BD6FE",
-      colorOffset100: "#ACE5FF",
-      chartData: [25, 40, 30, 45, 60, 50, 45, 55, 40],
-    },
-    {
-      title: "Total Orders",
-      value: "1,205",
-      change: "+22%",
-      isPositive: true,
-      color: "#34d399",
-      colorOffset0: "#7CE8DC",
-      colorOffset100: "#ADFCF3",
-      chartData: [35, 50, 40, 55, 70, 60, 55, 65, 50],
-    },
-    {
-      title: "Total Customers",
-      value: "21,052",
-      change: "-22%",
-      isPositive: false,
-      color: "#fbbf24",
-      colorOffset0: "#FDE68A",
-      colorOffset100: "#FEF3C7",
-      chartData: [20, 35, 25, 40, 55, 45, 40, 50, 35],
-    },
-  ];
-
-  // Inventory data
-  const inventoryData = {
-    stockValue: "$124,578",
-    addedStock: "523",
-    lowStock: "110",
-    outOfStock: "10",
-  };
-
-  // Orders data
-  const ordersData = {
-    totalOrderValue: "$4,578",
-    totalOrders: 432,
-    delivered: 324,
-    pending: 45,
-    cancelled: 42,
-  };
-
-  // Average Orders Chart data
-  const averageOrdersData = {
-    categories: Array.from({ length: 30 }, (_, i) => String(i + 1)),
-    series: [
-      {
-        name: "Total Orders(432)",
-        data: [
-          80, 75, 85, 90, 70, 95, 100, 85, 90, 75, 80, 85, 70, 95, 100,
-          85, 90, 75, 80, 85, 70, 95, 100, 85, 90, 100, 115, 90, 95, 80,
-        ],
-      },
-      {
-        name: "Delivered (324)",
-        data: [
-          50, 48, 52, 55, 45, 60, 65, 55, 58, 50, 52, 55, 48, 60, 65, 55,
-          58, 50, 52, 55, 48, 60, 65, 55, 58, 65, 75, 58, 60, 52,
-        ],
-      },
-      {
-        name: "Pending (45)",
-        data: [
-          20, 18, 22, 25, 18, 28, 30, 25, 26, 20, 22, 25, 18, 28, 30, 25,
-          26, 20, 22, 25, 18, 28, 30, 25, 26, 30, 35, 26, 28, 22,
-        ],
-      },
-      {
-        name: "Cancelled (42)",
-        data: [
-          10, 9, 11, 10, 7, 7, 5, 5, 6, 5, 6, 5, 4, 7, 5, 5, 6, 5, 6, 5,
-          4, 7, 5, 5, 6, 5, 5, 6, 7, 6,
-        ],
-      },
-    ],
-  };
-
-  // Driver Status data
-  const driverStatusData = {
-    categories: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
-    series: [
-      {
-        name: "Online",
-        data: [450, 320, 300, 460, 140, 380, 390],
-      },
-      {
-        name: "Offline",
-        data: [220, 120, 240, 360, 240, 220, 310],
-      },
-    ],
-    totals: {
-      online: 32,
-      offline: 23,
-    },
-  };
-
-  // Deliveries data
-  const deliveriesData = {
-    series: [31, 44, 25],
-    labels: ["Delivered", "Cancelled", "Processing"],
-  };
-
-  // Most Selling Area data
-  const mostSellingAreaData = [
-    {
-      areaCode: "M2N 3X0",
-      driver: "John Henry",
-      totalSales: "201 kg",
-      collection: "$821.00",
-      unpaidCollection: "$21.00",
-      orders: 43,
-    },
-    {
-      areaCode: "M2N 3X1",
-      driver: "Noah John",
-      totalSales: "152 kg",
-      collection: "$590.00",
-      unpaidCollection: "$50.00",
-      orders: 34,
-    },
-    {
-      areaCode: "M2N 3X2",
-      driver: "William Jackson",
-      totalSales: "92 kg",
-      collection: "$435.00",
-      unpaidCollection: "$12.00",
-      orders: 30,
-    },
-    {
-      areaCode: "M2N 3X3",
-      driver: "Jackson",
-      totalSales: "93 kg",
-      collection: "$348.00",
-      unpaidCollection: "$0",
-      orders: 20,
-    },
-    {
-      areaCode: "M2N 3X4",
-      driver: "Noah John",
-      totalSales: "86 kg",
-      collection: "$307.00",
-      unpaidCollection: "$61.00",
-      orders: 26,
-    },
-  ];
-
-  // Top Selling Products data
-  const topSellingProductsData = [
-    { id: 1, name: "Blue Meanies (Dried)", price: "$4,321" },
-    { id: 2, name: "Melmac (Dried)", price: "$1,025" },
-    { id: 3, name: "Albino Penis Envy (Dried)", price: "$565" },
-    { id: 4, name: "Mango Peach", price: "$520" },
-    { id: 5, name: "Aztec God", price: "$499" },
-  ];
-
-  // Driver Performance data
-  const driverPerformanceData = [
-    {
-      id: 1,
-      name: "Mike Wilson",
-      avatar: null,
-      onlineHours: "8.5 hrs",
-      deliveries: 120,
-      collected: "$1,234",
-    },
-    {
-      id: 2,
-      name: "John Henry",
-      avatar: null,
-      onlineHours: "7.2 hrs",
-      deliveries: 119,
-      collected: "$1,225",
-    },
-    {
-      id: 3,
-      name: "Nash John",
-      avatar: null,
-      onlineHours: "6.8 hrs",
-      deliveries: 115,
-      collected: "$1,204",
-    },
-    {
-      id: 4,
-      name: "Walliam Jackson",
-      avatar: null,
-      onlineHours: "8.5 hrs",
-      deliveries: 115,
-      collected: "$1,204",
-    },
-    {
-      id: 5,
-      name: "Jackson",
-      avatar: null,
-      onlineHours: "6.8 hrs",
-      deliveries: 115,
-      collected: "$1,204",
-    },
-  ];
-
-  // New Clients data
-  const newClientsData = [
-    { id: 1, name: "Daniyal Sajid", avatar: null, orders: 3 },
-    { id: 2, name: "Michael Hajas", avatar: null, orders: 2 },
-    { id: 3, name: "Chris Cilruth", avatar: null, orders: 1 },
-    { id: 4, name: "Adam Price", avatar: null, orders: 1 },
-    { id: 5, name: "Crystal Soares", avatar: null, orders: 1 },
-  ];
-
-  // Handler functions for "View All" buttons
-  const handleViewAll = (section) => {
-    if (section === "Inventory") {
-      navigate("/inventory");
-    } else if (section === "Orders") {
-      navigate("/orders");
-    } else if (section === "DriverStatus") {
-      navigate("/staff/drivers");
-    } else if (section === "Deliveries") {
-      navigate("/tracking");
-    } else if (section === "GeoPerformance") {
-      navigate("/tracking");
-    } else if (section === "NewClients") {
-      navigate("/customers");
-    } else if (section === "TopSellingProducts") {
-      navigate("/inventory");
-    } else if (section === "DriverPerformance") {
-      navigate("/staff/drivers");
-    }
-  };
-
+  const [priority, setPriority] = useState("all");
+  const [status, setStatus] = useState("assigned");
 
   return (
-    <div className="p-2 md:p-4 min-h-screen">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-        <h1 className="text-2xl font-bold text-[#212121] mb-4 md:mb-0">
-          👋 Hi, {user.fullName}
+    <div className="p-4 sm:p-4 min-h-screen bg-[#F5F5F5]">
+      {/* Welcome & Stats Row Container */}
+      <div className="flex flex-col gap-3 mb-6">
+        <h1 className="text-[17px] font-semibold text-[#222222] flex items-center gap-2 mb-1.5 mt-1.5">
+          <span>👋</span> Welcome, David Doe
         </h1>
-        <DatePickerMap
-          defaultItem={2}
-          onUpdate={(range) => setDateRange({ start: range.start, end: range.end })}
-        />
-      </div>
 
-      {/* Top Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2 mb-2">
-        {topStats.map((stat, index) => (
-          <DashboardChart
-            key={index}
-            title={stat.title}
-            value={stat.value}
-            change={stat.change}
-            isPositive={stat.isPositive}
-            color={stat.color}
-            colorOffset0={stat.colorOffset0}
-            colorOffset100={stat.colorOffset100}
-            chartData={stat.chartData}
-          />
-        ))}
-      </div>
+        <div className="bg-white px-6 py-4 rounded-md border border-[#E5E7EB] w-full  md:items-center  gap-6">
 
-      {/* Inventory and Orders Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2">
-        <InventoryHealth
-          data={inventoryData}
-          onViewAll={() => handleViewAll("Inventory")}
-        />
-        <OrderHealth
-          data={ordersData}
-          onViewAll={() => handleViewAll("Orders")}
-        />
-      </div>
+          <div className="shrink-1 flex items-center mb-2.5">
+            <p className="text-base font-semibold text-[#222222]">
+              Today , Feb 25 2026 Wednesday
+            </p>
+          </div>
 
-      {/* Average Orders Chart */}
-      <div className="mb-2">
-        <DashboardAverageOrders
-          data={averageOrdersData}
-          onViewAll={() => handleViewAll("AverageOrders")}
-        />
-      </div>
+          <div className="grid grid-cols-4 items-center justify-between lg:justify-end xl:gap-24 gap-8">
+            {topStats.map((stat, index) => (
+              <div key={index} className="flex items-center gap-4 min-w-fit">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${stat.iconBg}`}>
+                  <Icon icon={stat.icon} className={`w-6 h-6 ${stat.iconColor}`} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[12px] font-medium text-[#777777]">{stat.title}</span>
+                  <span className="text-[16px] font-bold text-[#222222] mt-0.5">{stat.value}</span>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      {/* Driver Status and Deliveries */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-2">
-        <div className="lg:col-span-2">
-          <DashboardDriverStatus
-            data={driverStatusData}
-            onViewAll={() => handleViewAll("DriverStatus")}
-          />
         </div>
-        <DashboardDeliveries
-          data={deliveriesData}
-          onViewAll={() => handleViewAll("Deliveries")}
-        />
       </div>
 
-      {/* GEO Performance and Most Selling Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2 items-start">
-        <GeoPerformance onViewAll={() => handleViewAll("GeoPerformance")} />
-        <MostSellingArea
-          data={mostSellingAreaData}
-          onViewAll={() => handleViewAll("MostSellingArea")}
-        />
-      </div>
+      {/* Deliveries List */}
+      <div className="bg-[#F5F5F5]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-4">
+          <h2 className="text-base font-semibold text-[#222222] ml-4.5">Assigned Deliveries</h2>
+          <div className="flex items-center gap-2">
+            <Select
+              options={priorityOptions}
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              minWidth="180px"
+              compact
+            />
+            <Select
+              options={statusOptions}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              minWidth="180px"
+              compact
+            />
+          </div>
+        </div>
 
-      {/* Bottom Row - Product, Driver, and Client Lists */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 items-start">
-        <TopSellingProducts
-          data={topSellingProductsData}
-          onViewAll={() => handleViewAll("TopSellingProducts")}
-        />
-        <DriverPerformance
-          data={driverPerformanceData}
-          onViewAll={() => handleViewAll("DriverPerformance")}
-        />
-        <NewClients
-          data={newClientsData}
-          onViewAll={() => handleViewAll("NewClients")}
-        />
+        <div className="flex flex-col gap-3.5">  {/* ← reduced gap between cards */}
+          {assignedDeliveries.map((delivery, index) => (
+            <div
+              key={index}
+              className={`
+        bg-white rounded-lg shadow-[0_1px_4px_rgba(0,0,0,0.06)]
+        border-l-[4px] ${delivery.priorityBorder}
+        pl-5 pr-5 pt-3 pb-3 min-h-[100px]     
+        lg:min-h-[100px]
+        flex flex-col lg:flex-row lg:items-stretch gap-5 lg:gap-6
+      `}
+            >
+
+              {/* Left - main content */}
+              <div className="flex-1 flex flex-col gap-8">
+
+                {/* Top row - ID + badges */}
+                <div className="flex items-center gap-2.5 flex-wrap mt-2 ml-2.5">
+                  <span className="font-semibold text-base text-[#222222] tracking-tight">
+                    {delivery.id}
+                  </span>
+                  <span
+                    className={`
+              px-2 py-1 text-[10px] font-semibold uppercase tracking-wide rounded
+              ${delivery.priorityBg} ${delivery.priorityColor}
+            `}
+                  >
+                    {delivery.priority}
+                  </span>
+                  <span
+                    className={`
+              px-2 py-1 text-[10px] font-semibold uppercase tracking-wide rounded
+              ${delivery.statusBg} ${delivery.statusColor}
+            `}
+                  >
+                    {delivery.status}
+                  </span>
+                </div>
+
+                {/* Details - tighter grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6">
+                  {[
+                    {
+                      icon: "solar:shop-outline",
+                      label: "PICKUP LOCATION",
+                      value: delivery.pickup,
+                    },
+                    {
+                      icon: "solar:map-point-outline",
+                      label: "DROP LOCATION",
+                      value: delivery.drop,
+                    },
+                    {
+                      icon: "solar:clock-circle-outline",
+                      label: "DELIVERY WINDOW",
+                      value: delivery.window,
+                    },
+                    {
+                      icon: "solar:box-outline",
+                      label: "PACKAGE DETAILS",
+                      value: delivery.packageDetails,
+                    },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <Icon
+                        icon={item.icon}
+                        className="w-4.5 h-4.5 text-gray-400 shrink-0 mt-0.5"
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-xs font-medium uppercase text-[#777777] tracking-wide leading-none">
+                          {item.label}
+                        </span>
+                        <span className="text-[13px] mt-0.5 font-semibold text-[#3F4753] leading-snug">
+                          {item.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right - buttons column */}
+              <div className="flex flex-row lg:flex-col gap-1.5 lg:w-36 lg:min-w-[9rem] lg:justify-center mt-2 lg:mt-0">
+                {delivery.status === "ASSIGNED" && (
+                  <>
+                    <button
+                      className="
+                px-4 py-1.5 text-[13px] font-semibold rounded-md
+                bg-[#E93E2A] text-white
+                transition-colors border border-transparent
+              "
+                    >
+                      Cancel Delivery
+                    </button>
+                    <button
+                      className="
+                px-4 py-1.5 text-[13px] font-semibold rounded-md
+                bg-[#1142D4] text-white
+                transition-colors border border-transparent
+              "
+                    >
+                      Start Delivery
+                    </button>
+                  </>
+                )}
+
+                {(delivery.status === "PICKED UP" || delivery.status === "OUT FOR DELIVERY") && (
+                  <button
+                    className="
+              px-4 py-1.5 text-[13px] font-semibold rounded-md
+              bg-blue-600 hover:bg-blue-700 text-white
+              transition-colors border border-transparent
+            "
+                  >
+                    Mark Delivered
+                  </button>
+                )}
+
+                <button
+                  className="
+            px-4 py-1.5 text-[13px] font-semibold rounded-md
+            bg-[#F1F5F9] text-[#222222]
+            transition-colors border border-gray-300
+          "
+                >
+                  View Details
+                </button>
+              </div>
+
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

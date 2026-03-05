@@ -1,74 +1,42 @@
-import { useState, useEffect, useRef } from "react";
+/* eslint-disable no-unused-vars */
+import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Bell, ChevronDown } from "lucide-react";
 import NotificationDropdown from "./common/NotificationDropdown";
 import avtar from "../assets/images/self-portrait-beautiful-chinese-girl2.png";
+import { Icon } from "@iconify/react";
 
 const routeTitleMap = {
   "/": "Dashboard",
-  "/orders": "Orders",
-  "/tracking": "Tracking",
-  "/inventory": "Inventory",
-  "/finances": "Finances",
-  "/customers": "Customers",
-  "/ai-agent": "AI Agent",
-  "/marketing": "Marketing",
-  "/staff": "Staff",
+  "/deliveries": "My Deliveries",
+  "/history": "Delivery History",
+  "/earnings": "Earnings",
+  "/documents": "Documents",
+  "/profile": "Profile",
   "/support": "Support",
-  "/setting": "Setting",
-};
-
-const specificPathTitles = {
-  "/orders/create": "Create Order",
-  "/inventory/add": "Add Inventory",
-  "/customers/add": "Add Customer",
-  "/staff/ai-admin": "AI Administrator",
-  "/staff/drivers": "Drivers",
-  "/staff/drivers/add-driver": "Add Driver",
-  "/staff/dispatcher": "Dispatchers",
-
-
 };
 
 const getDisplayTitle = (pathname) => {
-  if (specificPathTitles[pathname]) return specificPathTitles[pathname];
-  if (/^\/orders\/[^/]+$/.test(pathname)) return "Order Details";
-  if (/^\/customers\/[^/]+$/.test(pathname)) return "Customer Details";
-  if (/^\/staff\/drivers\/\d+$/.test(pathname)) return "Driver Details";
-  if (/^\/staff\/dispatcher\/\d+$/.test(pathname)) return "Dispatcher Details";
-  const matchedPath = Object.keys(routeTitleMap).find(
-    (path) => pathname === path
-  );
-  return routeTitleMap[matchedPath];
+  const matchedPath = Object.keys(routeTitleMap).find((path) => pathname === path);
+  return routeTitleMap[matchedPath] || "Dashboard";
 };
 
-const DashboardHeader = ({ sidebar, setSidebar, user = {
-  fullName: "Akash Sharma",
-  role: "Admin",
-  avatar: avtar,
-}, }) => {
+const DashboardHeader = ({ sidebar, setSidebar }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const displayTitle = getDisplayTitle(pathname);
-  // const navigate = useNavigate();
+
   useEffect(() => {
-    const pageTitle =
-      displayTitle || (pathname.startsWith("/staff") ? "Staff" : "Potrider");
-    document.title = pageTitle ? `${pageTitle} | Potrider` : "Potrider";
-  }, [displayTitle, pathname]);
+    document.title = displayTitle ? `${displayTitle} | Driver Dashboard` : "Driver Dashboard";
+  }, [displayTitle]);
 
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
   const dropdownRef = useRef();
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsUserMenuOpen(false);
       }
     };
@@ -76,88 +44,69 @@ const DashboardHeader = ({ sidebar, setSidebar, user = {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Logout function (Vue equivalent)
-  // const handleLogout = () => {
-  //   localStorage.removeItem("token"); // adjust if using context/auth
-  //   navigate("/");
-  //   alert("Logout successfully");
-  // };
   return (
     <>
-      <nav className="w-full px-2 sm:px-4 h-16 flex items-center justify-between bg-white relative z-30">
-        <div className="flex items-center gap-2 sm:gap-4">
-          {/* Hamburger icon - hidden on mobile (below 640px), visible on tablet */}
-          <button
+      <nav className="w-full px-4 sm:px-6 h-[72px] flex items-center justify-between bg-white shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative z-30">
+        <div className="flex items-center gap-4">
+          {/* <button
             onClick={() => setSidebar(!sidebar)}
-            className="hidden sm:block lg:hidden text-gray-700 text-xl font-bold hover:bg-gray-100 p-2 rounded transition-colors"
+            className="lg:hidden text-[#111827] hover:bg-gray-100 p-2 rounded transition-colors"
           >
             ☰
-          </button>
-
-          <h1 className="text-base sm:text-lg font-semibold text-[#212121]">
-            {displayTitle}
-          </h1>
+          </button> */}
+          <Icon icon="mynaui:sidebar" width="20" height="20" />
+          <div className="hidden sm:flex items-center text-[#9CA3AF] text-[14px] font-medium">
+            <span className="text-[#111827] border-l-2 border-[#111827] pl-3 leading-none h-4">
+              {displayTitle}
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-4">
-          <button
-            className="relative hover:bg-gray-100 rounded transition-colors mt-1"
-            onClick={() => setIsNotificationOpen(true)}
-          >
-            <Bell className="w-6 h-6 text-[#212121]" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
-          {/* 
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-sm font-medium">
-              {userName.charAt(0)}
-
-            </div>
-            <span className="hidden sm:block text-sm font-medium text-gray-700">
-              {userName}
-            </span>
-          </div> */}
-          <div className="relative" ref={dropdownRef}>
+        <div className="flex items-center gap-2">
+          {/* Status Toggle Pill */}
+          <div className="flex items-center bg-white rounded-full border-2 border-[#E5E7EB] cursor-pointer overflow-hidden h-[32px] mt-1">
             <button
-              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              className="flex items-center gap-2 hover:bg-gray-100 px-2 py-1 rounded transition"
+              onClick={() => setIsOnline(true)}
+              className={`h-full px-4 text-[13px] font-medium transition-colors flex items-center justify-center ${isOnline ? "bg-[#16A34A] text-white" : "text-[#777777] bg-transparent"
+                }`}
             >
-              <img
-                src={user.avatar}
-                alt="user"
-                className="w-9 h-9 rounded-full object-cover"
-              />
+              Online
+            </button>
+            <button
+              onClick={() => setIsOnline(false)}
+              className={`h-full px-4 text-[13px] font-medium transition-colors flex items-center justify-center ${!isOnline ? "bg-[#E93E2A] text-white" : "text-[#777777]  bg-transparent"
+                }`}
+            >
+              Offline
+            </button>
+          </div>
 
-              <div className="hidden sm:block text-left">
-                <p className="text-sm font-medium text-[#212121]">
-                  {user.fullName}
-                </p>
-                <p className="text-xs text-gray-500">
-                  {user.role}
-                </p>
-              </div>
-
-              <ChevronDown className="w-4.5 h-4.5 text-[#212121]" />
+          <div className="flex items-center gap-2">
+            <button
+              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+              onClick={() => setIsNotificationOpen(true)}
+            >
+              <Icon icon="si:notifications-alt-2-line" width="23" height="23" />
+              <span className="absolute top-2 right-1.5 w-2.5 h-2.5 bg-[#EF4444] rounded-full" />
             </button>
 
-            {/* Dropdown Menu */}
-            {/* {isUserMenuOpen && (
-              <div className="absolute right-0 mt-2 w-44 bg-white border rounded-xl shadow-lg py-2 z-50">
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Profile
-                </button>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center overflow-hidden hover:opacity-80 transition-opacity rounded-full w-9 h-9"
+              >
+                <img
+                  src={avtar || "https://ui-avatars.com/api/?name=David+Doe"}
+                  alt="user"
+                  className="w-full h-full object-cover"
+                />
+              </button>
 
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-500"
-                >
-                  Log Out
-                </button>
-              </div>
-            )} */}
+              {/* Optional User Dropdown if needed later
+              {isUserMenuOpen && (
+                ...
+              )} */}
+            </div>
           </div>
         </div>
       </nav>
