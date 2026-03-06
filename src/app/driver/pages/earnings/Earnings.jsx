@@ -11,6 +11,69 @@ import {
 const Earnings = () => {
     const [globalFilter, setGlobalFilter] = useState('');
 
+    const summaryData = [
+        {
+            title: "Today's Earnings",
+            amount: "$145.20",
+            icon: "iconamoon:trend-up",
+            iconColor: "text-[#10B981]",
+            subtext: "12% from yesterday",
+            subtextColor: "text-[#10B981]",
+            iconClass: "" // default
+        },
+        {
+            title: "Weekly Earnings",
+            amount: "$890.50",
+            icon: "si:info-line",
+            iconColor: "text-[#0F49BD]",
+            subtext: "Next payout on Monday",
+            subtextColor: "text-[#0F49BD]",
+            iconClass: "*:stroke-2"
+        },
+        {
+            title: "Pending Payout",
+            amount: "$320.00",
+            icon: "lucide:refresh-ccw",
+            iconColor: "text-[#F59E0B]",
+            subtext: "Processing",
+            subtextColor: "text-[#F59E0B]",
+            iconClass: "w-4 h-4" // specific width override needed here
+        },
+        {
+            title: "Total COD Collected",
+            amount: "$1,250.00",
+            icon: "lets-icons:date-today-light",
+            iconColor: "text-[#94A3B8]",
+            subtext: "Total for this week",
+            subtextColor: "text-[#94A3B8]",
+            iconClass: "*:stroke-2"
+        }
+    ];
+
+    const codSummaryData = [
+        {
+            title: "Total COD Assigned",
+            amount: "$1,500.00",
+            icon: "fluent:wallet-credit-card-24-regular",
+            iconColor: "text-[#059669]",
+            bgColor: "bg-[#D1FAE5]"
+        },
+        {
+            title: "COD Collected",
+            amount: "$1,250.00",
+            icon: "solar:documents-linear",
+            iconColor: "text-[#1142D4]",
+            bgColor: "bg-[#DBEAFE]"
+        },
+        {
+            title: "COD Submitted",
+            amount: "$1,000.00",
+            icon: "tabler:progress",
+            iconColor: "text-[#F59E0B]",
+            bgColor: "bg-[#FEF3C7]"
+        }
+    ];
+
     // Transaction history data
     const transactionData = useMemo(() => [
         {
@@ -146,7 +209,7 @@ const Earnings = () => {
     });
 
     return (
-        <div className="p-4 min-h-screen bg-[#F5F5F5]">
+        <div className="p-4  bg-[#F5F5F5]">
             {/* Welcome Header */}
             <div className="mb-6">
                 <h1 className="text-xl font-semibold text-[#222222]">
@@ -156,84 +219,39 @@ const Earnings = () => {
 
             {/* Earnings Summary Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                {/* Today's Earnings */}
-                <div className="bg-white rounded-sm shadow-sm p-5">
-                    <p className="text-sm text-[#222222] font-medium mb-2">Today's Earnings</p>
-                    <p className="text-xl font-semibold text-[#222222] mb-2">$145.20</p>
-                    <div className="flex items-center gap-1 text-sm mt-4">
-                        <Icon icon="iconamoon:trend-up" width="18" height="18" className="text-[#10B981]" />
-                        <span className="text-[#10B981] font-semibold">12% from yesterday</span>
+                {summaryData.map((item, index) => (
+                    <div key={index} className="bg-white rounded-sm shadow-sm p-3">
+                        <p className="text-sm text-[#222222] font-medium mb-2">{item.title}</p>
+                        <p className="text-xl font-semibold text-[#222222] mb-2">{item.amount}</p>
+                        <div className="flex items-center gap-1 text-sm mt-4">
+                            <Icon
+                                icon={item.icon}
+                                width={item.iconClass.includes("w-4") ? "16" : "18"}
+                                height={item.iconClass.includes("h-4") ? "16" : "18"}
+                                className={`${item.iconColor} ${item.iconClass}`}
+                            />
+                            <span className={`${item.subtextColor} font-semibold`}>{item.subtext}</span>
+                        </div>
                     </div>
-                </div>
-
-                {/* Weekly Earnings */}
-                <div className="bg-white rounded-sm shadow-sm p-5">
-                    <p className="text-sm text-[#222222] font-medium mb-2">Weekly Earnings</p>
-                    <p className="text-xl font-semibold text-[#222222] mb-2">$890.50</p>
-                    <div className="flex items-center gap-1 text-sm mt-4">
-                        <Icon icon="si:info-line" width="18" height="18" className="text-[#0F49BD] *:stroke-2" />
-                        <span className="text-[#0F49BD] font-semibold">Next payout on Monday</span>
-                    </div>
-                </div>
-
-                {/* Pending Payout */}
-                <div className="bg-white rounded-sm shadow-sm p-5">
-                    <p className="text-sm text-[#222222] font-medium mb-2">Pending Payout</p>
-                    <p className="text-xl font-semibold text-[#222222] mb-2">$320.00</p>
-                    <div className="flex items-center gap-1 text-sm mt-4">
-                        <Icon icon="lucide:refresh-ccw" width="16" height="16" className="text-[#F59E0B]" />
-                        <span className="text-[#F59E0B] font-semibold">Processing</span>
-                    </div>
-                </div>
-
-                {/* Total COD Collected */}
-                <div className="bg-white rounded-sm shadow-sm p-5">
-                    <p className="text-sm text-[#222222] font-medium mb-2">Total COD Collected</p>
-                    <p className="text-xl font-semibold text-[#222222] mb-2">$1,250.00</p>
-                    <div className="flex items-center gap-1 text-sm mt-4">
-                        <Icon icon="lets-icons:date-today-light" width="18" height="18" className="text-[#94A3B8] *:stroke-2" />
-                        <span className="text-[#94A3B8] font-semibold">Total for this week</span>
-                    </div>
-                </div>
+                ))}
             </div>
 
             {/* COD Summary */}
             <div className="bg-white rounded-md shadow-sm p-5 mb-6">
                 <h2 className="text-lg font-semibold text-[#222222] mb-4">COD Summary</h2>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Total COD Assigned */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-[#D1FAE5] flex items-center justify-center">
-                            <Icon icon="fluent:wallet-credit-card-24-regular" width="24" height="24" className="text-[#059669]" />
+                    {codSummaryData.map((item, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                            <div className={`w-12 h-12 rounded-full ${item.bgColor} flex items-center justify-center`}>
+                                <Icon icon={item.icon} width="24" height="24" className={item.iconColor} />
+                            </div>
+                            <div>
+                                <p className="text-xs text-[#777777] font-semibold">{item.title}</p>
+                                <p className="text-lg font-bold text-[#222222]">{item.amount}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="text-xs text-[#777777] font-semibold">Total COD Assigned</p>
-                            <p className="text-lg font-bold text-[#222222]">$1,500.00</p>
-                        </div>
-                    </div>
-
-                    {/* COD Collected */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-[#DBEAFE] flex items-center justify-center">
-                            <Icon icon="solar:documents-linear" width="24" height="24" className="text-[#1142D4]" />
-                        </div>
-                        <div>
-                            <p className="text-xs text-[#777777] font-semibold">COD Collected</p>
-                            <p className="text-lg font-bold text-[#222222]">$1,250.00</p>
-                        </div>
-                    </div>
-
-                    {/* COD Submitted */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-[#FEF3C7] flex items-center justify-center">
-                            <Icon icon="tabler:progress" width="24" height="24" className="text-[#F59E0B]" />
-                        </div>
-                        <div>
-                            <p className="text-xs text-[#777777] font-semibold">COD Submitted</p>
-                            <p className="text-lg font-bold text-[#222222]">$1,000.00</p>
-                        </div>
-                    </div>
+                    ))}
 
                     {/* Pending Submission */}
                     <div className="flex items-center gap-3 justify-between">
@@ -251,7 +269,7 @@ const Earnings = () => {
             </div>
 
             {/* Transaction History */}
-               <h2 className="text-lg font-semibold text-[#222222] mb-4 ml-4">Transaction History</h2>
+            <h2 className="text-lg font-semibold text-[#222222] mb-4 ml-4">Transaction History</h2>
             <div className="bg-white rounded-md shadow-sm p-5">
                 {/* Search Input */}
                 <div className="mb-5">
@@ -322,7 +340,7 @@ const Earnings = () => {
                         >
                             <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
                         </button>
-                        
+
                         <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] text-white shadow font-semibold text-xs">
                             1
                         </button>
@@ -332,7 +350,7 @@ const Earnings = () => {
                         <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] font-semibold text-xs transition-colors">
                             3
                         </button>
-                        
+
                         <button
                             onClick={() => table.nextPage()}
                             disabled={!table.getCanNextPage()}

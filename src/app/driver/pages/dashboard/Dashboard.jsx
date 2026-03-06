@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import Select from "../../components/Select";
+import OrderMapSection from "../../../admin/components/order/OrderMapSection";
 
 const topStats = [
   {
@@ -51,12 +52,12 @@ const assignedDeliveries = [
   {
     id: "#302012",
     priority: "MEDIUM PRIORITY",
-    priorityColor: "text-[#F59E0B]",
-    priorityBg: "bg-[#FFF4E5]",
+    priorityColor: "text-[#D97706]",
+    priorityBg: "bg-[#FEF3C7]",
     priorityBorder: "border-[#F59E0B]", // Yellow
     status: "PICKED UP",
     statusBg: "bg-[#E0E7FF]",
-    statusColor: "text-[#6366F1]",
+    statusColor: "text-[#4F46E5]",
     pickup: "Central Warehouse, Dock 4",
     drop: "42 Silicon Valley Ave, CA",
     window: "2 PM - 4 PM (Today)",
@@ -65,8 +66,8 @@ const assignedDeliveries = [
   {
     id: "#302013",
     priority: "MEDIUM PRIORITY",
-    priorityColor: "text-[#F59E0B]",
-    priorityBg: "bg-[#FFF4E5]",
+    priorityColor: "text-[#D97706]",
+    priorityBg: "bg-[#FEF3C7]",
     priorityBorder: "border-[#F59E0B]", // Yellow
     status: "OUT FOR DELIVERY",
     statusBg: "bg-[#FFEDD5]",
@@ -79,12 +80,12 @@ const assignedDeliveries = [
   {
     id: "#302014",
     priority: "LOW PRIORITY",
-    priorityColor: "text-[#6B7280]",
-    priorityBg: "bg-[#F3F4F6]",
+    priorityColor: "text-[#475569]",
+    priorityBg: "bg-[#F1F5F9]",
     priorityBorder: "border-[#4B5563]", // Dark gray
     status: "DELIVERD",
-    statusBg: "bg-[#DCFCE7]",
-    statusColor: "text-[#16A34A]",
+    statusBg: "bg-[#D1FAE5]",
+    statusColor: "text-[#059669]",
     pickup: "Central Warehouse, Dock 4",
     drop: "42 Silicon Valley Ave, CA",
     window: "2 PM - 4 PM (Today)",
@@ -111,7 +112,7 @@ const Dashboard = () => {
   const [status, setStatus] = useState("assigned");
 
   return (
-    <div className="p-4 sm:p-4 min-h-screen bg-[#F5F5F5]">
+    <div className="p-4 sm:p-4 bg-[#F5F5F5]">
       {/* Welcome & Stats Row Container */}
       <div className="flex flex-col gap-3 mb-6">
         <h1 className="text-[17px] font-semibold text-[#222222] flex items-center gap-2 mb-1.5 mt-1.5">
@@ -146,7 +147,7 @@ const Dashboard = () => {
       {/* Deliveries List */}
       <div className="bg-[#F5F5F5]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-4">
-          <h2 className="text-base font-semibold text-[#222222] ml-4.5">Assigned Deliveries</h2>
+          <h2 className="text-base font-semibold text-[#222222]  ml-4">Assigned Deliveries</h2>
           <div className="flex items-center gap-2">
             <Select
               options={priorityOptions}
@@ -297,6 +298,12 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Map Overview Section */}
+      <div className="mt-6">
+        <h2 className="text-base font-semibold text-[#222222] mb-2.5 ml-4">Map Overview</h2>
+        <OrderMapSection isDashboard={true} />
       </div>
     </div>
   );

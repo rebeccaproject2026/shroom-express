@@ -100,11 +100,10 @@ const DeliveryHistory = () => {
                 const value = info.getValue();
                 const isPrepaid = value === 'Prepaid';
                 return (
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                        isPrepaid 
-                            ? 'bg-[#D1FAE5] text-[#059669]' 
-                            : 'bg-[#FEE2E2] text-[#DC2626]'
-                    }`}>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${isPrepaid
+                        ? 'bg-[#D1FAE5] text-[#059669]'
+                        : 'bg-[#FEE2E2] text-[#DC2626]'
+                        }`}>
                         {value}
                     </span>
                 );
@@ -124,7 +123,7 @@ const DeliveryHistory = () => {
                 const value = info.getValue();
                 let bgColor = 'bg-[#D1FAE5]';
                 let textColor = 'text-[#059669]';
-                
+
                 if (value === 'Failed') {
                     bgColor = 'bg-[#FEE2E2]';
                     textColor = 'text-[#DC2626]';
@@ -135,7 +134,7 @@ const DeliveryHistory = () => {
                     bgColor = 'bg-[#F3F4F6]';
                     textColor = 'text-[#6B7280]';
                 }
-                
+
                 return (
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${bgColor} ${textColor}`}>
                         {value}
@@ -163,7 +162,7 @@ const DeliveryHistory = () => {
     });
 
     return (
-        <div className="p-4 min-h-screen bg-[#F5F5F5]">
+        <div className="p-4 bg-[#F5F5F5]">
             {/* Welcome Header */}
             <div className="flex flex-col gap-7">
                 <h1 className="text-xl font-semibold text-[#222222]">
@@ -277,39 +276,39 @@ const DeliveryHistory = () => {
                 </div>
             </div>
 
-             {/* Pagination */}
-                <div className="flex items-center justify-between mt-2">
-                    <div className="text-[13px] text-[#222222] font-semibold ml-4">
-                        Showing 1 to 5 of 124 results
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                            className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
-                        
-                        <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] shadow text-white font-semibold text-xs cursor-pointer">
-                            1
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
-                            2
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
-                            3
-                        </button>
-                        
-                        <button
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                            className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
-                    </div>
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-2">
+                <div className="text-[13px] text-[#222222] font-semibold ml-4">
+                    Showing 1 to 5 of 124 results
                 </div>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
+
+                    <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] shadow text-white font-semibold text-xs cursor-pointer">
+                        1
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        2
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        3
+                    </button>
+
+                    <button
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
