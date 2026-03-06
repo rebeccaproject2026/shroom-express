@@ -3,40 +3,40 @@ import { Icon } from "@iconify/react";
 
 const MobileMenuDrawer = ({ isOpen, onClose }) => {
   const menuItems = [
-    { 
-      to: "/finances", 
-      label: "Finances", 
-      Icon: <Icon icon="fluent:wallet-credit-card-16-regular" width="28" height="28" /> 
+    {
+      to: "/finances",
+      label: "Finances",
+      Icon: <Icon icon="fluent:wallet-credit-card-16-regular" width="28" height="28" />
     },
-    { 
-      to: "/customers", 
-      label: "Customers", 
-      Icon: <Icon icon="mynaui:users-group" width="28" height="28" /> 
+    {
+      to: "/customers",
+      label: "Customers",
+      Icon: <Icon icon="mynaui:users-group" width="28" height="28" />
     },
-    { 
-      to: "/ai-agent", 
-      label: "AI Agent", 
-      Icon: <Icon icon="tabler:messages" width="28" height="28" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/ai-agent",
+      label: "AI Agent",
+      Icon: <Icon icon="tabler:messages" width="28" height="28" className="*:stroke-[1.4px]" />
     },
-     { 
-      to: "/tracking", 
-      label: "Tracking", 
+    {
+      to: "/tracking",
+      label: "Tracking",
       Icon: <Icon icon="hugeicons:shipment-tracking" width="28" height="28" className="*:stroke-[1.4px]" />
     },
-     { 
-      to: "/marketing", 
-      label: "Marketing", 
-      Icon: <Icon icon="tabler:speakerphone" width="28" height="28" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/marketing",
+      label: "Marketing",
+      Icon: <Icon icon="tabler:speakerphone" width="28" height="28" className="*:stroke-[1.4px]" />
     },
-    { 
-      to: "/support", 
-      label: "Support", 
-      Icon: <Icon icon="hugeicons:customer-support" width="28" height="28" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/support",
+      label: "Support",
+      Icon: <Icon icon="hugeicons:customer-support" width="28" height="28" className="*:stroke-[1.4px]" />
     },
-    { 
-      to: "/setting", 
-      label: "Setting", 
-      Icon: <Icon icon="lucide:settings" width="28" height="28" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/setting",
+      label: "Setting",
+      Icon: <Icon icon="lucide:settings" width="28" height="28" className="*:stroke-[1.4px]" />
     },
   ];
 
@@ -60,10 +60,9 @@ const MobileMenuDrawer = ({ isOpen, onClose }) => {
               to={to}
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-4 px-4 py-3.5 transition-colors ${
-                  isActive
-                    ? "bg-[#E3EEFF] text-[#0066FF]"
-                    : "text-black hover:bg-gray-50"
+                `flex items-center gap-4 px-4 py-3.5 transition-colors ${isActive
+                  ? "bg-[#E3EEFF] text-[#0066FF]"
+                  : "text-black hover:bg-gray-50"
                 }`
               }
             >

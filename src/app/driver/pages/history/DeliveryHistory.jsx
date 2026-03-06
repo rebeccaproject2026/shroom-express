@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
+import PageHeader from '../../components/PageHeader';
+import Select from '../../components/Select';
 import {
     useReactTable,
     getCoreRowModel,
@@ -69,7 +71,7 @@ const DeliveryHistory = () => {
             accessorKey: 'id',
             header: 'Delivery ID',
             cell: (info) => (
-                <span className="text-[#1142D4] font-semibold">{info.getValue()}</span>
+                <span className="text-[#1142D4] font-medium">{info.getValue()}</span>
             ),
         },
         {
@@ -100,11 +102,10 @@ const DeliveryHistory = () => {
                 const value = info.getValue();
                 const isPrepaid = value === 'Prepaid';
                 return (
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                        isPrepaid 
-                            ? 'bg-[#D1FAE5] text-[#059669]' 
-                            : 'bg-[#FEE2E2] text-[#DC2626]'
-                    }`}>
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${isPrepaid
+                        ? 'bg-[#D1FAE5] text-[#059669]'
+                        : 'bg-[#FEE2E2] text-[#DC2626]'
+                        }`}>
                         {value}
                     </span>
                 );
@@ -124,7 +125,7 @@ const DeliveryHistory = () => {
                 const value = info.getValue();
                 let bgColor = 'bg-[#D1FAE5]';
                 let textColor = 'text-[#059669]';
-                
+
                 if (value === 'Failed') {
                     bgColor = 'bg-[#FEE2E2]';
                     textColor = 'text-[#DC2626]';
@@ -135,7 +136,7 @@ const DeliveryHistory = () => {
                     bgColor = 'bg-[#F3F4F6]';
                     textColor = 'text-[#6B7280]';
                 }
-                
+
                 return (
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${bgColor} ${textColor}`}>
                         {value}
@@ -163,56 +164,54 @@ const DeliveryHistory = () => {
     });
 
     return (
-        <div className="p-4 min-h-screen bg-[#F5F5F5]">
+        <div className="p-4 bg-[#F5F5F5]">
             {/* Welcome Header */}
             <div className="flex flex-col gap-7">
-                <h1 className="text-xl font-semibold text-[#222222]">
-                    👋 Welcome, David Doe
-                </h1>
+                <PageHeader className="!mb-0" />
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 sm:w-fit gap-4 mb-4">
                     {/* Month Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'March, 2026', label: 'March, 2026' },
+                                { value: 'February, 2026', label: 'February, 2026' },
+                                { value: 'January, 2026', label: 'January, 2026' }
+                            ]}
                             value={monthFilter}
                             onChange={(e) => setMonthFilter(e.target.value)}
-                            className="w-full px-4 py-2.5 pl-10 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>March, 2026</option>
-                            <option>February, 2026</option>
-                            <option>January, 2026</option>
-                        </select>
-                        <Icon icon="lets-icons:date-today-light" width="20" height="20" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636363] stroke-2 pointer-events-none" />
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!pl-10 !py-2.5 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
+                        <Icon icon="lets-icons:date-today-light" width="20" height="20" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636363] stroke-2 pointer-events-none z-10" />
                     </div>
 
                     {/* Status Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'Status: All', label: 'Status: All' },
+                                { value: 'Status: Delivered', label: 'Status: Delivered' },
+                                { value: 'Status: Failed', label: 'Status: Failed' },
+                                { value: 'Status: Cancelled', label: 'Status: Cancelled' }
+                            ]}
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="w-full px-4 py-2.5 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>Status: All</option>
-                            <option>Status: Delivered</option>
-                            <option>Status: Failed</option>
-                            <option>Status: Cancelled</option>
-                        </select>
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!py-2.5 !px-4 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
                     </div>
 
                     {/* Payment Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'Payment: All', label: 'Payment: All' },
+                                { value: 'Payment: Prepaid', label: 'Payment: Prepaid' },
+                                { value: 'Payment: COD', label: 'Payment: COD' }
+                            ]}
                             value={paymentFilter}
                             onChange={(e) => setPaymentFilter(e.target.value)}
-                            className="w-full  px-4 py-2.5 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>Payment: All</option>
-                            <option>Payment: Prepaid</option>
-                            <option>Payment: COD</option>
-                        </select>
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!py-2.5 !px-4 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
                     </div>
                 </div>
             </div>
@@ -277,40 +276,40 @@ const DeliveryHistory = () => {
                 </div>
             </div>
 
-             {/* Pagination */}
-                <div className="flex items-center justify-between mt-2">
-                    <div className="text-[13px] text-[#222222] font-semibold ml-4">
-                        Showing 1 to 5 of 124 results
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                            className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
-                        
-                        <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] shadow text-white font-semibold text-xs cursor-pointer">
-                            1
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
-                            2
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
-                            3
-                        </button>
-                        
-                        <button
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                            className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
-                    </div>
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-2">
+                <div className="text-[13px] text-[#222222] font-semibold ml-4">
+                    Showing 1 to 5 of 124 results
                 </div>
-        </div>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
+
+                    <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] shadow text-white font-semibold text-xs cursor-pointer">
+                        1
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        2
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        3
+                    </button>
+
+                    <button
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
+                </div>
+            </div>
+        </div >
     );
 };
 

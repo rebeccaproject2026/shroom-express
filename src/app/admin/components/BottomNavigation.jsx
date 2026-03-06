@@ -10,20 +10,20 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
   // Check if current path is a staff-related page
   const isStaffActive = location.pathname.startsWith("/staff");
   const navItems = [
-    { 
-      to: "/", 
-      label: "Dashboard", 
-      Icon: <Icon icon="solar:widget-2-outline" width="24" height="24" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/",
+      label: "Dashboard",
+      Icon: <Icon icon="solar:widget-2-outline" width="24" height="24" className="*:stroke-[1.4px]" />
     },
-    { 
-      to: "/orders", 
-      label: "Orders", 
-      Icon: <Icon icon="solar:documents-linear" width="24" height="24" className="*:stroke-[1.4px]" /> 
+    {
+      to: "/orders",
+      label: "Orders",
+      Icon: <Icon icon="solar:documents-linear" width="24" height="24" className="*:stroke-[1.4px]" />
     },
-    { 
-      to: "/inventory", 
-      label: "Inventory", 
-      Icon: <Icon icon="streamline-ultimate:drugs-cannabis" width="24" height="24" className="*:stroke-[1.2px]" /> 
+    {
+      to: "/inventory",
+      label: "Inventory",
+      Icon: <Icon icon="streamline-ultimate:drugs-cannabis" width="24" height="24" className="*:stroke-[1.2px]" />
     },
   ];
 
@@ -62,28 +62,26 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
             className="absolute inset-0 bg-black opacity-50"
             onClick={() => setShowStaffOptions(false)}
           />
-          
+
           {/* Popup Content */}
           <div className="relative w-full bg-white rounded-t-lg shadow-lg mb-16 animate-slide-up">
             <div className="p-3 space-y-2">
               <button
                 onClick={() => handleStaffOptionClick("/staff/drivers")}
-                className={`w-full px-4 py-3 text-left rounded-sm font-medium transition-colors flex items-center gap-3 ${
-                  location.pathname.startsWith("/staff/drivers")
+                className={`w-full px-4 py-3 text-left rounded-sm font-medium transition-colors flex items-center gap-3 ${location.pathname.startsWith("/staff/drivers")
                     ? "bg-blue-100 text-blue-700"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 <Icon icon="mdi:car" width="24" height="24" />
                 <span>Drivers</span>
               </button>
               <button
                 onClick={() => handleStaffOptionClick("/staff/dispatcher")}
-                className={`w-full px-4 py-3 text-left rounded-sm font-medium transition-colors flex items-center gap-3 ${
-                  location.pathname.startsWith("/staff/dispatcher")
+                className={`w-full px-4 py-3 text-left rounded-sm font-medium transition-colors flex items-center gap-3 ${location.pathname.startsWith("/staff/dispatcher")
                     ? "bg-blue-100 text-blue-700"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 <Icon icon="mdi:account-tie" width="24" height="24" />
                 <span>Dispatcher</span>
@@ -102,10 +100,9 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
               end={to === "/"}
               onClick={handleNavItemClick}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center flex-1 h-full transition-colors ${
-                  isActive
-                    ? "text-white bg-blue-600"
-                    : "text-gray-900"
+                `flex flex-col items-center justify-center flex-1 h-full transition-colors ${isActive
+                  ? "text-white bg-blue-600"
+                  : "text-gray-900"
                 }`
               }
             >
@@ -115,26 +112,24 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
               </div>
             </NavLink>
           ))}
-          
+
           {/* Staffs Button */}
           <button
             onClick={handleStaffClick}
-            className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
-              isStaffActive ? "text-white bg-blue-600" : "text-gray-900"
-            }`}
+            className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${isStaffActive ? "text-white bg-blue-600" : "text-gray-900"
+              }`}
           >
             <div className="flex flex-col items-center gap-1">
               <Icon icon="fluent:people-team-20-regular" width="24" height="24" />
               <span className="text-[10px] font-semibold">Staffs</span>
             </div>
           </button>
-          
+
           {/* Menu Button - toggles between menu and close icon */}
           <button
             onClick={handleMenuClick}
-            className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
-              isMenuOpen ? "text-[#0066FF]" : "text-gray-600 hover:text-[#0066FF]"
-            }`}
+            className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${isMenuOpen ? "text-[#0066FF]" : "text-gray-600 hover:text-[#0066FF]"
+              }`}
           >
             <div className="flex flex-col items-center gap-1">
               {isMenuOpen ? (

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
@@ -36,36 +37,36 @@ const ConfirmationModal = ({
 
             {/* Modal Panel */}
             <div
-                className={`relative bg-white rounded-lg shadow-xl w-full max-w-sm transform transition-all duration-300 ${isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"} overflow-hidden`}
+                className={`relative bg-white rounded-[8px] shadow-xl w-full max-w-[420px] transform transition-all duration-300 ${isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"} overflow-hidden`}
                 role="dialog"
                 aria-modal="true"
             >
                 {/* Header */}
-                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
-                        <Icon icon="mdi:close" width="24" />
+                <div className="px-6 py-5 border-b border-[#E8E8E8]  flex items-center justify-between">
+                    <h3 className="text-[17px] font-bold text-[#3F4753]">{title}</h3>
+                    <button onClick={onClose} className="text-[#8B8B8B] hover:text-[#3F4753] transition-colors rounded-full p-1 -mr-1">
+                        <Icon icon="lucide:x" width="20" className="stroke-[1.5]" />
                     </button>
                 </div>
 
                 {/* Body */}
-                <div className="px-6 py-6">
-                    <p className="text-gray-600 text-sm leading-relaxed">{message}</p>
+                <div className="px-6 pt-6 pb-8">
+                    <p className="text-[14px] font-medium text-[#777777] leading-relaxed">{message}</p>
                 </div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 bg-gray-50 flex justify-end gap-3 border-t border-gray-100">
+                <div className="px-6 py-4 flex justify-end gap-3 border-t border-[#E8E8E8]">
                     <button
                         onClick={onClose}
-                        className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                        className="px-5 py-2.5 bg-white text-[#222222] text-[13px] font-bold rounded-[6px] hover:bg-gray-50 transition-colors border border-[#DDDDDD] shadow-sm"
                     >
                         {cancelText}
                     </button>
                     <button
                         onClick={onConfirm}
-                        className={`px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${confirmVariant === "danger"
-                                ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
-                                : "bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+                        className={`px-6 py-2.5 text-white text-[13px] font-bold rounded-[6px] shadow-sm transition-colors border border-transparent ${confirmVariant === "danger"
+                            ? "bg-[#E93E2A] hover:bg-[#D93826]"
+                            : "bg-[#1142D4] hover:bg-blue-800"
                             }`}
                     >
                         {confirmText}

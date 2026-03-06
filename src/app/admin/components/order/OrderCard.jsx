@@ -20,9 +20,9 @@ const getPaymentStatusColor = (status) => {
 };
 
 const OrderCard = ({ order, onView, onDelete, onCustomerClick, onCourierClick, onPaymentMethodClick, onStatusClick }) => {
-  const isPaymentMethodLink = 
-    order.paymentMethod === "Credit Card" || 
-    order.paymentMethod === "Paypal" || 
+  const isPaymentMethodLink =
+    order.paymentMethod === "Credit Card" ||
+    order.paymentMethod === "Paypal" ||
     order.paymentMethod === "PayPal";
 
   return (
