@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
+import PageHeader from '../../components/PageHeader';
+import Select from '../../components/Select';
 import {
     useReactTable,
     getCoreRowModel,
@@ -69,7 +71,7 @@ const DeliveryHistory = () => {
             accessorKey: 'id',
             header: 'Delivery ID',
             cell: (info) => (
-                <span className="text-[#1142D4] font-semibold">{info.getValue()}</span>
+                <span className="text-[#1142D4] font-medium">{info.getValue()}</span>
             ),
         },
         {
@@ -165,53 +167,51 @@ const DeliveryHistory = () => {
         <div className="p-4 bg-[#F5F5F5]">
             {/* Welcome Header */}
             <div className="flex flex-col gap-7">
-                <h1 className="text-xl font-semibold text-[#222222]">
-                    👋 Welcome, David Doe
-                </h1>
+                <PageHeader className="!mb-0" />
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 sm:w-fit gap-4 mb-4">
                     {/* Month Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'March, 2026', label: 'March, 2026' },
+                                { value: 'February, 2026', label: 'February, 2026' },
+                                { value: 'January, 2026', label: 'January, 2026' }
+                            ]}
                             value={monthFilter}
                             onChange={(e) => setMonthFilter(e.target.value)}
-                            className="w-full px-4 py-2.5 pl-10 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>March, 2026</option>
-                            <option>February, 2026</option>
-                            <option>January, 2026</option>
-                        </select>
-                        <Icon icon="lets-icons:date-today-light" width="20" height="20" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636363] stroke-2 pointer-events-none" />
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!pl-10 !py-2.5 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
+                        <Icon icon="lets-icons:date-today-light" width="20" height="20" className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636363] stroke-2 pointer-events-none z-10" />
                     </div>
 
                     {/* Status Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'Status: All', label: 'Status: All' },
+                                { value: 'Status: Delivered', label: 'Status: Delivered' },
+                                { value: 'Status: Failed', label: 'Status: Failed' },
+                                { value: 'Status: Cancelled', label: 'Status: Cancelled' }
+                            ]}
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="w-full px-4 py-2.5 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>Status: All</option>
-                            <option>Status: Delivered</option>
-                            <option>Status: Failed</option>
-                            <option>Status: Cancelled</option>
-                        </select>
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!py-2.5 !px-4 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
                     </div>
 
                     {/* Payment Filter */}
                     <div className="relative sm:w-57.5">
-                        <select
+                        <Select
+                            options={[
+                                { value: 'Payment: All', label: 'Payment: All' },
+                                { value: 'Payment: Prepaid', label: 'Payment: Prepaid' },
+                                { value: 'Payment: COD', label: 'Payment: COD' }
+                            ]}
                             value={paymentFilter}
                             onChange={(e) => setPaymentFilter(e.target.value)}
-                            className="w-full  px-4 py-2.5 border border-[#E8E8E8] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm font-medium text-[#222222] appearance-none bg-white cursor-pointer"
-                        >
-                            <option>Payment: All</option>
-                            <option>Payment: Prepaid</option>
-                            <option>Payment: COD</option>
-                        </select>
-                        <Icon icon="iconamoon:arrow-down-2" width="20" height="20" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#636363] pointer-events-none" />
+                            className="!py-2.5 !px-4 !border-[#E8E8E8] !rounded-md !text-sm !font-medium !text-[#222222]"
+                        />
                     </div>
                 </div>
             </div>
@@ -309,7 +309,7 @@ const DeliveryHistory = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

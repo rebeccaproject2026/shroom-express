@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+// import { useNavigate } from "react-router-dom";
 import Select from "../../components/Select";
 import OrderMapSection from "../../../admin/components/order/OrderMapSection";
+import PageHeader from "../../components/PageHeader";
+import CancelDeliveryModal from "../../components/common/CancelDeliveryModal";
+import ConfirmationModal from "../../components/common/ConfirmationModal";
 
 const topStats = [
   {
@@ -34,7 +38,7 @@ const topStats = [
   }
 ];
 
-const assignedDeliveries = [
+const initialAssignedDeliveries = [
   {
     id: "#302011",
     priority: "HIGH PRIORITY",
@@ -108,16 +112,69 @@ const statusOptions = [
 ];
 
 const Dashboard = () => {
+  // const navigate = useNavigate();
   const [priority, setPriority] = useState("all");
   const [status, setStatus] = useState("assigned");
+  const [deliveries, setDeliveries] = useState(initialAssignedDeliveries);
+
+  const [cancelModalOpen, setCancelModalOpen] = useState(false);
+  const [selectedDeliveryToCancel, setSelectedDeliveryToCancel] = useState(null);
+
+  const [startModalOpen, setStartModalOpen] = useState(false);
+  const [selectedDeliveryToStart, setSelectedDeliveryToStart] = useState(null);
+
+  const [markDeliveredModalOpen, setMarkDeliveredModalOpen] = useState(false);
+  const [selectedDeliveryToMarkDelivered, setSelectedDeliveryToMarkDelivered] = useState(null);
+
+  const handleCancelClick = (deliveryId) => {
+    setSelectedDeliveryToCancel(deliveryId);
+    setCancelModalOpen(true);
+  };
+
+  const handleConfirmCancel = (payload) => {
+    // Make API call here -> Filter out or change status
+    setDeliveries(prev => prev.map(d =>
+      d.id === payload.deliveryId ? { ...d, status: "CANCELLED", statusBg: "bg-gray-200", statusColor: "text-gray-600" } : d
+    ));
+    setCancelModalOpen(false);
+    setSelectedDeliveryToCancel(null);
+  };
+
+  const handleStartClick = (deliveryId) => {
+    setSelectedDeliveryToStart(deliveryId);
+    setStartModalOpen(true);
+  };
+
+  const handleConfirmStart = () => {
+    setDeliveries(prev => prev.map(d =>
+      d.id === selectedDeliveryToStart ? { ...d, status: "OUT FOR DELIVERY", statusBg: "bg-[#FFEDD5]", statusColor: "text-[#EA580C]" } : d
+    ));
+    setStartModalOpen(false);
+    setSelectedDeliveryToStart(null);
+  };
+
+  const handleMarkDeliveredClick = (deliveryId) => {
+    setSelectedDeliveryToMarkDelivered(deliveryId);
+    setMarkDeliveredModalOpen(true);
+  };
+
+  const handleConfirmMarkDelivered = () => {
+    setDeliveries(prev => prev.map(d =>
+      d.id === selectedDeliveryToMarkDelivered ? { ...d, status: "DELIVERED", statusBg: "bg-[#D1FAE5]", statusColor: "text-[#059669]", priorityBg: "bg-[#F1F5F9]", priorityColor: "text-[#475569]", priorityBorder: "border-[#4B5563]" } : d
+    ));
+    setMarkDeliveredModalOpen(false);
+    setSelectedDeliveryToMarkDelivered(null);
+  };
+
+  // const handleViewDetails = () => {
+  //   navigate("/orders");
+  // };
 
   return (
     <div className="p-4 sm:p-4 bg-[#F5F5F5]">
       {/* Welcome & Stats Row Container */}
       <div className="flex flex-col gap-3 mb-6">
-        <h1 className="text-[17px] font-semibold text-[#222222] flex items-center gap-2 mb-1.5 mt-1.5">
-          <span>👋</span> Welcome, David Doe
-        </h1>
+        <PageHeader className="!mb-0" />
 
         <div className="bg-white px-6 py-4 rounded-md border border-[#E5E7EB] w-full  md:items-center  gap-6">
 
@@ -127,10 +184,10 @@ const Dashboard = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-4 items-center justify-between lg:justify-end xl:gap-24 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 items-center justify-between lg:justify-end xl:gap-24 gap-y-5 gap-x-3 sm:gap-8 mt-4 sm:mt-0">
             {topStats.map((stat, index) => (
-              <div key={index} className="flex items-center gap-4 min-w-fit">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${stat.iconBg}`}>
+              <div key={index} className="flex items-center gap-3 sm:gap-4 min-w-fit">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 ${stat.iconBg}`}>
                   <Icon icon={stat.icon} className={`w-6 h-6 ${stat.iconColor}`} />
                 </div>
                 <div className="flex flex-col">
@@ -167,7 +224,7 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col gap-3.5">  {/* ← reduced gap between cards */}
-          {assignedDeliveries.map((delivery, index) => (
+          {deliveries.map((delivery, index) => (
             <div
               key={index}
               className={`
@@ -252,6 +309,7 @@ const Dashboard = () => {
                 {delivery.status === "ASSIGNED" && (
                   <>
                     <button
+                      onClick={() => handleCancelClick(delivery.id)}
                       className="
                 px-4 py-1.5 text-[13px] font-semibold rounded-md
                 bg-[#E93E2A] text-white
@@ -261,6 +319,7 @@ const Dashboard = () => {
                       Cancel Delivery
                     </button>
                     <button
+                      onClick={() => handleStartClick(delivery.id)}
                       className="
                 px-4 py-1.5 text-[13px] font-semibold rounded-md
                 bg-[#1142D4] text-white
@@ -274,6 +333,7 @@ const Dashboard = () => {
 
                 {(delivery.status === "PICKED UP" || delivery.status === "OUT FOR DELIVERY") && (
                   <button
+                    onClick={() => handleMarkDeliveredClick(delivery.id)}
                     className="
               px-4 py-1.5 text-[13px] font-semibold rounded-md
               bg-blue-600 hover:bg-blue-700 text-white
@@ -305,6 +365,35 @@ const Dashboard = () => {
         <h2 className="text-base font-semibold text-[#222222] mb-2.5 ml-4">Map Overview</h2>
         <OrderMapSection isDashboard={true} />
       </div>
+
+      <CancelDeliveryModal
+        isOpen={cancelModalOpen}
+        onClose={() => setCancelModalOpen(false)}
+        onSubmit={handleConfirmCancel}
+        deliveryId={selectedDeliveryToCancel}
+      />
+
+      <ConfirmationModal
+        isOpen={startModalOpen}
+        onClose={() => setStartModalOpen(false)}
+        onConfirm={handleConfirmStart}
+        title="Start Delivery"
+        message={`Are you sure you want to start delivery ${selectedDeliveryToStart || ''}?`}
+        confirmText="Start Delivery"
+        cancelText="Cancel"
+        confirmVariant="primary"
+      />
+
+      <ConfirmationModal
+        isOpen={markDeliveredModalOpen}
+        onClose={() => setMarkDeliveredModalOpen(false)}
+        onConfirm={handleConfirmMarkDelivered}
+        title="Mark as Delivered"
+        message={`Confirm successful delivery for ${selectedDeliveryToMarkDelivered || ''}?`}
+        confirmText="Mark Delivered"
+        cancelText="Cancel"
+        confirmVariant="primary"
+      />
     </div>
   );
 };

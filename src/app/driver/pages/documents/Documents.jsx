@@ -1,14 +1,11 @@
 import { Icon } from "@iconify/react";
+import PageHeader from '../../components/PageHeader';
 
 const Documents = () => {
     return (
         <div className="p-4  bg-[#F5F5F5]">
             {/* Welcome Header */}
-            <div className="mb-6">
-                <h1 className="text-xl font-semibold text-[#222222]">
-                    👋 Welcome, David Doe
-                </h1>
-            </div>
+            <PageHeader />
 
             {/* Documents Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -77,7 +74,7 @@ const Documents = () => {
                                 {/* Details */}
                                 <div className="space-y-1.5">
                                     <div className="flex items-center gap-2">
-                                        <Icon icon="uim:calender" width="16" height="16" className="text-[#777777]" />
+                                        <Icon icon="lets-icons:date-today" width="16" height="16" className="text-[#777777]" />
                                         <span className="text-[11px] text-[#777777] font-medium">Expiry: N/A</span>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -134,7 +131,7 @@ const Documents = () => {
                     {/* Update Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end mt-auto">
                         <button className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
-                            <Icon icon="hugeicons:pencil-edit-01" width="14" height="14" />
+                            <Icon icon="hugeicons:pencil-edit-01" width="15" height="15" />
                             Update
                         </button>
                     </div>
@@ -161,8 +158,8 @@ const Documents = () => {
 
                                 {/* Error Message */}
                                 <div className="space-y-1.5">
-                                    <div className="flex items-center gap-2">
-                                        <Icon icon="radix-icons:cross-circled" width="14" height="14" className="text-[#DC2626]" />
+                                    <div className="flex items-center gap-1">
+                                        <Icon icon="material-symbols:cancel-outline-rounded" width="14" height="14" className="text-[#DC2626]" />
                                         <span className="text-[11px] text-[#DC2626] font-medium">Reason: Document unclear</span>
                                     </div>
                                     <p className="text-[11px] text-[#777777] font-medium leading-relaxed mt-1">
@@ -176,7 +173,7 @@ const Documents = () => {
                     {/* Re-Upload Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end mt-auto">
                         <button className="px-4 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
-                            <Icon icon="hugeicons:upload-02" width="14" height="14" />
+                            <Icon icon="tabler:reload" width="15" height="15" />
                             Re - Upload
                         </button>
                     </div>

@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import profile from "../../assets/images/profile.jpg";
+import PageHeader from '../../components/PageHeader';
 
 const Profile = () => {
     const [vehicleType, setVehicleType] = useState('Delivery Van');
@@ -13,11 +14,7 @@ const Profile = () => {
     return (
         <div className="p-4  bg-[#F5F5F5]">
             {/* Header */}
-            <div className="mb-6">
-                <h1 className="text-xl font-semibold text-[#222222]">
-                    👋 Welcome, David Doe
-                </h1>
-            </div>
+            <PageHeader />
 
             {/* Scrollable Content Arena */}
             <div className="flex-1 min-h-0  pb-10">
@@ -112,7 +109,7 @@ const Profile = () => {
                     <div className="lg:col-span-2 bg-white rounded-md shadow-sm border border-[#E8E8E8] flex flex-col">
                         {/* Card Header */}
                         <div className="px-5 py-4 border-b border-[#E8E8E8] flex items-center gap-2.5">
-                            <Icon icon="akar-icons:schedule" width="22" height="22" className="text-[#0F4CBD]" />
+                            <Icon icon="akar-icons:schedule" width="22" height="22" className="text-[#0F4CBD] *:stroke-[1.4px]" />
                             <h2 className="text-[15px] font-semibold text-[#222222]">Availability Schedule</h2>
                         </div>
                         {/* Card Body */}
@@ -177,7 +174,7 @@ const Profile = () => {
                     <div className="lg:col-span-1 bg-white rounded-md shadow-sm border border-[#E8E8E8] flex flex-col">
                         {/* Card Header */}
                         <div className="px-5 py-4 border-b border-[#E8E8E8] flex items-center gap-2.5">
-                            <Icon icon="material-symbols:e911-emergency-outline-rounded" width="22" height="22" className="text-[#0F4CBD]" />
+                            <Icon icon="material-symbols-light:e911-emergency-outline-rounded" width="24" height="24" className="text-[#0F4CBD]" />
                             <h2 className="text-[15px] font-semibold text-[#222222]">Emergency Contact</h2>
                         </div>
                         {/* Card Body */}

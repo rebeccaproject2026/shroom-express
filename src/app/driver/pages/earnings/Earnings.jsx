@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
+import PageHeader from '../../components/PageHeader';
 import {
     useReactTable,
     getCoreRowModel,
@@ -211,14 +212,10 @@ const Earnings = () => {
     return (
         <div className="p-4  bg-[#F5F5F5]">
             {/* Welcome Header */}
-            <div className="mb-6">
-                <h1 className="text-xl font-semibold text-[#222222]">
-                    👋 Welcome, David Doe
-                </h1>
-            </div>
+            <PageHeader />
 
             {/* Earnings Summary Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 {summaryData.map((item, index) => (
                     <div key={index} className="bg-white rounded-sm shadow-sm p-3">
                         <p className="text-sm text-[#222222] font-medium mb-2">{item.title}</p>
@@ -237,7 +234,7 @@ const Earnings = () => {
             </div>
 
             {/* COD Summary */}
-            <div className="bg-white rounded-md shadow-sm p-5 mb-6">
+            <div className="bg-white rounded-sm shadow-sm p-4 mb-4">
                 <h2 className="text-lg font-semibold text-[#222222] mb-4">COD Summary</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -270,7 +267,7 @@ const Earnings = () => {
 
             {/* Transaction History */}
             <h2 className="text-lg font-semibold text-[#222222] mb-4 ml-4">Transaction History</h2>
-            <div className="bg-white rounded-md shadow-sm p-5">
+            <div className="bg-white rounded-sm shadow-sm p-5">
                 {/* Search Input */}
                 <div className="mb-5">
                     <div className="relative">
@@ -311,10 +308,10 @@ const Earnings = () => {
                             {table.getRowModel().rows.map((row) => (
                                 <tr
                                     key={row.id}
-                                    className="border-b border-[#F5F5F5] hover:bg-[#F8FBFF] text-xs transition-colors"
+                                    className="border-b border-[#F5F5F5] hover:bg-[#F8FBFF] transition-colors"
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <td key={cell.id} className="py-3 px-4 text-sm">
+                                        <td key={cell.id} className="py-3 px-4 text-xs">
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()
@@ -326,39 +323,39 @@ const Earnings = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                {/* Pagination */}
-                <div className="flex items-center justify-between mt-5 pt-4 border-t border-[#E8E8E8]">
-                    <div className="text-sm text-[#222222] font-semibold ml-4">
-                        Showing 1 to 5 of 124 results
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
-                            className="p-2 rounded-sm bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-2">
+                <div className="text-[13px] text-[#222222] font-semibold ml-4">
+                    Showing 1 to 5 of 124 results
+                </div>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-left-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
 
-                        <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] text-white shadow font-semibold text-xs">
-                            1
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] font-semibold text-xs transition-colors">
-                            2
-                        </button>
-                        <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] font-semibold text-xs transition-colors">
-                            3
-                        </button>
+                    <button className="px-3 py-1.5 rounded-sm bg-[#1142D4] shadow text-white font-semibold text-xs cursor-pointer">
+                        1
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        2
+                    </button>
+                    <button className="px-3 py-1.5 rounded-sm hover:bg-gray-100 bg-white shadow text-[#222222] cursor-pointer font-semibold text-xs transition-colors">
+                        3
+                    </button>
 
-                        <button
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
-                            className="p-2 rounded-sm bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                        >
-                            <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        className="p-2 rounded-md bg-white shadow hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        <Icon icon="iconamoon:arrow-right-2" width="16" height="16" className="text-[#222222]" />
+                    </button>
                 </div>
             </div>
         </div>
