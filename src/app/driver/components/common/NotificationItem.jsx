@@ -14,7 +14,7 @@ const NotificationItem = ({ item, onClick }) => {
 
             {/* Left Icon */}
             <div className={`shrink-0 w-8 h-8 flex items-center justify-center mr-4 ${iconColorClass}`}>
-                <Icon icon={icon} className="text-[28px]" />
+                <Icon icon={icon} className="text-[35px]" />
             </div>
 
             {/* Middle Content Section */}

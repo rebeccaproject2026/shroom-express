@@ -55,7 +55,7 @@ const DashboardHeader = ({ sidebar, setSidebar }) => {
             ☰
           </button> */}
           <Icon icon="mynaui:sidebar" width="20" height="20" />
-          <div className="hidden sm:flex items-center text-[#9CA3AF] text-[14px] font-medium">
+          <div className="hidden sm:flex items-center text-[#9CA3AF] text-[15px] font-medium">
             <span className="text-[#111827] border-l-2 border-[#111827] pl-3 leading-none h-4">
               {displayTitle}
             </span>
