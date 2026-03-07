@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { X, Mail, ChevronRight } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Icon } from '@iconify/react';
 import NotificationItem from './NotificationItem';
-import deliveryIcon from '../../assets/images/delivered-icon-2.png';
-import newOrder from '../../assets/images/new-order-icon-1.png';
-import supportIcon from '../../assets/images/Logo.png';
 
 const NotificationDropdown = ({ isOpen, onClose }) => {
-    const [activeTab, setActiveTab] = useState(0); // 0: General, 1: Messages
     const dropdownRef = useRef(null);
 
     // Close on click outside
@@ -26,38 +22,119 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
         };
     }, [isOpen, onClose]);
 
-    // Static Data
+    // Static Mock Data exactly matching the design
     const notifications = [
         {
             _id: '1',
-            title: 'Order #12345 Delivered',
-            description: 'Your order has been successfully delivered by Driver John.',
-            createdAt: '2023-10-25T10:00:00Z',
-            icon: deliveryIcon, // Placeholder path
-            hasRead: false,
+            title: 'ETA 3 Minutes Delivery in Progress',
+            description: '3 minutes ETA has been sent to client for order #1234567890.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:shopping',
+            iconColorClass: 'text-[#ef4444]',
         },
         {
             _id: '2',
-            title: 'New order',
-            description: 'You have a new order for product XYZ.',
-            createdAt: '2023-10-24T14:30:00Z',
-            icon: newOrder,
-            hasRead: true,
+            title: 'ETA 5 Minutes Delivery in Progress',
+            description: '5 minutes ETA has been sent to client for order #1234567890.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:shopping',
+            iconColorClass: 'text-[#ef4444]',
         },
         {
             _id: '3',
-            title: 'System Update',
-            description: 'System maintenance scheduled for tonight at 2 AM.',
-            createdAt: '2023-10-23T09:15:00Z',
-            icon: supportIcon,
-            hasRead: true,
-        }
-    ];
-
-    const messages = [
+            title: 'Order Delivered',
+            description: 'Good Job! You Just Delivered #[Order ID]',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:clock-check-outline',
+            iconColorClass: 'text-[#22c55e]',
+        },
         {
-            chatId: '123456',
-            unreadCount: 2,
+            _id: '4',
+            title: 'Order Cancelled by Dispatcher',
+            description: 'Order #[Order ID] Order was cancelled by the dispatcher.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:calendar-remove-outline',
+            iconColorClass: 'text-[#ef4444]',
+        },
+        {
+            _id: '5',
+            title: 'Order Cancelled by Driver',
+            description: 'Order #[Order ID] Order was cancelled by the driver.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:calendar-remove-outline',
+            iconColorClass: 'text-[#ef4444]',
+        },
+        {
+            _id: '6',
+            title: 'New Order Assigned',
+            description: 'Order #[Order ID] assigned by Admin/Dispatcher to a driver.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:cube-outline',
+            iconColorClass: 'text-[#3b82f6]',
+        },
+        {
+            _id: '7',
+            title: 'Order Reassigned by Dispatcher',
+            description: 'Order #[Order ID] reassigned from driver name to driver name.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:cube-outline',
+            iconColorClass: 'text-[#3b82f6]',
+        },
+        {
+            _id: '8',
+            title: 'Dispatcher Changed Address',
+            description: 'Dispatcher updated an address in the system.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:map-marker',
+            iconColorClass: 'text-[#f97316]',
+        },
+        {
+            _id: '9',
+            title: 'Master Changed Address',
+            description: 'Master Admin updated an address in the system.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:map-marker',
+            iconColorClass: 'text-[#f97316]',
+        },
+        {
+            _id: '10',
+            title: 'Low Stock Alert',
+            description: 'Stock is running low for [Item Name]. Please restock.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'lucide:boxes',
+            iconColorClass: 'text-[#f59e0b]',
+        },
+        {
+            _id: '11',
+            title: 'High Demand Alert',
+            description: '[Item Name] is in high demand. Consider adjusting stock levels.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'lucide:boxes',
+            iconColorClass: 'text-[#22c55e]',
+        },
+        {
+            _id: '12',
+            title: 'Delivery Delayed Alert',
+            description: 'Order #[Order ID] is delayed beyond expected time.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:truck-outline',
+            iconColorClass: 'text-[#4b5563]',
+        },
+        {
+            _id: '13',
+            title: 'System Maintenance Notification',
+            description: 'Scheduled maintenance on [Date/Time]. Expect temporary downtime.',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:tools',
+            iconColorClass: 'text-[#1f2937]',
+        },
+        {
+            _id: '14',
+            title: 'Driver name is Online/Offline',
+            description: '[Driver Name] is [online/offline].',
+            timeText: '14 January 2025 at 10:20pm',
+            icon: 'mdi:moped-outline',
+            iconColorClass: 'text-[#1f2937]',
         }
     ];
 
@@ -66,92 +143,42 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
     return (
         <>
             {/* Backdrop */}
-            <div className="fixed inset-0 bg-black/50 z-40 transition-opacity" onClick={onClose} />
+            <div className="fixed inset-0 bg-black/40 z-40 transition-opacity" onClick={onClose} />
 
             {/* Drawer */}
             <div
                 ref={dropdownRef}
-                className="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-white shadow-2xl z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out"
+                className="fixed top-0 right-0 h-full w-full sm:w-[500px] bg-white shadow-2xl z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out flex flex-col"
                 style={{ transform: isOpen ? 'translateX(0)' : 'translateX(100%)' }}
             >
-                <div className="p-4">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-2 border-b border-gray-100 pb-2">
-                        <h2 className="text-lg font-semibold text-gray-800">Notifications</h2>
-                        <button
-                            onClick={onClose}
-                            className="p-1 rounded-full hover:bg-gray-100 text-gray-500 transition-colors cursor-pointer"
-                        >
-                            <X size={20} />
-                        </button>
-                    </div>
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 sticky top-0 bg-white z-10">
+                    <h2 className="text-[18px] font-semibold text-[#374151]">Notifications</h2>
+                    <button
+                        onClick={onClose}
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                        <Icon icon="lucide:x" className="text-[22px]" strokeWidth={1.5} />
+                    </button>
+                </div>
 
-                    {/* Tabs */}
-                    <div className="flex mb-2 bg-gray-100 p-1 rounded-lg">
-                        <button
-                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 0 ? 'bg-white text-[var(--color-primary)] shadow-sm' : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            onClick={() => setActiveTab(0)}
-                        >
-                            General
-                        </button>
-                        <button
-                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 1 ? 'bg-white text-[var(--color-primary)] shadow-sm' : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            onClick={() => setActiveTab(1)}
-                        >
-                            Messages
-                        </button>
-                    </div>
-
-                    {/* Content */}
-                    <div className="space-y-0.5">
-                        {activeTab === 0 ? (
-                            // General Notifications
-                            notifications.length > 0 ? (
-                                notifications.map(item => (
-                                    <NotificationItem
-                                        key={item._id}
-                                        item={item}
-                                        onClick={() => console.log('Clicked notification', item._id)}
-                                    />
-                                ))
-                            ) : (
-                                <div className="text-center py-8 text-gray-500">
-                                    No notifications
-                                </div>
-                            )
-                        ) : (
-                            // Messages Tab
-                            messages.length > 0 ? (
-                                messages.map(msg => (
-                                    <div key={msg.chatId} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer mb-2">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                                                <Mail size={20} className="text-blue-500" />
-                                            </div>
-                                            <div>
-                                                <p className="font-medium text-gray-800">Chat #{msg.chatId}</p>
-                                                <p className="text-xs text-gray-500">{msg.unreadCount} unread message{msg.unreadCount !== 1 ? 's' : ''}</p>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            {/* Badge component could go here */}
-                                            <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">{msg.unreadCount}</span>
-                                            <button className="text-xs bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">View</button>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="text-center py-10">
-                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-2">
-                                        <Mail size={24} className="text-gray-400" />
-                                    </div>
-                                    <p className="text-gray-500">No unread messages</p>
-                                </div>
-                            )
-                        )}
-                    </div>
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto">
+                    {notifications.length > 0 ? (
+                        <div className="flex flex-col">
+                            {notifications.map(item => (
+                                <NotificationItem
+                                    key={item._id}
+                                    item={item}
+                                    onClick={() => console.log('Clicked notification', item._id)}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8 text-gray-500">
+                            No notifications
+                        </div>
+                    )}
                 </div>
             </div>
         </>

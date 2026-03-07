@@ -6,13 +6,13 @@ import avtar from "../assets/images/self-portrait-beautiful-chinese-girl2.png";
 import { Icon } from "@iconify/react";
 
 const routeTitleMap = {
-  "/": "Dashboard",
-  "/deliveries": "My Deliveries",
-  "/history": "Delivery History",
-  "/earnings": "Earnings",
-  "/documents": "Documents",
-  "/profile": "Profile",
-  "/support": "Support",
+  "/driver/dashboard": "Dashboard",
+  "/driver/orders": "My Deliveries",
+  "/driver/history": "Delivery History",
+  "/driver/earnings": "Earnings",
+  "/driver/documents": "Documents",
+  "/driver/profile": "Profile",
+  "/driver/support": "Support",
 };
 
 const getDisplayTitle = (pathname) => {
