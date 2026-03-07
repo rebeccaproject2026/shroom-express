@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
@@ -6,6 +6,23 @@ import profile from "../../assets/images/profile.jpg";
 import PageHeader from '../../components/PageHeader';
 
 const Profile = () => {
+    const fileInputRef = useRef(null);
+    const [profileImage, setProfileImage] = useState(profile);
+
+    const handleAvatarClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setProfileImage(imageUrl);
+        }
+    };
+
     const [vehicleType, setVehicleType] = useState('Delivery Van');
     const [startTime, setStartTime] = useState('09:00 AM');
     const [endTime, setEndTime] = useState('09:00 AM');
@@ -32,12 +49,19 @@ const Profile = () => {
                             {/* Avatar */}
                             <div className="grid grid-cols-1 border-b border-[#D1D5DB] mb-5">
                                 <div className="relative w-[70px] h-[70px] mb-4.5">
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                    />
                                     <img
-                                        src={profile}
+                                        src={profileImage}
                                         alt="Profile"
                                         className="w-full h-full rounded-full object-cover border border-[#E8E8E8]"
                                     />
-                                    <button className="absolute bottom-0 right-0 w-6 h-6 bg-[#1142D4] rounded-full flex items-center justify-center border-2 border-white text-white hover:bg-blue-700 transition-colors">
+                                    <button onClick={handleAvatarClick} className="absolute bottom-0 right-0 w-6 h-6 bg-[#1142D4] rounded-full flex items-center justify-center border-2 border-white text-white hover:bg-blue-700 transition-colors">
                                         <Icon icon="hugeicons:camera-01" width="12" height="12" />
                                     </button>
                                 </div>

@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import PageHeader from '../../components/PageHeader';
 import UpcomingDeliveryCard from '../../components/UpcomingDeliveryCard';
+import ConfirmationModal from '../../components/common/ConfirmationModal';
 import {
   useReactTable,
   getCoreRowModel,
@@ -11,6 +12,47 @@ import {
 
 const MyDeliveries = () => {
   const [globalFilter, setGlobalFilter] = useState('');
+  const fileInputRef = useRef(null);
+
+  const [activeDelivery, setActiveDelivery] = useState({
+    id: "#DEL-10293",
+    status: "OUT FOR DELIVERY",
+    statusBg: "bg-[#FFEDD5]",
+    statusColor: "text-[#EA580C]"
+  });
+
+  const [markDeliveredModalOpen, setMarkDeliveredModalOpen] = useState(false);
+  const [selectedDeliveryToMarkDelivered, setSelectedDeliveryToMarkDelivered] = useState(null);
+
+  const handleUploadProofClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Handle the uploaded file here
+      console.log("File selected:", file.name);
+    }
+  };
+
+  const handleMarkDeliveredClick = (deliveryId = "#DEL-10293") => {
+    setSelectedDeliveryToMarkDelivered(deliveryId);
+    setMarkDeliveredModalOpen(true);
+  };
+
+  const handleConfirmMarkDelivered = () => {
+    setActiveDelivery(prev => ({
+      ...prev,
+      status: "DELIVERED",
+      statusBg: "bg-[#D1FAE5]",
+      statusColor: "text-[#059669]"
+    }));
+    setMarkDeliveredModalOpen(false);
+    setSelectedDeliveryToMarkDelivered(null);
+  };
 
   // Completed deliveries data
   const completedData = useMemo(() => [
@@ -118,10 +160,10 @@ const MyDeliveries = () => {
                 <div className="flex flex-col items-start  gap-1">
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs font-semibold text-[#1142D4] py-1 rounded">
-                      #DEL-10293
+                      {activeDelivery.id}
                     </span>
-                    <span className="text-xs font-semibold text-[#EA580C] bg-[#FFEDD5] px-3 py-1 rounded">
-                      OUT FOR DELIVERY
+                    <span className={`text-xs font-semibold px-3 py-1 rounded ${activeDelivery.statusColor} ${activeDelivery.statusBg}`}>
+                      {activeDelivery.status}
                     </span>
                   </div>
                   {/* Customer Info */}
@@ -183,11 +225,34 @@ const MyDeliveries = () => {
               <div className=" flex flex-col gap-5">
                 <div className="w-full bg-[#E8E8E8] h-0.5"></div>
                 <div className="flex gap-4 mb-4">
-                  <button className="flex-1 bg-[#1142D4] text-white py-2.5 rounded-md font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                  <button
+                    disabled={activeDelivery.status === "DELIVERED"}
+                    onClick={() => handleMarkDeliveredClick(activeDelivery.id)}
+                    className={`flex-1 py-2.5 rounded-md font-medium flex items-center justify-center gap-2 transition-colors ${activeDelivery.status === "DELIVERED"
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-[#1142D4] text-white hover:bg-blue-700"
+                      }`}
+                  >
                     <Icon icon="material-symbols:check-circle-outline-rounded" width="24" height="24" />
                     Mark as Delivered
                   </button>
-                  <button className="px-6 bg-[#1E293B] text-white py-2.5 rounded-md font-medium hover:bg-gray-900 transition-colors flex items-center justify-center gap-2">
+
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    className="hidden"
+                    accept="image/*,.pdf"
+                    disabled={activeDelivery.status === "DELIVERED"}
+                  />
+                  <button
+                    disabled={activeDelivery.status === "DELIVERED"}
+                    onClick={handleUploadProofClick}
+                    className={`px-6 py-2.5 rounded-md font-medium flex items-center justify-center gap-2 transition-colors ${activeDelivery.status === "DELIVERED"
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        : "bg-[#1E293B] text-white hover:bg-gray-900"
+                      }`}
+                  >
                     <Icon icon="tabler:upload" width="24" height="24" />
                     Upload Proof
                   </button>
@@ -280,6 +345,17 @@ const MyDeliveries = () => {
           </table>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={markDeliveredModalOpen}
+        onClose={() => setMarkDeliveredModalOpen(false)}
+        onConfirm={handleConfirmMarkDelivered}
+        title="Mark as Delivered"
+        message={`Confirm successful delivery for ${selectedDeliveryToMarkDelivered || ''}?`}
+        confirmText="Mark Delivered"
+        cancelText="Cancel"
+        confirmVariant="primary"
+      />
     </div>
   );
 };
