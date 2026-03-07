@@ -6,13 +6,13 @@ import avtar from "../assets/images/self-portrait-beautiful-chinese-girl2.png";
 import { Icon } from "@iconify/react";
 
 const routeTitleMap = {
-  "/": "Dashboard",
-  "/deliveries": "My Deliveries",
-  "/history": "Delivery History",
-  "/earnings": "Earnings",
-  "/documents": "Documents",
-  "/profile": "Profile",
-  "/support": "Support",
+  "/driver/dashboard": "Dashboard",
+  "/driver/orders": "My Deliveries",
+  "/driver/history": "Delivery History",
+  "/driver/earnings": "Earnings",
+  "/driver/documents": "Documents",
+  "/driver/profile": "Profile",
+  "/driver/support": "Support",
 };
 
 const getDisplayTitle = (pathname) => {
@@ -55,7 +55,7 @@ const DashboardHeader = ({ sidebar, setSidebar }) => {
             ☰
           </button> */}
           <Icon icon="mynaui:sidebar" width="20" height="20" />
-          <div className="hidden sm:flex items-center text-[#9CA3AF] text-[14px] font-medium">
+          <div className="hidden sm:flex items-center text-[#9CA3AF] text-[15px] font-medium">
             <span className="text-[#111827] border-l-2 border-[#111827] pl-3 leading-none h-4">
               {displayTitle}
             </span>

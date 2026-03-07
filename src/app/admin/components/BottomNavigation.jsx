@@ -56,7 +56,7 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
     <>
       {/* Staff Options Popup */}
       {showStaffOptions && (
-        <div className="fixed inset-0 z-40 flex items-end justify-center sm:hidden">
+        <div className="fixed inset-0 z-40 flex items-end justify-center lg:hidden">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black opacity-50"
@@ -91,7 +91,7 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
         </div>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 sm:hidden">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 lg:hidden">
         <div className="flex items-center justify-around h-16">
           {navItems.map(({ to, label, Icon }) => (
             <NavLink

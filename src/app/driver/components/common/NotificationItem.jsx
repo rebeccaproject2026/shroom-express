@@ -1,45 +1,46 @@
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 
 const NotificationItem = ({ item, onClick }) => {
-    const { title, description, createdAt, icon, hasRead } = item;
-
-    // Format date
-    const dateStr = new Date(createdAt).toDateString();
+    const { title, description, timeText, icon, iconColorClass } = item;
 
     return (
         <div
-            className={`flex items-center p-2 cursor-pointer transition-colors border-b border-gray-100 last:border-0 ${hasRead ? 'bg-gray-50' : 'bg-white hover:bg-gray-50'
-                }`}
+            className="group relative flex items-center px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer bg-white"
             onClick={onClick}
         >
-            <div className="mr-2 w-[40px] h-[38px] shrink-0">
-                {/* Using a placeholder if image fails, or generic icon */}
-                <img
-                    src={icon}
-                    alt="icon"
-                    className="w-full h-full object-cover rounded"
-                    onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://placehold.co/42x42?text=N"; // Fallback
-                    }}
-                />
+            {/* Inset Bottom Border */}
+            <div className="absolute bottom-0 left-6 right-6 border-b border-gray-100 group-last:border-0" />
+
+            {/* Left Icon */}
+            <div className={`shrink-0 w-8 h-8 flex items-center justify-center mr-4 ${iconColorClass}`}>
+                <Icon icon={icon} className="text-[35px]" />
             </div>
 
-            <div className="flex-1 min-w-0 mr-2">
-                <div className="flex justify-between items-start mb-1">
-                    <p className="text-sm font-medium text-gray-900 truncate pr-2">{title}</p>
-                    <p className="text-xs text-gray-500 whitespace-nowrap">{dateStr}</p>
+            {/* Middle Content Section */}
+            <div className="flex-1 min-w-0 pr-2">
+                <div className="flex justify-between items-center mb-1 gap-2">
+                    <h4
+                        className="text-[14px] font-semibold text-[#1f2937] truncate leading-tight shrink"
+                        title={title}
+                    >
+                        {title}
+                    </h4>
+                    <span className="text-[11px] text-[#6b7280] font-medium whitespace-nowrap shrink-0">
+                        {timeText}
+                    </span>
                 </div>
-
-                <div className="text-sm text-gray-600 truncate" title={description}>
+                <p
+                    className="text-[12px] text-[#6b7280] leading-snug truncate"
+                    title={description}
+                >
                     {description}
-                </div>
+                </p>
             </div>
 
-            <div className="text-gray-400">
-                <ChevronRight size={16} />
+            {/* Right Chevron Icon */}
+            <div className="shrink-0 flex items-center text-[#9ca3af]">
+                <Icon icon="lucide:chevron-right" className="text-[20px]" strokeWidth="1.5" />
             </div>
         </div>
     );

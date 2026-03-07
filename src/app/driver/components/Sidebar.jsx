@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { LogOut } from "lucide-react";
 import shroomLogo from "../assets/images/Logo.png";
 import { Icon } from "@iconify/react";
 

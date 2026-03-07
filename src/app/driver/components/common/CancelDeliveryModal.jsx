@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
-import Dialog from './Dialog';
-import { X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 
 const CancelDeliveryModal = ({ isOpen, onClose, onSubmit, deliveryId }) => {
     const [cancelReasonText, setCancelReasonText] = useState('');
     const [error, setError] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
 
-    if (!isOpen) return null;
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+            requestAnimationFrame(() => setIsVisible(true));
+        } else {
+            setIsVisible(false);
+            document.body.style.overflow = "";
+        }
+    }, [isOpen]);
+
+    if (!isOpen && !isVisible) return null;
 
     const handleSubmit = () => {
         if (!cancelReasonText.trim()) {
@@ -21,9 +30,9 @@ const CancelDeliveryModal = ({ isOpen, onClose, onSubmit, deliveryId }) => {
         };
 
         onSubmit(payload);
-        onClose();
-        setCancelReasonText(''); // Reset state after closing
+        setCancelReasonText('');
         setError('');
+        onClose();
     };
 
     const handleClose = () => {
@@ -33,63 +42,72 @@ const CancelDeliveryModal = ({ isOpen, onClose, onSubmit, deliveryId }) => {
     };
 
     return (
-        <Dialog
-            isOpen={isOpen}
-            onClose={handleClose}
-            title="Cancel Reason"
-            maxWidth="max-w-[95vw] sm:max-w-[31rem]"
-            maxHeight="max-h-[90vh] sm:max-h-[auto] lg:max-h-[auto] h-auto"
-            actions={[
-                {
-                    icon: X,
-                    onClick: handleClose,
-                    className: "!border-0 !bg-transparent !px-0 !py-0",
-                    iconClassName: "w-5 sm:w-6 h-5 sm:h-6 text-gray-500 stroke-[2.5]",
-                },
-            ]}
-        >
-            <div className="px-1 pb-2 sm:pb-3.5 space-y-3 sm:space-y-4 text-sm sm:text-[16px] text-[#212121]">
-                {/* Cancel Reason textarea */}
-                <div className="space-y-1 sm:space-y-1.5 flex flex-col mt-2">
-                    <label className="font-medium text-sm sm:text-base text-[#212529]/75 mb-1">Please enter cancel reason</label>
-                    <textarea
-                        value={cancelReasonText}
-                        onChange={(e) => {
-                            setCancelReasonText(e.target.value);
-                            setError('');
-                        }}
-                        placeholder="Cancel Reason"
-                        rows={3}
-                        className={`
-                            w-full px-2 sm:px-3 py-2 sm:py-2.5 text-sm sm:text-base border border-[#DDDDDD] rounded-[4px] 
-                            focus:outline-none resize-y
-                            ${error ? 'border-red-500' : ''}
-                        `}
-                    />
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <div
+                className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+                onClick={handleClose}
+                aria-hidden="true"
+            />
 
-                    {error && (
-                        <p className="text-xs sm:text-sm text-red-600">{error}</p>
-                    )}
+            {/* Modal Panel */}
+            <div
+                className={`relative bg-white rounded-[8px] shadow-xl w-full max-w-[450px] transform transition-all duration-300 ${isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"} overflow-hidden`}
+                role="dialog"
+                aria-modal="true"
+            >
+                {/* Header */}
+                <div className="px-6 py-5 border-b border-[#E8E8E8] flex items-center justify-between">
+                    <h3 className="text-[17px] font-bold text-[#3F4753]">Cancel Reason</h3>
+                    <button onClick={handleClose} className="text-[#8B8B8B] hover:text-[#3F4753] transition-colors rounded-full p-1 -mr-1">
+                        <Icon icon="lucide:x" width="20" className="stroke-[1.5]" />
+                    </button>
+                </div>
+
+                {/* Body */}
+                <div className="px-6 pt-5 pb-7">
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-[14px] font-medium text-[#777777]">
+                            Please enter cancel reason
+                        </label>
+                        <textarea
+                            value={cancelReasonText}
+                            onChange={(e) => {
+                                setCancelReasonText(e.target.value);
+                                setError('');
+                            }}
+                            placeholder="Type reason here..."
+                            rows={4}
+                            className={`
+                                w-full px-3 py-2.5 text-[14px] text-[#222222] border rounded-[6px] 
+                                focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-y
+                                transition-colors
+                                ${error ? 'border-red-500' : 'border-[#DDDDDD]'}
+                            `}
+                        />
+                        {error && (
+                            <p className="text-[13px] text-red-600 mt-1">{error}</p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Footer */}
+                <div className="px-6 py-4 flex justify-end gap-3 border-t border-[#E8E8E8] bg-gray-50/50">
+                    <button
+                        onClick={handleClose}
+                        className="px-5 py-2.5 bg-white text-[#222222] text-[13px] font-bold rounded-[6px] hover:bg-gray-50 transition-colors border border-[#DDDDDD] shadow-sm"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={handleSubmit}
+                        className="px-6 py-2.5 text-white text-[13px] font-bold rounded-[6px] shadow-sm transition-colors border border-transparent bg-[#E93E2A] hover:bg-[#D93826]"
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
-
-            {/* Buttons */}
-            <div className="flex gap-1.5 sm:gap-2 mt-2">
-                <button
-                    onClick={handleSubmit}
-                    className="flex-1 py-2 sm:py-2.5 bg-[#28a745] hover:bg-[#218838] text-white text-sm sm:text-base font-semibold rounded-[4px] transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
-                >
-                    <span>✓</span> Yes
-                </button>
-
-                <button
-                    onClick={handleClose}
-                    className="flex-1 py-2 sm:py-2.5 bg-[#dc3545] hover:bg-[#c82333] text-white text-sm sm:text-base font-semibold rounded-[4px] transition-colors flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm"
-                >
-                    <Icon icon="ph:x-bold" width="20" height="20" className="sm:w-6 sm:h-6" /> No
-                </button>
-            </div>
-        </Dialog>
+        </div>
     );
 };
 

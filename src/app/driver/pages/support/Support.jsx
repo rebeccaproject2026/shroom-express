@@ -64,11 +64,11 @@ const Support = () => {
           <div className="w-10 h-10 rounded-sm text-[#1142D4] bg-[#DBEAFE] flex items-center justify-center mb-3.5">
             <Icon icon="mynaui:ticket" width="22" height="22" className="text-[#0F4CBD]" />
           </div>
-          <h3 className="text-[14px] font-semibold text-[#0F172A] mb-1">Raise a Ticket</h3>
-          <p className="text-[12px] font-medium text-[#64748B] mb-2.5 leading-snug">
+          <h3 className="text-[15px] font-semibold text-[#0F172A] mb-1">Raise a Ticket</h3>
+          <p className="text-[13px] font-medium text-[#64748B] mb-2.5 leading-snug">
             Open a new help request for account or payment issues.
           </p>
-          <a href="#" onClick={(e) => { e.preventDefault(); openDrawer('raise'); }} className="mt-auto flex items-center gap-1 text-[12px] font-bold text-[#0F4CBD] hover:underline">
+          <a href="#" onClick={(e) => { e.preventDefault(); openDrawer('raise'); }} className="mt-auto flex items-center gap-1 text-[13px] font-bold text-[#0F4CBD] hover:underline">
             Start Request<Icon icon="streamline:next" width="16" height="16" />
           </a>
         </div>
@@ -78,15 +78,15 @@ const Support = () => {
           <div className="w-10 h-10 rounded-sm text-[#16A34A] bg-[#DCFCE7] flex items-center justify-center mb-3">
             <Icon icon="proicons:chat" width="22" height="22" className="text-[#16A34A]" />
           </div>
-          <h3 className="text-[14px] font-semibold text-[#0F172A] mb-1">Contact Admin</h3>
-          <p className="text-[12px] font-medium text-[#64748B] mb-2.5 leading-snug">
+          <h3 className="text-[15px] font-semibold text-[#0F172A] mb-1">Contact Admin</h3>
+          <p className="text-[13px] font-medium text-[#64748B] mb-2.5 leading-snug">
             Directly chat or call an administrator for immediate help.
           </p>
           <div className="mt-auto flex items-center gap-2.5">
-            <button className="bg-[#0F4CBD]/10 text-[#0F4CBD] text-[11px] font-semibold px-5 py-1.5 rounded-sm uppercase tracking-wide hover:bg-blue-100 transition-colors cursor-pointer">
+            <button className="bg-[#0F4CBD]/10 text-[#0F4CBD] text-[12px] font-semibold px-5 py-1.5 rounded-sm uppercase tracking-wide hover:bg-blue-100 transition-colors cursor-pointer">
               CHAT
             </button>
-            <button className="bg-[#DCFCE7] text-[#16A34A] text-[11px] font-semibold px-5 py-1.5 rounded-sm uppercase tracking-wide hover:bg-green-100 transition-colors cursor-pointer">
+            <button className="bg-[#DCFCE7] text-[#16A34A] text-[12px] font-semibold px-5 py-1.5 rounded-sm uppercase tracking-wide hover:bg-green-100 transition-colors cursor-pointer">
               CALL
             </button>
           </div>
@@ -97,11 +97,11 @@ const Support = () => {
           <div className="w-10 h-10 rounded-sm text-[#DC2626] bg-[#FEE2E2] flex items-center justify-center mb-3">
             <Icon icon="ic:outline-report" width="22" height="22" className="text-[#DC2626]" />
           </div>
-          <h3 className="text-[14px] font-semibold text-[#0F172A] mb-1">Report Issue</h3>
-          <p className="text-[12px] font-medium text-[#64748B] mb-2.5 leading-snug">
+          <h3 className="text-[15px] font-semibold text-[#0F172A] mb-1">Report Issue</h3>
+          <p className="text-[13px] font-medium text-[#64748B] mb-2.5 leading-snug">
             Report problems with active deliveries or route guidance.
           </p>
-          <a href="#" onClick={(e) => { e.preventDefault(); openDrawer('report'); }} className="mt-auto flex items-center gap-2 text-[12px] font-bold text-[#DC2626] hover:underline">
+          <a href="#" onClick={(e) => { e.preventDefault(); openDrawer('report'); }} className="mt-auto flex items-center gap-2 text-[13px] font-bold text-[#DC2626] hover:underline">
             Report Now <Icon icon="streamline:next" width="16" height="16" />
           </a>
         </div>
@@ -113,9 +113,9 @@ const Support = () => {
         {/* FAQ */}
         <div className="lg:col-span-2 bg-white rounded-md shadow-sm border border-[#E8E8E8] flex flex-col">
           {/* Header */}
-          <div className="px-5 py-4 border-b border-[#E8E8E8] flex items-center gap-2.5">
+          <div className="px-5 py-4  flex items-center gap-2.5">
             <Icon icon="mynaui:ticket" width="22" height="22" className="text-[#0F4CBD]" />
-            <h2 className="text-[15px] font-semibold text-[#0F172A]">Frequently Asked Questions</h2>
+            <h2 className="text-base font-semibold text-[#0F172A]">Frequently Asked Questions</h2>
           </div>
           {/* Body */}
           <div className="flex flex-col">
@@ -125,17 +125,17 @@ const Support = () => {
                   className="flex items-center justify-between px-5 py-4 cursor-pointer hover:bg-gray-50 transition-colors"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
                 >
-                  <h4 className="text-[13px] font-bold text-[#222222]">{faq.q}</h4>
+                  <h4 className="text-sm font-semibold text-[#222222]">{faq.q}</h4>
                   <Icon
                     icon="heroicons:chevron-down-20-solid"
-                    width="18"
-                    height="18"
-                    className={`text-gray-400 transition-transform duration-200 ${openFaq === index ? "rotate-180" : ""}`}
+                    width="22"
+                    height="22"
+                    className={`text-gray-600 transition-transform duration-200 ${openFaq === index ? "rotate-180" : ""}`}
                   />
                 </div>
                 {openFaq === index && (
                   <div className="px-5 pb-5">
-                    <p className="text-[12px] font-semibold  text-[#64748B] leading-relaxed pr-8">
+                    <p className="text-[13px] font-semibold  text-[#64748B] leading-relaxed pr-8">
                       {faq.a}
                     </p>
                   </div>
@@ -150,7 +150,7 @@ const Support = () => {
           {/* Header */}
           <div className="px-5 py-4 border-b border-[#E8E8E8] flex items-center gap-2.5">
             <Icon icon="mynaui:ticket" width="22" height="22" className="text-[#0F4CBD]" />
-            <h2 className="text-[15px] font-semibold text-[#222222]">My Tickets</h2>
+            <h2 className="text-base font-semibold text-[#0F172A]">My Tickets</h2>
           </div>
           {/* Body */}
           <div className="flex flex-col">
@@ -165,7 +165,7 @@ const Support = () => {
                   </p>
                 </div>
                 <span
-                  className={`shrink-0 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide ${ticket.status === 'Pending'
+                  className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide ${ticket.status === 'Pending'
                     ? 'bg-[#FEF9C3] text-[#A16207]'
                     : 'bg-[#DCFCE7] text-[#15803D]'
                     }`}

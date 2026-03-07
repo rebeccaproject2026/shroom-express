@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
 import PageHeader from '../../components/PageHeader';
+import ConfirmationModal from '../../components/common/ConfirmationModal';
 import {
     useReactTable,
     getCoreRowModel,
@@ -11,6 +12,13 @@ import {
 
 const Earnings = () => {
     const [globalFilter, setGlobalFilter] = useState('');
+    const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+
+    const handleConfirmSubmit = () => {
+        // Here you would typically trigger your API call
+        // alert("Successfully submitted pending COD amount!");
+        setIsSubmitModalOpen(false);
+    };
 
     const summaryData = [
         {
@@ -258,7 +266,10 @@ const Earnings = () => {
                                 <p className="text-lg font-bold text-[#1142D4]">$25.00</p>
                             </div>
                         </div>
-                        <button className="px-4 py-2 bg-[#1142D4] text-white rounded-md font-semibold text-sm hover:bg-blue-700 transition-colors">
+                        <button
+                            onClick={() => setIsSubmitModalOpen(true)}
+                            className="px-4 py-2 bg-[#1142D4] text-white rounded-md font-semibold text-sm hover:bg-blue-700 transition-colors"
+                        >
                             Submit Now
                         </button>
                     </div>
@@ -358,6 +369,17 @@ const Earnings = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Submit Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={isSubmitModalOpen}
+                onClose={() => setIsSubmitModalOpen(false)}
+                onConfirm={handleConfirmSubmit}
+                title="Submit Pending COD"
+                message="Are you sure you want to submit your pending Cash on Delivery (COD) amount of $25.00? Doing so will process the balance to your account."
+                confirmText="Submit"
+                confirmVariant="primary"
+            />
         </div>
     );
 };

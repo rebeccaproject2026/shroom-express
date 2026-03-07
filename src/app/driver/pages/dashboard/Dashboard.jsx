@@ -6,6 +6,7 @@ import OrderMapSection from "../../../admin/components/order/OrderMapSection";
 import PageHeader from "../../components/PageHeader";
 import CancelDeliveryModal from "../../components/common/CancelDeliveryModal";
 import ConfirmationModal from "../../components/common/ConfirmationModal";
+import ViewDetailsDrawer from "../../components/common/ViewDetailsDrawer";
 
 const topStats = [
   {
@@ -126,6 +127,9 @@ const Dashboard = () => {
   const [markDeliveredModalOpen, setMarkDeliveredModalOpen] = useState(false);
   const [selectedDeliveryToMarkDelivered, setSelectedDeliveryToMarkDelivered] = useState(null);
 
+  const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+  const [selectedDeliveryForDetails, setSelectedDeliveryForDetails] = useState(null);
+
   const handleCancelClick = (deliveryId) => {
     setSelectedDeliveryToCancel(deliveryId);
     setCancelModalOpen(true);
@@ -174,7 +178,7 @@ const Dashboard = () => {
     <div className="p-4 sm:p-4 bg-[#F5F5F5]">
       {/* Welcome & Stats Row Container */}
       <div className="flex flex-col gap-3 mb-6">
-        <PageHeader className="!mb-0" />
+        <PageHeader className="mb-0!" />
 
         <div className="bg-white px-6 py-4 rounded-md border border-[#E5E7EB] w-full  md:items-center  gap-6">
 
@@ -345,9 +349,13 @@ const Dashboard = () => {
                 )}
 
                 <button
+                  onClick={() => {
+                    setSelectedDeliveryForDetails(delivery);
+                    setViewDetailsOpen(true);
+                  }}
                   className="
             px-4 py-1.5 text-[13px] font-semibold rounded-md
-            bg-[#F1F5F9] text-[#222222]
+            bg-[#F1F5F9] text-[#222222] hover:bg-[#E2E8F0]
             transition-colors border border-gray-300
           "
                 >
@@ -393,6 +401,12 @@ const Dashboard = () => {
         confirmText="Mark Delivered"
         cancelText="Cancel"
         confirmVariant="primary"
+      />
+
+      <ViewDetailsDrawer
+        isOpen={viewDetailsOpen}
+        onClose={() => setViewDetailsOpen(false)}
+        delivery={selectedDeliveryForDetails}
       />
     </div>
   );

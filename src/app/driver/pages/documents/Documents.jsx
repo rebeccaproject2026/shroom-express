@@ -1,7 +1,23 @@
 import { Icon } from "@iconify/react";
+import { useState } from 'react';
 import PageHeader from '../../components/PageHeader';
+import UpdateDocumentModal from '../../components/common/UpdateDocumentModal';
 
 const Documents = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [documentTypeForUpload, setDocumentTypeForUpload] = useState("");
+
+    const handleActionClick = (docType) => {
+        setDocumentTypeForUpload(docType);
+        setIsModalOpen(true);
+    };
+
+    const handleDocumentSubmit = (payload) => {
+        // Here you would process the file, send it to API, etc.
+        console.log("Document submitted:", payload);
+        alert(`Successfully uploaded ${payload.file.name} for ${payload.documentType}`);
+    };
+
     return (
         <div className="p-4  bg-[#F5F5F5]">
             {/* Welcome Header */}
@@ -9,6 +25,8 @@ const Documents = () => {
 
             {/* Documents Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+
+
                 {/* Driver's License Card */}
                 <div className="bg-white flex flex-col border border-[#E8E8E8] rounded-md shadow-sm overflow-hidden min-h-[180px]">
                     <div className="relative p-5 flex-1 flex flex-col">
@@ -45,7 +63,7 @@ const Documents = () => {
 
                     {/* Update Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end">
-                        <button className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
+                        <button onClick={() => handleActionClick("Driver's License")} className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
                             <Icon icon="hugeicons:pencil-edit-01" width="14" height="14" />
                             Update
                         </button>
@@ -88,7 +106,7 @@ const Documents = () => {
 
                     {/* Update Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end">
-                        <button className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
+                        <button onClick={() => handleActionClick("Identity Proof")} className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
                             <Icon icon="hugeicons:pencil-edit-01" width="14" height="14" />
                             Update
                         </button>
@@ -130,7 +148,7 @@ const Documents = () => {
 
                     {/* Update Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end mt-auto">
-                        <button className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
+                        <button onClick={() => handleActionClick("Vehicle Insurance")} className="px-5 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
                             <Icon icon="hugeicons:pencil-edit-01" width="15" height="15" />
                             Update
                         </button>
@@ -172,13 +190,21 @@ const Documents = () => {
 
                     {/* Re-Upload Button Section */}
                     <div className="bg-[#F8FBFF] px-5 py-3 border-t border-[#E8E8E8] flex justify-end mt-auto">
-                        <button className="px-4 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
+                        <button onClick={() => handleActionClick("Bank Verification")} className="px-4 py-2 bg-[#1142D4] text-white rounded-md font-medium text-xs hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5">
                             <Icon icon="tabler:reload" width="15" height="15" />
                             Re - Upload
                         </button>
                     </div>
                 </div>
             </div>
+
+            {/* Mount Document Validation Modal */}
+            <UpdateDocumentModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleDocumentSubmit}
+                initialDocumentType={documentTypeForUpload}
+            />
         </div>
     );
 };

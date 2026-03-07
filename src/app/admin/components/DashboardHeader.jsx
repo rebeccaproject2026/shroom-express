@@ -42,7 +42,7 @@ const getDisplayTitle = (pathname) => {
   return routeTitleMap[matchedPath];
 };
 
-const DashboardHeader = ({ sidebar, setSidebar, user = {
+const DashboardHeader = ({ user = {
   fullName: "Akash Sharma",
   role: "Admin",
   avatar: avtar,
@@ -87,12 +87,12 @@ const DashboardHeader = ({ sidebar, setSidebar, user = {
       <nav className="w-full px-2 sm:px-4 h-16 flex items-center justify-between bg-white relative z-30">
         <div className="flex items-center gap-2 sm:gap-4">
           {/* Hamburger icon - hidden on mobile (below 640px), visible on tablet */}
-          <button
+          {/* <button
             onClick={() => setSidebar(!sidebar)}
             className="hidden sm:block lg:hidden text-gray-700 text-xl font-bold hover:bg-gray-100 p-2 rounded transition-colors"
           >
             ☰
-          </button>
+          </button> */}
 
           <h1 className="text-base sm:text-lg font-semibold text-[#212121]">
             {displayTitle}

@@ -1,8 +1,7 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 
 const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
-  const location = useLocation();
 
   const navItems = [
     {
@@ -32,7 +31,7 @@ const BottomNavigation = ({ onMenuClick, isMenuOpen, onNavItemClick }) => {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 sm:hidden">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 lg:hidden">
         <div className="flex items-center justify-around h-16">
           {navItems.map(({ to, label, Icon }) => (
             <NavLink

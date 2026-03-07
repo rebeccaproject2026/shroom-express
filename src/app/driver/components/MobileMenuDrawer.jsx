@@ -31,12 +31,12 @@ const MobileMenuDrawer = ({ isOpen, onClose }) => {
     <>
       {/* Backdrop - behind bottom nav */}
       <div
-        className="fixed inset-0 bg-black opacity-60 z-40 sm:hidden"
+        className="fixed inset-0 bg-black opacity-60 z-40 lg:hidden"
         onClick={onClose}
       />
 
       {/* Drawer - behind bottom nav (z-40) */}
-      <div className="fixed bottom-16 left-0 right-0 bg-white rounded-t-xl z-40 sm:hidden animate-slide-up">
+      <div className="fixed bottom-16 left-0 right-0 bg-white rounded-t-xl z-40 lg:hidden animate-slide-up">
         {/* Menu Items */}
         <div className="px-2 py-2 space-y-0">
           {menuItems.map(({ to, label, Icon }) => (
