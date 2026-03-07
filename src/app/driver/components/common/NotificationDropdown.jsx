@@ -29,7 +29,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'ETA 3 Minutes Delivery in Progress',
             description: '3 minutes ETA has been sent to client for order #1234567890.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:shopping',
+            icon: 'material-symbols:folder-open-rounded',
             iconColorClass: 'text-[#ef4444]',
         },
         {
@@ -37,7 +37,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'ETA 5 Minutes Delivery in Progress',
             description: '5 minutes ETA has been sent to client for order #1234567890.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:shopping',
+            icon: 'material-symbols:folder-open-rounded',
             iconColorClass: 'text-[#ef4444]',
         },
         {
@@ -53,7 +53,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Order Cancelled by Dispatcher',
             description: 'Order #[Order ID] Order was cancelled by the dispatcher.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:calendar-remove-outline',
+            icon: 'fluent:calendar-cancel-24-regular',
             iconColorClass: 'text-[#ef4444]',
         },
         {
@@ -61,7 +61,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Order Cancelled by Driver',
             description: 'Order #[Order ID] Order was cancelled by the driver.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:calendar-remove-outline',
+            icon: 'fluent:calendar-cancel-24-regular',
             iconColorClass: 'text-[#ef4444]',
         },
         {
@@ -69,7 +69,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'New Order Assigned',
             description: 'Order #[Order ID] assigned by Admin/Dispatcher to a driver.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:cube-outline',
+            icon: 'lucide:package-check',
             iconColorClass: 'text-[#3b82f6]',
         },
         {
@@ -77,7 +77,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Order Reassigned by Dispatcher',
             description: 'Order #[Order ID] reassigned from driver name to driver name.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:cube-outline',
+            icon: 'lucide:package-check',
             iconColorClass: 'text-[#3b82f6]',
         },
         {
@@ -101,7 +101,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Low Stock Alert',
             description: 'Stock is running low for [Item Name]. Please restock.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'lucide:boxes',
+            icon: 'picon:boxes',
             iconColorClass: 'text-[#f59e0b]',
         },
         {
@@ -117,7 +117,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Delivery Delayed Alert',
             description: 'Order #[Order ID] is delayed beyond expected time.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:truck-outline',
+            icon: 'hugeicons:delivery-delay-02',
             iconColorClass: 'text-[#4b5563]',
         },
         {
@@ -125,7 +125,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'System Maintenance Notification',
             description: 'Scheduled maintenance on [Date/Time]. Expect temporary downtime.',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:tools',
+            icon: 'wpf:maintenance',
             iconColorClass: 'text-[#1f2937]',
         },
         {
@@ -133,7 +133,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             title: 'Driver name is Online/Offline',
             description: '[Driver Name] is [online/offline].',
             timeText: '14 January 2025 at 10:20pm',
-            icon: 'mdi:moped-outline',
+            icon: 'healthicons:truck-driver-outline',
             iconColorClass: 'text-[#1f2937]',
         }
     ];
@@ -148,7 +148,7 @@ const NotificationDropdown = ({ isOpen, onClose }) => {
             {/* Drawer */}
             <div
                 ref={dropdownRef}
-                className="fixed top-0 right-0 h-full w-full sm:w-[500px] bg-white shadow-2xl z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out flex flex-col"
+                className="fixed top-0 right-0 h-full w-full sm:w-140 bg-white shadow-2xl z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out flex flex-col"
                 style={{ transform: isOpen ? 'translateX(0)' : 'translateX(100%)' }}
             >
                 {/* Header */}
