@@ -178,7 +178,7 @@ const Dashboard = () => {
     <div className="p-4 sm:p-4 bg-[#F5F5F5]">
       {/* Welcome & Stats Row Container */}
       <div className="flex flex-col gap-3 mb-6">
-        <PageHeader className="!mb-0" />
+        <PageHeader className="mb-0!" />
 
         <div className="bg-white px-6 py-4 rounded-md border border-[#E5E7EB] w-full  md:items-center  gap-6">
 
