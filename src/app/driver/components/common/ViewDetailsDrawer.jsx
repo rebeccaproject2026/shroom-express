@@ -3,12 +3,12 @@ import { Icon } from "@iconify/react";
 import Drawer from "./Drawer";
 import OrderMapSection from "../../../admin/components/order/OrderMapSection";
 
-const ViewDetailsDrawer = ({ isOpen, onClose }) => {
+const ViewDetailsDrawer = ({ isOpen, onClose, delivery }) => {
     return (
         <Drawer isOpen={isOpen} onClose={onClose} width="w-full md:w-[650px] lg:w-[800px]">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E8E8] shrink-0">
-                <h2 className="text-lg font-semibold text-[#3F4753]">View Details</h2>
+                <h2 className="text-lg font-semibold text-[#3F4753]">View Details {delivery?.id ? `(${delivery.id})` : ""}</h2>
                 <button
                     onClick={onClose}
                     className="p-1.5 rounded-full cursor-pointer hover:bg-gray-100 transition-colors"
@@ -38,7 +38,7 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-[#777777] font-medium mb-0.5">Address</p>
-                                    <p className="text-sm font-semibold text-[#222222]">452 Commerce Way, Industrial District, SF 94103</p>
+                                    <p className="text-sm font-semibold text-[#222222]">{delivery?.pickup || "452 Commerce Way, Industrial District, SF 94103"}</p>
                                 </div>
                                 <div className="mt-1 bg-[#F2F2F2] rounded-[6px] p-4 flex items-center justify-between">
                                     <div>
@@ -64,7 +64,7 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
                                 </div>
                                 <div>
                                     <p className="text-sm text-[#777777] font-medium mb-0.5">Address</p>
-                                    <p className="text-sm font-semibold text-[#222222] leading-snug">88 Innovation Blvd, Ste 400, Financial Center, SF94111</p>
+                                    <p className="text-sm font-semibold text-[#222222] leading-snug">{delivery?.dropoff || delivery?.drop || "88 Innovation Blvd, Ste 400, Financial Center, SF94111"}</p>
                                 </div>
                                 <div className="mt-1 bg-[#1142D4]/5 border border-[#D5E1FE] rounded-[6px] p-2.5">
                                     <p className="text-sm text-[#1142D4] font-medium mb-0.5">Instructions</p>
@@ -103,7 +103,7 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
 
                                 <div className="flex justify-between items-center">
                                     <span className="text-base font-semibold text-[#222222]">Total Payable</span>
-                                    <span className="text-lg font-bold text-[#1142D4]">$1,269.50</span>
+                                    <span className="text-lg font-bold text-[#1142D4]">{delivery?.amount || delivery?.earnings || delivery?.netAmount || "$1,269.50"}</span>
                                 </div>
 
                                 <button className="mt-auto pt-2 flex items-center justify-center w-full">
@@ -124,7 +124,7 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
                             <div className="flex flex-col gap-4">
                                 <div>
                                     <p className="text-[13px] text-[#777777] font-medium mb-0.5">Item Description</p>
-                                    <p className="text-sm font-semibold text-[#222222]">Network Switches (L3-24P)</p>
+                                    <p className="text-sm font-semibold text-[#222222]">{delivery?.packageDetails || "Network Switches (L3-24P)"}</p>
                                 </div>
                                 <div>
                                     <p className="text-[13px] text-[#777777] font-medium mb-0.5">Quantity</p>
@@ -158,7 +158,7 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
                                     <div className="w-[23px] h-[23px] bg-[#10B981] rounded-full border-[4px] border-[#E8E8E8] shadow-sm mb-3"></div>
                                     <p className="text-[13px] font-semibold text-[#222222] text-center mb-0.5">Delivery Created</p>
                                     <p className="text-[11px] font-medium text-[#777777] text-center">Oct 24, 2023 • 09:12 AM</p>
-                                    <p className="text-[11px] font-medium text-[#777777] text-center">Order #PO-7721 submitted</p>
+                                    <p className="text-[11px] font-medium text-[#777777] text-center">Order {delivery?.id || "#PO-7721"} submitted</p>
                                 </div>
 
                                 {/* Step 2: Assigned to Fleet */}
@@ -194,8 +194,8 @@ const ViewDetailsDrawer = ({ isOpen, onClose }) => {
                     </div>
 
                     {/* Order Map section */}
-                    <div className="w-full h-[240px]  overflow-hidden border border-[#E8E8E8] shadow-sm">
-                        <OrderMapSection className="w-full h-full object-cover" isDashboard={true} />
+                    <div className="w-full h-[400px]  overflow-hidden border border-[#E8E8E8] shadow-sm">
+                        <OrderMapSection className="w-full h-full object-cover" isDashboard={true} isViewDetails={true} />
                     </div>
 
                 </div>

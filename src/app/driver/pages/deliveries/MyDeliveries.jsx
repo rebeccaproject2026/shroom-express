@@ -3,6 +3,7 @@ import { useMemo, useState, useRef } from 'react';
 import PageHeader from '../../components/PageHeader';
 import UpcomingDeliveryCard from '../../components/UpcomingDeliveryCard';
 import ConfirmationModal from '../../components/common/ConfirmationModal';
+import ViewDetailsDrawer from '../../components/common/ViewDetailsDrawer';
 import {
   useReactTable,
   getCoreRowModel,
@@ -23,6 +24,8 @@ const MyDeliveries = () => {
 
   const [markDeliveredModalOpen, setMarkDeliveredModalOpen] = useState(false);
   const [selectedDeliveryToMarkDelivered, setSelectedDeliveryToMarkDelivered] = useState(null);
+  const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+  const [selectedDeliveryForDetails, setSelectedDeliveryForDetails] = useState(null);
 
   const handleUploadProofClick = () => {
     if (fileInputRef.current) {
@@ -94,7 +97,15 @@ const MyDeliveries = () => {
       accessorKey: 'id',
       header: 'Delivery ID',
       cell: (info) => (
-        <span className="text-[#1142D4] font-medium ">{info.getValue()}</span>
+        <span
+          className="text-[#1142D4] font-medium cursor-pointer hover:underline"
+          onClick={() => {
+            setSelectedDeliveryForDetails(info.row.original);
+            setViewDetailsOpen(true);
+          }}
+        >
+          {info.getValue()}
+        </span>
       ),
     },
     {
@@ -229,8 +240,8 @@ const MyDeliveries = () => {
                     disabled={activeDelivery.status === "DELIVERED"}
                     onClick={() => handleMarkDeliveredClick(activeDelivery.id)}
                     className={`flex-1 py-2.5 rounded-md font-medium flex items-center justify-center gap-2 transition-colors ${activeDelivery.status === "DELIVERED"
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-[#1142D4] text-white hover:bg-blue-700"
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-[#1142D4] text-white hover:bg-blue-700"
                       }`}
                   >
                     <Icon icon="material-symbols:check-circle-outline-rounded" width="24" height="24" />
@@ -249,8 +260,8 @@ const MyDeliveries = () => {
                     disabled={activeDelivery.status === "DELIVERED"}
                     onClick={handleUploadProofClick}
                     className={`px-6 py-2.5 rounded-md font-medium flex items-center justify-center gap-2 transition-colors ${activeDelivery.status === "DELIVERED"
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-[#1E293B] text-white hover:bg-gray-900"
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-[#1E293B] text-white hover:bg-gray-900"
                       }`}
                   >
                     <Icon icon="tabler:upload" width="24" height="24" />
@@ -355,6 +366,12 @@ const MyDeliveries = () => {
         confirmText="Mark Delivered"
         cancelText="Cancel"
         confirmVariant="primary"
+      />
+
+      <ViewDetailsDrawer
+        isOpen={viewDetailsOpen}
+        onClose={() => setViewDetailsOpen(false)}
+        delivery={selectedDeliveryForDetails}
       />
     </div>
   );

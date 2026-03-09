@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
 import PageHeader from '../../components/PageHeader';
 import Select from '../../components/Select';
+import ViewDetailsDrawer from '../../components/common/ViewDetailsDrawer';
 import {
     useReactTable,
     getCoreRowModel,
@@ -15,6 +16,9 @@ const DeliveryHistory = () => {
     const [monthFilter, setMonthFilter] = useState('March, 2026');
     const [statusFilter, setStatusFilter] = useState('All');
     const [paymentFilter, setPaymentFilter] = useState('All');
+
+    const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+    const [selectedDeliveryForDetails, setSelectedDeliveryForDetails] = useState(null);
 
     // Delivery history data
     const deliveryData = useMemo(() => [
@@ -71,7 +75,15 @@ const DeliveryHistory = () => {
             accessorKey: 'id',
             header: 'Delivery ID',
             cell: (info) => (
-                <span className="text-[#1142D4] font-medium">{info.getValue()}</span>
+                <span
+                    className="text-[#1142D4] font-medium cursor-pointer hover:underline"
+                    onClick={() => {
+                        setSelectedDeliveryForDetails(info.row.original);
+                        setViewDetailsOpen(true);
+                    }}
+                >
+                    {info.getValue()}
+                </span>
             ),
         },
         {
@@ -309,6 +321,12 @@ const DeliveryHistory = () => {
                     </button>
                 </div>
             </div>
+
+            <ViewDetailsDrawer
+                isOpen={viewDetailsOpen}
+                onClose={() => setViewDetailsOpen(false)}
+                delivery={selectedDeliveryForDetails}
+            />
         </div >
     );
 };

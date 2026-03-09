@@ -8,7 +8,7 @@ if (typeof import.meta.env.VITE_MAPBOX_ACCESS_TOKEN !== 'undefined') {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 }
 
-const OrderMapSection = ({ orderData, isDashboard = false }) => {
+const OrderMapSection = ({ orderData, isDashboard = false, isViewDetails = false }) => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [isSatellite, setIsSatellite] = useState(false);
@@ -228,6 +228,7 @@ const OrderMapSection = ({ orderData, isDashboard = false }) => {
             delivered: 3,
             cancelled: 2,
           }}
+          compact={isViewDetails}
           showActions={false}
         />
       );
@@ -240,7 +241,7 @@ const OrderMapSection = ({ orderData, isDashboard = false }) => {
       // Add dummy markers for Dashboard
       if (isDashboard) {
         const dummyMarkers = [
-          { pos: [-78.72, 44.92], num: '12' },
+          { pos: [-74.72, 44.92], num: '12' },
           { pos: [-74.00, 44.30], num: '13' }
         ];
         dummyMarkers.forEach(m => {
@@ -316,11 +317,13 @@ const OrderMapSection = ({ orderData, isDashboard = false }) => {
               Satellite
             </button>
           </div>
-          <div className="absolute top-4 right-4 z-10">
-            <div className="bg-[#1142D4] text-white px-2 py-2 rounded-sm font-semibold shadow-md flex items-center justify-center text-[13px] tracking-wide border-2 border-transparent">
-              Active Deliveries (2)
+          {!isViewDetails && (
+            <div className="absolute top-4 right-4 z-10">
+              <div className="bg-[#1142D4] text-white px-2 py-2 rounded-sm font-semibold shadow-md flex items-center justify-center text-[13px] tracking-wide border-2 border-transparent">
+                Active Deliveries (2)
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>
