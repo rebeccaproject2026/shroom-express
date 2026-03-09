@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { useMemo, useState } from 'react';
 import PageHeader from '../../components/PageHeader';
 import ConfirmationModal from '../../components/common/ConfirmationModal';
+import ViewDetailsDrawer from '../../components/common/ViewDetailsDrawer';
 import {
     useReactTable,
     getCoreRowModel,
@@ -13,6 +14,8 @@ import {
 const Earnings = () => {
     const [globalFilter, setGlobalFilter] = useState('');
     const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
+    const [viewDetailsOpen, setViewDetailsOpen] = useState(false);
+    const [selectedDeliveryForDetails, setSelectedDeliveryForDetails] = useState(null);
 
     const handleConfirmSubmit = () => {
         // Here you would typically trigger your API call
@@ -138,7 +141,15 @@ const Earnings = () => {
             accessorKey: 'id',
             header: 'Delivery ID',
             cell: (info) => (
-                <span className="text-[#1142D4] font-medium">{info.getValue()}</span>
+                <span
+                    className="text-[#1142D4] font-medium cursor-pointer hover:underline"
+                    onClick={() => {
+                        setSelectedDeliveryForDetails(info.row.original);
+                        setViewDetailsOpen(true);
+                    }}
+                >
+                    {info.getValue()}
+                </span>
             ),
         },
         {
@@ -379,6 +390,12 @@ const Earnings = () => {
                 message="Are you sure you want to submit your pending Cash on Delivery (COD) amount of $25.00? Doing so will process the balance to your account."
                 confirmText="Submit"
                 confirmVariant="primary"
+            />
+
+            <ViewDetailsDrawer
+                isOpen={viewDetailsOpen}
+                onClose={() => setViewDetailsOpen(false)}
+                delivery={selectedDeliveryForDetails}
             />
         </div>
     );
