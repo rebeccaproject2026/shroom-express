@@ -1,0 +1,7 @@
+@import "./styles/variable.css";
+@import "./styles/fonts.css";
+
+/* Store Web Front Specific Global Styles */
+body.store-front {
+    background-color: var(--store-bg);
+}

@@ -1,0 +1,39 @@
+/* =========================
+   🍄 SHROOM EXPRESS - WEB FRONT
+   🎨 GLOBAL CSS VARIABLES
+========================= */
+
+:root {
+  /* Brand Primary Colors */
+  --color-brand-red: #E93E2B;
+  --color-brand-red-hover: #D32F2F;
+  --color-brand-red-light: #FFEBEE;
+  
+  /* Brand Secondary Colors */
+  --color-brand-blue: #1E3A8A;
+  
+  /* Background & Surface Colors */
+  --color-bg-main: #FFFFFF;
+  --color-bg-secondary: #F5F5F5;
+  --color-bg-card: #FFFFFF;
+  
+  /* Typography Colors */
+  --color-text-main: #111827;      /* Primary Headings */
+  --color-text-dim: #4B5563;       /* Subheadings/Paragraphs */
+  --color-text-muted: #9CA3AF;     /* Placeholder/Secondary */
+  --color-text-inverse: #FFFFFF;   /* Text on red */
+  
+  /* Action & Status Colors */
+  --color-status-success: #10B981;
+  --color-status-warning: #F59E0B;
+  --color-status-error: #EF4444;
+  
+  /* Borders & Dividers */
+  --color-border-light: #F3F4F6;
+  --color-border-main: #E5E7EB;
+  --color-border-dark: #D1D5DB;
+
+  /* Global Store aliases */
+  --store-primary: #E93E2B;
+  --store-bg: #F5F5F5;
+}
