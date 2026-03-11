@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}>
             {/* Image Container */}
-            <div className="relative flex items-center justify-center overflow-visible">
+            <div className="relative w-full h-[240px] flex items-center justify-center overflow-visible shrink-0 mb-3">
                 {/* Badge */}
                 {badge && (
                     <span

@@ -6,7 +6,7 @@ import { AlertTriangle } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="bg-white border-t border-[#E8E8E8] mt-16 pt-12 pb-8 font-sans">
+        <footer className="bg-white pt-12 pb-8 font-sans">
             <div className="container mx-auto px-12">
 
                 {/* Main Content Grid */}
