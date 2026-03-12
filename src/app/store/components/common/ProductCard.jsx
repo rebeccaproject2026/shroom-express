@@ -133,7 +133,7 @@ const ProductCard = ({ product }) => {
 
                         {/* Add to Cart */}
                         <button className="w-[30px] h-[30px] bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0">
-                            <Icon icon="solar:cart-plus-linear" width={22} strokeWidth={1.5} />
+                            <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />
                         </button>
                     </div>
                 </div>

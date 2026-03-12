@@ -41,7 +41,7 @@ const StickyHeader = () => {
     ];
 
     return (
-        <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-50 bg-white  flex flex-col w-full font-sans`}>
+        <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
             <div className="bg-[var(--store-primary)] text-white text-sm py-2 px-4 flex justify-center items-center gap-6">
                 <Link to="/store/open" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
@@ -143,9 +143,19 @@ const StickyHeader = () => {
                 <div className="container mx-auto px-4">
                     <ul className="flex items-center justify-center space-x-12 h-10 overflow-x-auto no-scrollbar">
                         {categories.map((cat, idx) => {
+                            const categoryPath = `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
+                            const isActive = location.pathname === categoryPath;
+                            
                             return (
                                 <li key={idx} className="shrink-0 flex items-center justify-center">
-                                    <Link to={`/store/category/${cat.name.toLowerCase().replace(' ', '-')}`} className="flex items-center gap-2 text-[15px] font-bold text-[#181211] hover:text-[var(--store-primary)] transition-colors py-2">
+                                    <Link 
+                                        to={categoryPath} 
+                                        className={`flex items-center gap-2 text-[15px] font-bold transition-colors py-2 ${
+                                            isActive 
+                                                ? 'text-[var(--store-primary)]' 
+                                                : 'text-[#181211] hover:text-[var(--store-primary)]'
+                                        }`}
+                                    >
                                         <Icon
                                             icon={cat.icon}
                                             width={18}

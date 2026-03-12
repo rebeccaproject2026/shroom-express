@@ -11,7 +11,7 @@ const StoreLayout = () => {
         <div className="store-app min-h-screen flex flex-col">
             <StickyHeader />
 
-            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[160px]'}`}>
+            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[250px]'}`}>
                 <Outlet />
             </main>
 
