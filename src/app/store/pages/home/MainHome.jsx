@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 
@@ -47,6 +48,7 @@ import news3 from "../../assets/images/news3.png";
 
 const Home = () => {
     const sliderRef = useRef(null);
+    const navigate = useNavigate();
 
     const slideLeft = () => {
         if (sliderRef.current) {
@@ -58,6 +60,10 @@ const Home = () => {
         if (sliderRef.current) {
             sliderRef.current.scrollBy({ left: 320, behavior: 'smooth' });
         }
+    };
+
+    const handleViewAllStores = () => {
+        navigate('/store/storeslists');
     };
 
     return (
@@ -249,9 +255,9 @@ const Home = () => {
                     {/* Header Row */}
                     <div className="flex items-center justify-between mb-7">
                         <h2 className="text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
-                        <a href="#" className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity">
-                            View All <Icon icon="ep:arrow-right-bold" width={14} />
-                        </a>
+                        <button onClick={handleViewAllStores} className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity cursor-pointer">
+                            View All <Icon icon="streamline:next" width={17} height={17} />
+                        </button>
                     </div>
 
                     {/* Store Cards Row */}

@@ -1,9 +1,13 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
 import productEffectImg from "../../assets/images/producteffect1.png";
 
 const StoreCard = ({ store }) => {
+    const navigate = useNavigate();
+
     const {
+        id,
         coverImage = "https://via.placeholder.com/300x140/333/fff?text=Cover+Image",
         logo = "https://via.placeholder.com/60/fff/000?text=Logo",
         name = "micro zoomiez",
@@ -16,6 +20,10 @@ const StoreCard = ({ store }) => {
         avatars = [productEffectImg, productEffectImg, productEffectImg, productEffectImg],
         isPrimary = false
     } = store || {};
+
+    const handleViewStore = () => {
+        navigate(`/store/storeslists/${id}`);
+    };
 
     return (
         <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full min-h-[340px]">
@@ -83,10 +91,13 @@ const StoreCard = ({ store }) => {
 
                 {/* Action Button */}
                 <div className="mt-auto">
-                    <button className={`w-full py-3 cursor-pointer rounded-md font-semibold text-base transition-colors flex items-center justify-center ${isPrimary
-                        ? 'bg-[var(--store-primary)] text-white hover:bg-opacity-90'
-                        : 'bg-white text-[#181211] border-2 border-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B]'
-                        }`}>
+                    <button
+                        onClick={handleViewStore}
+                        className={`w-full py-3 cursor-pointer rounded-md font-semibold text-base transition-colors flex items-center justify-center ${isPrimary
+                            ? 'bg-[var(--store-primary)] text-white hover:bg-opacity-90'
+                            : 'bg-white text-[#181211] border-2 border-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B]'
+                            }`}
+                    >
                         View Store
                     </button>
                 </div>

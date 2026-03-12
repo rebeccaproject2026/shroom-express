@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
+import StoresList from './pages/stores/StoresList';
+import StoreDetails from './pages/stores/StoreDetails';
 
 
 function StoreApp() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.history.scrollRestoration = "manual";
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     return (
         <Routes>
             <Route path="/" element={<StoreLayout />}>
                 <Route index element={<Home />} />
+                <Route path="storeslists" element={<StoresList />} />
+                <Route path="storeslists/:storeId" element={<StoreDetails />} />
                 {/* Further routes like /products, /cart, /checkout will go here */}
             </Route>
         </Routes>
