@@ -5,6 +5,7 @@ import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
 import StoreDetails from './pages/stores/StoreDetails';
+import ProductsList from './pages/products/ProductsList';
 
 
 function StoreApp() {
@@ -19,8 +20,9 @@ function StoreApp() {
         <Routes>
             <Route path="/" element={<StoreLayout />}>
                 <Route index element={<Home />} />
-                <Route path="storeslists" element={<StoresList />} />
+                <Route path="stores" element={<StoresList />} />
                 <Route path="storeslists/:storeId" element={<StoreDetails />} />
+                <Route path="category/:category" element={<ProductsList />} />
                 {/* Further routes like /products, /cart, /checkout will go here */}
             </Route>
         </Routes>

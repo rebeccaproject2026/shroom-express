@@ -11,7 +11,6 @@ import focusClarityImg from "../../assets/images/focusclarity.png";
 import product1 from "../../assets/images/product1.png";
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
-import Select from '../../components/common/select';
 import creativeBoostImg from "../../assets/images/creative boost.png";
 import StoreCard from '../../components/common/StoreCard';
 import storecard1 from "../../assets/images/storecard1.png";
@@ -22,6 +21,7 @@ import storecard3 from "../../assets/images/storecard3.png";
 import background3 from "../../assets/images/background3.png";
 import storecard4 from "../../assets/images/storecard4.png";
 import background4 from "../../assets/images/Logo.png";
+import Select from '../../components/common/Select';
 const StoreDetails = () => {
     const navigate = useNavigate();
     const [sortBy, setSortBy] = useState('popularity');
@@ -287,7 +287,7 @@ const StoreDetails = () => {
     return (
         <div className="w-full bg-[#FAF8F5]">
             {/* Store Profile Header Section */}
-            <div className="px-12 pt-11">
+            <div className="px-10 pt-11">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-[280px] bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}
@@ -358,7 +358,7 @@ const StoreDetails = () => {
             </div>
 
             {/* Products Section */}
-            <div className="px-12 mt-30 pb-10">
+            <div className="px-10 mt-30 pb-10">
                 {/* Filter Bar */}
                 <div className="flex items-center gap-3 mb-4.5" >
 
@@ -406,7 +406,7 @@ const StoreDetails = () => {
                     ))}
                 </div>
             </div>
-            <div className="px-12 mt-3 mb-7">
+            <div className="px-10 mt-3 mb-7">
                 <div className="flex items-center justify-between mb-7">
                     <h2 className="text-2xl font-bold text-[#181211]">Similar Store</h2>
                     <button onClick={() => navigate('/store/storeslists')} className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity cursor-pointer">
