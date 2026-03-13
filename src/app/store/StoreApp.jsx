@@ -21,7 +21,7 @@ function StoreApp() {
         <Routes>
             <Route path="/" element={<StoreLayout />}>
                 <Route index element={<Home />} />
-                <Route path="stores" element={<StoresList />} />
+                <Route path="storeslists" element={<StoresList />} />
                 <Route path="storeslists/:storeId" element={<StoreDetails />} />
                 <Route path="category/:category" element={<ProductsList />} />
                 <Route path="product/:productId" element={<ProductDetail />} />
