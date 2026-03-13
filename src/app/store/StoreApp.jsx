@@ -6,6 +6,7 @@ import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
 import StoreDetails from './pages/stores/StoreDetails';
 import ProductsList from './pages/products/ProductsList';
+import ProductDetail from './pages/products/ProductDetail';
 
 
 function StoreApp() {
@@ -23,6 +24,7 @@ function StoreApp() {
                 <Route path="stores" element={<StoresList />} />
                 <Route path="storeslists/:storeId" element={<StoreDetails />} />
                 <Route path="category/:category" element={<ProductsList />} />
+                <Route path="product/:productId" element={<ProductDetail />} />
                 {/* Further routes like /products, /cart, /checkout will go here */}
             </Route>
         </Routes>

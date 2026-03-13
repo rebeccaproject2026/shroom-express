@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
 import product1 from '../../assets/images/product1.png';
 
 const ProductCard = ({ product }) => {
+    const navigate = useNavigate();
+    
     // Destructure with default fallbacks matching the screenshot design
     const {
+        id,
         badge = { text: 'BEST SELLER', colorClass: 'bg-[#EA4031]' },
         isWishlisted = false,
         image,
@@ -31,8 +35,17 @@ const ProductCard = ({ product }) => {
         setQuantity(quantity + 1);
     };
 
+    const handleProductClick = () => {
+        if (id) {
+            navigate(`/store/product/${id}`);
+        }
+    };
+
     return (
-        <div className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}>
+        <div 
+            onClick={handleProductClick}
+            className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}
+        >
             {/* Image Container */}
             <div className="relative w-full h-[240px] flex items-center justify-center overflow-visible shrink-0 mb-3">
                 {/* Badge */}
@@ -46,6 +59,7 @@ const ProductCard = ({ product }) => {
 
                 {/* Wishlist Button */}
                 <button
+                    onClick={(e) => e.stopPropagation()}
                     className={`absolute top-2.5 right-1 w-[32px] h-[32px] rounded-full flex items-center justify-center shadow-sm transition-colors z-20 border ${isWishlisted
                         ? 'bg-[#FDE047] text-[#181211] border-[#FDE047]'
                         : 'bg-white text-[#181211] border-[#E8E8E8] hover:text-[#EA4031]'
@@ -121,7 +135,10 @@ const ProductCard = ({ product }) => {
 
                     <div className="flex items-center gap-2.5">
                         {/* Qty Selector */}
-                        <div className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-[30px] shadow-sm">
+                        <div 
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-[30px] shadow-sm"
+                        >
                             <button onClick={handleDecrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
                                 <Icon icon="fa6-solid:minus" width={11} />
                             </button>
@@ -132,7 +149,10 @@ const ProductCard = ({ product }) => {
                         </div>
 
                         {/* Add to Cart */}
-                        <button className="w-[30px] h-[30px] bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0">
+                        <button 
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-[30px] h-[30px] bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0"
+                        >
                             <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />
                         </button>
                     </div>
