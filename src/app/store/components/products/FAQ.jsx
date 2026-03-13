@@ -47,7 +47,7 @@ const FAQ = ({ faqs = [] }) => {
     <div className="w-full py-12 bg-[#FAF8F5]">
       {/* Header */}
       <div className="px-10 mb-8">
-        <h2 className="text-3xl font-bold text-[#181211] text-center">
+        <h2 className="text-3xl font-bold text-[#161C2D] text-center">
           Frequently Ask Questions
         </h2>
       </div>
@@ -74,10 +74,10 @@ const FAQ = ({ faqs = [] }) => {
                       icon="mdi:plus"
                       width={24}
                       height={24}
-                      className="text-[#181211] shrink-0 mt-0.5"
+                      className="text-[#161C2D] shrink-0 mt-0.5"
                     />
                   )}
-                  <h3 className="text-base font-semibold text-[#181211] leading-tight">
+                  <h3 className="text-base font-semibold text-[#161C2D] leading-tight">
                     {faq.question}
                   </h3>
                 </div>
@@ -86,7 +86,7 @@ const FAQ = ({ faqs = [] }) => {
               {/* Answer Content */}
               {expandedIndex === index && (
                 <div className="px-6 pb-5 pt-0 ml-10">
-                  <p className="text-sm text-[#777777] leading-relaxed">
+                  <p className="text-sm text-[#363049]/60 font-medium leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
