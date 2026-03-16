@@ -56,7 +56,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
     return (
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#E93E2B]/10 flex items-start gap-5 sm:gap-7">
             {/* Product Image */}
-            <div className="w-28 h-28 sm:w-32 sm:h-32 border border-gray-200 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
                 <img
                     src={item.image}
                     alt={item.name}
@@ -88,13 +88,13 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
 
                 {/* Quantity controller – number below buttons */}
                 <div className="mt-4 flex items-center gap-3">
-                    <div className="flex flex-col items-center gap-1">
+                    <div className="flex items-center gap-6 border border-[#E93E2B1A] bg-[#F8F6F6] rounded-xl px-1 py-1">
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity - 1)}
                             disabled={item.quantity <= 1}
-                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-[#E93E2B] hover:text-[#E93E2B] disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-gray-600 transition-colors"
+                            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-gray-600  transition-colors"
                         >
-                            <Icon icon="mdi:minus" width={16} />
+                            <Icon icon="mdi:minus" width={20}  />
                         </button>
 
                         <span className="font-bold text-[#181211] text-base sm:text-lg">
@@ -103,7 +103,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
 
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity + 1)}
-                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#E93E2B] flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#E93E2B] flex items-center justify-center text-white hover:opacity-90 transition-opacity"
                         >
                             <Icon icon="mdi:plus" width={16} />
                         </button>

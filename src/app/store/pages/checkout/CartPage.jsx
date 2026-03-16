@@ -36,7 +36,7 @@ const CartPage = () => {
     const total = subtotal + tax + deliveryFee;
 
     return (
-        <div className="w-full min-h-screen bg-[#F5F0EB] px-10 py-8">
+        <div className="w-full min-h-screen bg-[#F5F0EB] px-10 pt-8 pb-20">
             <Stepper currentStep={1} />
 
             {/* Title */}
@@ -47,7 +47,7 @@ const CartPage = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
                 {/* Left — Cart Items */}
-                <div className="lg:col-span-2 flex flex-col p-2 gap-6">
+                <div className="lg:col-span-2 flex flex-col gap-6">
                     {cartItems.map(item => (
                         <CartItem
                             key={item.id}
@@ -59,7 +59,7 @@ const CartPage = () => {
 
                     <button
                         onClick={() => navigate('/store')}
-                        className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm mt-2 hover:opacity-80 transition-opacity w-fit"
+                        className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-sm mt-2 hover:opacity-80 transition-opacity w-fit"
                     >
                         <Icon icon="mdi:arrow-left" width={16} />
                         Continue Shopping
@@ -73,70 +73,71 @@ const CartPage = () => {
 
                         {/* Subtotal & Tax */}
                         <div className="flex flex-col gap-2">
-                            <div className="flex justify-between text-sm text-gray-500">
+                            <div className="flex justify-between text-sm text-[#475569]">
                                 <span>Subtotal</span>
-                                <span className="text-[#181211] font-medium">${subtotal.toFixed(2)}</span>
+                                <span className="text-[#0F172A] font-bold">${subtotal.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-sm text-gray-500">
+                            <div className="flex justify-between text-sm text-[#475569]">
                                 <span>Estimated Taxes (8%)</span>
-                                <span className="text-[#181211] font-medium">${tax.toFixed(2)}</span>
+                                <span className="text-[#0F172A] font-bold">${tax.toFixed(2)}</span>
                             </div>
                         </div>
 
                         {/* Delivery Method */}
-                        <div>
-                            <p className="text-xs font-semibold text-gray-500 mb-2">Delivery Method</p>
+                        <div className='border-t border-[#E93E2B1A] pt-2'>
+                            <p className="text-sm font-bold text-[#334155] mb-2">Delivery Method</p>
                             <DeliveryMethod selected={delivery} onChange={setDelivery} variant="radio" />
                         </div>
 
                         {/* Promo */}
-                        <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2.5">
+                        <div className="flex items-center gap-2 border border-dashed border-[#CBD5E1] bg-[#F8FAFC] rounded-xl px-4 py-4 mt-2">
                             <Icon icon="mdi:tag-outline" className="text-gray-400" width={16} />
                             <input
                                 type="text"
                                 value={promo}
                                 onChange={e => setPromo(e.target.value)}
                                 placeholder="Promo code"
-                                className="flex-1 text-sm outline-none text-gray-700 placeholder-gray-400 bg-transparent"
+                                className="flex-1 text-sm outline-none text-gray-700 placeholder-[#6B7280] bg-transparent"
                             />
                             <button className="text-sm font-bold text-[#E93E2B]">Apply</button>
                         </div>
 
                         {/* Total */}
-                        <div className="border-t border-gray-100 pt-3">
-                            <p className="text-xs text-gray-400 mb-1">Total Amount</p>
+                        <div className="border-t border-[#F1F5F9] py-6">
+                            <p className="text-sm text-[#64748B] mb-2">Total Amount</p>
                             <div className="flex items-center justify-between">
-                                <span className="text-2xl font-extrabold text-[#181211]">${total.toFixed(2)}</span>
-                                <span className="text-xs text-green-500 font-bold">Save $15.00</span>
+                                <span className="text-[28px] font-extrabold text-[#0F172A]">${total.toFixed(2)}</span>
+                                <span className="text-xs bg-[#F0FDF4] rounded-lg px-2 py-1 text-green-500 font-bold">Save $15.00</span>
                             </div>
                         </div>
 
                         <button
                             onClick={() => navigate('/store/checkout')}
-                            className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-4 rounded-full transition-colors text-sm"
+                            className="w-full bg-[#E93E2B] cursor-pointer hover:bg-red-600 text-white font-bold py-3.5 shadow-md rounded-full transition-colors text-base"
                         >
                             Proceed to Checkout →
                         </button>
 
-                        <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400">
-                            <Icon icon="mdi:lock-outline" width={12} />
+                        <div className="flex items-center justify-center gap-2 font-semibold text-[11px] text-[#94A3B8]">
+                            <Icon icon="mdi:lock-outline" width={18} />
                             <span>SECURE SSL ENCRYPTED CHECKOUT</span>
                         </div>
 
-                        {/* Trust badges */}
-                        <div className="flex items-center justify-around pt-2 border-t border-gray-100">
+                    </div>
+
+                    {/* Trust badges */}
+                        <div className="flex items-center justify-around pt-6">
                             {[
                                 { icon: 'mdi:shield-check-outline', label: '100% Organic' },
-                                { icon: 'mdi:package-variant', label: 'Discreet Box' },
-                                { icon: 'mdi:flask-outline', label: 'Lab Tested' },
+                                { icon: 'ri:truck-line', label: 'Discreet Box' },
+                                { icon: 'lsicon:refresh-done-outline', label: 'Lab Tested' },
                             ].map(b => (
                                 <div key={b.label} className="flex flex-col items-center gap-1">
-                                    <Icon icon={b.icon} className="text-gray-400" width={20} />
-                                    <span className="text-[10px] text-gray-400">{b.label}</span>
+                                    <Icon icon={b.icon} className="text-[#64748B]" width={20} />
+                                    <span className="text-[10px] text-[#94A3B8] font-bold">{b.label}</span>
                                 </div>
                             ))}
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

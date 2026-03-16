@@ -13,7 +13,7 @@ const defaultItems = [
     { id: 3, name: 'Moonlight Gummies (20pk)', description: '1000mg | Natural Flavor | 30ml', price: 85, quantity: 1, image: product1 },
 ];
 
-const inputClass = "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] transition-colors bg-white placeholder-gray-400";
+const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] transition-colors bg-white placeholder-gray-400";
 
 const CheckoutPage = () => {
     const navigate = useNavigate();
@@ -43,53 +43,53 @@ const CheckoutPage = () => {
                 {/* Left - Form */}
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {/* Delivery Method */}
-                    <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h2 className="text-xl font-bold text-[#181211] mb-5">Delivery Method</h2>
+                    <div className="py-4">
+                        <h2 className="text-2xl font-bold text-[#181211] mb-5">Delivery Method</h2>
                         <DeliveryMethod selected={delivery} onChange={setDelivery} variant="cards" />
                     </div>
 
                     {/* Billing & Delivery Form */}
-                    <div className="bg-white rounded-2xl shadow-sm p-6">
+                    <div className="py-4">
                         <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-xl font-bold text-[#181211]">Billing and Delivery</h2>
+                            <h2 className="text-2xl font-bold text-[#181211]">Billing and Delivery</h2>
                             <button className="text-sm text-[#E93E2B] font-medium hover:opacity-80">Log in for faster checkout</button>
                         </div>
 
                         <div className="flex flex-col gap-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-xs text-gray-500 font-medium mb-1 block">Full Name</label>
+                                    <label className="text-sm text-[#181211] font-semibold mb-1 block">Full Name</label>
                                     <input className={inputClass} value={form.fullName} onChange={e => handleFormChange('fullName', e.target.value)} placeholder="Alex Johnson" />
                                 </div>
                                 <div>
-                                    <label className="text-xs text-gray-500 font-medium mb-1 block">Phone Number</label>
+                                    <label className="text-sm text-[#181211] font-semibold mb-1 block">Phone Number</label>
                                     <input className={inputClass} value={form.phone} onChange={e => handleFormChange('phone', e.target.value)} placeholder="+1 (555) 000-0000" />
                                 </div>
                             </div>
                             <div>
-                                <label className="text-xs text-gray-500 font-medium mb-1 block">Email Address</label>
+                                <label className="text-sm text-[#181211] font-semibold mb-1 block">Email Address</label>
                                 <input className={inputClass} value={form.email} onChange={e => handleFormChange('email', e.target.value)} placeholder="Jhon@example.com" />
                             </div>
                             <div>
-                                <label className="text-xs text-gray-500 font-medium mb-1 block">Street Address</label>
+                                <label className="text-sm text-[#181211] font-semibold mb-1 block">Street Address</label>
                                 <input className={inputClass} value={form.address} onChange={e => handleFormChange('address', e.target.value)} placeholder="420 High St." />
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
-                                    <label className="text-xs text-gray-500 font-medium mb-1 block">City</label>
+                                    <label className="text-sm text-[#181211] font-semibold mb-1 block">City</label>
                                     <input className={inputClass} value={form.city} onChange={e => handleFormChange('city', e.target.value)} placeholder="San Francisco" />
                                 </div>
                                 <div>
-                                    <label className="text-xs text-gray-500 font-medium mb-1 block">State</label>
+                                    <label className="text-sm text-[#181211] font-semibold mb-1 block">State</label>
                                     <input className={inputClass} value={form.state} onChange={e => handleFormChange('state', e.target.value)} placeholder="CN" />
                                 </div>
                                 <div>
-                                    <label className="text-xs text-gray-500 font-medium mb-1 block">ZIP / Postal Code</label>
+                                    <label className="text-sm text-[#181211] font-semibold mb-1 block">ZIP / Postal Code</label>
                                     <input className={inputClass} value={form.zip} onChange={e => handleFormChange('zip', e.target.value)} placeholder="94103" />
                                 </div>
                             </div>
                             <div>
-                                <label className="text-xs text-gray-500 font-medium mb-1 block">Order Notes (Optional)</label>
+                                <label className="text-sm text-[#181211] font-semibold mb-1 block">Order Notes (Optional)</label>
                                 <textarea
                                     className={`${inputClass} resize-none h-24`}
                                     value={form.notes}
@@ -101,9 +101,9 @@ const CheckoutPage = () => {
                     </div>
 
                     {/* Payment Method */}
-                    <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <h2 className="text-xl font-bold text-[#181211] mb-2">Payment Method</h2>
-                        <p className="text-sm text-gray-400 mb-5">Choose how you'd like to pay for your order securely.</p>
+                    <div className="py-4">
+                        <h2 className="text-2xl font-bold text-[#181211] mb-1">Payment Method</h2>
+                        <p className="text-sm text-[#64748B] mb-5">Choose how you'd like to pay for your order securely.</p>
                         <PaymentMethod
                             selected={payment}
                             onChange={setPayment}

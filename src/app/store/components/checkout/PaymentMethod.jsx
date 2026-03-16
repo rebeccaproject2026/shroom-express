@@ -16,8 +16,8 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                     <button
                         key={m.id}
                         onClick={() => onChange(m.id)}
-                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all text-left ${
-                            selected === m.id ? 'border-[#E93E2B] bg-red-50' : 'border-gray-200 bg-white hover:border-gray-300'
+                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-4 rounded-xl border-2 transition-all text-left ${
+                            selected === m.id ? 'border-[#E93E2B] bg-red-50' : 'border-[#E2E8F0] bg-white hover:border-gray-300'
                         }`}
                     >
                         <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selected === m.id ? 'border-[#E93E2B]' : 'border-gray-300'}`}>
@@ -25,9 +25,9 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-[#181211]">{m.label}</p>
-                            <p className="text-xs text-gray-400">{m.sub}</p>
+                            <p className="text-xs text-[#64748B]">{m.sub}</p>
                         </div>
-                        <Icon icon={m.icon} className="text-gray-400 shrink-0" width={22} />
+                        <Icon icon={m.icon} className={`${selected === m.id ? 'text-[#E93E2B]' : 'text-gray-400'} shrink-0`} width={22} />
                     </button>
                 ))}
             </div>
@@ -35,10 +35,10 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
             {/* Card Details */}
             {selected === 'card' && (
                 <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <h4 className="font-bold text-[#181211] mb-5">Card Details</h4>
+                    <h4 className="font-bold text-[#181211] text-xl  mb-5">Card Details</h4>
                     <div className="flex flex-col gap-4">
                         <div>
-                            <label className="text-xs text-gray-500 font-medium mb-1 block">Cardholder Name</label>
+                            <label className="text-sm text-[#334155] font-semibold mb-1 block">Cardholder Name</label>
                             <input
                                 type="text"
                                 value={cardData.name}
@@ -48,7 +48,7 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                             />
                         </div>
                         <div>
-                            <label className="text-xs text-gray-500 font-medium mb-1 block">Card Number</label>
+                            <label className="text-sm text-[#334155] font-semibold mb-1 block">Card Number</label>
                             <div className="relative">
                                 <input
                                     type="text"
@@ -62,7 +62,7 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="text-xs text-gray-500 font-medium mb-1 block">Expiry Date</label>
+                                <label className="text-sm text-[#334155] font-semibold mb-1 block">Expiry Date</label>
                                 <input
                                     type="text"
                                     value={cardData.expiry}
@@ -72,7 +72,7 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                                 />
                             </div>
                             <div>
-                                <label className="text-xs text-gray-500 font-medium mb-1 block">CVV</label>
+                                <label className="text-sm text-[#334155] font-semibold mb-1 block">CVV</label>
                                 <input
                                     type="text"
                                     value={cardData.cvv}
@@ -91,9 +91,9 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                             </div>
                             <button
                                 onClick={() => onSaveCard(!saveCard)}
-                                className={`w-12 h-6 rounded-full transition-colors relative ${saveCard ? 'bg-[#E93E2B]' : 'bg-gray-200'}`}
+                                className={`w-12 h-5.5 rounded-full transition-colors relative ${saveCard ? 'bg-[#E93E2B]' : 'bg-gray-200'}`}
                             >
-                                <div className={`w-5 h-5 bg-white rounded-full shadow absolute top-0.5 transition-all ${saveCard ? 'left-6' : 'left-0.5'}`} />
+                                <div className={`w-5 h-4.5 bg-white rounded-full shadow absolute top-0.5 transition-all ${saveCard ? 'left-6' : 'left-0.5'}`} />
                             </button>
                         </div>
                     </div>

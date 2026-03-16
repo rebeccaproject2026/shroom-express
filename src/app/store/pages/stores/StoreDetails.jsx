@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
@@ -16,15 +16,161 @@ import StoreCard from '../../components/common/StoreCard';
 import storecard1 from "../../assets/images/storecard1.png";
 import background from "../../assets/images/background1.png";
 import storecard2 from "../../assets/images/storecard2.png";
-import background2 from "../../assets/images/background2.png";
 import storecard3 from "../../assets/images/storecard3.png";
-import background3 from "../../assets/images/background3.png";
 import storecard4 from "../../assets/images/storecard4.png";
 import background4 from "../../assets/images/Logo.png";
 import Select from '../../components/common/Select';
+import Bg3 from '../../assets/images/Bg3.svg';
+import Bg2 from '../../assets/images/Bg2.svg';
+import Bg5 from '../../assets/images/Bg5.svg';
+import Bg6 from '../../assets/images/Bg6.svg';
+import Bg7 from '../../assets/images/Bg7.svg';
+import Bg8 from '../../assets/images/Bg8.svg';
+import Bg9 from '../../assets/images/Bg9.svg';
+import Bg10 from '../../assets/images/Bg10.svg';
+import Str3 from '../../assets/images/str3.png';
+import Str2 from '../../assets/images/str2.png';
+import Str5 from '../../assets/images/str5.png';
+import Str6 from '../../assets/images/str6.png';
+import Str7 from '../../assets/images/str7.png';
+import Str8 from '../../assets/images/str8.png';
+import Str9 from '../../assets/images/str9.png';
+import Str10 from '../../assets/images/str10.png';
+
+
 const StoreDetails = () => {
     const navigate = useNavigate();
+    const { storeId } = useParams();
     const [sortBy, setSortBy] = useState('popularity');
+
+    // All stores data
+    const allStoresData = {
+        1: {
+            name: "micro zoomiez",
+            nameColor: "#ffffff",
+            logo: storedetaillogo,
+            coverImage: storedetailbg,
+            description: "Forest Oasis is a premium magic mushroom wellness store inspired by the purity and mystery of the forest. Our mission is to provide high-quality, carefully sourced psilocybin mushroom products in a safe, informed, and responsible environment.",
+            deliveryTime: "Under 2 Hours",
+            phone: "(416)546-0998",
+            website: "www.microzoomiez.com",
+            rating: "4.8",
+            reviewCount: "124"
+        },
+        2: {
+            name: "The Mushroom",
+            nameColor: "black",
+            logo: Bg2,
+            coverImage: Str2,
+            description: "The Mushroom is your trusted source for premium quality psilocybin products. We pride ourselves on rigorous quality control, discreet shipping, and exceptional customer service. Every product is carefully selected and tested for potency and purity.",
+            deliveryTime: "2 - 5 Hours",
+            phone: "(613)555-0123",
+            website: "www.themushroom.com",
+            rating: "5.0",
+            reviewCount: "89"
+        },
+        3: {
+            name: "Psilovibin",
+            nameColor: "black",
+            logo: Bg3,
+            coverImage: Str3,
+            description: "Psilovibin specializes in rare and exotic mushroom strains sourced from trusted cultivators worldwide. We are committed to providing the highest quality products with complete transparency and customer satisfaction guaranteed.",
+            deliveryTime: "1 - 2 Hours",
+            phone: "(416)555-0456",
+            website: "www.psilovibin.com",
+            rating: "4.1",
+            reviewCount: "210"
+        },
+        4: {
+            name: "Shroom Express",
+            nameColor: "black",
+            logo: background4,
+            coverImage: storecard4,
+            description: "Shroom Express is dedicated to fast, reliable delivery of premium psilocybin products. With our express delivery service and competitive pricing, we make quality mushrooms accessible to everyone. Your satisfaction is our priority.",
+            deliveryTime: "1 - 3 Hours",
+            phone: "(604)555-0789",
+            website: "www.shroomexpress.com",
+            rating: "4.7",
+            reviewCount: "340"
+        },
+        5: {
+            name: "Shroom For Sale",
+            nameColor: "#ffffff",
+            logo: Bg5,
+            coverImage: Str5,
+            description: "Shroom For Sale offers a wide selection of premium dried and fresh mushroom products at competitive prices. Located in the heart of Toronto, we are committed to providing safe, high-quality products with fast same-day delivery.",
+            deliveryTime: "Under 2 Hours",
+            phone: "(416)555-0111",
+            website: "www.shroomforsale.com",
+            rating: "4.8",
+            reviewCount: "124"
+        },
+        6: {
+            name: "Magic Mushroom Delivery",
+            nameColor: "black",
+            logo: Bg6,
+            coverImage: Str6,
+            description: "Magic Mushroom Store is a premier destination for psilocybin enthusiasts. We carry an extensive catalog of strains, edibles, and microdose capsules, all sourced from certified cultivators with a focus on safety and quality.",
+            deliveryTime: "2 - 5 Hours",
+            phone: "(416)555-0222",
+            website: "www.magicmushroomstore.com",
+            rating: "5.0",
+            reviewCount: "89"
+        },
+        7: {
+            name: "Planet 51",
+            nameColor: "white",
+            logo: Bg7,
+            coverImage: Str7,
+            description: "Planet 51 brings you an out-of-this-world selection of magic mushroom products. Our knowledgeable staff curates only the finest strains to ensure every customer has a safe, informed, and transformative experience.",
+            deliveryTime: "1 - 2 Hours",
+            phone: "(416)555-0333",
+            website: "www.planet51shrooms.com",
+            rating: "4.1",
+            reviewCount: "210"
+        },
+        8: {
+            name: "Toronto Magic Store",
+            nameColor: "white",
+            logo: Bg8,
+            coverImage: Str8,
+            description: "Toronto Magic Store is your local go-to for premium psilocybin mushroom products. We offer a carefully curated selection of dried mushrooms, edibles, and microdose options with express delivery across the GTA.",
+            deliveryTime: "1 - 3 Hours",
+            phone: "(416)555-0444",
+            website: "www.torontomagicstore.com",
+            rating: "4.7",
+            reviewCount: "340"
+        },
+        9: {
+            name: "Magic Mushroom Danforth",
+            nameColor: "#000000",
+            logo: Bg9,
+            coverImage: Str9,
+            description: "Magic Mushroom Ottawa serves the Ottawa community with a passion for wellness and natural healing. Our store offers a diverse range of psilocybin products, from classic dried strains to innovative edibles and tinctures.",
+            deliveryTime: "Under 2 Hours",
+            phone: "(613)555-0555",
+            website: "www.magicmushroomottawa.com",
+            rating: "4.8",
+            reviewCount: "124"
+        },
+        10: {
+            name: "Danforth Weed",
+            nameColor: "white",
+            logo: Bg10,
+            coverImage: Str10,
+            description: "Danforth Weed combines a welcoming atmosphere with an exceptional product lineup. We specialize in premium mushroom strains and wellness products, serving the Danforth community with fast, discreet delivery and expert guidance.",
+            deliveryTime: "2 - 5 Hours",
+            phone: "(416)555-0666",
+            website: "www.danforthweed.com",
+            rating: "5.0",
+            reviewCount: "89"
+        }
+    };
+
+    // Get current store data based on storeId
+    const storeData = useMemo(() => {
+        return allStoresData[storeId] || allStoresData[1];
+    }, [storeId]);
 
     // Sort options
     const sortOptions = [
@@ -34,20 +180,6 @@ const StoreDetails = () => {
         { value: 'price-low', label: 'Sort by Price: low to high' },
         { value: 'price-high', label: 'Sort by Price: high to low' }
     ];
-    // Mock store data
-    const storeData = {
-        name: "micro zoomiez",
-        logo: storedetaillogo,
-        coverImage: storedetailbg,
-        description: "Forest Oasis is a premium magic mushroom wellness store inspired by the purity and mystery of the forest. Our mission is to provide high-quality, carefully sourced psilocybin mushroom products in a safe, informed, and responsible environment",
-        deliveryTime: "Under 2 Hours",
-        phone: "(416)546-0998",
-        website: "www.microzoomiez.com",
-        rating: "4.8",
-        reviewCount: "124"
-    };
-
-    // Mock products
     const products = [
         {
             id: 1,
@@ -250,7 +382,7 @@ const StoreDetails = () => {
             avgPrice: "$27.43",
             location: "779 Somerset St W. Centertown, Ottawa, Ontario",
             coverImage: storecard2,
-            logo: background2,
+            logo: Bg2,
             deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
@@ -264,7 +396,7 @@ const StoreDetails = () => {
             avgPrice: "$27.43",
             location: "5.2 km away • Etobicoke",
             coverImage: storecard3,
-            logo: background3,
+            logo: Bg3,
             deliveryBadge: null,
             isPrimary: false,
             avatars: []
@@ -297,8 +429,10 @@ const StoreDetails = () => {
                         <div className="flex items-center gap-6">
 
                             {/* Logo */}
-                            <div className="absolute -bottom-22 left-7 w-[240px] h-[240px] rounded-full bg-white  flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#F8F6F6]
-                        ">
+                            <div
+                                className="absolute -bottom-22 left-7 w-[240px] h-[240px] rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#F8F6F6]"
+                                style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#ffffff' }}
+                            >
                                 <img
                                     src={storeData.logo}
                                     alt={storeData.name}
@@ -308,7 +442,7 @@ const StoreDetails = () => {
 
                             {/* Store Info */}
                             <div className="ml-[260px]">
-                                <h1 className="text-white text-[40px] font-bold leading-tight">
+                                <h1 className="text-[40px] font-bold leading-tight" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
 
@@ -316,12 +450,12 @@ const StoreDetails = () => {
                                     <button onClick={() => navigate('/store')} className="text-[var(--store-primary)] hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
-                                    <span className="text-white">/</span>
+                                    <span  style={{ color: storeData.nameColor }}>/</span>
                                     <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] hover:underline font-medium cursor-pointer">
                                         Stores
                                     </button>
-                                    <span className="text-white">/</span>
-                                    <span className="text-white font-medium">{storeData.name}</span>
+                                    <span style={{ color: storeData.nameColor }}>/</span>
+                                    <span className="font-medium"  style={{ color: storeData.nameColor }}>{storeData.name}</span>
                                 </div>
                             </div>
 
