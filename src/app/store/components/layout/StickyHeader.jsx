@@ -16,7 +16,7 @@ import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
 import deepJourneyImg from "../../assets/images/deepjourney.png";
 
-const StickyHeader = () => {
+const StickyHeader = ({ cartCount = 0, onCartClick }) => {
     const [deliveryMethod, setDeliveryMethod] = useState('delivery');
     const location = useLocation();
     const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
@@ -126,11 +126,11 @@ const StickyHeader = () => {
 
                     <div className="w-px h-5 bg-[#181211] hidden sm:block"></div>
 
-                    <button className="flex items-center gap-2 text-[#181211] hover:text-[var(--store-primary)] transition-colors relative">
+                    <button onClick={onCartClick} className="flex items-center gap-2 text-[#181211] hover:text-[var(--store-primary)] transition-colors relative">
                         <div className="relative">
                             <Icon icon="mdi:cart-outline" width={26} height={26} strokeWidth={2} />
                             <span className="absolute -top-2 -right-2 bg-[var(--store-primary)] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
-                                2
+                                {cartCount}
                             </span>
                         </div>
                         <span className="text-sm font-semibold   hidden sm:inline">My Cart</span>
