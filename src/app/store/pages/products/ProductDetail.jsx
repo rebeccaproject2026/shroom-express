@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useParams } from "react-router-dom";
 
-import product1 from "../../assets/images/product1.png";
-import microDosingImg from "../../assets/images/microdosing.png";
-import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
-import highPotencyImg from "../../assets/images/highpotency.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
-import relaxChillImg from "../../assets/images/relaxchill.png";
-import visualExperienceImg from "../../assets/images/visualexperience.png";
 import storecard1 from "../../assets/images/storecard1.png";
 import background from "../../assets/images/background1.png";
 import storecard2 from "../../assets/images/storecard2.png";
@@ -18,51 +11,27 @@ import background3 from "../../assets/images/background3.png";
 import ProdSideCard from "../../components/common/ProdSideCard";
 import SimilarProducts from "../../components/products/SimilarProducts";
 import FAQ from "../../components/products/FAQ";
+import { getProductById, allProducts } from "../../data/productsData";
 
 const ProductDetail = () => {
     const { productId } = useParams();
-    const [quantity, setQuantity] = useState(4);
-    const [selectedWeight, setSelectedWeight] = useState("3.5g");
+    const [quantity, setQuantity] = useState(1);
+    const [selectedWeight, setSelectedWeight] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
     const [activeTab, setActiveTab] = useState("description");
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [reviewRating, setReviewRating] = useState(0);
     const [reviewText, setReviewText] = useState("");
 
-    // Mock product data
+    // Look up product by ID from shared data
+    const productData = getProductById(productId) || allProducts[0];
     const product = {
-        id: productId,
-        name: "Albino Choda",
-        rating: 4.0,
-        reviewCount: 120,
-        price: 50.0,
-        vendor: "Aether Mushroom Labs",
-        location: "5.6 km away • Toronto Central",
-        effects: [
-            { image: microDosingImg, name: "Micro dosing" },
-            { image: beginnerFriendlyImg, name: "Beginner Friendly" },
-            { image: highPotencyImg, name: "High Potency" },
-        ],
-        images: [product1, product1, product1],
-        description: [
-            {
-                title: "Blue Meanies Magic Mushrooms:",
-                text: "Known for their distinctive deep blue , stain upon handling.",
-            },
-            {
-                title: "Easily Bruised:",
-                text: "High concentrations of psilocybin cause rapid bruising, altering the mushrooms' color.",
-            },
-            {
-                title: "Potency:",
-                text: "Average",
-                icon: <Icon icon="noto:mushroom" width="16" height="16" />,
-            },
-        ],
-        weights: ["3.5g", "7g", "14g", "28g"],
-        sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        ...productData,
+        weights: productData.weights || ["3.5g", "7g", "14g", "28g"],
     };
+
+    // Set default selected weight from product
+    const activeWeight = selectedWeight || product.weights[0];
 
     // Mock stores
     const stores = [
@@ -76,20 +45,9 @@ const ProductDetail = () => {
             location: "Delivery",
             coverImage: storecard1,
             logo: background,
-            deliveryBadge: {
-                text: "Same-day Delivery",
-                color: "text-[#181211]",
-                icon: "carbon:delivery",
-            },
+            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
-            avatars: [
-                beginnerFriendlyImg,
-                highPotencyImg,
-                microDosingImg,
-                visualExperienceImg,
-                creativeBoostImg,
-                relaxChillImg,
-            ],
+            avatars: [],
         },
         {
             id: 2,
@@ -101,20 +59,9 @@ const ProductDetail = () => {
             location: "Delivery",
             coverImage: storecard2,
             logo: background2,
-            deliveryBadge: {
-                text: "Express Delivery",
-                color: "text-[#7F7F7F]",
-                icon: "carbon:delivery",
-            },
+            deliveryBadge: { text: "Express Delivery", color: "text-[#7F7F7F]", icon: "carbon:delivery" },
             isPrimary: false,
-            avatars: [
-                beginnerFriendlyImg,
-                highPotencyImg,
-                microDosingImg,
-                visualExperienceImg,
-                creativeBoostImg,
-                relaxChillImg,
-            ],
+            avatars: [],
         },
         {
             id: 3,
@@ -126,11 +73,7 @@ const ProductDetail = () => {
             location: "Delivery",
             coverImage: storecard3,
             logo: background3,
-            deliveryBadge: {
-                text: "Same-day Delivery",
-                color: "text-[#181211]",
-                icon: "carbon:delivery",
-            },
+            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [],
         },
@@ -294,7 +237,7 @@ const ProductDetail = () => {
                                         <button
                                             key={weight}
                                             onClick={() => setSelectedWeight(weight)}
-                                            className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all ${selectedWeight === weight
+                                            className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all ${activeWeight === weight
                                                 ? "bg-(--store-primary) text-white"
                                                 : "bg-white border border-gray-300 text-[#181211] hover:border-(--store-primary)"
                                                 }`}
