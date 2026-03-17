@@ -76,14 +76,14 @@ const Home = () => {
                         {/* Left Side */}
                         <div className="md:w-[55%] flex flex-col items-start z-10 w-full mb-10 md:mb-0 px-10">
                             {/* Badge */}
-                            <div className="bg-[#E93E2B]/10 text-[var(--store-primary)] text-[10px] md:text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-6">
+                            <div className="bg-[#E93E2B]/10 text-(--store-primary) text-[10px] md:text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-6">
                                 Premium Collection 2026
                             </div>
 
                             {/* Heading */}
                             <h1 className="text-[#181211] font-extrabold text-6xl md:text-6xl lg:text-6xl  tracking-tight">
                                 Elevate Your <br />
-                                <span className="text-[var(--store-primary)] inline-block mt-2">Wellness Journey</span>
+                                <span className="text-(--store-primary) inline-block mt-2">Wellness Journey</span>
                             </h1>
 
                             {/* Subtitle */}
@@ -94,21 +94,21 @@ const Home = () => {
 
                         {/* Right Side Container */}
                         <div className="md:w-[45%] h-[30%] flex justify-center items-center w-full relative z-10 ">
-                            <div className="relative w-full max-w-[440px] aspect-square flex items-center justify-center">
+                            <div className="relative w-full max-w-110 aspect-square flex items-center justify-center">
                                 <img
                                     src={home3}
                                     alt="Hero background right"
-                                    className="absolute w-[85%] h-auto rounded-[32px] rotate-[3deg] right-9 bottom-8 z-0 object-cover"
+                                    className="absolute w-[85%] h-auto rounded-4xl rotate-3 right-9 bottom-8 z-0 object-cover"
                                 />
                                 <img
                                     src={home2}
                                     alt="Hero background left"
-                                    className="absolute w-[85%] h-auto rounded-[32px] -rotate-[3deg] left-9 top-8 z-10 object-cover"
+                                    className="absolute w-[85%] h-auto rounded-4xl -rotate-3 left-9 top-8 z-10 object-cover"
                                 />
                                 <img
                                     src={home1}
                                     alt="Premium Mushroom Coffee"
-                                    className="w-[85%] h-auto rounded-[32px] relative z-20 object-cover"
+                                    className="w-[85%] h-auto rounded-4xl relative z-20 object-cover"
                                     id="hero-coffee-image"
                                     style={{ filter: "drop-shadow(0px 0px 30px 0px #000000)" }}
                                 />
@@ -132,10 +132,10 @@ const Home = () => {
 
                         {/* Carousel Controls */}
                         <div className="flex items-center gap-3">
-                            <button onClick={slideLeft} className="w-10 h-10 rounded-full border border-[var(--store-primary)] flex items-center cursor-pointer justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-colors bg-white shadow-sm">
+                            <button onClick={slideLeft} className="w-10 h-10 rounded-full border border-(--store-primary) flex items-center cursor-pointer justify-center text-(--store-primary) hover:bg-(--store-primary) hover:text-white transition-colors bg-white shadow-sm">
                                 <Icon icon="ep:arrow-left-bold" width={14} />
                             </button>
-                            <button onClick={slideRight} className="w-10 h-10 rounded-full bg-[var(--store-primary)] text-white flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity shadow-sm">
+                            <button onClick={slideRight} className="w-10 h-10 rounded-full bg-(--store-primary) text-white flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity shadow-sm">
                                 <Icon icon="ep:arrow-right-bold" width={14} />
                             </button>
                         </div>
@@ -233,7 +233,7 @@ const Home = () => {
                                 ]
                             },
                         ].map((prod) => (
-                            <div key={prod.id} className="min-w-[270px] w-full max-w-[341px] shrink-0">
+                            <div key={prod.id} className="min-w-67.5 w-full max-w-85.25 shrink-0">
                                 <ProductCard product={prod} />
                             </div>
                         ))}
@@ -329,7 +329,7 @@ const Home = () => {
                                     visualExperienceImg, creativeBoostImg, relaxChillImg,]
                             }
                         ].map(store => (
-                            <div key={store.id} className="min-w-[310px]  w-full max-w-[341px] shrink-0">
+                            <div key={store.id} className="min-w-77.5  w-full max-w-85.25 shrink-0">
                                 <StoreCard store={store} />
                             </div>
                         ))}
@@ -429,44 +429,44 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 text-center">
                         {/* Feature 1 */}
                         <div className="flex flex-col items-center">
-                            <div className="w-[56px] h-[56px] bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="hugeicons:wellness" className="text-[#E93E2B] *:stroke-[1px]" width={28} height={28} />
                             </div>
                             <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">First-Time Customer?</h3>
-                            <p className="text-[#886663] text-[16px] max-w-[260px] mx-auto leading-relaxed">
+                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
                                 Enjoy 20% off your first order, your wellness journey starts here.
                             </p>
                         </div>
 
                         {/* Feature 2 */}
                         <div className="flex flex-col items-center">
-                            <div className="w-[56px] h-[56px] bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="streamline-plump:shipping-box-1" className="text-[#E93E2B] *:stroke-[2px]" width={28} height={28} />
                             </div>
                             <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Bundle & Save</h3>
-                            <p className="text-[#886663] text-[16px] max-w-[290px] mx-auto leading-relaxed">
+                            <p className="text-[#886663] text-[16px] max-w-72.5 mx-auto leading-relaxed">
                                 Curated mushroom & cannabis combos at up to 30% off.
                             </p>
                         </div>
 
                         {/* Feature 3 */}
                         <div className="flex flex-col items-center">
-                            <div className="w-[56px] h-[56px] bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="la:shipping-fast" className="text-[#E93E2B] *:stroke-[0.5px]" width={28} height={28} />
                             </div>
                             <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Free Shipping Canada-Wide</h3>
-                            <p className="text-[#886663] text-[16px] max-w-[260px] mx-auto leading-relaxed">
+                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
                                 On all orders over $150. Delivered discreetly to your door.
                             </p>
                         </div>
 
                         {/* Feature 4 */}
                         <div className="flex flex-col items-center">
-                            <div className="w-[56px] h-[56px] bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="stash:data-date-light" className="text-[#E93E2B] *:stroke-[1px]" width={28} height={28} />
                             </div>
                             <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Daily Dose Discount</h3>
-                            <p className="text-[#886663] text-[16px] max-w-[260px] mx-auto leading-relaxed">
+                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
                                 Subscribe & save 25% on your monthly microdosing essentials.
                             </p>
                         </div>
@@ -493,7 +493,7 @@ const Home = () => {
                                 Elementum vulputate platea pellentesque velit nisi id etiam donec felis viverra vel id sem nullus pellentesque mattis tempus ante adipiscing pellentesque ut eu interdum sit
                             </p>
 
-                            <div className="w-full h-[320px] rounded-2xl overflow-hidden mb-6">
+                            <div className="w-full h-80 rounded-2xl overflow-hidden mb-6">
                                 <img
                                     src={news1}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -504,7 +504,7 @@ const Home = () => {
                             {/* Author Row */}
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <img src={profileImg} className="w-[40px] h-[40px] rounded-full object-cover shadow-sm" alt="Author Sophia Martinez" />
+                                    <img src={profileImg} className="w-10 h-10 rounded-full object-cover shadow-sm" alt="Author Sophia Martinez" />
                                     <span className="text-[#0F3540] font-bold text-base">Sophia Martinez</span>
                                 </div>
                                 <span className="text-[#777777] text-base font-semibold">July 4, 2025</span>
@@ -516,7 +516,7 @@ const Home = () => {
 
                             {/* Standard Block 1 */}
                             <div className="bg-white rounded-2xl p-2 border border-[#E8E8E8] shadow-sm flex items-start gap-4 cursor-pointer group hover:shadow-md transition-all">
-                                <div className="w-[100px] h-[100px] shrink-0 rounded-xl overflow-hidden">
+                                <div className="w-25 h-25 shrink-0 rounded-xl overflow-hidden">
                                     <img src={news2} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="News thumbnail" />
                                 </div>
                                 <div className="flex flex-col h-full py-1">
@@ -529,7 +529,7 @@ const Home = () => {
 
                             {/* Standard Block 2 */}
                             <div className="bg-white rounded-2xl p-2 border border-[#E8E8E8] shadow-sm flex items-start gap-4 cursor-pointer group hover:shadow-md transition-all">
-                                <div className="w-[100px] h-[100px]  shrink-0 rounded-xl overflow-hidden">
+                                <div className="w-25 h-25  shrink-0 rounded-xl overflow-hidden">
                                     <img src={news3} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="News thumbnail" />
                                 </div>
                                 <div className="flex flex-col h-full py-1">
@@ -542,7 +542,7 @@ const Home = () => {
 
                             {/* Standard Block 3 (Landscape Layout variation) */}
                             <div className="bg-white rounded-2xl p-2 border border-[#E8E8E8] shadow-sm flex flex-col cursor-pointer group hover:shadow-md transition-all">
-                                <div className="w-full h-[162px] rounded-xl overflow-hidden mb-4">
+                                <div className="w-full h-40.5 rounded-xl overflow-hidden mb-4">
                                     <img src={news2} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="News thumbnail" />
                                 </div>
                                 <div className="flex items-end justify-between">
