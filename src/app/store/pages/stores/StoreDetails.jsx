@@ -243,7 +243,7 @@ const StoreDetails = () => {
             {/* Store Profile Header Section */}
             <div className="px-10 pt-11">
                 {/* Banner with rounded corners */}
-                <div className="relative rounded-[20px] overflow-visible h-[280px] bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
+                <div className="relative rounded-[20px] overflow-visible h-70 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}
                     <div className="relative h-full flex items-end justify-between px-10 pb-4">
                         {/* Left side - Store Info (with space for logo) */}
@@ -252,7 +252,7 @@ const StoreDetails = () => {
 
                             {/* Logo */}
                             <div
-                                className="absolute -bottom-22 left-7 w-[240px] h-[240px] rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#F8F6F6]"
+                                className="absolute -bottom-22 left-7 w-60 h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#F8F6F6]"
                                 style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#ffffff' }}
                             >
                                 <img
@@ -263,17 +263,17 @@ const StoreDetails = () => {
                             </div>
 
                             {/* Store Info */}
-                            <div className="ml-[260px]">
+                            <div className="ml-65">
                                 <h1 className="text-[40px] font-bold leading-tight" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
 
                                 <div className="flex items-center gap-1 text-lg">
-                                    <button onClick={() => navigate('/store')} className="text-[var(--store-primary)] hover:underline font-semibold cursor-pointer">
+                                    <button onClick={() => navigate('/store')} className="text-(--store-primary) hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
                                     <span  style={{ color: storeData.nameColor }}>/</span>
-                                    <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] hover:underline font-medium cursor-pointer">
+                                    <button onClick={() => navigate('/store/storeslists')} className="text-(--store-primary) hover:underline font-medium cursor-pointer">
                                         Stores
                                     </button>
                                     <span style={{ color: storeData.nameColor }}>/</span>
@@ -306,7 +306,7 @@ const StoreDetails = () => {
                 </div>
                 {/* Store Description - Below banner */}
                 <div className="flex justify-end px-30 w-[108%]">
-                    <div className="w-[250px]"></div>
+                    <div className="w-62.5"></div>
                     <p className="mt-5 text-[#777777] font-normal text-sm">
                         {storeData.description}
                     </p>
@@ -319,7 +319,7 @@ const StoreDetails = () => {
                 <div className="flex items-center gap-3 mb-4.5" >
 
                     {/* Filter Icon */}
-                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-[var(--store-primary)] text-white">
+                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white">
 
                         <Icon icon="mage:filter" width={22} height={22} />
 
@@ -331,15 +331,15 @@ const StoreDetails = () => {
                     </div>
 
                     {/* Pills */}
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
                         Category
                     </button>
 
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
                         Delivery
                     </button>
 
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
                         Best Seller
                     </button>
                     <div className=" w-[22%] ml-auto">

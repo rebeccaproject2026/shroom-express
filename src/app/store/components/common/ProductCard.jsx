@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
             className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}
         >
             {/* Image Container */}
-            <div className="relative w-full h-[240px] flex items-center justify-center overflow-visible shrink-0 mb-3">
+            <div className="relative w-full h-60 flex items-center justify-center overflow-visible shrink-0 mb-3">
                 {/* Badge */}
                 {badge && (
                     <span
@@ -60,7 +60,7 @@ const ProductCard = ({ product }) => {
                 {/* Wishlist Button */}
                 <button
                     onClick={(e) => e.stopPropagation()}
-                    className={`absolute top-2.5 right-1 w-[32px] h-[32px] rounded-full flex items-center justify-center shadow-sm transition-colors z-20 border ${isWishlisted
+                    className={`absolute top-2.5 right-1 w-8 h-8 rounded-full flex items-center justify-center shadow-sm transition-colors z-20 border ${isWishlisted
                         ? 'bg-[#FDE047] text-[#181211] border-[#FDE047]'
                         : 'bg-white text-[#181211] border-[#E8E8E8] hover:text-[#EA4031]'
                         }`}
@@ -71,7 +71,7 @@ const ProductCard = ({ product }) => {
                 {/* Product Image */}
                 <img
                     src={image || product1}
-                    className="w-[100%] h-[100%] object-contain relative z-10 transition-transform duration-300"
+                    className="w-full h-full object-contain relative z-10 transition-transform duration-300"
                     alt={title}
                 />
 
@@ -91,7 +91,7 @@ const ProductCard = ({ product }) => {
                     {activeEffects.length > 0 && (
                         <div className="flex items-center -space-x-2 justify-end z-20">
                             {activeEffects.map((effect, idx) => (
-                                <div key={idx} className={`relative flex items-center justify-center group/tooltip cursor-pointer shrink-0 z-[${10 - idx}] hover:z-30 ${effect.hasBorder !== false ? 'w-[34px] h-[34px] bg-white rounded-full shadow-sm border border-[#E8E8E8]' : 'w-[42px] h-[42px]'}`}>
+                                <div key={idx} className={`relative flex items-center justify-center group/tooltip cursor-pointer shrink-0 z-[${10 - idx}] hover:z-30 ${effect.hasBorder !== false ? 'w-8.5 h-8.5 bg-white rounded-full shadow-sm border border-[#E8E8E8]' : 'w-10.5 h-10.5'}`}>
                                     <img
                                         src={effect.image}
                                         className={effect.hasBorder !== false ? "w-[85%] h-[85%] rounded-full object-cover" : "w-full h-full object-contain drop-shadow-sm"}
@@ -119,7 +119,7 @@ const ProductCard = ({ product }) => {
                         {weights.map((w, idx) => (
                             <span
                                 key={idx}
-                                className="px-3 py-1 border border-[#CCCCCC] rounded-sm text-sm font-medium text-[#181211] bg-white text-center min-w-[40px]"
+                                className="px-3 py-1 border border-[#CCCCCC] rounded-sm text-sm font-medium text-[#181211] bg-white text-center min-w-10"
                             >
                                 {w}
                             </span>
@@ -137,7 +137,7 @@ const ProductCard = ({ product }) => {
                         {/* Qty Selector */}
                         <div 
                             onClick={(e) => e.stopPropagation()}
-                            className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-[30px] shadow-sm"
+                            className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-7.5 shadow-sm"
                         >
                             <button onClick={handleDecrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
                                 <Icon icon="fa6-solid:minus" width={11} />
@@ -150,8 +150,11 @@ const ProductCard = ({ product }) => {
 
                         {/* Add to Cart */}
                         <button 
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-[30px] h-[30px] bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                navigate('/store/cart');
+                            }}
+                            className="w-7.5 h-7.5 bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0"
                         >
                             <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />
                         </button>

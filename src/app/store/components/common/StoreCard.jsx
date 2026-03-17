@@ -26,10 +26,10 @@ const StoreCard = ({ store }) => {
     };
 
     return (
-        <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full min-h-[340px]">
+        <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full min-h-85">
 
             {/* Cover Image Area */}
-            <div className="relative w-full h-[160px] mb-8 shrink-0">
+            <div className="relative w-full h-40 mb-8 shrink-0">
                 <img src={coverImage} className="w-full h-full rounded-t-sm object-cover" alt={`${name} cover`} />
                 {/* Delivery Badge */}
                 {deliveryBadge && (
@@ -63,7 +63,7 @@ const StoreCard = ({ store }) => {
                 {/* Headers */}
                 <div className="flex justify-between items-start mb-3">
                     <div className="flex flex-col pr-2">
-                        <h3 className="font-bold text-[#181211] text-xl leading-tight mb-1 truncate max-w-[150px]">{name}</h3>
+                        <h3 className="font-bold text-[#181211] text-xl leading-tight mb-1 truncate max-w-37.5">{name}</h3>
                         <div className="flex items-center gap-1.5">
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (
@@ -94,7 +94,7 @@ const StoreCard = ({ store }) => {
                     <button
                         onClick={handleViewStore}
                         className={`w-full py-3 cursor-pointer rounded-md font-semibold text-base transition-colors flex items-center justify-center ${isPrimary
-                            ? 'bg-[var(--store-primary)] text-white hover:bg-opacity-90'
+                            ? 'bg-white text-[#181211] border-2 hover:border-[#E93E2B] hover:text-[#E93E2B]'
                             : 'bg-white text-[#181211] border-2 border-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B]'
                             }`}
                     >

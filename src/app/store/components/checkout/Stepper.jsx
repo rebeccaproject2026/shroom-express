@@ -26,7 +26,7 @@ const Stepper = ({ currentStep }) => {
                         </span>
                     </div>
                     {idx < steps.length - 1 && (
-                        <div className={`h-[4px] w-39 mx-4 mb-5 rounded-md ${currentStep > step.id ? 'bg-[#E93E2B]' :
+                        <div className={`h-1 w-39 mx-4 mb-5 rounded-md ${currentStep > step.id ? 'bg-[#E93E2B]' :
                             'bg-[#E8E8E8]'}`} />
                     )}
                 </React.Fragment>

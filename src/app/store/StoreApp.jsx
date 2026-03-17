@@ -10,7 +10,12 @@ import ProductDetail from './pages/products/ProductDetail';
 import CheckoutPage from './pages/checkout/CheckoutPage';
 import OrderCompletePage from './pages/checkout/OrderCompletePage';
 import CartPage from './pages/checkout/CartPage';
-
+import TrackOrderPage from './pages/checkout/TrackOrderPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import CheckEmailPage from './pages/auth/CheckEmailPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -31,6 +36,12 @@ function StoreApp() {
                 <Route path="checkout" element={<CheckoutPage />} />
                 <Route path="order-complete" element={<OrderCompletePage />} />
                 <Route path="cart" element={<CartPage />} />
+                <Route path="track-order" element={<TrackOrderPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="check-email" element={<CheckEmailPage />} />
+                <Route path="reset-password" element={<ResetPasswordPage />} />
             </Route>
         </Routes>
     );

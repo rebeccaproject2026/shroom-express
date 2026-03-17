@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Icon } from '@iconify/react';
 import Stepper from '../../components/checkout/Stepper';
 import DeliveryMethod from '../../components/checkout/DeliveryMethod';
 import PaymentMethod from '../../components/checkout/PaymentMethod';
@@ -39,7 +38,7 @@ const CheckoutPage = () => {
         <div className="w-full min-h-screen bg-[#FAF8F5] px-10 ">
             <Stepper currentStep={2} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-[1200px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-300 mx-auto">
                 {/* Left - Form */}
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {/* Delivery Method */}
@@ -117,7 +116,7 @@ const CheckoutPage = () => {
 
                 {/* Right - Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="sticky top-[270px]">
+                    <div className="sticky top-67.5">
                         <OrderSummary
                             items={defaultItems}
                             delivery={delivery}

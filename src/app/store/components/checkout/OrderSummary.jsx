@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 
-const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Checkout →', showPromo = true, showSavings = false }) => {
+const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Checkout →', showPromo = true, showSavings = false, showBadges = true }) => {
     const [promo, setPromo] = useState('');
     const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
     const tax = +(subtotal * 0.08).toFixed(2);
@@ -72,21 +72,25 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
                 </div>
             </div>
 
-            <button
-                onClick={onProceed}
-                className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3 rounded-full transition-colors text-base"
-            >
-                {btnLabel}
-            </button>
+            {btnLabel && (
+                <button
+                    onClick={onProceed}
+                    className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3 rounded-full transition-colors text-base"
+                >
+                    {btnLabel}
+                </button>
+            )}
 
-            <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#94A3B8]">
-                <Icon icon="mdi:lock-outline" width={16} />
-                <span>SECURE SSL ENCRYPTED CHECKOUT</span>
-            </div>
-
+            {btnLabel && (
+                <div className="flex items-center justify-center gap-2 text-xs font-medium text-[#94A3B8]">
+                    <Icon icon="mdi:lock-outline" width={16} />
+                    <span>SECURE SSL ENCRYPTED CHECKOUT</span>
+                </div>
+            )}
            
         </div>
          {/* Trust badges */}
+           {showBadges && (
            <div className="flex items-center justify-around pt-6">
                                        {[
                                            { icon: 'mdi:shield-check-outline', label: '100% Organic' },
@@ -99,6 +103,7 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
                                            </div>
                                        ))}
                                    </div>
+           )}
             </>
     );
 };

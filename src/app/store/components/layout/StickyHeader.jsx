@@ -55,7 +55,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick }) => {
                     <span>Become Driver</span>
                 </Link>
                 <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
-                <Link to="/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                <Link to="/store/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
                     <Icon icon="hugeicons:user-02" width={17} height={17} />
                     <span>Login / Register</span>
                 </Link>

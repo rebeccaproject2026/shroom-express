@@ -42,7 +42,7 @@ const OrderCompletePage = () => {
     <div className="w-full min-h-screen bg-[#F8F6F6] px-10 py-8">
       <Stepper currentStep={3} />
 
-      <div className="max-w-[700px] mx-auto flex flex-col gap-6">
+      <div className="max-w-175 mx-auto flex flex-col gap-6">
         {/* Success Icon + Title */}
         <div className="flex flex-col items-center text-center gap-3">
           <div className="w-18 h-18 rounded-full bg-[#E93E2B1A] flex items-center justify-center">
