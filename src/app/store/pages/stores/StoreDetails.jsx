@@ -319,7 +319,7 @@ const StoreDetails = () => {
                 <div className="flex items-center gap-3 mb-4.5" >
 
                     {/* Filter Icon */}
-                    <div className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white">
+                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-[var(--store-primary)] text-white">
 
                         <Icon icon="mage:filter" width={22} height={22} />
 
