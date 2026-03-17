@@ -40,7 +40,7 @@ const CartPage = () => {
             <Stepper currentStep={1} />
 
             {/* Title */}
-            <div className="mb-6 max-w-[1200px]">
+            <div className="mb-6 max-w-300">
                 <h1 className="text-4xl font-extrabold text-[#0F172A]">My Cart</h1>
                 <p className="text-base text-[#64748B] mt-2">Review your premium selection before final checkout.</p>
             </div>

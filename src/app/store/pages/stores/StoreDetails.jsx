@@ -7,8 +7,6 @@ import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
-import focusClarityImg from "../../assets/images/focusclarity.png";
-import product1 from "../../assets/images/product1.png";
 import { allProducts } from '../../data/productsData';
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
