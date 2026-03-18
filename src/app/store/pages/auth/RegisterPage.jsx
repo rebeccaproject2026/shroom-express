@@ -20,13 +20,13 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F9F6F4] flex items-center justify-center p-6">
-      <div className="grid grid-cols-2 w-full max-w-[1344px] rounded-2xl overflow-hidden shadow-xl">
+      <div className="grid grid-cols-2 w-full max-w-336 rounded-2xl overflow-hidden shadow-xl">
         {/* Left panel — form */}
         <div className=" bg-white p-12 flex flex-col justify-center">
           <h1 className="text-[26px] font-bold text-[#181211] mb-3">
             Create Account
           </h1>
-          <p className="text-sm text-[#181211] mb-8 max-w-[400px] tracking-wide">
+          <p className="text-sm text-[#181211] mb-8 max-w-100 tracking-wide">
             Join our exclusive community for curated cannabis and mushroom
             products.
           </p>
@@ -190,7 +190,7 @@ const RegisterPage = () => {
 
         {/* Right panel — dark olive with bottle image */}
         <div
-          className="relative flex flex-col justify-center items-center pb-12 px-12 min-h-[630px]"
+          className="relative flex flex-col justify-center items-center pb-12 px-12 min-h-157.5"
           style={{
             backgroundImage: `url(${RegisterBg})`,
             backgroundSize: "cover",
@@ -224,7 +224,7 @@ const RegisterPage = () => {
                   Members
                 </p>
               </div>
-              <div className="w-[2px] h-8 bg-white/20"></div>
+              <div className="w-0.5 h-8 bg-white/20"></div>
               <div>
                 <p className="text-white font-bold text-2xl">4.9/5</p>
                 <p className="text-white/60 text-xs uppercase tracking-wide">

@@ -16,6 +16,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import CheckEmailPage from './pages/auth/CheckEmailPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
+import MyAccountPage from './pages/auth/MyAccountPage';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -42,6 +43,7 @@ function StoreApp() {
                 <Route path="forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="check-email" element={<CheckEmailPage />} />
                 <Route path="reset-password" element={<ResetPasswordPage />} />
+                <Route path="myaccount" element={<MyAccountPage />} />
             </Route>
         </Routes>
     );

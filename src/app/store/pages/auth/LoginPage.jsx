@@ -12,7 +12,7 @@ const LoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/store');
+        navigate('/store/myaccount');
     };
 
     return (
