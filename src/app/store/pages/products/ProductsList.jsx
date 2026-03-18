@@ -11,7 +11,18 @@ import creativeBoostImg from "../../assets/images/creative boost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
-import product1 from "../../assets/images/product1.png";
+import albinoChodaImg from "../../assets/images/Albinochoda.png";
+import Aztecgod from "../../assets/images/Aztecgod.png";
+import albinohillbilyImg from "../../assets/images/Albinohillbilly.png";
+import albinopenisenvyImg from "../../assets/images/Albinopenisenvy.png";
+import AmazonianImg from "../../assets/images/Amazonian.png";
+import Jackfrost from "../../assets/images/Jackfrost.png";
+import Bluemeanies from "../../assets/images/Bluemeanies.png";
+import Penisenvy from "../../assets/images/Penisenvy.png";
+import Shakti from "../../assets/images/Shakti.png";
+import Tidalwave from "../../assets/images/Tidalwave.png";
+import Trinity from "../../assets/images/Trinity.png";
+import Truealbinoteacher from "../../assets/images/Truealbinoteacher.png";
 import storecard1 from "../../assets/images/storecard1.png";
 import background from "../../assets/images/background1.png";
 import storecard2 from "../../assets/images/storecard2.png";
@@ -49,7 +60,7 @@ const ProductsList = () => {
             id: 1,
             badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" },
             isWishlisted: false,
-            image: product1,
+            image: albinoChodaImg,
             title: "Albino Choda",
             vendor: "Green Valley Organics",
             rating: '4.9',
@@ -61,7 +72,22 @@ const ProductsList = () => {
             id: 2,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
             isWishlisted: true,
-            image: product1,
+            image: albinohillbilyImg,
+            title: "Albino Hillbilly",
+            vendor: "Aether Mushroom Labs",
+            rating: '5.0',
+            weights: ['3g', '10g'],
+            price: 50.00,
+            effects: [
+                { image: highPotencyImg, name: "High Potency" },
+                { image: visualExperienceImg, name: "Visual Experience" }
+            ]
+        },
+        {
+            id: 3,
+            badge: { text: "NEW", colorClass: "bg-[#059669]" },
+            isWishlisted: true,
+            image: albinopenisenvyImg,
             title: "Albino Penis Envy",
             vendor: "Elevated Solstice",
             rating: '5.0',
@@ -73,10 +99,10 @@ const ProductsList = () => {
             ]
         },
         {
-            id: 3,
+            id: 4,
             badge: null,
             isWishlisted: false,
-            image: product1,
+            image: Aztecgod,
             title: "Aztec God",
             vendor: "Green Valley Organics",
             rating: '4.7',
@@ -87,12 +113,25 @@ const ProductsList = () => {
                 { image: relaxChillImg, name: "Relax & Chill" }
             ]
         },
+
         {
-            id: 4,
+            id: 5,
             badge: null,
             isWishlisted: false,
-            image: product1,
-            title: "Golden Teacher",
+            image: Bluemeanies,
+            title: "Blue Meanies",
+            vendor: "Green Valley Organics",
+            rating: '4.9',
+            weights: ['3g', '10g'],
+            price: 50.00,
+            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+        },
+        {
+            id: 6,
+            badge: null,
+            isWishlisted: false,
+            image: Penisenvy,
+            title: "Penis Envy",
             vendor: "Aether Mushroom Labs",
             rating: '4.8',
             weights: ['3g', '10g'],
@@ -103,51 +142,25 @@ const ProductsList = () => {
             ]
         },
         {
-            id: 5,
-            badge: null,
-            isWishlisted: false,
-            image: product1,
-            title: "Blue Meanies",
-            vendor: "Green Valley Organics",
-            rating: '4.9',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
-        },
-        {
-            id: 6,
+            id: 7,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
             isWishlisted: true,
-            image: product1,
-            title: "Melmac (Dried)",
+            image: Shakti,
+            title: "Shakti",
             vendor: "Elevated Solstice",
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 55.00,
             effects: [{ image: highPotencyImg, name: "High Potency" }]
         },
-        {
-            id: 7,
-            badge: null,
-            isWishlisted: false,
-            image: product1,
-            title: "Chocolate Bar Golden",
-            vendor: "Green Valley Organics",
-            rating: '4.7',
-            weights: ['3g', '10g'],
-            price: 45.00,
-            effects: [
-                { image: focusClarityImg, name: "Focus & Clarity" },
-                { image: relaxChillImg, name: "Relax & Chill" }
-            ]
-        },
+
         {
             id: 8,
             badge: null,
             isWishlisted: false,
-            image: product1,
+            image: Tidalwave,
             title: "Tidal Wave",
-            vendor: "Aether Mushroom Labs",
+            vendor: "Green Valley Organics",
             rating: '4.8',
             weights: ['3g', '10g'],
             price: 50.00,
@@ -160,14 +173,53 @@ const ProductsList = () => {
             id: 9,
             badge: null,
             isWishlisted: false,
-            image: product1,
-            title: "Shakti",
+            image: Trinity,
+            title: "Trinity",
             vendor: "Green Valley Organics",
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 50.00,
             effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
-        }
+        },
+        {
+            id: 10,
+            badge: null,
+            isWishlisted: false,
+            image: Truealbinoteacher,
+            title: "True Albino Teacher",
+            vendor: "Aether Mushroom Labs",
+            rating: '4.7',
+            weights: ['3g', '10g'],
+            price: 45.00,
+            effects: [
+                { image: focusClarityImg, name: "Focus & Clarity" },
+                { image: relaxChillImg, name: "Relax & Chill" }
+            ]
+        },
+        {
+            id: 11,
+            badge: { text: "NEW", colorClass: "bg-[#059669]" },
+            isWishlisted: true,
+            image: AmazonianImg,
+            title: "Amazonian",
+            vendor: "Elevated Solstice",
+            rating: '5.0',
+            weights: ['3g', '10g'],
+            price: 50.00,
+            effects: [{ image: highPotencyImg, name: "High Potency" }]
+        },
+        {
+            id: 12,
+            badge: null,
+            isWishlisted: false,
+            image: Jackfrost,
+            title: "Jack Frost",
+            vendor: "Green Valley Organics",
+            rating: '5.0',
+            weights: ['3g', '10g'],
+            price: 45.00,
+            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+        },
     ];
 
     // Mock stores

@@ -1,36 +1,38 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 import ProductCard from '../common/ProductCard';
-import storecard1 from "../../assets/images/storecard1.png";
-import product1 from "../../assets/images/product1.png";
-
-
-
+import microDosingImg from "../../assets/images/microdosing.png";
+import relaxChillImg from "../../assets/images/relaxchill.png";
+import highPotencyImg from "../../assets/images/highpotency.png";
+import Trinity from "../../assets/images/Trinity.png";
+import Truealbinoteacher from "../../assets/images/Truealbinoteacher.png";
+import AmazonianImg from "../../assets/images/Amazonian.png";
+import Jackfrost from "../../assets/images/Jackfrost.png";
+import focusClarityImg from "../../assets/images/focusclarity.png";
 const SimilarProducts = ({ products = [] }) => {
   const defaultProducts = [
     {
       id: 1,
       badge: { text: 'BEST SELLER', colorClass: 'bg-[#EA4031]' },
-      image: product1,
-      effects: [
-        { image: storecard1, name: 'Creative Boost' }
-      ],
+      image: Trinity,
+      effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
       rating: '4.9',
-      title: 'Albino Choda',
+      title: 'Trinity',
       vendor: 'Green Valley Organics',
       weights: ['3g', '10g'],
       price: 50.00,
     },
     {
       id: 2,
-      badge: { text: 'NEW', colorClass: 'bg-[#22C55E]' },
-      image: product1,
+      isWishlisted: true,
+      badge: null,
+      image: Truealbinoteacher,
       effects: [
-        { image: storecard1, name: 'Relaxing' },
-        { image: storecard1, name: 'Energetic' },
+        { image: focusClarityImg, name: "Focus & Clarity" },
+        { image: relaxChillImg, name: "Relax & Chill" }
       ],
       rating: '4.4',
-      title: 'Albino Hilbility',
+      title: 'True Albino Teacher',
       vendor: 'Aether Mushroom Labs',
       weights: ['3g', '10g'],
       price: 50.00,
@@ -38,12 +40,10 @@ const SimilarProducts = ({ products = [] }) => {
     {
       id: 3,
       badge: { text: 'NEW', colorClass: 'bg-[#22C55E]' },
-      image: product1,
-      effects: [
-        { image: storecard1, name: 'Euphoric' }
-      ],
+      image: AmazonianImg,
+      effects: [{ image: highPotencyImg, name: "High Potency" }],
       rating: '5.0',
-      title: 'Albino Penis Envy',
+      title: 'Amazonian',
       vendor: 'Elevated Solstice',
       weights: ['3g', '10g'],
       price: 55.00,
@@ -51,13 +51,10 @@ const SimilarProducts = ({ products = [] }) => {
     {
       id: 4,
       badge: { text: 'POPULAR', colorClass: 'bg-[#3B82F6]' },
-      image: product1,
-      effects: [
-        { image: storecard1, name: 'Energetic' },
-        { image: storecard1, name: 'Energetic' },
-      ],
+      image: Jackfrost,
+      effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
       rating: '4.7',
-      title: 'Aztec God',
+      title: 'Jack Frost',
       vendor: 'Green Valley Organics',
       weights: ['3g', '10g'],
       price: 45.00,
