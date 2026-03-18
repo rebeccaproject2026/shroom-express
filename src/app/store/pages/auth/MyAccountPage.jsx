@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
+import WishlistView from "../../components/account/WishlistView";
+import AddressDetailsView from "../../components/account/AddressDetailsView";
+import OrderHistoryView from "../../components/account/OrderHistoryView";
+import PaymentMethodPanel from "./tabs/PaymentMethodPanel";
 
 const sidebarItems = [
   {
@@ -51,21 +55,21 @@ const PasswordField = ({
         <span className="text-xs font-semibold text-[#18121199]">{hint}</span>
       )}
     </label>
-    <div className="flex items-center border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
+    <div className="flex items-center border border-[#BDBDD2] rounded-lg px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
       <input
         type={show ? "text" : "password"}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent"
+        className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#18121199] bg-transparent"
       />
       <button
         type="button"
         onClick={onToggle}
-        className="text-[#BDBDBD] hover:text-[#181211] ml-2"
+        className="text-[#181211] ml-2"
       >
         <Icon
-          icon={show ? "mdi:eye-off-outline" : "mdi:eye-outline"}
+          icon={show ? "fluent:eye-off-24-filled" : "fluent:eye-48-filled"}
           width={18}
         />
       </button>
@@ -95,39 +99,39 @@ const MyAccountPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#F5F0EB] font-sans">
+    <div className="min-h-screen bg-[#F5F0EB]">
       <div className="max-w-[1400px] mx-auto px-6 py-8">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-sm mb-5">
+        <div className="flex items-center gap-1.5 text-base mb-5">
           <button
             onClick={() => navigate("/store")}
-            className="text-[#E93E2B] font-medium hover:underline"
+            className="text-[#E93E2B] font-semibold hover:underline"
           >
             Home
           </button>
-          <span className="text-[#BDBDBD]">/</span>
-          <span className="text-[#181211]">My Account</span>
+          <span className="text-[#777777]">/</span>
+          <span className="text-[#777777] font-semibold">My Account</span>
         </div>
 
         {/* Header card */}
         <div className="bg-white rounded-2xl border border-[#F1F5F9] shadow-sm px-7 py-5 flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-xl font-bold text-[#181211]">Hi, Frank Nava</h1>
-            <p className="text-sm text-[#BDBDBD] mt-0.5">
+            <h1 className="text-2xl font-bold text-[#181211]">Hi, Frank Nava</h1>
+            <p className="text-sm text-[#181211] mt-0.5">
               Your fungi journey continues here.
             </p>
           </div>
           <button
             onClick={() => navigate("/store/login")}
-            className="flex items-center gap-2 bg-[#E93E2B] hover:bg-red-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors"
+            className="flex items-center gap-2 bg-[#E93E2B] hover:bg-red-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors"
           >
-            <Icon icon="mdi:logout" width={18} />
+            <Icon icon="solar:logout-outline" width="24" height="24" />
             Logout
           </button>
         </div>
 
         {/* Main grid */}
-        <div className="grid grid-cols-[340px_1fr] gap-2.5 bg-white border border-[#F1F5F9] rounded-2xl shadow-sm overflow-hidden">
+        <div className="grid grid-cols-[340px_1fr] bg-white border border-[#F1F5F9] rounded-2xl shadow-sm overflow-hidden">
           {/* Sidebar */}
           <div className="h-fit p-3 flex flex-col gap-2.5">
             {sidebarItems.map((item) => (
@@ -178,7 +182,21 @@ const MyAccountPage = () => {
           </div>
 
           {/* Right panel */}
-          <div className="p-1  mr-1">
+          <div className="p-3 mr-1">
+            {/* Payment Method tab */}
+            {activeTab === "payment" && <PaymentMethodPanel />}
+
+            {/* Wishlist tab */}
+            {activeTab === 'wishlist' && <WishlistView />}
+
+            {/* Address Details tab */}
+            {activeTab === 'address' && <AddressDetailsView />}
+
+            {/* Order History tab */}
+            {activeTab === 'orders' && <OrderHistoryView />}
+
+            {/* Profile tab */}
+            {activeTab === 'profile' && <>
             {/* Avatar + name */}
             <div className="flex items-center gap-4 mb-6">
               <div className="relative shrink-0">
@@ -198,12 +216,28 @@ const MyAccountPage = () => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex-1">
                 <p className="text-2xl font-bold text-[#181211]">Frank Nava</p>
                 <p className="text-sm text-[#181211]">
                   Member since March 2024
                 </p>
               </div>
+              {editMode && (
+                <div className="flex items-center gap-3 shrink-0">
+                  <button
+                    onClick={() => setEditMode(false)}
+                    className="bg-[#E93E2B] border-2 border-[#E93E2B] hover:bg-red-600 text-white font-semibold px-8 py-2.5 rounded-md text-sm transition-colors"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => setEditMode(false)}
+                    className="border-2 border-[#E93E2B33] text-[#E93E2B] hover:bg-[#FFF0EE] font-semibold px-8 py-2.5 rounded-md text-sm transition-colors bg-white"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Edit Mode row */}
@@ -285,7 +319,7 @@ const MyAccountPage = () => {
                     placeholder="Jeo Deo"
                     className="w-full border border-[#E5DCDC] rounded-lg px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] disabled:bg-white placeholder:text-[#BDBDBD] transition-colors"
                   />
-                  <p className="text-xs text-[#BDBDBD] mt-1.5">
+                  <p className="text-xs text-[#18121199] mt-1.5">
                     This will be how your name will be displayed in the account
                     section and in reviews
                   </p>
@@ -311,7 +345,7 @@ const MyAccountPage = () => {
             </div>
 
             {/* Password Change */}
-            <div className="border border-[#E5DCDC] py-4 rounded-lg">
+            <div className="border border-[#E5DCDC] pt-4 pb-2 rounded-lg mb-2">
               <div className="px-3 mr-1 flex items-center justify-between border-b border-[#E5DCDC]">
                 <div className="flex flex-col mb-1">
                   <p className="text-base font-bold text-[#181211]">
@@ -321,7 +355,7 @@ const MyAccountPage = () => {
                     Update your password to keep your account secure
                   </p>
                 </div>
-                <span className="text-xs font-bold text-[#E93E2B] tracking-wider uppercase bg-[#E93E2B0D] px-3 py-1.5 rounded">
+                <span className="text-xs font-bold text-[#E93E2B] tracking-wider uppercase bg-[#E93E2B0D] px-3 py-1.5 rounded-md">
                   HIGH SECURITY
                 </span>
               </div>
@@ -361,6 +395,7 @@ const MyAccountPage = () => {
                 />
               </div>
             </div>
+            </>}
           </div>
         </div>
       </div>
