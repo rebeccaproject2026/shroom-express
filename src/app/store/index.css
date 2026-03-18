@@ -16,3 +16,10 @@ body.store-front {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+/* Lock scroll when modal is open */
+html.modal-open,
+html.modal-open body {
+    overflow: hidden !important;
+    touch-action: none !important;
+}
