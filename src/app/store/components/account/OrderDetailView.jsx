@@ -40,7 +40,7 @@ const OrderDetailView = () => {
 
             {/* Order Timeline */}
             <div className="border border-[#E8E8E8] rounded-xl p-5 bg-white mb-4">
-                <h3 className="text-base font-bold text-[#181211] mb-6">Order Timeline</h3>
+                <h3 className="text-xl font-bold text-[#181211] mb-6">Order Timeline</h3>
 
                 {/* Stepper */}
                 <div className="relative flex items-start justify-between">
@@ -64,39 +64,39 @@ const OrderDetailView = () => {
                                     className={step.completed ? 'text-white' : 'text-[#BDBDBD]'}
                                 />
                             </div>
-                            <p className={`text-xs font-bold text-center ${step.completed ? 'text-[#181211]' : 'text-[#BDBDBD]'}`}>
+                            <p className={`text-sm font-bold text-center ${step.completed ? 'text-[#181211]' : 'text-[#181211]'}`}>
                                 {step.label}
                             </p>
-                            <p className="text-[10px] text-[#BDBDBD] text-center mt-0.5 leading-tight px-1">{step.sub}</p>
-                            <p className="text-[10px] text-[#BDBDBD] text-center mt-1">{step.date}</p>
+                            <p className="text-xs font-semibold text-[#181211B2] text-center mt-0.5 leading-tight px-1">{step.sub}</p>
+                            <p className="text-xs font-semibold text-[#181211B2] text-center mt-1">{step.date}</p>
                         </div>
                     ))}
                 </div>
             </div>
 
             {/* Order Details */}
-            <div className="border border-[#E8E8E8] rounded-xl bg-white mb-4 overflow-hidden">
-                <h3 className="text-base font-bold text-[#181211] px-5 pt-5 mb-4">Order Details</h3>
+            <div className="border border-[#E8E8E8] rounded-lg bg-white mb-4 overflow-hidden">
+                <h3 className="text-xl font-bold text-[#181211] p-4 border-b border-[#E8E8E8]">Order Details</h3>
 
                 <div className="flex flex-col divide-y divide-[#F5F0EB]">
                     {orderItems.map(item => (
                         <div key={item.id} className="flex items-center gap-4 px-5 py-4">
-                            <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-[#F5F0EB]">
+                            <div className="w-20 h-20 rounded-md overflow-hidden shrink-0 border border-[#E8E8E8] p-2">
                                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                             </div>
                             <div className="flex-1">
-                                <p className="text-sm font-bold text-[#181211]">{item.name}</p>
-                                <p className="text-xs text-[#BDBDBD] mt-0.5">Quantity: {item.qty}</p>
+                                <p className="text-base font-bold text-[#181211]">{item.name}</p>
+                                <p className="text-[13px] text-[#181211B2] font-medium mt-0.5">Quantity: {item.qty}</p>
                             </div>
-                            <p className="text-sm font-bold text-[#E93E2B] shrink-0">${item.price.toFixed(2)}</p>
+                            <p className="text-base font-bold text-[#E93E2B] shrink-0">${item.price.toFixed(2)}</p>
                         </div>
                     ))}
                 </div>
 
                 {/* Total row */}
-                <div className="flex items-center justify-between px-5 py-4 border-t border-[#E8E8E8] bg-[#FAFAFA]">
-                    <p className="text-sm font-semibold text-[#181211]">{orderItems.length} Item</p>
-                    <p className="text-sm font-bold text-[#181211]">
+                <div className="flex items-center justify-between px-5 py-4 border-t border-[#E8E8E8]">
+                    <p className="text-base font-bold text-[#181211]">{orderItems.length} Item</p>
+                    <p className="text-base font-bold text-[#181211]">
                         Total : ${orderItems.reduce((s, i) => s + i.price, 0).toFixed(2)}
                     </p>
                 </div>
@@ -106,30 +106,30 @@ const OrderDetailView = () => {
             <div className="grid grid-cols-2 gap-4">
                 {/* Shipping Address */}
                 <div className="border border-[#E8E8E8] rounded-xl p-5 bg-white">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Icon icon="mdi:truck-delivery-outline" width={18} className="text-[#181211]" />
-                        <p className="text-sm font-bold text-[#181211]">Shipping Address</p>
+                    <div className="flex items-center gap-2 mb-4">
+                        <Icon icon="hugeicons:shipping-truck-01" width="24" height="24" />
+                        <p className="text-base font-semibold text-[#181211]">Shipping Address</p>
                     </div>
-                    <p className="text-sm font-bold text-[#181211] mb-1">Jeo Deo</p>
-                    <p className="text-xs text-[#886663] leading-relaxed mb-3">
+                    <p className="text-[15px] font-bold text-[#181211] mb-3">Jeo Deo</p>
+                    <p className="text-[13px] font-semibold text-[#181211B2] leading-relaxed mb-3 max-w-[300px]">
                         11, Gardiner Expressway Exhibition Place Toronto - M5V 3B1 Ontario
                     </p>
-                    <div className="flex items-center gap-3 text-xs text-[#181211]">
+                    <div className="flex items-center gap-3 text-[13px] font-semibold text-[#181211B2]">
                         <span>Phone : +44 4568 2356</span>
-                        <span className="text-[#BDBDBD]">|</span>
+                        <span className="text-[#181211]">|</span>
                         <span>Email : jeodeo@gmail.com</span>
                     </div>
                 </div>
 
                 {/* Payment Method */}
                 <div className="border border-[#E8E8E8] rounded-xl p-5 bg-white">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Icon icon="mdi:credit-card-outline" width={18} className="text-[#181211]" />
-                        <p className="text-sm font-bold text-[#181211]">Payment Method</p>
+                    <div className="flex items-center gap-2 mb-4">
+                        <Icon icon="streamline-plump:payment-recieve-7" width="24" height="24" />
+                        <p className="text-base font-semibold text-[#181211]">Payment Method</p>
                     </div>
-                    <p className="text-sm font-bold text-[#181211] mb-1">Credit Card</p>
-                    <p className="text-xs text-[#886663] mb-1">Mastercard ending in ... 8045</p>
-                    <p className="text-xs text-[#886663]">Total : $60.00</p>
+                    <p className="text-[15px] font-bold text-[#181211] mb-2.5">Credit Card</p>
+                    <p className="text-[13px] text-[#181211] font-semibold mb-1">Mastercard ending in ... 8045</p>
+                    <p className="text-[13px] text-[#181211B2] font-semibold">Total : $60.00</p>
                 </div>
             </div>
         </div>
