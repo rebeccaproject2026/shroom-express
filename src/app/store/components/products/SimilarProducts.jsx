@@ -12,7 +12,7 @@ import focusClarityImg from "../../assets/images/focusclarity.png";
 const SimilarProducts = ({ products = [] }) => {
   const defaultProducts = [
     {
-      id: 1,
+      id: 9,
       badge: { text: 'BEST SELLER', colorClass: 'bg-[#EA4031]' },
       image: Trinity,
       effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
@@ -23,7 +23,7 @@ const SimilarProducts = ({ products = [] }) => {
       price: 50.00,
     },
     {
-      id: 2,
+      id: 10,
       isWishlisted: true,
       badge: null,
       image: Truealbinoteacher,
@@ -38,7 +38,7 @@ const SimilarProducts = ({ products = [] }) => {
       price: 50.00,
     },
     {
-      id: 3,
+      id: 11,
       badge: { text: 'NEW', colorClass: 'bg-[#22C55E]' },
       image: AmazonianImg,
       effects: [{ image: highPotencyImg, name: "High Potency" }],
@@ -49,7 +49,7 @@ const SimilarProducts = ({ products = [] }) => {
       price: 55.00,
     },
     {
-      id: 4,
+      id: 12,
       badge: { text: 'POPULAR', colorClass: 'bg-[#3B82F6]' },
       image: Jackfrost,
       effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
