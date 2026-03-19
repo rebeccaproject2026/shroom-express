@@ -5,7 +5,7 @@ import product1 from '../../assets/images/product1.png';
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
-    
+
     // Destructure with default fallbacks matching the screenshot design
     const {
         id,
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div 
+        <div
             onClick={handleProductClick}
             className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}
         >
@@ -135,7 +135,7 @@ const ProductCard = ({ product }) => {
 
                     <div className="flex items-center gap-2.5">
                         {/* Qty Selector */}
-                        <div 
+                        <div
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-7.5 shadow-sm"
                         >
@@ -149,12 +149,12 @@ const ProductCard = ({ product }) => {
                         </div>
 
                         {/* Add to Cart */}
-                        <button 
+                        <button
                             onClick={(e) => {
                                 e.stopPropagation();
                                 navigate('/store/cart');
                             }}
-                            className="w-7.5 h-7.5 bg-[#E93E2B] text-white rounded-md flex items-center justify-center hover:bg-opacity-90 transition-opacity shrink-0"
+                            className="w-7.5 h-7.5 bg-[#E93E2B] text-white rounded-md flex items-center cursor-pointer justify-center hover:bg-opacity-90 transition-opacity shrink-0"
                         >
                             <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />
                         </button>

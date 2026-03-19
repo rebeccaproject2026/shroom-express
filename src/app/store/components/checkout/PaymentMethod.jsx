@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react';
 
 const methods = [
     { id: 'card', label: 'Credit Card', sub: 'Visa, Mastercard, Amex', icon: 'mdi:credit-card-outline' },
-    { id: 'paypal', label: 'PayPal', sub: 'Fast and secure', icon: 'mdi:paypal' },
-    { id: 'apple', label: 'Apple Pay', sub: 'One-tap payment', icon: 'mdi:apple' },
+    { id: 'paypal', label: 'PayPal', sub: 'Fast and secure', icon: 'mdi:wallet-outline' },
+    { id: 'apple', label: 'Apple Pay', sub: 'One-tap payment', icon: 'material-symbols:branding-watermark-outline' },
 ];
 
 const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, onSaveCard }) => {
@@ -16,9 +16,8 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                     <button
                         key={m.id}
                         onClick={() => onChange(m.id)}
-                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-4 rounded-xl border-2 transition-all text-left ${
-                            selected === m.id ? 'border-[#E93E2B] bg-red-50' : 'border-[#E2E8F0] bg-white hover:border-gray-300'
-                        }`}
+                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-4 rounded-xl border-2 transition-all text-left ${selected === m.id ? 'border-[#E93E2B] bg-red-50' : 'border-[#E2E8F0] bg-white hover:border-gray-300'
+                            }`}
                     >
                         <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selected === m.id ? 'border-[#E93E2B]' : 'border-gray-300'}`}>
                             {selected === m.id && <div className="w-2 h-2 rounded-full bg-[#E93E2B]" />}
@@ -27,7 +26,7 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
                             <p className="text-sm font-semibold text-[#181211]">{m.label}</p>
                             <p className="text-xs text-[#64748B]">{m.sub}</p>
                         </div>
-                        <Icon icon={m.icon} className={`${selected === m.id ? 'text-[#E93E2B]' : 'text-gray-400'} shrink-0`} width={22} />
+                        <Icon icon={m.icon} className={`${selected === m.id ? 'text-[#E93E2B]' : 'text-[#94A3B8]'} shrink-0`} width={22} />
                     </button>
                 ))}
             </div>

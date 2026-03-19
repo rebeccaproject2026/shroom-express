@@ -44,13 +44,13 @@ const StickyHeader = ({ cartCount = 0, onCartClick }) => {
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
             <div className="bg-[var(--store-primary)] text-white text-sm py-2 px-4 flex justify-center items-center gap-6">
-                <Link to="/store/open" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                <Link to="" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
                     <Icon icon="clarity:store-line" width={17} height={17} />
 
                     <span>Open Store</span>
                 </Link>
                 <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
-                <Link to="/driver/apply" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                <Link to="" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
                     <Icon icon="fluent-mdl2:car" width={17} height={17} />
                     <span>Become Driver</span>
                 </Link>
@@ -145,16 +145,15 @@ const StickyHeader = ({ cartCount = 0, onCartClick }) => {
                         {categories.map((cat, idx) => {
                             const categoryPath = `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
                             const isActive = location.pathname === categoryPath;
-                            
+
                             return (
                                 <li key={idx} className="shrink-0 flex items-center justify-center">
-                                    <Link 
-                                        to={categoryPath} 
-                                        className={`flex items-center gap-2 text-[15px] font-bold transition-colors py-2 ${
-                                            isActive 
-                                                ? 'text-[var(--store-primary)]' 
-                                                : 'text-[#181211] hover:text-[var(--store-primary)]'
-                                        }`}
+                                    <Link
+                                        to={categoryPath}
+                                        className={`flex items-center gap-2 text-[15px] font-bold transition-colors py-2 ${isActive
+                                            ? 'text-[var(--store-primary)]'
+                                            : 'text-[#181211] hover:text-[var(--store-primary)]'
+                                            }`}
                                     >
                                         <Icon
                                             icon={cat.icon}

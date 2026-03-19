@@ -92,9 +92,9 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity - 1)}
                             disabled={item.quantity <= 1}
-                            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-gray-600  transition-colors"
+                            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-gray-600 cursor-pointer transition-colors"
                         >
-                            <Icon icon="mdi:minus" width={20}  />
+                            <Icon icon="mdi:minus" width={20} />
                         </button>
 
                         <span className="font-bold text-[#181211] text-base sm:text-lg">
@@ -103,7 +103,7 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
 
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity + 1)}
-                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#E93E2B] flex items-center justify-center text-white hover:opacity-90 transition-opacity"
+                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#E93E2B] flex items-center cursor-pointer justify-center text-white hover:opacity-90 transition-opacity"
                         >
                             <Icon icon="mdi:plus" width={16} />
                         </button>

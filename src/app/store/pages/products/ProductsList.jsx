@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 import Select from '../../components/common/Select';
+import FilterDrawer from '../../components/products/FilterDrawer';
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
@@ -34,6 +35,7 @@ const ProductsList = () => {
     const { category } = useParams();
     const navigate = useNavigate();
     const [sortBy, setSortBy] = useState('popularity');
+    const [filterOpen, setFilterOpen] = useState(false);
 
     // Category title mapping
     const categoryTitles = {
@@ -270,6 +272,7 @@ const ProductsList = () => {
 
     return (
         <div className="w-full px-12 py-10">
+            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
             {/* Page Header - White Background Card */}
             <div className="bg-white rounded-[20px] p-12 mb-8  border border-[#E5DCDC]">
                 <h1 className="text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>
@@ -303,7 +306,10 @@ const ProductsList = () => {
                             <div className="flex items-center gap-3 mb-4.5" >
 
                                 {/* Filter Icon */}
-                                <div className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white">
+                                <div
+                                    onClick={() => setFilterOpen(true)}
+                                    className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white cursor-pointer"
+                                >
 
                                     <Icon icon="mage:filter" width={22} height={22} />
 
@@ -355,7 +361,7 @@ const ProductsList = () => {
                         {/* Trending Store Header */}
                         <div className="flex items-center justify-between mb-4.5">
                             <h2 className="text-[22px] font-bold text-[#181211]">Trending Store</h2>
-                            <button onClick={() => navigate('/store/stores')} className="text-[var(--store-primary)] font-semibold text-base hover:opacity-80 transition-opacity cursor-pointer mr-2">
+                            <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] font-semibold text-base hover:opacity-80 transition-opacity cursor-pointer mr-2">
                                 View All
                             </button>
                         </div>

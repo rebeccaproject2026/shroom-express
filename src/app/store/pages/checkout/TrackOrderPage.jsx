@@ -1,9 +1,12 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 import OrderSummary from '../../components/checkout/OrderSummary';
-import product1 from '../../assets/images/product1.png';
-import product2 from '../../assets/images/product2.png';
-import product3 from '../../assets/images/product3.png';
+// import product1 from '../../assets/images/product1.png';
+// import product2 from '../../assets/images/product2.png';
+// import product3 from '../../assets/images/product3.png';
+import cart1 from '../../assets/images/cart1.png';
+import cart2 from '../../assets/images/cart2.png';
+import cart3 from '../../assets/images/cart3.jpg';
 
 const orderStatus = {
     currentStep: 3,
@@ -24,9 +27,9 @@ const driver = {
 };
 
 const orderItems = [
-    { id: 1, image: product1, name: 'Blue Pulaski (Dried)', description: 'Focus & Cognitive Support | 60 Capsules', quantity: 1, price: 45 },
-    { id: 2, image: product2, name: "Lion's Mane Dual Extract", description: 'Top-Shelf Indica | 3.5 Grams', quantity: 2, price: 60 },
-    { id: 3, image: product3, name: 'Moonlight Gummies (20pk)', description: '1000mg | Natural Flavor | 30ml', quantity: 1, price: 85 },
+    { id: 1, image: cart1, name: 'Blue Pulaski (Dried)', description: 'Focus & Cognitive Support | 60 Capsules', quantity: 1, price: 45 },
+    { id: 2, image: cart2, name: "Lion's Mane Dual Extract", description: 'Top-Shelf Indica | 3.5 Grams', quantity: 2, price: 60 },
+    { id: 3, image: cart3, name: 'Moonlight Gummies (20pk)', description: '1000mg | Natural Flavor | 30ml', quantity: 1, price: 85 },
 ];
 
 const TrackOrderPage = () => {
@@ -58,22 +61,20 @@ const TrackOrderPage = () => {
                         <div className="absolute top-[18px] right-0 w-[25%] h-[2px] bg-[#E8E8E8] z-0" />
 
                         {[
-                            { label: 'Order Placed',     icon: 'mdi:check',          completed: true,  active: false },
-                            { label: 'Processing',       icon: 'mdi:check',          completed: true,  active: false },
-                            { label: 'Out for Delivery', icon: 'ri:truck-line',       completed: true,  active: true  },
-                            { label: 'Delivered',        icon: 'mdi:home-outline',   completed: false, active: false },
+                            { label: 'Order Placed', icon: 'mdi:check', completed: true, active: false },
+                            { label: 'Processing', icon: 'mdi:check', completed: true, active: false },
+                            { label: 'Out for Delivery', icon: 'ri:truck-line', completed: true, active: true },
+                            { label: 'Delivered', icon: 'mdi:home-outline', completed: false, active: false },
                         ].map((step, idx) => (
                             <div key={idx} className="flex flex-col items-center z-10">
-                                <div className={`w-9 h-9 rounded-full flex items-center justify-center border-2 ${
-                                    step.completed
-                                        ? 'bg-[#E93E2B] border-[#E93E2B] text-white'
-                                        : 'bg-white border-[#E8E8E8] text-[#BDBDBD]'
-                                }`}>
+                                <div className={`w-9 h-9 rounded-full flex items-center justify-center border-2 ${step.completed
+                                    ? 'bg-[#E93E2B] border-[#E93E2B] text-white'
+                                    : 'bg-white border-[#E8E8E8] text-[#BDBDBD]'
+                                    }`}>
                                     <Icon icon={step.icon} width={18} />
                                 </div>
-                                <span className={`text-xs font-semibold mt-2 whitespace-nowrap ${
-                                    step.active ? 'text-[#E93E2B]' : step.completed ? 'text-[#181211]' : 'text-[#BDBDBD]'
-                                }`}>{step.label}</span>
+                                <span className={`text-xs font-semibold mt-2 whitespace-nowrap ${step.active ? 'text-[#E93E2B]' : step.completed ? 'text-[#181211]' : 'text-[#BDBDBD]'
+                                    }`}>{step.label}</span>
                             </div>
                         ))}
                     </div>
@@ -149,7 +150,7 @@ xt-[#0F172A] mb-4">Delivery Details</h3>
                     showPromo={false}
                     showBadges={false}
                     btnLabel={null}
-                    onProceed={() => {}}
+                    onProceed={() => { }}
                 />
 
                 {/* Action buttons */}

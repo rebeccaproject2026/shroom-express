@@ -2,7 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Stepper from "../../components/checkout/Stepper";
-import product1 from "../../assets/images/product1.png";
+import cart1 from '../../assets/images/cart1.png';
+import cart2 from '../../assets/images/cart2.png';
+import cart3 from '../../assets/images/cart3.jpg';
 
 const orderItems = [
   {
@@ -11,7 +13,7 @@ const orderItems = [
     description: "Focus & Cognitive Support | 60 Capsules",
     price: 45,
     quantity: 1,
-    image: product1,
+    image: cart1,
   },
   {
     id: 2,
@@ -19,7 +21,7 @@ const orderItems = [
     description: "Top-Shelf Indica | 3.5 Grams",
     price: 60,
     quantity: 2,
-    image: product1,
+    image: cart2,
   },
   {
     id: 3,
@@ -27,7 +29,7 @@ const orderItems = [
     description: "1000mg | Natural Flavor | 30ml",
     price: 85,
     quantity: 1,
-    image: product1,
+    image: cart3,
   },
 ];
 
@@ -64,7 +66,7 @@ const OrderCompletePage = () => {
         {/* Two info cards */}
         <div className="grid grid-cols-2 gap-4">
           {/* Estimated Delivery */}
-          <div className="bg-white rounded-2xl shadow-sm p-5 flex flex-col gap-2">
+          <div className="bg-white rounded-2xl shadow-[0px_1px_2px_0px_#0000000D] p-5 flex flex-col gap-2 border border-[#E93E2B1A]/10">
             <div className="flex items-center gap-2 text-[#E93E2B]">
               <Icon icon="ri:truck-line" width="20" height="20" />
               <span className="font-semibold text-[#E93E2B] text-sm uppercase">
@@ -76,7 +78,7 @@ const OrderCompletePage = () => {
           </div>
 
           {/* Delivery Address */}
-          <div className="bg-white rounded-2xl shadow-sm p-5 flex flex-col gap-2">
+          <div className="bg-white rounded-2xl shadow-[0px_1px_2px_0px_#0000000D] p-5 flex flex-col gap-2 border border-[#E93E2B1A]/10">
             <div className="flex items-center gap-2 text-[#E93E2B]">
               <Icon icon="iconamoon:location-pin" width="20" height="20" />
               <span className="font-semibold text-[#E93E2B] uppercase text-sm">
@@ -101,7 +103,7 @@ const OrderCompletePage = () => {
           <div className="px-6 pb-6 flex flex-col gap-5">
             {orderItems.map((item) => (
               <div key={item.id} className="flex items-center gap-3 ">
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-50 shrink-0 border border-[#E5DCDC] p-1">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-50 shrink-0 border border-[#E5DCDC]">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -154,7 +156,7 @@ const OrderCompletePage = () => {
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => navigate("/store/track-order")}
-                className="flex-1 flex items-center justify-center gap-1 bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-4 rounded-full transition-colors text-sm"
+            className="flex-1 flex items-center justify-center gap-1 bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-4 rounded-full transition-colors text-sm"
           >
             <Icon icon="material-symbols:map-outline" width="24" height="24" />
             Track My Order
@@ -168,7 +170,7 @@ const OrderCompletePage = () => {
         </div>
 
         <div className="flex justify-center items-center my-6">
-            <p>Questions about your order? <a href="/help" className="text-[#E93E2B] hover:underline">Visit Help Center</a></p>
+          <p>Questions about your order? <a href="/help" className="text-[#E93E2B] hover:underline">Visit Help Center</a></p>
         </div>
       </div>
     </div>

@@ -4,12 +4,14 @@ import Stepper from '../../components/checkout/Stepper';
 import DeliveryMethod from '../../components/checkout/DeliveryMethod';
 import PaymentMethod from '../../components/checkout/PaymentMethod';
 import OrderSummary from '../../components/checkout/OrderSummary';
-import product1 from '../../assets/images/product1.png';
+import cart1 from '../../assets/images/cart1.png';
+import cart2 from '../../assets/images/cart2.png';
+import cart3 from '../../assets/images/cart3.jpg';
 
 const defaultItems = [
-    { id: 1, name: 'Blue Pulaski (Dried)', description: 'Focus & Cognitive Support | 60 Capsules', price: 45, quantity: 1, image: product1 },
-    { id: 2, name: "Lion's Mane Dual Extract", description: 'Top-Shelf Indica | 3.5 Grams', price: 60, quantity: 2, image: product1 },
-    { id: 3, name: 'Moonlight Gummies (20pk)', description: '1000mg | Natural Flavor | 30ml', price: 85, quantity: 1, image: product1 },
+    { id: 1, name: 'Blue Pulaski (Dried)', description: 'Focus & Cognitive Support | 60 Capsules', price: 45, quantity: 1, image: cart1, badge: 'Best Seller', badgeColor: 'text-[#E93E2B] bg-red-50' },
+    { id: 2, name: "Lion's Mane Dual Extract", description: 'Top-Shelf Indica | 3.5 Grams', price: 60, quantity: 2, image: cart2, badge: 'Hybrid', badgeColor: 'text-green-600 bg-green-50' },
+    { id: 3, name: 'Moonlight Gummies (20pk)', description: '1000mg | Natural Flavor | 30ml', price: 85, quantity: 1, image: cart3, badge: 'New Arrival', badgeColor: 'text-blue-600 bg-blue-50' },
 ];
 
 const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] transition-colors bg-white placeholder-gray-400";
