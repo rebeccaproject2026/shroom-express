@@ -15,7 +15,7 @@ import microDosingImg from "../../assets/images/microdosing.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import creativeBoostImg from "../../assets/images/creativeboost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
-import Shroomforsalebanner from "../../assets/images/shroomforsalebanner.png";
+import Shroomforsalebanner from "../../assets/images/Shroomforsalebanner.png";
 import Shroomforsalelogo from "../../assets/images/Shroomforsalebannerlogo.png";
 import Magicmushroombanner from "../../assets/images/magicmushroombanner.jpg";
 import Magicmushroomlogo from "../../assets/images/magicmushroomlogo.png";
@@ -25,7 +25,7 @@ import Torontomagiclogo from "../../assets/images/Torontomagiclogo.png";
 import Torontomagicbanner from "../../assets/images/Torontomagicbanner.jpg";
 import magicmashroombanner2 from "../../assets/images/magicmashroombanner2.jpg";
 import magicmashroomlogo2 from "../../assets/images/magicmashroomlogo2.png";
-import FilterDrawer from '../../components/products/FilterDrawer';
+import StoreFilterDrawer from '../../components/stores/StoreFilterDrawer';
 
 
 
@@ -33,6 +33,7 @@ import FilterDrawer from '../../components/products/FilterDrawer';
 const StoresList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterOpen, setFilterOpen] = useState(false);
+    const [drawerFilters, setDrawerFilters] = useState({ selectedDelivery: 'All', selectedRating: 'All', isPrimary: false });
     const [activeCategory, setActiveCategory] = useState(false);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeShipping, setActiveShipping] = useState(false);
@@ -185,14 +186,20 @@ const StoresList = () => {
         const matchesCategory = !activeCategory || s.isPrimary === true;
         const matchesDelivery = !activeDelivery || (s.deliveryBadge?.text === "Same-day Delivery");
         const matchesShipping = !activeShipping || (s.deliveryBadge?.text === "Express Delivery");
-        return matchesSearch && matchesCategory && matchesDelivery && matchesShipping;
+        const matchesDrawerDelivery = drawerFilters.selectedDelivery === 'All' || s.deliveryBadge?.text === drawerFilters.selectedDelivery;
+        const matchesDrawerRating = drawerFilters.selectedRating === 'All' ||
+            (drawerFilters.selectedRating === '5.0' ? parseFloat(s.rating) === 5.0 :
+                drawerFilters.selectedRating === '4.5+' ? parseFloat(s.rating) >= 4.5 :
+                    parseFloat(s.rating) >= 4.0);
+        const matchesDrawerPrimary = !drawerFilters.isPrimary || s.isPrimary === true;
+        return matchesSearch && matchesCategory && matchesDelivery && matchesShipping && matchesDrawerDelivery && matchesDrawerRating && matchesDrawerPrimary;
     });
 
     const activeFilterCount = [activeCategory, activeDelivery, activeShipping].filter(Boolean).length;
 
     return (
         <div className="w-full px-10 py-20">
-            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
+            <StoreFilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Page Header */}
             <h1 className="text-3xl font-bold text-[#0F3540] mb-3">
