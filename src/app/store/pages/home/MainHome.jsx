@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
+import { useCategory } from '../../context/CategoryContext';
 
 // Import Hero Images
 import home1 from '../../assets/images/home1.png';
@@ -20,7 +21,8 @@ import product8 from "../../assets/images/product8.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
+import deepJourneyImg from "../../assets/images/deepjourney.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
@@ -49,6 +51,7 @@ import news3 from "../../assets/images/news3.png";
 const Home = () => {
     const sliderRef = useRef(null);
     const navigate = useNavigate();
+    const { selectedEffect } = useCategory();
 
     const slideLeft = () => {
         if (sliderRef.current) {
@@ -155,13 +158,30 @@ const Home = () => {
                                 rating: '4.9',
                                 weights: ['3g', '10g'],
                                 price: 50.00,
-                                categories: ["Microdosing", "Creative Boost"],
+                                categories: ["Micro dosing", "Creative Boost"],
                                 effects: [
-                                    { image: microDosingImg, name: "Creative Boost", hasBorder: false }
+                                    { image: creativeBoostImg, name: "Creative Boost" },
+                                    { image: microDosingImg, name: "Micro dosing" }
                                 ]
                             },
                             {
                                 id: 2,
+                                badge: null,
+                                isWishlisted: false,
+                                image: product1,
+                                title: "Albino Hillbilly",
+                                vendor: "Aether Mushroom Labs",
+                                rating: '4.8',
+                                weights: ['3g', '10g'],
+                                price: 50.00,
+                                categories: ["Beginner Friendly", "Micro dosing"],
+                                effects: [
+                                    { image: beginnerFriendlyImg, name: "Beginner Friendly" },
+                                    { image: microDosingImg, name: "Microdosing" }
+                                ]
+                            },
+                            {
+                                id: 3,
                                 badge: { text: "NEW", colorClass: "bg-[#059669]" },
                                 isWishlisted: true,
                                 image: product1,
@@ -177,7 +197,7 @@ const Home = () => {
                                 ]
                             },
                             {
-                                id: 3,
+                                id: 4,
                                 badge: null,
                                 isWishlisted: false,
                                 image: product1,
@@ -192,39 +212,9 @@ const Home = () => {
                                     { image: relaxChillImg, name: "Relax & Chill" }
                                 ]
                             },
-                            {
-                                id: 4,
-                                badge: null,
-                                isWishlisted: false,
-                                image: product1,
-                                title: "Golden Teacher",
-                                vendor: "Aether Mushroom Labs",
-                                rating: '4.8',
-                                weights: ['3g', '10g'],
-                                price: 50.00,
-                                categories: ["Beginner Friendly", "Microdosing"],
-                                effects: [
-                                    { image: beginnerFriendlyImg, name: "Beginner Friendly" },
-                                    { image: microDosingImg, name: "Microdosing" }
-                                ]
-                            },
+
                             {
                                 id: 5,
-                                badge: null,
-                                isWishlisted: false,
-                                image: product1,
-                                title: "Golden Teacher",
-                                vendor: "Aether Mushroom Labs",
-                                rating: '4.8',
-                                weights: ['3g', '10g'],
-                                price: 50.00,
-                                categories: ["Creative Boost"],
-                                effects: [
-                                    { image: creativeBoostImg, name: "Creative Boost" }
-                                ]
-                            },
-                            {
-                                id: 6,
                                 badge: { text: "NEW", colorClass: "bg-[#059669]" },
                                 isWishlisted: true,
                                 image: product1,
@@ -233,12 +223,13 @@ const Home = () => {
                                 rating: '5.0',
                                 weights: ['3g', '10g'],
                                 price: 55.00,
-                                categories: ["High Potency"],
+                                categories: ["High Potency", "Deep Journey"],
                                 effects: [
-                                    { image: highPotencyImg, name: "High Potency" }
+                                    { image: highPotencyImg, name: "High Potency" },
+                                    { image: deepJourneyImg, name: "Deep Journey" }
                                 ]
                             },
-                        ].map((prod) => (
+                        ].filter(p => !selectedEffect || p.categories?.includes(selectedEffect)).map((prod) => (
                             <div key={prod.id} className="min-w-67.5 w-full max-w-85.25 shrink-0">
                                 <ProductCard product={prod} />
                             </div>
@@ -383,8 +374,8 @@ const Home = () => {
                             {
                                 id: 101, badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, image: product1,
                                 title: "Blue Meanies", vendor: "Green Valley Organics", rating: '4.9', weights: ['3g', '10g'], price: 50.00,
-                                categories: ["Creative Boost", "Visual Experience"],
-                                effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+                                categories: ["Creative Boost", "Visual Experience", "High Potency"],
+                                effects: [{ image: microDosingImg, name: "Micro dosing" }, { image: visualExperienceImg, name: "Visual Experience" }, { image: highPotencyImg, name: "High Potency" }]
                             },
                             {
                                 id: 102, badge: null, isWishlisted: true, image: product2,
@@ -395,8 +386,10 @@ const Home = () => {
                             {
                                 id: 103, badge: { text: "NEW", colorClass: "bg-[#059669]" }, isWishlisted: false, image: product3,
                                 title: "Chocolate Bar Golden Teacher", vendor: "Elevated Solstice", rating: '5.0', weights: ['3g', '10g'], price: 45.00,
-                                categories: ["Beginner Friendly"],
-                                effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }]
+                                categories: ["Beginner Friendly", "Micro dosing"],
+                                effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" },
+                                { image: microDosingImg, name: "Micro dosing" }
+                                ]
                             },
                             {
                                 id: 104, badge: null, isWishlisted: false, image: product4,
@@ -407,28 +400,28 @@ const Home = () => {
                             {
                                 id: 105, badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, image: product5,
                                 title: "Utopia Gummy Grape 10pcs", vendor: "Green Valley Organics", rating: '4.9', weights: ['3g', '10g'], price: 80.00,
-                                categories: ["Microdosing", "Creative Boost"],
-                                effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+                                categories: ["Micro dosing", "Creative Boost"],
+                                effects: [{ image: microDosingImg, name: "Creative Boost" }, { image: creativeBoostImg, name: "Creative Boost" }]
                             },
                             {
                                 id: 106, badge: null, isWishlisted: true, image: product6,
                                 title: "Original OG Dummyz 1000mg...", vendor: "Aether Mushroom Labs", rating: '4.8', weights: ['3g', '10g'], price: 35.00,
-                                categories: ["Creative Boost", "Relax & Chill"],
-                                effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: relaxChillImg, name: "Relax & Chill" }]
+                                categories: ["Creative Boost", "Relax & Chill", "Deep Journey"],
+                                effects: [{ image: deepJourneyImg, name: "Deep Journey" }, { image: relaxChillImg, name: "Relax & Chill" }, { image: creativeBoostImg, name: "Creative Boost" }]
                             },
                             {
                                 id: 107, badge: { text: "NEW", colorClass: "bg-[#059669]" }, isWishlisted: false, image: product7,
                                 title: "Shakti Capsules", vendor: "Elevated Solstice", rating: '5.0', weights: ['3g', '10g'], price: 40.00,
-                                categories: ["Beginner Friendly"],
-                                effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }]
+                                categories: ["Beginner Friendly", "Focus & Clarity"],
+                                effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }, { image: focusClarityImg, name: "Focus & Clarity" }]
                             },
                             {
                                 id: 108, badge: null, isWishlisted: false, image: product8,
                                 title: "Toad Bites", vendor: "Green Valley Organics", rating: '4.7', weights: ['3g', '10g'], price: 10.00,
-                                categories: ["Focus & Clarity", "Relax & Chill"],
-                                effects: [{ image: focusClarityImg, name: "Focus & Clarity" }, { image: relaxChillImg, name: "Relax & Chill" }]
+                                categories: ["Focus & Clarity", "Relax & Chill", "Deep Journey"],
+                                effects: [{ image: focusClarityImg, name: "Focus & Clarity" }, { image: relaxChillImg, name: "Relax & Chill" }, { image: deepJourneyImg, name: "Deep Journey" }]
                             }
-                        ].map((prod) => (
+                        ].filter(p => !selectedEffect || p.categories?.includes(selectedEffect)).map((prod) => (
                             <div key={prod.id} className="w-full">
                                 <ProductCard product={prod} />
                             </div>

@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 import Select from '../../components/common/Select';
 import FilterDrawer from '../../components/products/FilterDrawer';
+import { useCategory } from '../../context/CategoryContext';
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
+import deepjourneyImg from "../../assets/images/deepjourney.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
@@ -34,10 +37,15 @@ import background3 from "../../assets/images/background3.png";
 const ProductsList = () => {
     const { category } = useParams();
     const navigate = useNavigate();
+    const { selectedEffect } = useCategory();
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState(false);
+    const [activeDelivery, setActiveDelivery] = useState(false);
+    const [activeBestSeller, setActiveBestSeller] = useState(false);
+    const [storeSearch, setStoreSearch] = useState('');
 
-    // Category title mapping
+    // Category title mapping - only for main nav categories, effect slugs keep parent title
     const categoryTitles = {
         'magic-mushrooms': 'The Magic Mushrooms',
         'microdose': 'Microdose',
@@ -45,7 +53,7 @@ const ProductsList = () => {
         'deals': 'Deals',
     };
 
-    const pageTitle = categoryTitles[category] || 'Products';
+    const pageTitle = categoryTitles[category] || 'The Magic Mushrooms';
 
     // Sort options
     const sortOptions = [
@@ -57,6 +65,7 @@ const ProductsList = () => {
     ];
 
     // Mock products
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const products = [
         {
             id: 1,
@@ -69,7 +78,12 @@ const ProductsList = () => {
             weights: ['3g', '10g'],
             price: 50.00,
             categories: ["Microdosing", "Creative Boost"],
-            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+            effects: [
+                { image: creativeBoostImg, name: "Creative Boost" },
+                { image: microDosingImg, name: "Microdosing" }
+
+
+            ]
         },
         {
             id: 2,
@@ -130,7 +144,7 @@ const ProductsList = () => {
             weights: ['3g', '10g'],
             price: 50.00,
             categories: ["Creative Boost", "Visual Experience"],
-            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: visualExperienceImg, name: "Visual Experience" }]
         },
         {
             id: 6,
@@ -158,8 +172,8 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 55.00,
-            categories: ["High Potency"],
-            effects: [{ image: highPotencyImg, name: "High Potency" }]
+            categories: ["High Potency", "Deep Journey"],
+            effects: [{ image: highPotencyImg, name: "High Potency" }, { image: deepjourneyImg, name: "Deep Journey" }]
         },
         {
             id: 8,
@@ -188,7 +202,7 @@ const ProductsList = () => {
             weights: ['3g', '10g'],
             price: 50.00,
             categories: ["Creative Boost", "Microdosing"],
-            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: microDosingImg, name: "Microdosing" }]
         },
         {
             id: 10,
@@ -230,7 +244,7 @@ const ProductsList = () => {
             weights: ['3g', '10g'],
             price: 45.00,
             categories: ["Creative Boost", "Microdosing"],
-            effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
+            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: microDosingImg, name: "Microdosing" }]
         },
     ];
 
@@ -280,6 +294,52 @@ const ProductsList = () => {
         }
     ];
 
+    const filteredProducts = useMemo(() => {
+        let list = [...products];
+
+        // Filter by URL category param (effect-based icon categories)
+        const effectCategories = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
+        if (effectCategories.includes(category)) {
+            // Convert slug back to display name for matching
+            const slugToName = {
+                'micro-dosing': 'Microdosing',
+                'beginner-friendly': 'Beginner Friendly',
+                'high-potency': 'High Potency',
+                'creative-boost': 'Creative Boost',
+                'relax-and-chill': 'Relax & Chill',
+                'visual-experience': 'Visual Experience',
+                'focus-and-clarity': 'Focus & Clarity',
+                'deep-journey': 'Deep Journey',
+            };
+            const targetCategory = slugToName[category];
+            if (targetCategory) list = list.filter(p => p.categories?.includes(targetCategory));
+        }
+
+        // Filter by context selectedEffect (from header icon click, no URL change)
+        if (selectedEffect) {
+            // "Micro dosing" in header maps to "Microdosing" in product data
+            const effectAlias = selectedEffect === 'Micro dosing' ? 'Microdosing' : selectedEffect;
+            list = list.filter(p => p.categories?.includes(effectAlias));
+        }
+
+        if (activeCategory) list = list.filter(p => p.categories?.some(c => c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'));
+        if (activeDelivery) list = list.filter(p => p.categories?.some(c => c === 'Beginner Friendly' || c === 'Microdosing'));
+        if (activeBestSeller) list = list.filter(p => p.badge?.text === 'BEST SELLER');
+        if (sortBy === 'price-low') list.sort((a, b) => a.price - b.price);
+        else if (sortBy === 'price-high') list.sort((a, b) => b.price - a.price);
+        else if (sortBy === 'rating') list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+        else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
+        return list;
+    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, products, category, selectedEffect]);
+
+    const filteredStores = useMemo(() =>
+        stores.filter(s =>
+            s.name.toLowerCase().includes(storeSearch.toLowerCase()) ||
+            s.location.toLowerCase().includes(storeSearch.toLowerCase())
+        ), [storeSearch, stores]);
+
+    const activeFilterCount = [activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length;
+
     return (
         <div className="w-full px-12 py-10">
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
@@ -325,21 +385,30 @@ const ProductsList = () => {
 
                                     {/* Badge */}
                                     <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                                        1
+                                        {activeFilterCount || 1}
                                     </span>
 
                                 </div>
 
                                 {/* Pills */}
-                                <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                                <button
+                                    onClick={() => setActiveCategory(p => !p)}
+                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                >
                                     Category
                                 </button>
 
-                                <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                                <button
+                                    onClick={() => setActiveDelivery(p => !p)}
+                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                >
                                     Delivery
                                 </button>
 
-                                <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                                <button
+                                    onClick={() => setActiveBestSeller(p => !p)}
+                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeBestSeller ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                >
                                     Best Seller
                                 </button>
                                 <div className=" w-[22%] ml-auto">
@@ -355,11 +424,16 @@ const ProductsList = () => {
 
                             {/* Products Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-7">
-                                {products.map((product) => (
+                                {filteredProducts.length > 0 ? filteredProducts.map((product) => (
                                     <div key={product.id} className="w-full">
                                         <ProductCard product={product} />
                                     </div>
-                                ))}
+                                )) : (
+                                    <div className="col-span-3 flex flex-col items-center justify-center py-16 text-center">
+                                        <Icon icon="mdi:package-variant-remove" width={48} className="text-[#E5DCDC] mb-3" />
+                                        <p className="text-sm font-semibold text-[#BDBDBD]">No products match the selected filters</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -383,6 +457,8 @@ const ProductsList = () => {
                                     <input
                                         type="text"
                                         placeholder="Search Store"
+                                        value={storeSearch}
+                                        onChange={(e) => setStoreSearch(e.target.value)}
                                         className="w-full px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]  placeholder-[#222222] focus:outline-none focus:ring-2 focus:ring-[var(--store-primary)] focus:border-transparent"
                                     />
                                     <Icon icon="mdi:magnify" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" width={20} height={20} />
@@ -390,11 +466,16 @@ const ProductsList = () => {
                             </div>
                             {/* Stores List - Vertical Stack */}
                             <div className="flex flex-col gap-6">
-                                {stores.map(store => (
+                                {filteredStores.length > 0 ? filteredStores.map(store => (
                                     <div key={store.id} className="w-full">
                                         <StoreCard store={store} />
                                     </div>
-                                ))}
+                                )) : (
+                                    <div className="flex flex-col items-center justify-center py-8 text-center">
+                                        <Icon icon="streamline:shopping-store-2-store-shop-shops-stores" width={36} className="text-[#E5DCDC] mb-2" />
+                                        <p className="text-xs font-semibold text-[#BDBDBD]">No stores found</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

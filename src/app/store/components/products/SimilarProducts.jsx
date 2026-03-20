@@ -2,25 +2,34 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 import ProductCard from '../common/ProductCard';
 import microDosingImg from "../../assets/images/microdosing.png";
-import relaxChillImg from "../../assets/images/relaxchill.png";
+import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
+import deepjourneyImg from "../../assets/images/deepjourney.png";
+import relaxChillImg from "../../assets/images/relaxchill.png";
+import visualExperienceImg from "../../assets/images/visualexperience.png";
+import focusClarityImg from "../../assets/images/focusclarity.png";
 import Trinity from "../../assets/images/Trinity.png";
 import Truealbinoteacher from "../../assets/images/Truealbinoteacher.png";
 import AmazonianImg from "../../assets/images/Amazonian.png";
 import Jackfrost from "../../assets/images/Jackfrost.png";
-import focusClarityImg from "../../assets/images/focusclarity.png";
+import { useCategory } from '../../context/CategoryContext';
+
 const SimilarProducts = ({ products = [] }) => {
+  const { selectedEffect } = useCategory();
+
   const defaultProducts = [
     {
       id: 9,
       badge: { text: 'BEST SELLER', colorClass: 'bg-[#EA4031]' },
       image: Trinity,
-      effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
+      effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: microDosingImg, name: "Micro dosing" }, { image: visualExperienceImg, name: "Visual Experience" }],
       rating: '4.9',
       title: 'Trinity',
       vendor: 'Green Valley Organics',
       weights: ['3g', '10g'],
       price: 50.00,
+      categories: ['Micro dosing', 'Creative Boost', "Visual Experience"],
     },
     {
       id: 10,
@@ -36,32 +45,43 @@ const SimilarProducts = ({ products = [] }) => {
       vendor: 'Aether Mushroom Labs',
       weights: ['3g', '10g'],
       price: 50.00,
+      categories: ['Focus & Clarity', 'Relax & Chill'],
     },
     {
       id: 11,
       badge: { text: 'NEW', colorClass: 'bg-[#22C55E]' },
       image: AmazonianImg,
-      effects: [{ image: highPotencyImg, name: "High Potency" }],
+      effects: [{ image: highPotencyImg, name: "High Potency" },
+      { image: deepjourneyImg, name: "Deep Journey" },
+      { image: beginnerFriendlyImg, name: "Beginner Friendly" }
+      ],
       rating: '5.0',
       title: 'Amazonian',
       vendor: 'Elevated Solstice',
       weights: ['3g', '10g'],
       price: 55.00,
+      categories: ['High Potency', "Deep Journey", 'Beginner Friendly'],
     },
     {
       id: 12,
       badge: { text: 'POPULAR', colorClass: 'bg-[#3B82F6]' },
       image: Jackfrost,
-      effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }],
+      effects: [{ image: creativeBoostImg, name: "Creative Boost" },
+      { image: microDosingImg, name: "Micro dosing" }
+      ],
       rating: '4.7',
       title: 'Jack Frost',
       vendor: 'Green Valley Organics',
       weights: ['3g', '10g'],
       price: 45.00,
+      categories: ['Micro dosing', 'Creative Boost', 'Focus & Clarity'],
     },
   ];
 
-  const displayProducts = products.length > 0 ? products : defaultProducts;
+  const baseProducts = products.length > 0 ? products : defaultProducts;
+  const displayProducts = selectedEffect
+    ? baseProducts.filter(p => p.categories?.includes(selectedEffect))
+    : baseProducts;
 
   return (
     <div className="w-full py-12 bg-[#FAF8F5]">

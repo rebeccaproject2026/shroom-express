@@ -1,26 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     Search,
-    Heart,
-    ShoppingCart,
 } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import shroomLogo from "../../assets/images/Logo.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
 import deepJourneyImg from "../../assets/images/deepjourney.png";
+import { allProducts } from '../../data/productsData';
+import { useCategory } from '../../context/CategoryContext';
 
 const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     const [deliveryMethod, setDeliveryMethod] = useState('delivery');
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
+    const { selectedEffect, toggleEffect } = useCategory();
+
+    // Search state
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchOpen, setSearchOpen] = useState(false);
+    const searchRef = useRef(null);
+
+    const allStores = [
+        { id: 1, name: "micro zoomiez", type: 'store' },
+        { id: 2, name: "The Mushroom", type: 'store' },
+        { id: 3, name: "Psilovibin", type: 'store' },
+        { id: 4, name: "Shroom Express", type: 'store' },
+        { id: 5, name: "Shroom For Sale", type: 'store' },
+        { id: 6, name: "Magic Mushroom Delivery", type: 'store' },
+        { id: 7, name: "Planet 51", type: 'store' },
+        { id: 8, name: "Toronto Magic Store", type: 'store' },
+        { id: 9, name: "Magic Mushroom Danforth", type: 'store' },
+    ];
+
+    const searchResults = searchQuery.trim().length > 1 ? [
+        ...allProducts
+            .filter(p => (p.title || p.name || '').toLowerCase().includes(searchQuery.toLowerCase()))
+            .slice(0, 4)
+            .map(p => ({ id: p.id, name: p.title || p.name, image: p.image, type: 'product', vendor: p.vendor })),
+        ...allStores
+            .filter(s => s.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            .slice(0, 3),
+    ] : [];
+
+    const handleSelect = (result) => {
+        setSearchQuery('');
+        setSearchOpen(false);
+        if (result.type === 'product') navigate(`/store/product/${result.id}`);
+        else navigate(`/store/storeslists/${result.id}`);
+    };
+
+    // Close on outside click
+    useEffect(() => {
+        const handler = (e) => {
+            if (searchRef.current && !searchRef.current.contains(e.target)) {
+                setSearchOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
     const categories = [
         { name: 'Magic Mushrooms', icon: "hugeicons:mushroom" },
@@ -104,16 +150,88 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Center: Search Bar */}
-                <div className="flex-1 max-w-xl px-4 hidden md:block">
-                    <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm">
-                        <div className="pl-5 text-[#636363]">
-                            <Search size={20} />
+                <div className="flex-1 max-w-xl px-4 hidden md:block" ref={searchRef}>
+                    <div className="relative">
+                        <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm">
+                            <div className="pl-5 text-[#636363]">
+                                <Search size={20} />
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Search Products, Stores"
+                                value={searchQuery}
+                                onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+                                onFocus={() => setSearchOpen(true)}
+                                className="w-full h-full px-4 text-sm text-gray-700 outline-none placeholder-[#636363] placeholder:text-center placeholder:leading-4"
+                            />
+                            {searchQuery && (
+                                <button onClick={() => { setSearchQuery(''); setSearchOpen(false); }} className="pr-4 text-[#999] hover:text-[#E93E2B]">
+                                    <Icon icon="mdi:close" width={18} />
+                                </button>
+                            )}
                         </div>
-                        <input
-                            type="text"
-                            placeholder="Search Products, Stores"
-                            className="w-full h-full px-4 text-sm text-gray-700 outline-none placeholder-[#636363] placeholder:text-center placeholder:leading-4"
-                        />
+
+                        {/* Dropdown results */}
+                        {searchOpen && searchResults.length > 0 && (
+                            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden">
+                                {/* Products */}
+                                {searchResults.filter(r => r.type === 'product').length > 0 && (
+                                    <div>
+                                        <p className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase px-4 pt-3 pb-1">Products</p>
+                                        {searchResults.filter(r => r.type === 'product').map(r => (
+                                            <div
+                                                key={`p-${r.id}`}
+                                                onClick={() => handleSelect(r)}
+                                                className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#FFF5F4] cursor-pointer transition-colors"
+                                            >
+                                                <div className="w-9 h-9 rounded-lg bg-[#F5F0EB] overflow-hidden shrink-0">
+                                                    <img src={r.image} alt={r.name} className="w-full h-full object-contain" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="text-sm font-semibold text-[#181211] truncate">{r.name}</p>
+                                                    <p className="text-xs text-[#94A3B8] truncate">{r.vendor}</p>
+                                                </div>
+                                                <Icon icon="mdi:arrow-top-left" width={14} className="text-[#BDBDBD] ml-auto shrink-0" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                {/* Stores */}
+                                {searchResults.filter(r => r.type === 'store').length > 0 && (
+                                    <div className="border-t border-[#F1F5F9]">
+                                        <p className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase px-4 pt-3 pb-1">Stores</p>
+                                        {searchResults.filter(r => r.type === 'store').map(r => (
+                                            <div
+                                                key={`s-${r.id}`}
+                                                onClick={() => handleSelect(r)}
+                                                className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#FFF5F4] cursor-pointer transition-colors"
+                                            >
+                                                <div className="w-9 h-9 rounded-lg bg-[#F5F0EB] flex items-center justify-center shrink-0">
+                                                    <Icon icon="streamline:shopping-store-2-store-shop-shops-stores" width={18} className="text-[#E93E2B]" />
+                                                </div>
+                                                <p className="text-sm font-semibold text-[#181211] truncate flex-1">{r.name}</p>
+                                                <Icon icon="mdi:arrow-top-left" width={14} className="text-[#BDBDBD] shrink-0" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                                <div className="px-4 py-2.5 border-t border-[#F1F5F9]">
+                                    <button
+                                        onClick={() => { navigate('/store/storeslists'); setSearchOpen(false); }}
+                                        className="text-xs font-semibold text-[#E93E2B] hover:underline"
+                                    >
+                                        View all results for "{searchQuery}"
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* No results */}
+                        {searchOpen && searchQuery.trim().length > 1 && searchResults.length === 0 && (
+                            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] px-4 py-5 text-center">
+                                <p className="text-sm text-[#94A3B8] font-medium">No results for "{searchQuery}"</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -156,7 +274,11 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                             const categoryPath = cat.name === 'Stores'
                                 ? '/store/storeslists'
                                 : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
-                            const isActive = location.pathname === categoryPath;
+
+                            const effectSlugs = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
+                            const isEffectSlug = effectSlugs.some(s => location.pathname === `/store/category/${s}`);
+                            const isActive = location.pathname === categoryPath ||
+                                (cat.name === 'Magic Mushrooms' && isEffectSlug);
 
                             return (
                                 <li key={idx} className="shrink-0 flex items-center justify-center">
@@ -185,16 +307,32 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             <div className="w-full bg-[#FFFFFF]">
                 <div className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-center gap-10 overflow-x-auto no-scrollbar pb-1">
-                        {categoryIcons.map((item, idx) => (
-                            <div key={idx} className="flex flex-col items-center gap-2.5 shrink-0 cursor-pointer group">
-                                <div className="w-[58px] h-[58px] rounded-full bg-white flex items-center justify-center border border-[#E8E8E8] overflow-hidden ">
-                                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                        {categoryIcons.map((item, idx) => {
+                            const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                            const iconPath = `/store/category/${slug}`;
+                            const isActiveRoute = location.pathname === iconPath;
+                            const isActiveContext = selectedEffect === item.name;
+                            const isActive = isActiveRoute || isActiveContext;
+
+                            const handleIconClick = () => {
+                                toggleEffect(item.name);
+                            };
+
+                            return (
+                                <div
+                                    key={idx}
+                                    onClick={handleIconClick}
+                                    className="flex flex-col items-center gap-2.5 shrink-0 cursor-pointer group"
+                                >
+                                    <div className={`w-[58px] h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white border-[#E8E8E8]`}>
+                                        <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                                    </div>
+                                    <span className={`text-sm font-semibold whitespace-nowrap transition-colors ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
+                                        {item.name}
+                                    </span>
                                 </div>
-                                <span className="text-sm font-semibold text-[#181211] whitespace-nowrap group-hover:text-[var(--store-primary)] transition-colors">
-                                    {item.name}
-                                </span>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             </div>

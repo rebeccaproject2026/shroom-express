@@ -13,7 +13,7 @@ import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import Shroomforsalebanner from "../../assets/images/shroomforsalebanner.png";
 import Shroomforsalelogo from "../../assets/images/Shroomforsalebannerlogo.png";

@@ -6,11 +6,11 @@ import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
-import visualExperienceImg from "../../assets/images/visualexperience.png";
+import visualExperienceImg from "../../assets/images/visualexperience.png";;
+import creativeBoostImg from "../../assets/images/creativeboost.png";
 import { allProducts } from '../../data/productsData';
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
-import creativeBoostImg from "../../assets/images/creative boost.png";
 import StoreCard from '../../components/common/StoreCard';
 import storecard1 from "../../assets/images/storecard1.png";
 import background from "../../assets/images/background1.png";
@@ -36,6 +36,7 @@ import Str8 from '../../assets/images/str8.png';
 import Str9 from '../../assets/images/str9.png';
 import Str10 from '../../assets/images/str10.png';
 import FilterDrawer from '../../components/products/FilterDrawer';
+import { useCategory } from '../../context/CategoryContext';
 
 
 const StoreDetails = () => {
@@ -46,6 +47,7 @@ const StoreDetails = () => {
     const [activeCategory, setActiveCategory] = useState(null); // 'mushrooms' | 'edibles' | null
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
+    const { selectedEffect } = useCategory();
     // All stores data
     const allStoresData = {
         1: {
@@ -186,6 +188,12 @@ const StoreDetails = () => {
     const products = useMemo(() => {
         let list = [...allProducts];
 
+        // Filter by header icon selectedEffect from context
+        if (selectedEffect) {
+            const effectAlias = selectedEffect === 'Micro dosing' ? 'Microdosing' : selectedEffect;
+            list = list.filter(p => p.categories?.includes(effectAlias));
+        }
+
         // Category = High Potency products
         if (activeCategory === 'mushrooms') {
             list = list.filter(p => p.categories?.some(c =>
@@ -210,7 +218,7 @@ const StoreDetails = () => {
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
 
         return list;
-    }, [activeCategory, activeDelivery, activeBestSeller, sortBy]);
+    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, selectedEffect]);
     const stores = [
         {
             id: 1,

@@ -3,7 +3,9 @@ import beginnerFriendlyImg from "../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../assets/images/highpotency.png";
 import relaxChillImg from "../assets/images/relaxchill.png";
 import visualExperienceImg from "../assets/images/visualexperience.png";
+import deepjourneyImg from "../assets/images/deepjourney.png";
 import focusClarityImg from "../assets/images/focusclarity.png";
+import creativeBoostImg from "../assets/images/creativeboost.png";
 import albinoChodaImg from "../assets/images/Albinochoda.png";
 import Aztecgod from "../assets/images/Aztecgod.png";
 import albinohillbilyImg from "../assets/images/Albinohillbilly.png";
@@ -376,7 +378,8 @@ export const allProducts = [
         sku: "N/A",
         categories: ["Microdosing", "Creative Boost"],
         effects: [
-            { image: microDosingImg, name: "Creative Boost" },
+            { image: creativeBoostImg, name: "Creative Boost" },
+            { image: microDosingImg, name: "Microdosing" },
         ],
         description: [
             { title: "Blue Meanies Magic Mushrooms:", text: "Known for their distinctive deep blue stain upon handling." },
@@ -427,10 +430,10 @@ export const allProducts = [
         price: 55,
         location: "7.1 km away • North York",
         sku: "N/A",
-        categories: ["High Potency", "Visual Experience"],
+        categories: ["Deep Journey", "Focus & Clarity"],
         effects: [
-            { image: highPotencyImg, name: "High Potency" },
-            { image: visualExperienceImg, name: "Visual Experience" },
+            { image: deepjourneyImg, name: "Deep Journey" },
+            { image: focusClarityImg, name: "Focus & Clarity" },
         ],
         description: [
             { title: "Albino Penis Envy:", text: "One of the strongest psilocybin strains available." },
@@ -483,7 +486,7 @@ export const allProducts = [
         sku: "N/A",
         categories: ["Creative Boost", "Visual Experience"],
         effects: [
-            { image: microDosingImg, name: "Creative Boost" },
+            { image: creativeBoostImg, name: "Creative Boost" },
             { image: visualExperienceImg, name: "Visual Experience" },
         ],
         description: [
@@ -590,7 +593,8 @@ export const allProducts = [
         sku: "N/A",
         categories: ["Creative Boost", "Microdosing"],
         effects: [
-            { image: microDosingImg, name: "Creative Boost" },
+            { image: creativeBoostImg, name: "Creative Boost" },
+            { image: microDosingImg, name: "Microdosing" },
         ],
         description: [
             { title: "Trinity:", text: "Balanced strain known for smooth effects." },
@@ -669,7 +673,8 @@ export const allProducts = [
         sku: "N/A",
         categories: ["Creative Boost", "Microdosing"],
         effects: [
-            { image: microDosingImg, name: "Creative Boost" },
+            { image: creativeBoostImg, name: "Creative Boost" },
+            { image: microDosingImg, name: "Microdosing" },
         ],
         description: [
             { title: "Jack Frost:", text: "Unique strain with frosty white appearance." },
