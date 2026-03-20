@@ -48,6 +48,7 @@ const StoreDetails = () => {
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const { selectedEffect } = useCategory();
+    const [drawerFilters, setDrawerFilters] = useState({ onSale: false, inStock: false, priceRange: [0, 200], selectedCategory: 'All' });
     // All stores data
     const allStoresData = {
         1: {
@@ -194,6 +195,17 @@ const StoreDetails = () => {
             list = list.filter(p => p.categories?.includes(effectAlias));
         }
 
+        // Drawer filters
+        if (drawerFilters.inStock) list = list.filter(p => p.inStock !== false);
+        if (drawerFilters.onSale) list = list.filter(p => p.onSale === true);
+        if (drawerFilters.selectedCategory && drawerFilters.selectedCategory !== 'All') {
+            const catAlias = drawerFilters.selectedCategory === 'Micro dosing' ? 'Microdosing' : drawerFilters.selectedCategory;
+            list = list.filter(p => p.categories?.includes(catAlias));
+        }
+        if (drawerFilters.priceRange) {
+            list = list.filter(p => p.price >= drawerFilters.priceRange[0] && p.price <= drawerFilters.priceRange[1]);
+        }
+
         // Category = High Potency products
         if (activeCategory === 'mushrooms') {
             list = list.filter(p => p.categories?.some(c =>
@@ -218,7 +230,7 @@ const StoreDetails = () => {
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
 
         return list;
-    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, selectedEffect]);
+    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters]);
     const stores = [
         {
             id: 1,
@@ -425,7 +437,7 @@ const StoreDetails = () => {
                     ))}
                 </div>
             </div>
-            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
+            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
         </div>
     );
 };

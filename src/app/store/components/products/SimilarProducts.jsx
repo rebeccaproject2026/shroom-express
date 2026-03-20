@@ -30,6 +30,7 @@ const SimilarProducts = ({ products = [] }) => {
       weights: ['3g', '10g'],
       price: 50.00,
       categories: ['Micro dosing', 'Creative Boost', "Visual Experience"],
+      inStock: true, onSale: true,
     },
     {
       id: 10,
@@ -46,6 +47,7 @@ const SimilarProducts = ({ products = [] }) => {
       weights: ['3g', '10g'],
       price: 50.00,
       categories: ['Focus & Clarity', 'Relax & Chill'],
+      inStock: false, onSale: false,
     },
     {
       id: 11,
@@ -61,6 +63,7 @@ const SimilarProducts = ({ products = [] }) => {
       weights: ['3g', '10g'],
       price: 55.00,
       categories: ['High Potency', "Deep Journey", 'Beginner Friendly'],
+      inStock: true, onSale: false,
     },
     {
       id: 12,
@@ -75,6 +78,7 @@ const SimilarProducts = ({ products = [] }) => {
       weights: ['3g', '10g'],
       price: 45.00,
       categories: ['Micro dosing', 'Creative Boost', 'Focus & Clarity'],
+      inStock: true, onSale: true,
     },
   ];
 

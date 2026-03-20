@@ -365,6 +365,8 @@ export const allProducts = [
         id: 1,
         badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" },
         isWishlisted: false,
+        inStock: true,
+        onSale: true,
         image: albinoChodaImg,
         images: [albinoChodaImg, albinoChodaImg, albinoChodaImg],
         title: "Albino Choda",
@@ -387,11 +389,12 @@ export const allProducts = [
             { title: "Potency:", text: "Average" },
         ],
     },
-
     {
         id: 2,
         badge: { text: "NEW", colorClass: "bg-[#059669]" },
         isWishlisted: true,
+        inStock: true,
+        onSale: false,
         image: albinohillbilyImg,
         images: [albinohillbilyImg, albinohillbilyImg, albinohillbilyImg],
         title: "Albino Hillbilly",
@@ -414,11 +417,12 @@ export const allProducts = [
             { title: "Potency:", text: "High" },
         ],
     },
-
     {
         id: 3,
         badge: { text: "NEW", colorClass: "bg-[#059669]" },
         isWishlisted: true,
+        inStock: false,
+        onSale: false,
         image: albinopenisenvyImg,
         images: [albinopenisenvyImg, albinopenisenvyImg, albinopenisenvyImg],
         title: "Albino Penis Envy",
@@ -441,11 +445,12 @@ export const allProducts = [
             { title: "Potency:", text: "Very High" },
         ],
     },
-
     {
         id: 4,
         badge: null,
         isWishlisted: false,
+        inStock: true,
+        onSale: true,
         image: Aztecgod,
         images: [Aztecgod, Aztecgod, Aztecgod],
         title: "Aztec God",
@@ -468,11 +473,12 @@ export const allProducts = [
             { title: "Potency:", text: "Moderate" },
         ],
     },
-
     {
         id: 5,
         badge: null,
         isWishlisted: false,
+        inStock: true,
+        onSale: false,
         image: Bluemeanies,
         images: [Bluemeanies, Bluemeanies, Bluemeanies],
         title: "Blue Meanies",
@@ -495,11 +501,12 @@ export const allProducts = [
             { title: "Potency:", text: "High" },
         ],
     },
-
     {
         id: 6,
         badge: null,
         isWishlisted: false,
+        inStock: false,
+        onSale: false,
         image: Penisenvy,
         images: [Penisenvy, Penisenvy, Penisenvy],
         title: "Penis Envy",
@@ -522,11 +529,12 @@ export const allProducts = [
             { title: "Potency:", text: "High" },
         ],
     },
-
     {
         id: 7,
         badge: { text: "NEW", colorClass: "bg-[#059669]" },
         isWishlisted: true,
+        inStock: true,
+        onSale: true,
         image: Shakti,
         images: [Shakti, Shakti, Shakti],
         title: "Shakti",
@@ -548,11 +556,12 @@ export const allProducts = [
             { title: "Potency:", text: "Very High" },
         ],
     },
-
     {
         id: 8,
         badge: null,
         isWishlisted: false,
+        inStock: true,
+        onSale: false,
         image: Tidalwave,
         images: [Tidalwave, Tidalwave, Tidalwave],
         title: "Tidal Wave",
@@ -575,11 +584,12 @@ export const allProducts = [
             { title: "Potency:", text: "High" },
         ],
     },
-
     {
         id: 9,
         badge: null,
         isWishlisted: false,
+        inStock: true,
+        onSale: true,
         image: Trinity,
         images: [Trinity, Trinity, Trinity],
         title: "Trinity",
@@ -602,11 +612,12 @@ export const allProducts = [
             { title: "Potency:", text: "Moderate" },
         ],
     },
-
     {
         id: 10,
         badge: null,
         isWishlisted: false,
+        inStock: false,
+        onSale: false,
         image: Truealbinoteacher,
         images: [Truealbinoteacher, Truealbinoteacher, Truealbinoteacher],
         title: "True Albino Teacher",
@@ -629,11 +640,12 @@ export const allProducts = [
             { title: "Potency:", text: "Moderate" },
         ],
     },
-
     {
         id: 11,
         badge: { text: "NEW", colorClass: "bg-[#059669]" },
         isWishlisted: true,
+        inStock: true,
+        onSale: false,
         image: AmazonianImg,
         images: [AmazonianImg, AmazonianImg, AmazonianImg],
         title: "Amazonian",
@@ -655,11 +667,12 @@ export const allProducts = [
             { title: "Potency:", text: "High" },
         ],
     },
-
     {
         id: 12,
         badge: null,
         isWishlisted: false,
+        inStock: true,
+        onSale: true,
         image: Jackfrost,
         images: [Jackfrost, Jackfrost, Jackfrost],
         title: "Jack Frost",

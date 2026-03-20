@@ -44,6 +44,7 @@ const ProductsList = () => {
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const [storeSearch, setStoreSearch] = useState('');
+    const [drawerFilters, setDrawerFilters] = useState({ onSale: false, inStock: false, priceRange: [0, 200], selectedCategory: 'All' });
 
     // Category title mapping - only for main nav categories, effect slugs keep parent title
     const categoryTitles = {
@@ -70,7 +71,7 @@ const ProductsList = () => {
         {
             id: 1,
             badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" },
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: true,
             image: albinoChodaImg,
             title: "Albino Choda",
             vendor: "Green Valley Organics",
@@ -81,14 +82,12 @@ const ProductsList = () => {
             effects: [
                 { image: creativeBoostImg, name: "Creative Boost" },
                 { image: microDosingImg, name: "Microdosing" }
-
-
             ]
         },
         {
             id: 2,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true,
+            isWishlisted: true, inStock: true, onSale: false,
             image: albinohillbilyImg,
             title: "Albino Hillbilly",
             vendor: "Aether Mushroom Labs",
@@ -104,7 +103,7 @@ const ProductsList = () => {
         {
             id: 3,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true,
+            isWishlisted: true, inStock: false, onSale: false,
             image: albinopenisenvyImg,
             title: "Albino Penis Envy",
             vendor: "Elevated Solstice",
@@ -120,7 +119,7 @@ const ProductsList = () => {
         {
             id: 4,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: true,
             image: Aztecgod,
             title: "Aztec God",
             vendor: "Green Valley Organics",
@@ -136,7 +135,7 @@ const ProductsList = () => {
         {
             id: 5,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: false,
             image: Bluemeanies,
             title: "Blue Meanies",
             vendor: "Green Valley Organics",
@@ -149,7 +148,7 @@ const ProductsList = () => {
         {
             id: 6,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: false, onSale: false,
             image: Penisenvy,
             title: "Penis Envy",
             vendor: "Aether Mushroom Labs",
@@ -165,7 +164,7 @@ const ProductsList = () => {
         {
             id: 7,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true,
+            isWishlisted: true, inStock: true, onSale: true,
             image: Shakti,
             title: "Shakti",
             vendor: "Elevated Solstice",
@@ -178,7 +177,7 @@ const ProductsList = () => {
         {
             id: 8,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: false,
             image: Tidalwave,
             title: "Tidal Wave",
             vendor: "Green Valley Organics",
@@ -194,7 +193,7 @@ const ProductsList = () => {
         {
             id: 9,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: true,
             image: Trinity,
             title: "Trinity",
             vendor: "Green Valley Organics",
@@ -207,7 +206,7 @@ const ProductsList = () => {
         {
             id: 10,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: false, onSale: false,
             image: Truealbinoteacher,
             title: "True Albino Teacher",
             vendor: "Aether Mushroom Labs",
@@ -223,7 +222,7 @@ const ProductsList = () => {
         {
             id: 11,
             badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true,
+            isWishlisted: true, inStock: true, onSale: false,
             image: AmazonianImg,
             title: "Amazonian",
             vendor: "Elevated Solstice",
@@ -236,7 +235,7 @@ const ProductsList = () => {
         {
             id: 12,
             badge: null,
-            isWishlisted: false,
+            isWishlisted: false, inStock: true, onSale: true,
             image: Jackfrost,
             title: "Jack Frost",
             vendor: "Green Valley Organics",
@@ -322,6 +321,17 @@ const ProductsList = () => {
             list = list.filter(p => p.categories?.includes(effectAlias));
         }
 
+        // Drawer filters
+        if (drawerFilters.inStock) list = list.filter(p => p.inStock !== false);
+        if (drawerFilters.onSale) list = list.filter(p => p.onSale === true);
+        if (drawerFilters.selectedCategory && drawerFilters.selectedCategory !== 'All') {
+            const catAlias = drawerFilters.selectedCategory === 'Micro dosing' ? 'Microdosing' : drawerFilters.selectedCategory;
+            list = list.filter(p => p.categories?.includes(catAlias));
+        }
+        if (drawerFilters.priceRange) {
+            list = list.filter(p => p.price >= drawerFilters.priceRange[0] && p.price <= drawerFilters.priceRange[1]);
+        }
+
         if (activeCategory) list = list.filter(p => p.categories?.some(c => c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'));
         if (activeDelivery) list = list.filter(p => p.categories?.some(c => c === 'Beginner Friendly' || c === 'Microdosing'));
         if (activeBestSeller) list = list.filter(p => p.badge?.text === 'BEST SELLER');
@@ -330,7 +340,7 @@ const ProductsList = () => {
         else if (sortBy === 'rating') list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
         return list;
-    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, products, category, selectedEffect]);
+    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, products, category, selectedEffect, drawerFilters]);
 
     const filteredStores = useMemo(() =>
         stores.filter(s =>
@@ -342,7 +352,7 @@ const ProductsList = () => {
 
     return (
         <div className="w-full px-12 py-10">
-            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
+            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
             {/* Page Header - White Background Card */}
             <div className="bg-white rounded-[20px] p-12 mb-8  border border-[#E5DCDC]">
                 <h1 className="text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 
-const categories = ["All", "Edible", "Medicinal", "Functional", "Grow Kits"];
+const categories = ["All", "Micro dosing", "Beginner Friendly", "Creative Boost", "Relax & Chill", "Visual Experience", "Focus & Clarity", "Deep Journey"];
 
-const FilterDrawer = ({ open, onClose }) => {
+const FilterDrawer = ({ open, onClose, onApply }) => {
   const [onSale, setOnSale] = useState(false);
   const [inStock, setInStock] = useState(false);
   const [priceRange, setPriceRange] = useState([25, 150]);
@@ -138,6 +138,31 @@ const FilterDrawer = ({ open, onClose }) => {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-5 py-4 border-t border-[#E8E8E8] flex gap-3">
+          <button
+            onClick={() => {
+              setOnSale(false);
+              setInStock(false);
+              setPriceRange([25, 150]);
+              setSelectedCategory("All");
+              if (onApply) onApply({ onSale: false, inStock: false, priceRange: [25, 150], selectedCategory: "All" });
+            }}
+            className="flex-1 py-2.5 rounded-full border border-[#E8E8E8] text-sm font-semibold text-[#444] hover:bg-[#F5F0EB] transition-colors cursor-pointer"
+          >
+            Reset
+          </button>
+          <button
+            onClick={() => {
+              if (onApply) onApply({ onSale, inStock, priceRange, selectedCategory });
+              onClose();
+            }}
+            className="flex-1 py-2.5 rounded-full bg-[#E93E2B] text-white text-sm font-semibold hover:opacity-90 transition-opacity cursor-pointer"
+          >
+            Apply
+          </button>
         </div>
       </div>
     </>
