@@ -68,6 +68,7 @@ const ProductsList = () => {
             rating: '4.9',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["Microdosing", "Creative Boost"],
             effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
         },
         {
@@ -80,6 +81,7 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["High Potency", "Visual Experience"],
             effects: [
                 { image: highPotencyImg, name: "High Potency" },
                 { image: visualExperienceImg, name: "Visual Experience" }
@@ -95,6 +97,7 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 55.00,
+            categories: ["High Potency", "Visual Experience"],
             effects: [
                 { image: highPotencyImg, name: "High Potency" },
                 { image: visualExperienceImg, name: "Visual Experience" }
@@ -110,12 +113,12 @@ const ProductsList = () => {
             rating: '4.7',
             weights: ['3g', '10g'],
             price: 45.00,
+            categories: ["Focus & Clarity", "Relax & Chill"],
             effects: [
                 { image: focusClarityImg, name: "Focus & Clarity" },
                 { image: relaxChillImg, name: "Relax & Chill" }
             ]
         },
-
         {
             id: 5,
             badge: null,
@@ -126,6 +129,7 @@ const ProductsList = () => {
             rating: '4.9',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["Creative Boost", "Visual Experience"],
             effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
         },
         {
@@ -138,6 +142,7 @@ const ProductsList = () => {
             rating: '4.8',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["Beginner Friendly", "Microdosing"],
             effects: [
                 { image: beginnerFriendlyImg, name: "Beginner Friendly" },
                 { image: microDosingImg, name: "Microdosing" }
@@ -153,9 +158,9 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 55.00,
+            categories: ["High Potency"],
             effects: [{ image: highPotencyImg, name: "High Potency" }]
         },
-
         {
             id: 8,
             badge: null,
@@ -166,6 +171,7 @@ const ProductsList = () => {
             rating: '4.8',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["Beginner Friendly", "Microdosing"],
             effects: [
                 { image: beginnerFriendlyImg, name: "Beginner Friendly" },
                 { image: microDosingImg, name: "Microdosing" }
@@ -181,6 +187,7 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["Creative Boost", "Microdosing"],
             effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
         },
         {
@@ -193,6 +200,7 @@ const ProductsList = () => {
             rating: '4.7',
             weights: ['3g', '10g'],
             price: 45.00,
+            categories: ["Focus & Clarity", "Relax & Chill"],
             effects: [
                 { image: focusClarityImg, name: "Focus & Clarity" },
                 { image: relaxChillImg, name: "Relax & Chill" }
@@ -208,6 +216,7 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 50.00,
+            categories: ["High Potency"],
             effects: [{ image: highPotencyImg, name: "High Potency" }]
         },
         {
@@ -220,6 +229,7 @@ const ProductsList = () => {
             rating: '5.0',
             weights: ['3g', '10g'],
             price: 45.00,
+            categories: ["Creative Boost", "Microdosing"],
             effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
         },
     ];

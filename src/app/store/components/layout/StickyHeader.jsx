@@ -143,7 +143,9 @@ const StickyHeader = ({ cartCount = 0, onCartClick }) => {
                 <div className="container mx-auto px-4">
                     <ul className="flex items-center justify-center space-x-12 h-10 overflow-x-auto no-scrollbar">
                         {categories.map((cat, idx) => {
-                            const categoryPath = `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
+                            const categoryPath = cat.name === 'Stores'
+                                ? '/store/storeslists'
+                                : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
                             const isActive = location.pathname === categoryPath;
 
                             return (

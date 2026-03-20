@@ -374,7 +374,7 @@ export const allProducts = [
         price: 50,
         location: "5.6 km away • Toronto Central",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["Microdosing", "Creative Boost"],
         effects: [
             { image: microDosingImg, name: "Creative Boost" },
         ],
@@ -400,7 +400,7 @@ export const allProducts = [
         price: 55,
         location: "3.2 km away • Toronto East",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["High Potency", "Visual Experience"],
         effects: [
             { image: highPotencyImg, name: "High Potency" },
             { image: visualExperienceImg, name: "Visual Experience" },
@@ -427,7 +427,7 @@ export const allProducts = [
         price: 55,
         location: "7.1 km away • North York",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["High Potency", "Visual Experience"],
         effects: [
             { image: highPotencyImg, name: "High Potency" },
             { image: visualExperienceImg, name: "Visual Experience" },
@@ -454,7 +454,7 @@ export const allProducts = [
         price: 45,
         location: "7.1 km away • North York",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["Focus & Clarity", "Relax & Chill"],
         effects: [
             { image: focusClarityImg, name: "Focus & Clarity" },
             { image: relaxChillImg, name: "Relax & Chill" },
@@ -481,7 +481,7 @@ export const allProducts = [
         price: 50,
         location: "5.6 km away • Toronto Central",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["Creative Boost", "Visual Experience"],
         effects: [
             { image: microDosingImg, name: "Creative Boost" },
             { image: visualExperienceImg, name: "Visual Experience" },
@@ -508,7 +508,7 @@ export const allProducts = [
         price: 50,
         location: "3.2 km away • Toronto East",
         sku: "N/A",
-        categories: ["Shop Mushroom", "Shroom Strains"],
+        categories: ["Beginner Friendly", "Microdosing"],
         effects: [
             { image: beginnerFriendlyImg, name: "Beginner Friendly" },
             { image: microDosingImg, name: "Microdosing" },
@@ -535,7 +535,7 @@ export const allProducts = [
         price: 55,
         location: "7.1 km away • North York",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["High Potency"],
         effects: [
             { image: highPotencyImg, name: "High Potency" },
         ],
@@ -561,7 +561,7 @@ export const allProducts = [
         price: 50,
         location: "2.4 km away • Downtown Toronto",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["Beginner Friendly", "Microdosing"],
         effects: [
             { image: beginnerFriendlyImg, name: "Beginner Friendly" },
             { image: microDosingImg, name: "Microdosing" },
@@ -588,7 +588,7 @@ export const allProducts = [
         price: 50,
         location: "5.6 km away • Toronto Central",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["Creative Boost", "Microdosing"],
         effects: [
             { image: microDosingImg, name: "Creative Boost" },
         ],
@@ -614,7 +614,7 @@ export const allProducts = [
         price: 45,
         location: "7.1 km away • North York",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["Focus & Clarity", "Relax & Chill"],
         effects: [
             { image: focusClarityImg, name: "Focus & Clarity" },
             { image: relaxChillImg, name: "Relax & Chill" },
@@ -641,7 +641,7 @@ export const allProducts = [
         price: 50,
         location: "3.2 km away • Toronto East",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["High Potency"],
         effects: [
             { image: highPotencyImg, name: "High Potency" },
         ],
@@ -667,7 +667,7 @@ export const allProducts = [
         price: 45,
         location: "2.4 km away • Downtown Toronto",
         sku: "N/A",
-        categories: ["Shop Mushroom"],
+        categories: ["Creative Boost", "Microdosing"],
         effects: [
             { image: microDosingImg, name: "Creative Boost" },
         ],

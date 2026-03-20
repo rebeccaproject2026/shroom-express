@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import product1 from '../../assets/images/product1.png';
+import { useCart } from '../../context/CartContext';
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
+    const { addToCart } = useCart();
 
     // Destructure with default fallbacks matching the screenshot design
     const {
@@ -26,6 +28,7 @@ const ProductCard = ({ product }) => {
     const activeEffects = effects.length > 0 ? effects : (effectImage ? [{ image: effectImage, name: effectName }] : []);
 
     const [quantity, setQuantity] = useState(1);
+    const [selectedWeight, setSelectedWeight] = useState(null);
 
     const handleDecrement = () => {
         if (quantity > 1) setQuantity(quantity - 1);
@@ -33,6 +36,11 @@ const ProductCard = ({ product }) => {
 
     const handleIncrement = () => {
         setQuantity(quantity + 1);
+    };
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        addToCart(product, selectedWeight, quantity);
     };
 
     const handleProductClick = () => {
@@ -43,11 +51,13 @@ const ProductCard = ({ product }) => {
 
     return (
         <div
-            onClick={handleProductClick}
             className={`bg-white rounded-3xl p-4  flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}
         >
             {/* Image Container */}
-            <div className="relative w-full h-60 flex items-center justify-center overflow-visible shrink-0 mb-3">
+            <div
+                onClick={handleProductClick}
+                className="relative w-full h-60 flex items-center justify-center overflow-visible shrink-0 mb-3 cursor-pointer"
+            >
                 {/* Badge */}
                 {badge && (
                     <span
@@ -117,12 +127,13 @@ const ProductCard = ({ product }) => {
                 {weights && weights.length > 0 && (
                     <div className="flex gap-1">
                         {weights.map((w, idx) => (
-                            <span
+                            <button
                                 key={idx}
-                                className="px-3 py-1 border border-[#CCCCCC] rounded-sm text-sm font-medium text-[#181211] bg-white text-center min-w-10"
+                                onClick={(e) => { e.stopPropagation(); setSelectedWeight(w); }}
+                                className={`px-3 py-1 cursor-pointer border rounded-sm text-sm font-medium text-center min-w-10 transition-colors ${selectedWeight === w ? 'border-[#E93E2B] bg-[#E93E2B] text-white' : 'border-[#CCCCCC] bg-white text-[#181211] hover:border-[#E93E2B]'}`}
                             >
                                 {w}
-                            </span>
+                            </button>
                         ))}
                     </div>
                 )}
@@ -150,10 +161,7 @@ const ProductCard = ({ product }) => {
 
                         {/* Add to Cart */}
                         <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                navigate('/store/cart');
-                            }}
+                            onClick={handleAddToCart}
                             className="w-7.5 h-7.5 bg-[#E93E2B] text-white rounded-md flex items-center cursor-pointer justify-center hover:bg-opacity-90 transition-opacity shrink-0"
                         >
                             <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />

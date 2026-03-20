@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './index.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
@@ -27,25 +28,27 @@ function StoreApp() {
     }, [pathname]);
 
     return (
-        <Routes>
-            <Route path="/" element={<StoreLayout />}>
-                <Route index element={<Home />} />
-                <Route path="storeslists" element={<StoresList />} />
-                <Route path="storeslists/:storeId" element={<StoreDetails />} />
-                <Route path="category/:category" element={<ProductsList />} />
-                <Route path="product/:productId" element={<ProductDetail />} />
-                <Route path="checkout" element={<CheckoutPage />} />
-                <Route path="order-complete" element={<OrderCompletePage />} />
-                <Route path="cart" element={<CartPage />} />
-                <Route path="track-order" element={<TrackOrderPage />} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="forgot-password" element={<ForgotPasswordPage />} />
-                <Route path="check-email" element={<CheckEmailPage />} />
-                <Route path="reset-password" element={<ResetPasswordPage />} />
-                <Route path="myaccount" element={<MyAccountPage />} />
-            </Route>
-        </Routes>
+        <CartProvider>
+            <Routes>
+                <Route path="/" element={<StoreLayout />}>
+                    <Route index element={<Home />} />
+                    <Route path="storeslists" element={<StoresList />} />
+                    <Route path="storeslists/:storeId" element={<StoreDetails />} />
+                    <Route path="category/:category" element={<ProductsList />} />
+                    <Route path="product/:productId" element={<ProductDetail />} />
+                    <Route path="checkout" element={<CheckoutPage />} />
+                    <Route path="order-complete" element={<OrderCompletePage />} />
+                    <Route path="cart" element={<CartPage />} />
+                    <Route path="track-order" element={<TrackOrderPage />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="check-email" element={<CheckEmailPage />} />
+                    <Route path="reset-password" element={<ResetPasswordPage />} />
+                    <Route path="myaccount" element={<MyAccountPage />} />
+                </Route>
+            </Routes>
+        </CartProvider>
     );
 }
 

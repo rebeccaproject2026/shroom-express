@@ -155,6 +155,7 @@ const Home = () => {
                                 rating: '4.9',
                                 weights: ['3g', '10g'],
                                 price: 50.00,
+                                categories: ["Microdosing", "Creative Boost"],
                                 effects: [
                                     { image: microDosingImg, name: "Creative Boost", hasBorder: false }
                                 ]
@@ -169,6 +170,7 @@ const Home = () => {
                                 rating: '5.0',
                                 weights: ['3g', '10g'],
                                 price: 55.00,
+                                categories: ["High Potency", "Visual Experience"],
                                 effects: [
                                     { image: highPotencyImg, name: "High Potency" },
                                     { image: visualExperienceImg, name: "Visual Experience" }
@@ -184,6 +186,7 @@ const Home = () => {
                                 rating: '4.7',
                                 weights: ['3g', '10g'],
                                 price: 45.00,
+                                categories: ["Focus & Clarity", "Relax & Chill"],
                                 effects: [
                                     { image: focusClarityImg, name: "Focus & Clarity" },
                                     { image: relaxChillImg, name: "Relax & Chill" }
@@ -199,6 +202,7 @@ const Home = () => {
                                 rating: '4.8',
                                 weights: ['3g', '10g'],
                                 price: 50.00,
+                                categories: ["Beginner Friendly", "Microdosing"],
                                 effects: [
                                     { image: beginnerFriendlyImg, name: "Beginner Friendly" },
                                     { image: microDosingImg, name: "Microdosing" }
@@ -214,6 +218,7 @@ const Home = () => {
                                 rating: '4.8',
                                 weights: ['3g', '10g'],
                                 price: 50.00,
+                                categories: ["Creative Boost"],
                                 effects: [
                                     { image: creativeBoostImg, name: "Creative Boost" }
                                 ]
@@ -228,6 +233,7 @@ const Home = () => {
                                 rating: '5.0',
                                 weights: ['3g', '10g'],
                                 price: 55.00,
+                                categories: ["High Potency"],
                                 effects: [
                                     { image: highPotencyImg, name: "High Potency" }
                                 ]
@@ -377,41 +383,49 @@ const Home = () => {
                             {
                                 id: 101, badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, image: product1,
                                 title: "Blue Meanies", vendor: "Green Valley Organics", rating: '4.9', weights: ['3g', '10g'], price: 50.00,
+                                categories: ["Creative Boost", "Visual Experience"],
                                 effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
                             },
                             {
                                 id: 102, badge: null, isWishlisted: true, image: product2,
                                 title: "Melmac (Dried)", vendor: "Aether Mushroom Labs", rating: '4.8', weights: ['3g', '10g'], price: 35.00,
+                                categories: ["Creative Boost", "Relax & Chill"],
                                 effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: relaxChillImg, name: "Relax & Chill" }]
                             },
                             {
                                 id: 103, badge: { text: "NEW", colorClass: "bg-[#059669]" }, isWishlisted: false, image: product3,
                                 title: "Chocolate Bar Golden Teacher", vendor: "Elevated Solstice", rating: '5.0', weights: ['3g', '10g'], price: 45.00,
+                                categories: ["Beginner Friendly"],
                                 effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }]
                             },
                             {
                                 id: 104, badge: null, isWishlisted: false, image: product4,
                                 title: "Tidal Wave", vendor: "Green Valley Organics", rating: '4.7', weights: ['3g', '10g'], price: 60.00,
+                                categories: ["Focus & Clarity", "Relax & Chill"],
                                 effects: [{ image: focusClarityImg, name: "Focus & Clarity" }, { image: relaxChillImg, name: "Relax & Chill" }]
                             },
                             {
                                 id: 105, badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, image: product5,
                                 title: "Utopia Gummy Grape 10pcs", vendor: "Green Valley Organics", rating: '4.9', weights: ['3g', '10g'], price: 80.00,
+                                categories: ["Microdosing", "Creative Boost"],
                                 effects: [{ image: microDosingImg, name: "Creative Boost", hasBorder: false }]
                             },
                             {
                                 id: 106, badge: null, isWishlisted: true, image: product6,
                                 title: "Original OG Dummyz 1000mg...", vendor: "Aether Mushroom Labs", rating: '4.8', weights: ['3g', '10g'], price: 35.00,
+                                categories: ["Creative Boost", "Relax & Chill"],
                                 effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: relaxChillImg, name: "Relax & Chill" }]
                             },
                             {
                                 id: 107, badge: { text: "NEW", colorClass: "bg-[#059669]" }, isWishlisted: false, image: product7,
                                 title: "Shakti Capsules", vendor: "Elevated Solstice", rating: '5.0', weights: ['3g', '10g'], price: 40.00,
+                                categories: ["Beginner Friendly"],
                                 effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }]
                             },
                             {
                                 id: 108, badge: null, isWishlisted: false, image: product8,
                                 title: "Toad Bites", vendor: "Green Valley Organics", rating: '4.7', weights: ['3g', '10g'], price: 10.00,
+                                categories: ["Focus & Clarity", "Relax & Chill"],
                                 effects: [{ image: focusClarityImg, name: "Focus & Clarity" }, { image: relaxChillImg, name: "Relax & Chill" }]
                             }
                         ].map((prod) => (
