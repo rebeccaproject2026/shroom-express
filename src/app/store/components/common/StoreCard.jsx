@@ -63,7 +63,13 @@ const StoreCard = ({ store }) => {
                 {/* Headers */}
                 <div className="flex justify-between items-start mb-3">
                     <div className="flex flex-col pr-2">
-                        <h3 className="font-bold text-[#181211] text-xl leading-tight mb-1 truncate max-w-37.5">{name}</h3>
+                        <div className="relative group/name cursor-default mb-1">
+                            <h3 className="font-bold text-[#181211] text-xl leading-tight truncate max-w-37.5">{name}</h3>
+                            <span className="absolute bottom-full left-0 mb-1.5 bg-[#181211] text-white text-xs font-semibold px-2.5 py-1.5 rounded-md whitespace-nowrap opacity-0 group-hover/name:opacity-100 transition-opacity pointer-events-none z-[200]
+                                after:content-[''] after:absolute after:top-full after:left-4 after:border-[5px] after:border-transparent after:border-t-[#181211]">
+                                {name}
+                            </span>
+                        </div>
                         <div className="flex items-center gap-1.5">
                             <div className="flex items-center">
                                 {[...Array(5)].map((_, i) => (

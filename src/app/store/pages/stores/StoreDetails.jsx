@@ -35,13 +35,17 @@ import Str7 from '../../assets/images/str7.png';
 import Str8 from '../../assets/images/str8.png';
 import Str9 from '../../assets/images/str9.png';
 import Str10 from '../../assets/images/str10.png';
+import FilterDrawer from '../../components/products/FilterDrawer';
 
 
 const StoreDetails = () => {
     const navigate = useNavigate();
     const { storeId } = useParams();
     const [sortBy, setSortBy] = useState('popularity');
-
+    const [filterOpen, setFilterOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState(null); // 'mushrooms' | 'edibles' | null
+    const [activeDelivery, setActiveDelivery] = useState(false);
+    const [activeBestSeller, setActiveBestSeller] = useState(false);
     // All stores data
     const allStoresData = {
         1: {
@@ -179,7 +183,34 @@ const StoreDetails = () => {
         { value: 'price-low', label: 'Sort by Price: low to high' },
         { value: 'price-high', label: 'Sort by Price: high to low' }
     ];
-    const products = allProducts;
+    const products = useMemo(() => {
+        let list = [...allProducts];
+
+        // Category = High Potency products
+        if (activeCategory === 'mushrooms') {
+            list = list.filter(p => p.categories?.some(c =>
+                c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'
+            ));
+        }
+
+        // Delivery = fast/beginner-friendly products (Beginner Friendly or Microdosing)
+        if (activeDelivery) {
+            list = list.filter(p => p.categories?.some(c =>
+                c === 'Beginner Friendly' || c === 'Microdosing'
+            ));
+        }
+
+        if (activeBestSeller) {
+            list = list.filter(p => p.badge?.text === 'BEST SELLER');
+        }
+
+        if (sortBy === 'price-low') list.sort((a, b) => a.price - b.price);
+        else if (sortBy === 'price-high') list.sort((a, b) => b.price - a.price);
+        else if (sortBy === 'rating') list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+        else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
+
+        return list;
+    }, [activeCategory, activeDelivery, activeBestSeller, sortBy]);
     const stores = [
         {
             id: 1,
@@ -252,13 +283,17 @@ const StoreDetails = () => {
 
                             {/* Logo */}
                             <div
-                                className="absolute -bottom-22 left-7 w-60 h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#F8F6F6]"
-                                style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#ffffff' }}
+                                className="absolute -bottom-22 left-7 w-60 h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#FAF8F5]"
+                                style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#FAF8F5' }}
                             >
                                 <img
                                     src={storeData.logo}
                                     alt={storeData.name}
-                                    className="w-full h-full object-contain p-5 "
+                                    className={`w-full h-full object-contain ${storeData.logo === Bg5 || storeData.logo === Bg6
+                                        || storeData.logo === Bg7 || storeData.logo === Bg8 || storeData.logo === Bg9
+                                        ? "p-0"
+                                        : "p-5"
+                                        }`}
                                 />
                             </div>
 
@@ -272,12 +307,12 @@ const StoreDetails = () => {
                                     <button onClick={() => navigate('/store')} className="text-(--store-primary) hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
-                                    <span  style={{ color: storeData.nameColor }}>/</span>
+                                    <span style={{ color: storeData.nameColor }}>/</span>
                                     <button onClick={() => navigate('/store/storeslists')} className="text-(--store-primary) hover:underline font-medium cursor-pointer">
                                         Stores
                                     </button>
                                     <span style={{ color: storeData.nameColor }}>/</span>
-                                    <span className="font-medium"  style={{ color: storeData.nameColor }}>{storeData.name}</span>
+                                    <span className="font-medium" style={{ color: storeData.nameColor }}>{storeData.name}</span>
                                 </div>
                             </div>
 
@@ -317,29 +352,35 @@ const StoreDetails = () => {
             <div className="px-10 mt-30 pb-10">
                 {/* Filter Bar */}
                 <div className="flex items-center gap-3 mb-4.5" >
-
                     {/* Filter Icon */}
-                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white">
-
+                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white cursor-pointer"
+                        onClick={() => setFilterOpen(true)}
+                    >
                         <Icon icon="mage:filter" width={22} height={22} />
-
                         {/* Badge */}
                         <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                            1
+                            {[activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length || 1}
                         </span>
-
                     </div>
-
                     {/* Pills */}
-                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveCategory(p => p === 'mushrooms' ? null : 'mushrooms')}
+                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory === 'mushrooms' ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Category
                     </button>
 
-                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveDelivery(p => !p)}
+                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Delivery
                     </button>
 
-                    <button className="px-5 h-10 rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveBestSeller(p => !p)}
+                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeBestSeller ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Best Seller
                     </button>
                     <div className=" w-[22%] ml-auto">
@@ -348,7 +389,6 @@ const StoreDetails = () => {
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
                             placeholder="Select your country"
-
                         />
                     </div>
                 </div>
@@ -377,6 +417,7 @@ const StoreDetails = () => {
                     ))}
                 </div>
             </div>
+            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
         </div>
     );
 };

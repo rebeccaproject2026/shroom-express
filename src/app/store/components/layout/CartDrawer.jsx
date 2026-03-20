@@ -61,7 +61,7 @@ const CartDrawer = ({ open, onClose }) => {
             cartItems.map((item, idx) => (
               <div key={item.cartKey || idx} className="flex items-start gap-4 py-5">
                 {/* Large square image */}
-                <div className="w-[90px] h-[90px] rounded-2xl overflow-hidden shrink-0 bg-[#F5F5F5]">
+                <div className="w-20 h-20  rounded-md border border-[#E8E8E8] overflow-hidden shrink-0 bg-[#F5F5F5]">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                 </div>
 
@@ -69,12 +69,12 @@ const CartDrawer = ({ open, onClose }) => {
                 <div className="flex-1 min-w-0">
                   {/* Name + close */}
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <p className="text-[15px] font-bold text-[#0F172A] leading-snug">{item.name}</p>
+                    <p className="text-sm font-bold text-[#0F172A] leading-snug">{item.name}</p>
                     <button
                       onClick={() => removeFromCart(item.cartKey)}
-                      className="text-[#BDBDBD] hover:text-[#E93E2B] transition-colors shrink-0 mt-0.5"
+                      className="text-[#CBD5E1] cursor-pointer hover:text-[#E93E2B] transition-colors shrink-0 mt-0.5"
                     >
-                      <Icon icon="mdi:close" width={15} />
+                      <Icon icon="mdi:close" width={17} />
                     </button>
                   </div>
 
@@ -86,17 +86,17 @@ const CartDrawer = ({ open, onClose }) => {
                   {/* Qty + Price row */}
                   <div className="flex items-center justify-between">
                     {/* Qty pill */}
-                    <div className="flex items-center gap-3 bg-[#F1F5F9] rounded-lg px-3 py-1.5">
+                    <div className="flex items-center gap-3 bg-[#F8FAFC] rounded-lg px-2 py-1.5">
                       <button
                         onClick={() => updateQuantity(item.cartKey, -1)}
-                        className="text-[#64748B] hover:text-[#E93E2B] transition-colors"
+                        className="text-[#64748B] cursor-pointer hover:text-[#E93E2B] transition-colors"
                       >
                         <Icon icon="fa6-solid:minus" width={10} />
                       </button>
                       <span className="text-sm font-bold text-[#0F172A] w-4 text-center">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.cartKey, 1)}
-                        className="text-[#64748B] hover:text-[#E93E2B] transition-colors"
+                        className="text-[#64748B] cursor-pointer hover:text-[#E93E2B] transition-colors"
                       >
                         <Icon icon="fa6-solid:plus" width={10} />
                       </button>
@@ -117,12 +117,12 @@ const CartDrawer = ({ open, onClose }) => {
         {cartItems.length > 0 && (
           <div className="px-5 py-5 border-t border-[#E8E8E8]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-[#555]">Subtotal</span>
-              <span className="text-sm font-semibold text-[#181211]">${subtotal.toFixed(2)}</span>
+              <span className="text-sm text-[#181211]">Subtotal</span>
+              <span className="text-sm font-bold text-[#181211]">${subtotal.toFixed(2)}</span>
             </div>
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm text-[#555]">Delivery</span>
-              <span className="text-sm font-bold text-[#22C55E]">FREE</span>
+              <span className="text-sm text-[#181211]">Delivery</span>
+              <span className="text-sm font-bold text-[#10B981]">FREE</span>
             </div>
             <div className="flex items-center justify-between mb-5">
               <span className="text-base font-bold text-[#181211]">Total</span>
@@ -131,13 +131,13 @@ const CartDrawer = ({ open, onClose }) => {
 
             <button
               onClick={handleCheckout}
-              className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors flex items-center cursor-pointer justify-center gap-2"
             >
               Checkout Now
               <Icon icon="mdi:arrow-right" width={18} />
             </button>
 
-            <p className="text-center text-xs text-[#888] mt-3 flex items-center justify-center gap-1">
+            <p className="text-center text-xs font-bold text-[#000000] tracking-wide uppercase mt-4 flex items-center justify-center gap-1">
               <Icon icon="mdi:lock-outline" width={13} />
               100% ENCRYPTED PAYMENT
             </p>

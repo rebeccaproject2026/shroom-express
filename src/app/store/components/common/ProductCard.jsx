@@ -3,16 +3,17 @@ import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import product1 from '../../assets/images/product1.png';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
     const { addToCart } = useCart();
+    const { toggleWishlist, isWishlisted: checkWishlisted } = useWishlist();
 
     // Destructure with default fallbacks matching the screenshot design
     const {
         id,
         badge = { text: 'BEST SELLER', colorClass: 'bg-[#EA4031]' },
-        isWishlisted = false,
         image,
         effects = [],
         effectImage,
@@ -29,6 +30,7 @@ const ProductCard = ({ product }) => {
 
     const [quantity, setQuantity] = useState(1);
     const [selectedWeight, setSelectedWeight] = useState(null);
+    const wishlisted = checkWishlisted(id);
 
     const handleDecrement = () => {
         if (quantity > 1) setQuantity(quantity - 1);
@@ -68,15 +70,22 @@ const ProductCard = ({ product }) => {
                 )}
 
                 {/* Wishlist Button */}
-                <button
-                    onClick={(e) => e.stopPropagation()}
-                    className={`absolute top-2.5 right-1 w-8 h-8 rounded-full flex items-center justify-center shadow-sm transition-colors z-20 border ${isWishlisted
-                        ? 'bg-[#FDE047] text-[#181211] border-[#FDE047]'
-                        : 'bg-white text-[#181211] border-[#E8E8E8] hover:text-[#EA4031]'
-                        }`}
-                >
-                    <Icon icon={isWishlisted ? "mdi:heart" : "mdi:heart-outline"} width={18} />
-                </button>
+                <div className="absolute top-2.5 right-1 z-20  group/wish">
+                    <button
+                        onClick={(e) => { e.stopPropagation(); toggleWishlist(product); }}
+                        className={`w-8 h-8 rounded-full flex cursor-pointer items-center justify-center shadow-sm transition-colors border ${wishlisted
+                            ? 'bg-[#FDE047] text-[#181211] border-[#FDE047]'
+                            : 'bg-white text-[#181211] border-[#E8E8E8] hover:text-[#EA4031]'
+                            }`}
+                    >
+                        <Icon icon={wishlisted ? "mdi:heart" : "mdi:heart-outline"} width={18} />
+                    </button>
+                    {/* Tooltip */}
+                    <div className="absolute bottom-full  cursor-pointer right-0 mb-2 bg-[#181211] text-white text-[11px] font-semibold px-2.5 py-1 rounded-md whitespace-nowrap opacity-0 group-hover/wish:opacity-100 transition-opacity pointer-events-none
+                        after:content-[''] after:absolute after:top-full after:right-3 after:border-[5px] after:border-transparent after:border-t-[#181211]">
+                        {wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                    </div>
+                </div>
 
                 {/* Product Image */}
                 <img

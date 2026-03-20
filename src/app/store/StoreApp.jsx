@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './index.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
@@ -29,6 +30,7 @@ function StoreApp() {
 
     return (
         <CartProvider>
+            <WishlistProvider>
             <Routes>
                 <Route path="/" element={<StoreLayout />}>
                     <Route index element={<Home />} />
@@ -48,6 +50,7 @@ function StoreApp() {
                     <Route path="myaccount" element={<MyAccountPage />} />
                 </Route>
             </Routes>
+            </WishlistProvider>
         </CartProvider>
     );
 }

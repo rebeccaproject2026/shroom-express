@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import StoreCard from '../../components/common/StoreCard';
 import storecard1 from "../../assets/images/storecard1.png";
@@ -15,8 +15,27 @@ import microDosingImg from "../../assets/images/microdosing.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import creativeBoostImg from "../../assets/images/creative boost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
+import Shroomforsalebanner from "../../assets/images/shroomforsalebanner.png";
+import Shroomforsalelogo from "../../assets/images/Shroomforsalebannerlogo.png";
+import Magicmushroombanner from "../../assets/images/magicmushroombanner.jpg";
+import Magicmushroomlogo from "../../assets/images/magicmushroomlogo.png";
+import Planetbanner from "../../assets/images/Planetbanner.png";
+import Planetlogo from "../../assets/images/Planetlogo.png";
+import Torontomagiclogo from "../../assets/images/Torontomagiclogo.png";
+import Torontomagicbanner from "../../assets/images/Torontomagicbanner.jpg";
+import magicmashroombanner2 from "../../assets/images/magicmashroombanner2.jpg";
+import magicmashroomlogo2 from "../../assets/images/magicmashroomlogo2.png";
+import FilterDrawer from '../../components/products/FilterDrawer';
+
+
+
 
 const StoresList = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterOpen, setFilterOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState(false);
+    const [activeDelivery, setActiveDelivery] = useState(false);
+    const [activeShipping, setActiveShipping] = useState(false);
     const stores = [
         {
             id: 1,
@@ -82,8 +101,8 @@ const StoresList = () => {
             estimatedDelivery: "Under 2 Hours",
             avgPrice: "$27.43",
             location: "164 Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: storecard1,
-            logo: background,
+            coverImage: Shroomforsalebanner,
+            logo: Shroomforsalelogo,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg]
@@ -96,8 +115,8 @@ const StoresList = () => {
             estimatedDelivery: "2 - 5 Hours",
             avgPrice: "$27.43",
             location: "85a Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: storecard2,
-            logo: background2,
+            coverImage: Magicmushroombanner,
+            logo: Magicmushroomlogo,
             deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg]
@@ -110,8 +129,8 @@ const StoresList = () => {
             estimatedDelivery: "1 - 2 Hours",
             avgPrice: "$27.43",
             location: "1/2 Geary Ave, Toronto, ON M6H 4H1",
-            coverImage: storecard3,
-            logo: background3,
+            coverImage: Planetbanner,
+            logo: Planetlogo,
             deliveryBadge: null,
             isPrimary: false,
             avatars: []
@@ -124,8 +143,8 @@ const StoresList = () => {
             estimatedDelivery: "1 - 3 hours",
             avgPrice: "$27.43",
             location: "164 Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: storecard4,
-            logo: background4,
+            coverImage: Torontomagicbanner,
+            logo: Torontomagiclogo,
             deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg]
@@ -138,30 +157,42 @@ const StoresList = () => {
             estimatedDelivery: "Under 2 Hours",
             avgPrice: "$27.43",
             location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-            coverImage: storecard1,
-            logo: background,
+            coverImage: magicmashroombanner2,
+            logo: magicmashroomlogo2,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
         },
-        {
-            id: 10,
-            name: "Danforth Weed",
-            rating: "5.0",
-            reviewCount: "89 reviews",
-            estimatedDelivery: "2 - 5 Hours",
-            avgPrice: "$27.43",
-            location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-            coverImage: storecard2,
-            logo: background2,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg]
-        }
+        // {
+        //     id: 10,
+        //     name: "Danforth Weed",
+        //     rating: "5.0",
+        //     reviewCount: "89 reviews",
+        //     estimatedDelivery: "2 - 5 Hours",
+        //     avgPrice: "$27.43",
+        //     location: "779 Somerset St W. Centertown, Ottawa, Ontario",
+        //     coverImage: storecard2,
+        //     logo: background2,
+        //     deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
+        //     isPrimary: false,
+        //     avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg]
+        // }
     ];
+
+    const filteredStores = stores.filter(s => {
+        const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            s.location.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = !activeCategory || s.isPrimary === true;
+        const matchesDelivery = !activeDelivery || (s.deliveryBadge?.text === "Same-day Delivery");
+        const matchesShipping = !activeShipping || (s.deliveryBadge?.text === "Express Delivery");
+        return matchesSearch && matchesCategory && matchesDelivery && matchesShipping;
+    });
+
+    const activeFilterCount = [activeCategory, activeDelivery, activeShipping].filter(Boolean).length;
 
     return (
         <div className="w-full px-10 py-20">
+            <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} />
 
             {/* Page Header */}
             <h1 className="text-3xl font-bold text-[#0F3540] mb-3">
@@ -202,27 +233,35 @@ const StoresList = () => {
                 <div className="flex items-center gap-3">
 
                     {/* Filter Icon */}
-                    <div className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white">
-
+                    <div
+                        onClick={() => setFilterOpen(true)}
+                        className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white cursor-pointer">
                         <Icon icon="mage:filter" width={22} height={22} />
-
                         {/* Badge */}
                         <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                            1
+                            {activeFilterCount || 1}
                         </span>
-
                     </div>
 
                     {/* Pills */}
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveCategory(p => !p)}
+                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Category
                     </button>
 
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveDelivery(p => !p)}
+                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Delivery
                     </button>
 
-                    <button className="px-5 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  text-[15px] font-semibold text-[#222222]">
+                    <button
+                        onClick={() => setActiveShipping(p => !p)}
+                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeShipping ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                    >
                         Shipping
                     </button>
 
@@ -231,6 +270,8 @@ const StoresList = () => {
                         <input
                             type="text"
                             placeholder="Search Store"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8]  px-5 text-[14px] outline-none placeholder:text-[#222222] font-semibold"
                         />
                     </div>
@@ -253,11 +294,16 @@ const StoresList = () => {
             </div>
             {/* Stores Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
-                {stores.map(store => (
+                {filteredStores.length > 0 ? filteredStores.map(store => (
                     <div key={store.id} className="w-full">
                         <StoreCard store={store} />
                     </div>
-                ))}
+                )) : (
+                    <div className="col-span-4 flex flex-col items-center justify-center py-20 text-center">
+                        <Icon icon="streamline:shopping-store-2-store-shop-shops-stores" width={48} className="text-[#E5DCDC] mb-3" />
+                        <p className="text-sm font-semibold text-[#BDBDBD]">No stores found for "{searchQuery}"</p>
+                    </div>
+                )}
             </div>
 
         </div >
