@@ -106,7 +106,7 @@ const TrackOrderPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className="flex items-center gap-2 bg-[#E93E2B] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors">
+                        <button onClick={() => window.open(`tel:${orderStatus.phone}`)} className="flex items-center gap-2 bg-[#E93E2B] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors cursor-pointer">
                             <Icon icon="mdi:phone" width={16} />
                             Call
                         </button>
@@ -155,11 +155,11 @@ xt-[#0F172A] mb-4">Delivery Details</h3>
 
                 {/* Action buttons */}
                 <div className="grid grid-cols-2 gap-3">
-                    <button className="flex flex-col items-center gap-1.5 bg-white rounded-2xl py-4 shadow-sm hover:shadow-md transition-shadow border border-[#F0EDED]">
+                    <button onClick={() => window.open('mailto:support@shroomexpress.com')} className="flex flex-col items-center gap-1.5 bg-white rounded-2xl py-4 shadow-sm hover:shadow-md transition-shadow border border-[#F0EDED] cursor-pointer">
                         <Icon icon="mdi:headset" className="text-[#E93E2B]" width={22} />
                         <span className="text-xs font-semibold text-[#181211]">Contact Support</span>
                     </button>
-                    <button className="flex flex-col items-center gap-1.5 bg-white rounded-2xl py-4 shadow-sm hover:shadow-md transition-shadow border border-[#F0EDED]">
+                    <button onClick={() => alert('Return Policy: Due to the nature of our products, returns are accepted within 48 hours of delivery for damaged or incorrect items. Contact support@shroomexpress.com.')} className="flex flex-col items-center gap-1.5 bg-white rounded-2xl py-4 shadow-sm hover:shadow-md transition-shadow border border-[#F0EDED] cursor-pointer">
                         <Icon icon="mdi:package-variant-closed-remove" className="text-[#E93E2B]" width={22} />
                         <span className="text-xs font-semibold text-[#181211]">Return Policy</span>
                     </button>

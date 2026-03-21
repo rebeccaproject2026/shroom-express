@@ -671,7 +671,7 @@ const ProductDetail = () => {
                                             </button>
                                             <p className="text-sm text-[#777777]">
                                                 Don&apos;t have an account?{" "}
-                                                <a href="#" className="text-[#E93E2B] font-semibold hover:underline">Register now</a>
+                                                <a onClick={() => navigate('/store/register')} className="text-[#E93E2B] font-semibold hover:underline cursor-pointer">Register now</a>
                                             </p>
                                         </>
                                     )}

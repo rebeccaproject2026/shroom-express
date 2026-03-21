@@ -292,7 +292,7 @@ const StoresList = () => {
                             Toronto Central
                         </span>
 
-                        <button className="text-base font-semibold text-[var(--store-primary)]">
+                        <button onClick={() => alert('Location change coming soon.')} className="text-base font-semibold text-[var(--store-primary)]">
                             Change
                         </button>
 

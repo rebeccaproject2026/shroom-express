@@ -53,7 +53,7 @@ const CheckoutPage = () => {
                     <div className="py-4">
                         <div className="flex items-center justify-between mb-5">
                             <h2 className="text-2xl font-bold text-[#181211]">Billing and Delivery</h2>
-                            <button className="text-sm text-[#E93E2B] font-medium hover:opacity-80">Log in for faster checkout</button>
+                            <button onClick={() => navigate('/store/login')} className="text-sm text-[#E93E2B] font-medium hover:opacity-80">Log in for faster checkout</button>
                         </div>
 
                         <div className="flex flex-col gap-4">

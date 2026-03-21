@@ -344,7 +344,7 @@ const StoreDetails = () => {
                                 <Icon icon="hugeicons:truck-delivery" width={18} height={18} />
                                 <span>Delivery {storeData.deliveryTime}</span>
                             </button>
-                            <button className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
                                 <Icon icon="proicons:call" width={18} height={18} />
                                 <span>{storeData.phone}</span>
                             </button>
@@ -352,7 +352,7 @@ const StoreDetails = () => {
                                 <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
                                 <span>Website</span>
                             </button>
-                            <button className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button onClick={() => document.getElementById('store-about')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
                                 <Icon icon="ix:about" width={18} height={18} />
                                 <span>About</span>
                             </button>

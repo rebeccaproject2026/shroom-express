@@ -104,7 +104,8 @@ const PaymentMethodPanel = () => {
         ].map((method) => (
           <button
             key={method.label}
-            className="flex items-center gap-2 border border-[#E8E8E8] rounded-xl px-4 py-3.5 bg-white hover:bg-[#FFF5F4] transition-colors w-full text-left"
+            onClick={() => alert(`${method.label} integration coming soon.`)}
+            className="flex items-center gap-2 border border-[#E8E8E8] rounded-xl px-4 py-3.5 bg-white hover:bg-[#FFF5F4] transition-colors w-full text-left cursor-pointer"
           >
             <div className="w-11 h-8  flex items-center justify-center shrink-0 ">
               <Icon icon={method.icon} width={25} className="text-[#181211]" />
