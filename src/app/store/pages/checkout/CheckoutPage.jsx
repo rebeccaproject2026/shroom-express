@@ -122,7 +122,7 @@ const CheckoutPage = () => {
                         <OrderSummary
                             items={defaultItems}
                             delivery={delivery}
-                            onProceed={() => navigate('/store/order-complete')}
+                            onProceed={() => navigate('/store/order-complete', { state: { delivery, form } })}
                             btnLabel="Place Secure Order →"
                             showPromo={true}
                             showSavings={false}

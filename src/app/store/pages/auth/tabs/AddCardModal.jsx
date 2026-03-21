@@ -2,9 +2,19 @@ import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import Input from "../../../components/common/Input";
 
-const AddCardModal = ({ onClose }) => {
+const AddCardModal = ({ onClose, onSave }) => {
   const [form, setForm] = useState({ cardNumber: "", expiry: "", cvv: "", country: "" });
+  const [error, setError] = useState('');
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const handleSave = () => {
+    if (!form.cardNumber.trim() || !form.expiry.trim() || !form.cvv.trim()) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+    setError('');
+    if (onSave) onSave(form);
+  };
 
   useEffect(() => {
     document.body.style.setProperty("overflow", "hidden", "important");
@@ -46,7 +56,7 @@ const AddCardModal = ({ onClose }) => {
               required
               value={form.cardNumber}
               onChange={set("cardNumber")}
-              placeholder="Jeo"
+              placeholder="1234 5678 9012 3456"
             />
 
             {/* Expiry + CVV */}
@@ -77,7 +87,8 @@ const AddCardModal = ({ onClose }) => {
             />
 
             {/* Save Button */}
-            <button className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors mt-1 shadow-[0px_4px_6px_-4px_rgba(233,62,43,0.25),0px_10px_15px_-3px_rgba(233,62,43,0.25)]">
+            {error && <p className="text-xs text-[#E93E2B] font-medium -mt-2">{error}</p>}
+            <button onClick={handleSave} className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors mt-1 shadow-[0px_4px_6px_-4px_rgba(233,62,43,0.25),0px_10px_15px_-3px_rgba(233,62,43,0.25)] cursor-pointer">
               Save Card
             </button>
           </div>

@@ -3,18 +3,35 @@ import { Icon } from "@iconify/react";
 import AddCardModal from "./AddCardModal";
 import payment1 from "../../../assets/images/payment1.jpg";
 import payment2 from "../../../assets/images/payment2.jpg";
-const savedCards = [
+
+const defaultCards = [
   { id: 1, last4: "4242", expiry: "12/26", color: "#E8E8E8", icon: "mdi:credit-card", img: payment1 },
   { id: 2, last4: "5555", expiry: "09/25", color: "#E8E8E8", icon: "mdi:credit-card", img: payment2 },
 ];
 
 const PaymentMethodPanel = () => {
+  const [cards, setCards] = useState(defaultCards);
   const [defaultCard, setDefaultCard] = useState(1);
   const [showModal, setShowModal] = useState(false);
 
+  const handleSaveCard = (cardData) => {
+    const last4 = cardData.cardNumber.replace(/\s/g, '').slice(-4) || '0000';
+    const newCard = {
+      id: Date.now(),
+      last4,
+      expiry: cardData.expiry || 'N/A',
+      color: "#E8E8E8",
+      icon: "mdi:credit-card",
+      img: payment1,
+    };
+    setCards(prev => [...prev, newCard]);
+    setDefaultCard(newCard.id);
+    setShowModal(false);
+  };
+
   return (
     <div className="pt-4">
-      {showModal && <AddCardModal onClose={() => setShowModal(false)} />}
+      {showModal && <AddCardModal onClose={() => setShowModal(false)} onSave={handleSaveCard} />}
 
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
@@ -46,7 +63,7 @@ const PaymentMethodPanel = () => {
       </div>
 
       <div className="flex flex-col gap-3 mb-6">
-        {savedCards.map((card) => (
+        {cards.map((card) => (
           <div
             key={card.id}
             className="flex items-center gap-4 border border-[#E8E8E8] rounded-xl px-4 py-3.5 bg-white"

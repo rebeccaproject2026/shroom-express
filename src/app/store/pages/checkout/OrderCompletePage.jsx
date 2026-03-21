@@ -1,10 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Stepper from "../../components/checkout/Stepper";
 import cart1 from '../../assets/images/cart1.png';
 import cart2 from '../../assets/images/cart2.png';
 import cart3 from '../../assets/images/cart3.jpg';
+
+const DELIVERY_LABELS = {
+    sameday:  { label: 'Same Day Delivery',  time: 'Today, 2–4 PM',        fee: 'Free' },
+    express:  { label: 'Express Delivery',   time: 'Today, within 1 hour', fee: '$15.00' },
+    shipping: { label: 'Standard Shipping',  time: '3–5 Business Days',    fee: '$10.00' },
+};
 
 const orderItems = [
   {
@@ -35,8 +41,13 @@ const orderItems = [
 
 const OrderCompletePage = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const delivery = state?.delivery || 'sameday';
+  const form = state?.form || {};
+  const deliveryInfo = DELIVERY_LABELS[delivery] || DELIVERY_LABELS.sameday;
+
   const subtotal = orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const deliveryFee = 0;
+  const deliveryFee = delivery === 'express' ? 15 : delivery === 'shipping' ? 10 : 0;
   const tax = +(subtotal * 0.08).toFixed(2);
   const total = subtotal + deliveryFee + tax;
 
@@ -73,8 +84,8 @@ const OrderCompletePage = () => {
                 Estimated Delivery
               </span>
             </div>
-            <p className="text-xl font-bold text-[#0F172A]">Today, 2–4 PM</p>
-            <p className="text-sm text-[#64748B]">Same Day Delivery · Free</p>
+            <p className="text-xl font-bold text-[#0F172A]">{deliveryInfo.time}</p>
+            <p className="text-sm text-[#64748B]">{deliveryInfo.label} · {deliveryInfo.fee}</p>
           </div>
 
           {/* Delivery Address */}
@@ -86,9 +97,9 @@ const OrderCompletePage = () => {
               </span>
             </div>
             <p className="text-lg text-[#0F172A] font-bold leading-relaxed">
-              420 High St.
+              {form.address || '420 High St.'}
             </p>
-            <p className="text-[#64748B] text-sm">San Francisco, CA 94103</p>
+            <p className="text-[#64748B] text-sm">{form.city || 'San Francisco'}{form.state ? `, ${form.state}` : ', CA'} {form.zip || '94103'}</p>
           </div>
         </div>
 
@@ -133,7 +144,9 @@ const OrderCompletePage = () => {
               </div>
               <div className="flex justify-between text-sm text-[#475569]">
                 <span className="text-base">Delivery Fee</span>
-                <span className="text-green-500 font-bold ">FREE</span>
+                <span className={deliveryFee === 0 ? "text-green-500 font-bold" : "text-[#475569] font-medium"}>
+                  {deliveryFee === 0 ? 'FREE' : `$${deliveryFee.toFixed(2)}`}
+                </span>
               </div>
               <div className="flex justify-between text-sm text-[#475569]">
                 <span className="text-base">Estimated Taxes</span>

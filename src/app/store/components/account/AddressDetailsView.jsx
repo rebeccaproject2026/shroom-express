@@ -27,24 +27,45 @@ const AddressDetailsView = () => {
     const [addresses, setAddresses] = useState(initialAddresses);
     const [showModal, setShowModal] = useState(false);
     const [form, setForm] = useState(emptyForm);
+    const [editingId, setEditingId] = useState(null);
 
     const removeAddress = (id) => setAddresses(prev => prev.filter(a => a.id !== id));
 
+    const handleEdit = (addr) => {
+        const [firstName, ...rest] = addr.name.split(' ');
+        setForm({
+            firstName: firstName || '',
+            lastName: rest.join(' ') || '',
+            phone: addr.phone,
+            email: addr.email,
+            address: addr.address,
+            city: '',
+            state: '',
+            postcode: '',
+        });
+        setEditingId(addr.id);
+        setShowModal(true);
+    };
+
     const handleSave = () => {
         if (!form.firstName || !form.lastName) return;
-        setAddresses(prev => ([
-            ...prev,
-            {
-                id: Date.now(),
-                name: `${form.firstName} ${form.lastName}`,
-                address: `${form.address}, ${form.city} - ${form.postcode} ${form.state}`,
-                phone: form.phone,
-                email: form.email,
-            }
-        ]));
+        const updated = {
+            name: `${form.firstName} ${form.lastName}`,
+            address: form.address || '',
+            phone: form.phone,
+            email: form.email,
+        };
+        if (editingId) {
+            setAddresses(prev => prev.map(a => a.id === editingId ? { ...a, ...updated } : a));
+        } else {
+            setAddresses(prev => ([...prev, { id: Date.now(), ...updated }]));
+        }
         setForm(emptyForm);
+        setEditingId(null);
         setShowModal(false);
     };
+
+    const handleClose = () => { setShowModal(false); setEditingId(null); setForm(emptyForm); };
 
     const set = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }));
 
@@ -77,7 +98,7 @@ const AddressDetailsView = () => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-4 shrink-0">
-                                <button className="text-base font-bold text-[#E93E2B] cursor-pointer hover:underline">Edit</button>
+                                <button onClick={() => handleEdit(addr)} className="text-base font-bold text-[#E93E2B] cursor-pointer hover:underline">Edit</button>
                                 <button
                                     onClick={() => removeAddress(addr.id)}
                                     className="text-base font-semibold text-[#181211B2] cursor-pointer hover:text-[#E93E2B] transition-colors"
@@ -98,13 +119,13 @@ const AddressDetailsView = () => {
 
             {/* Add New Address Modal */}
             {showModal && createPortal(
-                <div className="fixed inset-0 z-200 flex items-center justify-center bg-black/40" onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}>
+                <div className="fixed inset-0 z-200 flex items-center justify-center bg-black/40" onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}>
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[520px] mx-2 relative max-h-[97vh] overflow-y-auto">
                         {/* Modal header */}
                         <div className="flex items-center justify-between bg-[#FAF8F8] border border-[#E8E8E8] p-4">
-                            <h3 className="text-lg font-bold text-[#181211]">Add New Address</h3>
+                            <h3 className="text-lg font-bold text-[#181211]">{editingId ? 'Edit Address' : 'Add New Address'}</h3>
                             <button
-                                onClick={() => setShowModal(false)}
+                                onClick={handleClose}
                                 className="text-[#181211] hover:text-[#E93E2B] transition-colors text-xl font-bold leading-none"
                             >
                                 ✕
@@ -181,7 +202,7 @@ const AddressDetailsView = () => {
                                 onClick={handleSave}
                                 className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-3 rounded-md text-[15px] transition-colors mt-1"
                             >
-                                Save Address
+                                {editingId ? 'Update Address' : 'Save Address'}
                             </button>
                         </div>
                     </div>

@@ -14,24 +14,52 @@ const orderItems = [
     { id: 2, name: 'Blue Pulaski (Dried)', qty: '3.5g', price: 30.00, image: allProducts[0].image },
 ];
 
-const OrderDetailView = () => {
+const OrderDetailView = ({ onBack }) => {
+    const handleInvoice = () => {
+        const items = orderItems.map(i => `
+            <tr>
+                <td style="padding:8px;border-bottom:1px solid #eee">${i.name}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;text-align:center">${i.qty}</td>
+                <td style="padding:8px;border-bottom:1px solid #eee;text-align:right">$${i.price.toFixed(2)}</td>
+            </tr>`).join('');
+        const total = orderItems.reduce((s, i) => s + i.price, 0).toFixed(2);
+        const html = `<!DOCTYPE html><html><head><title>Invoice #SH-12345</title>
+            <style>body{font-family:sans-serif;padding:40px;color:#181211}h1{color:#E93E2B}table{width:100%;border-collapse:collapse}th{text-align:left;padding:8px;background:#f5f5f5}</style>
+            </head><body>
+            <h1>Invoice</h1>
+            <p><strong>Order:</strong> #SH-12345 &nbsp;&nbsp; <strong>Date:</strong> Feb 23, 2026</p>
+            <p><strong>Ship To:</strong> Jeo Deo &nbsp;&nbsp; <strong>Total:</strong> $${total}</p>
+            <table><thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead><tbody>${items}</tbody></table>
+            <p style="margin-top:24px;font-weight:bold">Total: $${total}</p>
+            </body></html>`;
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'invoice-SH-12345.html';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
     return (
         <div>
+
             {/* Header */}
             <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-3">
-                   
+                    <button onClick={onBack} className="flex items-center gap-1.5 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity cursor-pointer">
+                        <Icon icon="mdi:arrow-left" width={20} />
+                    </button>
                     <div>
                         <h2 className="text-xl font-bold text-[#181211]">#SH-12345</h2>
                         <p className="text-sm text-[#181211B2] font-semibold">Placed on Feb 23, 2026</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1.5 cursor-pointer border border-[#E8E8E8] rounded-md px-4 py-2 text-[15px] font-semibold text-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B] transition-colors bg-white">
+                    <button onClick={handleInvoice} className="flex items-center gap-1.5 cursor-pointer border border-[#E8E8E8] rounded-md px-4 py-2 text-[15px] font-semibold text-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B] transition-colors bg-white">
                         <Icon icon="mynaui:download" width="20" height="20" />
                         Invoice
                     </button>
-                    <button className="flex items-center gap-1.5 cursor-pointer border border-[#E8E8E8] rounded-md px-4 py-2 text-[15px] font-semibold text-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B] transition-colors bg-white">
+                    <button onClick={() => window.print()} className="flex items-center gap-1.5 cursor-pointer border border-[#E8E8E8] rounded-md px-4 py-2 text-[15px] font-semibold text-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B] transition-colors bg-white">
                         <Icon icon="lets-icons:print-light" width="22" height="22" className='stroke-2' />
                         Print
                     </button>
@@ -53,11 +81,10 @@ const OrderDetailView = () => {
 
                     {timelineSteps.map((step, idx) => (
                         <div key={idx} className="relative z-10 flex flex-col items-center flex-1">
-                            <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-2 ${
-                                step.completed
-                                    ? 'bg-[#E93E2B] border-[#E93E2B]'
-                                    : 'bg-white border-[#E8E8E8]'
-                            }`}>
+                            <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-2 ${step.completed
+                                ? 'bg-[#E93E2B] border-[#E93E2B]'
+                                : 'bg-white border-[#E8E8E8]'
+                                }`}>
                                 <Icon
                                     icon="mdi:check-circle-outline"
                                     width={18}

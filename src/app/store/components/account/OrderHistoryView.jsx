@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
 import { allProducts } from '../../data/productsData';
 import OrderDetailView from './OrderDetailView';
 
@@ -20,6 +21,7 @@ const statusConfig = {
 };
 
 const OrderHistoryView = () => {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('All orders');
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -109,9 +111,10 @@ const OrderHistoryView = () => {
                                 <div className="flex flex-col gap-2 shrink-0 min-w-[120px]">
                                     <button
                                         disabled={!trackable}
+                                        onClick={() => trackable && navigate('/store/track-order')}
                                         className={`flex items-center justify-center gap-1.5 font-semibold px-4 py-2.5 rounded-md text-sm transition-colors ${
                                             trackable
-                                                ? 'bg-[#E93E2B] hover:bg-red-600 text-white'
+                                                ? 'bg-[#E93E2B] hover:bg-red-600 text-white cursor-pointer'
                                                 : 'bg-[#F5DCDC] text-white cursor-not-allowed'
                                         }`}
                                     >
