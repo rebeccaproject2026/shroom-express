@@ -91,7 +91,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
             <div className="bg-[var(--store-primary)] text-white text-sm py-2 px-4 flex justify-center items-center gap-6">
-                <Link to="" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                <Link to="/store/storeslists" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
                     <Icon icon="clarity:store-line" width={17} height={17} />
 
                     <span>Open Store</span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from '../common/ProductCard';
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
@@ -17,6 +18,7 @@ import { useCategory } from '../../context/CategoryContext';
 
 const SimilarProducts = ({ products = [] }) => {
   const { selectedEffect } = useCategory();
+  const navigate = useNavigate();
 
   const defaultProducts = [
     {
@@ -92,7 +94,7 @@ const SimilarProducts = ({ products = [] }) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8 px-10">
         <h2 className="text-2xl font-bold text-[#181211]">Similar Product</h2>
-        <a href="#" className="text-[#E93E2B] font-semibold flex items-center gap-1 hover:underline">
+        <a onClick={() => navigate('/store/category/all')} className="text-[#E93E2B] font-semibold flex items-center gap-1 hover:underline cursor-pointer">
           View All
           <Icon icon="uil:arrow-to-right" width="20" height="20" />
         </a>

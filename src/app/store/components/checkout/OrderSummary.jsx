@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 
+const PROMO_CODES = {
+    'SHROOM10': { type: 'percent', value: 10, label: '10% off' },
+    'SAVE15': { type: 'fixed', value: 15, label: '$15 off' },
+    'WELCOME20': { type: 'percent', value: 20, label: '20% off' },
+};
+
 const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Checkout →', showPromo = true, showSavings = false, showBadges = true }) => {
     const [promo, setPromo] = useState('');
+    const [appliedPromo, setAppliedPromo] = useState(null);
+    const [promoError, setPromoError] = useState('');
+
     const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
     const tax = +(subtotal * 0.08).toFixed(2);
     const deliveryFee = delivery === 'express' ? 15 : delivery === 'shipping' ? 10 : 0;
-    const total = subtotal + tax + deliveryFee;
+
+    const discount = appliedPromo
+        ? appliedPromo.type === 'percent'
+            ? +(subtotal * appliedPromo.value / 100).toFixed(2)
+            : Math.min(appliedPromo.value, subtotal)
+        : 0;
+
+    const total = subtotal + tax + deliveryFee - discount;
+
+    const handleApplyPromo = () => {
+        const code = promo.trim().toUpperCase();
+        if (PROMO_CODES[code]) {
+            setAppliedPromo({ ...PROMO_CODES[code], code });
+            setPromoError('');
+            setPromo('');
+        } else {
+            setPromoError('Invalid promo code.');
+            setAppliedPromo(null);
+        }
+    };
 
     return (
         <>
@@ -32,16 +60,31 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
 
                 {/* Promo */}
                 {showPromo && (
-                    <div className="flex items-center gap-2 border border-[#CBD5E1] bg-[#F8FAFC] rounded-xl px-4 py-4">
-                        <Icon icon="mdi:tag-outline" className="text-gray-400" width={18} />
-                        <input
-                            type="text"
-                            value={promo}
-                            onChange={e => setPromo(e.target.value)}
-                            placeholder="Promo code"
-                            className="flex-1 text-sm outline-none text-gray-700 placeholder-gray-400 bg-transparent"
-                        />
-                        <button className="text-sm font-bold text-[#E93E2B] hover:opacity-80">Apply</button>
+                    <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-2 border border-[#CBD5E1] bg-[#F8FAFC] rounded-xl px-4 py-4">
+                            <Icon icon="mdi:tag-outline" className="text-gray-400" width={18} />
+                            <input
+                                type="text"
+                                value={promo}
+                                onChange={e => { setPromo(e.target.value); setPromoError(''); }}
+                                onKeyDown={e => e.key === 'Enter' && handleApplyPromo()}
+                                placeholder="Promo code"
+                                className="flex-1 text-sm outline-none text-gray-700 placeholder-gray-400 bg-transparent"
+                            />
+                            <button onClick={handleApplyPromo} className="text-sm font-bold text-[#E93E2B] hover:opacity-80 cursor-pointer">Apply</button>
+                        </div>
+                        {!appliedPromo && !promoError && (
+                            <p className="text-xs text-[#94A3B8] px-1">
+                                Try <button onClick={() => setPromo('SAVE15')} className="text-[#E93E2B] font-semibold hover:underline cursor-pointer">SAVE15</button> for 10% off
+                            </p>
+                        )}
+                        {promoError && <p className="text-xs text-[#E93E2B] font-medium px-1">{promoError}</p>}
+                        {appliedPromo && (
+                            <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                                <span className="text-xs font-semibold text-green-700">✓ "{appliedPromo.code}" — {appliedPromo.label} applied</span>
+                                <button onClick={() => setAppliedPromo(null)} className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer">✕</button>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -60,6 +103,12 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
                         <span>Estimated Taxes</span>
                         <span className="text-[#181211] font-medium">${tax.toFixed(2)}</span>
                     </div>
+                    {discount > 0 && (
+                        <div className="flex justify-between text-sm text-[#16A34A] font-semibold">
+                            <span>Discount ({appliedPromo.code})</span>
+                            <span>-${discount.toFixed(2)}</span>
+                        </div>
+                    )}
                 </div>
 
                 <div className="border-t border-gray-100 py-4 flex justify-between items-center">

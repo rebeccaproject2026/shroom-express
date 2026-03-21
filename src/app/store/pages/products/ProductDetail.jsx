@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
+import { useAuth } from "../../context/AuthContext";
 
 import storecard1 from "../../assets/images/storecard1.png";
 import background from "../../assets/images/background1.png";
@@ -15,6 +18,10 @@ import { getProductById, allProducts } from "../../data/productsData";
 
 const ProductDetail = () => {
     const { productId } = useParams();
+    const navigate = useNavigate();
+    const { addToCart } = useCart();
+    const { toggleWishlist, isWishlisted } = useWishlist();
+    const { user } = useAuth();
     const [quantity, setQuantity] = useState(1);
     const [selectedWeight, setSelectedWeight] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
@@ -22,6 +29,8 @@ const ProductDetail = () => {
     const [showLoginForm, setShowLoginForm] = useState(false);
     const [reviewRating, setReviewRating] = useState(0);
     const [reviewText, setReviewText] = useState("");
+    const [userReviews, setUserReviews] = useState([]);
+    const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
     // Look up product by ID from shared data
     const productData = getProductById(productId) || allProducts[0];
@@ -36,7 +45,7 @@ const ProductDetail = () => {
     // Mock stores
     const stores = [
         {
-            id: 1,
+            id: 2,
             name: "The Mushroom",
             rating: "4.8",
             reviewCount: "124",
@@ -50,7 +59,7 @@ const ProductDetail = () => {
             avatars: [],
         },
         {
-            id: 2,
+            id: 3,
             name: "Psilovibin",
             rating: "5.0",
             reviewCount: "89 reviews",
@@ -64,7 +73,7 @@ const ProductDetail = () => {
             avatars: [],
         },
         {
-            id: 3,
+            id: 4,
             name: "Shroom Express",
             rating: "4.1",
             reviewCount: "210 reviews",
@@ -85,6 +94,32 @@ const ProductDetail = () => {
         } else if (type === "decrement" && quantity > 1) {
             setQuantity((prev) => prev - 1);
         }
+    };
+
+    const handleAddToCart = () => {
+        addToCart({ ...product }, activeWeight, quantity);
+    };
+
+    const handleBuyNow = () => {
+        addToCart({ ...product }, activeWeight, quantity);
+        navigate('/store/checkout');
+    };
+
+    const handleShare = async () => {
+        const url = window.location.href;
+        if (navigator.share) {
+            try {
+                await navigator.share({ title: product.name, url });
+                // eslint-disable-next-line no-unused-vars, no-empty
+            } catch (_) { }
+        } else {
+            await navigator.clipboard.writeText(url);
+            alert('Link copied to clipboard!');
+        }
+    };
+
+    const handleWishlist = () => {
+        toggleWishlist({ ...product });
     };
 
     return (
@@ -267,16 +302,16 @@ const ProductDetail = () => {
                                         </button>
                                     </div>
 
-                                    <button className="w-16 h-12 flex items-center justify-center border border-gray-300 rounded-full bg-white">
+                                    <button onClick={handleWishlist} className="w-16 h-12 flex items-center justify-center border cursor-pointer border-gray-300 rounded-full bg-white">
                                         <Icon
-                                            icon="ion:heart-outline"
+                                            icon={isWishlisted(product.id) ? "ion:heart" : "ion:heart-outline"}
                                             width={24}
                                             height={24}
-                                            className="text-gray-800"
+                                            className={isWishlisted(product.id) ? "text-[#E93E2B]" : "text-gray-800"}
                                         />
                                     </button>
 
-                                    <button className="w-16 h-12 flex items-center justify-center border border-gray-300 rounded-full bg-white">
+                                    <button onClick={handleShare} className="w-16 h-12 flex items-center justify-center border cursor-pointer border-gray-300 rounded-full bg-white">
                                         <Icon
                                             icon="majesticons:share-line"
                                             width={24}
@@ -289,11 +324,11 @@ const ProductDetail = () => {
 
                             {/* Action Buttons */}
                             <div className="flex gap-4 mb-4">
-                                <button className="flex-1 bg-(--store-primary) text-white py-4 rounded-lg font-semibold text-base hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                                <button onClick={handleAddToCart} className="flex-1 bg-(--store-primary) text-white py-4 rounded-lg cursor-pointer font-semibold text-base hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
                                     <Icon icon="proicons:cart" width="22" height="22" />
                                     Add to cart
                                 </button>
-                                <button className="flex-1 bg-white border border-gray-300 text-black py-4 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+                                <button onClick={handleBuyNow} className="flex-1 bg-white border border-gray-300 cursor-pointer text-black py-4 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
                                     <Icon
                                         icon="iconamoon:shopping-bag-light"
                                         width="24"
@@ -346,7 +381,7 @@ const ProductDetail = () => {
                         <div className="flex flex-col gap-6">
                             {stores.map((store) => (
                                 <div key={store.id} className="w-full">
-                                    <ProdSideCard store={store} />
+                                    <ProdSideCard store={store} onAddToCart={handleAddToCart} />
                                 </div>
                             ))}
                         </div>
@@ -525,7 +560,7 @@ const ProductDetail = () => {
                                     </div>
 
                                     {/* Write Review Button */}
-                                    <button className="w-full py-3 border-2 border-[#E93E2B] text-[#E93E2B] rounded-lg font-semibold hover:bg-[var(--color-primary)] hover:text-white transition-colors cursor-pointer">
+                                    <button onClick={() => user ? setShowLoginForm(true) : setShowLoginPrompt(true)} className="w-full py-3 border-2 border-[#E93E2B] text-[#E93E2B] rounded-lg font-semibold hover:bg-[var(--color-primary)] hover:text-white transition-colors cursor-pointer">
                                         Write a Review
                                     </button>
                                 </div>
@@ -535,11 +570,13 @@ const ProductDetail = () => {
                             <div className="lg:col-span-2">
                                 {/* Login Prompt */}
                                 <div className="bg-white border border-[#E8E8E8] rounded-lg p-8 mb-6 text-center">
-                                    {showLoginForm ? (
+                                    {user ? (
+                                        showLoginForm ? (
                                         <>
                                             <h3 className="text-2xl font-bold text-[#0F172A] mb-4 text-left">
                                                 Write a Review
                                             </h3>
+                                            <p className="text-sm text-[#64748B] text-left mb-4">Posting as <span className="font-semibold text-[#181211]">{user.name}</span></p>
 
                                             <div className="text-left mb-3.5">
                                                 <p className="text-base font-medium leading-1.5 text-[#334155] mb-3">Your Rating</p>
@@ -552,14 +589,9 @@ const ProductDetail = () => {
                                                             className="focus:outline-none focus:ring-2 focus:ring-[#E85D4C]"
                                                         >
                                                             <Icon
-                                                                icon={
-                                                                    star <= reviewRating
-                                                                        ? "flowbite:star-solid"
-                                                                        : "basil:star-outline"
-                                                                }
+                                                                icon={star <= reviewRating ? "flowbite:star-solid" : "basil:star-outline"}
                                                                 className={star <= reviewRating ? "text-[#FFE100]" : "text-[#181211]"}
-                                                                width={24}
-                                                                height={24}
+                                                                width={24} height={24}
                                                             />
                                                         </button>
                                                     ))}
@@ -579,11 +611,7 @@ const ProductDetail = () => {
                                             <div className="flex items-center justify-end gap-3">
                                                 <button
                                                     type="button"
-                                                    onClick={() => {
-                                                        setShowLoginForm(false);
-                                                        setReviewRating(0);
-                                                        setReviewText("");
-                                                    }}
+                                                    onClick={() => { setShowLoginForm(false); setReviewRating(0); setReviewText(""); }}
                                                     className="px-8 py-3.5 text-sm border border-[#E5E5E5] rounded-lg font-medium text-[#181211] hover:bg-[#F5F5F5] transition-colors"
                                                 >
                                                     Cancel
@@ -591,8 +619,17 @@ const ProductDetail = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        // TODO: submit review
-                                                        console.log("submit review", { reviewRating, reviewText });
+                                                        if (!reviewText.trim()) return;
+                                                        setUserReviews(prev => [{
+                                                            id: Date.now(),
+                                                            name: user.name,
+                                                            rating: reviewRating || 5,
+                                                            text: reviewText.trim(),
+                                                            date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                                                        }, ...prev]);
+                                                        setShowLoginForm(false);
+                                                        setReviewRating(0);
+                                                        setReviewText("");
                                                     }}
                                                     className="px-8 py-3.5 text-sm bg-[#E93E2B] text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
                                                 >
@@ -600,16 +637,19 @@ const ProductDetail = () => {
                                                 </button>
                                             </div>
                                         </>
+                                        ) : (
+                                            <div className="text-center">
+                                                <p className="text-base text-[#181211] mb-4">Logged in as <span className="font-semibold">{user.name}</span></p>
+                                                <button onClick={() => setShowLoginForm(true)} className="bg-[#E93E2B] text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity">
+                                                    Write a Review
+                                                </button>
+                                            </div>
+                                        )
                                     ) : (
                                         <>
                                             <div className="flex justify-center mb-4">
                                                 <div className="w-16 h-16 flex items-center justify-center">
-                                                    <Icon
-                                                        icon="bx:message-edit"
-                                                        width="32"
-                                                        height="32"
-                                                        className="text-[#7F7F7F]"
-                                                    />
+                                                    <Icon icon="bx:message-edit" width="32" height="32" className="text-[#7F7F7F]" />
                                                 </div>
                                             </div>
                                             <h3 className="text-2xl font-bold text-[#181211] mb-2">
@@ -618,20 +658,20 @@ const ProductDetail = () => {
                                             <p className="text-base text-[#181211] mb-4">
                                                 Please log in to write a review for this product.
                                             </p>
+                                            {showLoginPrompt && (
+                                                <p className="text-sm font-semibold text-[#E93E2B] mb-3 animate-pulse">
+                                                    You must be logged in to write a review. Please login first.
+                                                </p>
+                                            )}
                                             <button
-                                                onClick={() => setShowLoginForm(true)}
-                                                className="bg-[#E93E2B] text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-opacity mb-3"
+                                                onClick={() => navigate('/store/login')}
+                                                className={`text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-all mb-3 ${showLoginPrompt ? 'bg-[#E93E2B] ring-4 ring-[#E93E2B]/40 scale-105' : 'bg-[#E93E2B]'}`}
                                             >
                                                 Login
                                             </button>
                                             <p className="text-sm text-[#777777]">
                                                 Don&apos;t have an account?{" "}
-                                                <a
-                                                    href="#"
-                                                    className="text-[#E93E2B] font-semibold hover:underline"
-                                                >
-                                                    Register now
-                                                </a>
+                                                <a href="#" className="text-[#E93E2B] font-semibold hover:underline">Register now</a>
                                             </p>
                                         </>
                                     )}
@@ -639,6 +679,23 @@ const ProductDetail = () => {
 
                                 {/* Reviews List */}
                                 <div className="space-y-6">
+                                    {/* User submitted reviews */}
+                                    {userReviews.map(r => (
+                                        <div key={r.id} className="border-b border-[#E5DCDC] pb-6">
+                                            <div className="flex items-start justify-between mb-2">
+                                                <h4 className="text-base font-bold text-[#181211]">{r.name}</h4>
+                                            </div>
+                                            <div className="flex items-center gap-1 mb-3">
+                                                <div className="flex items-center gap-1">
+                                                    {[...Array(5)].map((_, i) => (
+                                                        <Icon key={i} icon={i < r.rating ? "flowbite:star-solid" : "basil:star-outline"} className={i < r.rating ? "text-[#FFE100]" : "text-[#ccc]"} width={16} height={16} />
+                                                    ))}
+                                                </div>
+                                                <span className="text-xs text-[#7F7F7F] ml-2">• {r.date}</span>
+                                            </div>
+                                            <p className="text-sm text-[#181211] leading-relaxed">"{r.text}"</p>
+                                        </div>
+                                    ))}
                                     {/* Review 1 */}
                                     <div className="border-b border-[#E5DCDC] pb-6">
                                         <div className="flex items-start justify-between mb-2">

@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 
 
-const ProdSideCard = ({ store }) => {
+const ProdSideCard = ({ store, onAddToCart }) => {
   const navigate = useNavigate();
 
   const {
@@ -26,11 +26,11 @@ const ProdSideCard = ({ store }) => {
   };
 
   return (
-    <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full p-2">
+    <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5 cursor-pointer w-full h-full p-2" onClick={handleViewStore}>
       <div className="space-y-3">
         <div className="flex items-center gap-3">
           {/* Logo */}
-          <div className=" w-16 h-16 bg-white rounded-[14px] shadow-[0px_2px_4px_-2px_#0000001A,0px_4px_6px_-1px_#0000001A]  border border-[#E8E8E8] flex items-center justify-center z-10 overflow-hidden">
+          <div className="w-16 h-16 bg-white rounded-[14px] shadow-[0px_2px_4px_-2px_#0000001A,0px_4px_6px_-1px_#0000001A] border border-[#E8E8E8] flex items-center justify-center z-10 overflow-hidden">
             <img
               src={logo}
               className="w-[85%] h-[85%] object-contain rounded-[10px]"
@@ -97,7 +97,7 @@ const ProdSideCard = ({ store }) => {
         
           <div>
             <button
-            onClick={handleViewStore}
+            onClick={(e) => { e.stopPropagation(); onAddToCart && onAddToCart(); }}
             className=" bg-[#E93E2B] rounded-lg p-2"
           >
             <Icon icon="material-symbols:add-shopping-cart-sharp" width="20" height="20" className=" text-white" />

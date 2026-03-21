@@ -21,6 +21,29 @@ const CartPage = () => {
     const [cartItems, setCartItems] = useState(defaultCartItems);
     const [delivery, setDelivery] = useState('sameday');
     const [promo, setPromo] = useState('');
+    const [promoApplied, setPromoApplied] = useState(null); // { code, discount, type }
+    const [promoError, setPromoError] = useState('');
+
+    const PROMO_CODES = {
+        'SHROOM10': { discount: 10, type: 'percent', label: '10% off' },
+        'SAVE15':   { discount: 15, type: 'flat',    label: '$15 off' },
+        'WELCOME20':{ discount: 20, type: 'percent', label: '20% off' },
+    };
+
+    const handleApplyPromo = () => {
+        const code = promo.trim().toUpperCase();
+        if (!code) {
+            setPromoError('Invalid promo code.');
+            return;
+        }
+        if (PROMO_CODES[code]) {
+            setPromoApplied({ code, ...PROMO_CODES[code] });
+            setPromoError('');
+        } else {
+            setPromoApplied(null);
+            setPromoError('Invalid promo code. Try SHROOM10, SAVE15 or WELCOME20.');
+        }
+    };
 
     const handleQuantityChange = (id, qty) => {
         setCartItems(prev => prev.map(i => i.id === id ? { ...i, quantity: Math.max(1, qty) } : i));
@@ -33,7 +56,12 @@ const CartPage = () => {
     const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
     const tax = +(subtotal * 0.08).toFixed(2);
     const deliveryFee = delivery === 'express' ? 5 : 0;
-    const total = subtotal + tax + deliveryFee;
+    const discount = promoApplied
+        ? promoApplied.type === 'percent'
+            ? +(subtotal * promoApplied.discount / 100).toFixed(2)
+            : promoApplied.discount
+        : 0;
+    const total = subtotal + tax + deliveryFee - discount;
 
     return (
         <div className="w-full min-h-screen bg-[#F5F0EB] px-10 pt-8 pb-20">
@@ -81,6 +109,12 @@ const CartPage = () => {
                                 <span>Estimated Taxes (8%)</span>
                                 <span className="text-[#0F172A] font-bold">${tax.toFixed(2)}</span>
                             </div>
+                            {promoApplied && (
+                                <div className="flex justify-between text-sm text-green-600">
+                                    <span>Promo ({promoApplied.code})</span>
+                                    <span className="font-bold">-${discount.toFixed(2)}</span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Delivery Method */}
@@ -90,16 +124,31 @@ const CartPage = () => {
                         </div>
 
                         {/* Promo */}
-                        <div className="flex items-center gap-2 border border-dashed border-[#CBD5E1] bg-[#F8FAFC] rounded-xl px-4 py-4 mt-2">
-                            <Icon icon="mdi:tag-outline" className="text-gray-400" width={16} />
-                            <input
-                                type="text"
-                                value={promo}
-                                onChange={e => setPromo(e.target.value)}
-                                placeholder="Promo code"
-                                className="flex-1 text-sm outline-none text-gray-700 placeholder-[#6B7280] bg-transparent"
-                            />
-                            <button className="text-sm font-bold text-[#E93E2B]">Apply</button>
+                        <div className="flex flex-col gap-1.5 mt-2">
+                            <div className="flex items-center gap-2 border border-[#CBD5E1] bg-[#F8FAFC] rounded-xl px-4 py-4">
+                                <Icon icon="mdi:tag-outline" className="text-gray-400" width={16} />
+                                <input
+                                    type="text"
+                                    value={promo}
+                                    onChange={e => { setPromo(e.target.value); setPromoError(''); }}
+                                    onKeyDown={e => e.key === 'Enter' && handleApplyPromo()}
+                                    placeholder="Promo code"
+                                    className="flex-1 text-sm outline-none text-gray-700 placeholder-[#6B7280] bg-transparent"
+                                />
+                                <button onClick={handleApplyPromo} className="text-sm font-bold text-[#E93E2B] cursor-pointer hover:opacity-80">Apply</button>
+                            </div>
+                            {!promoApplied && !promoError && (
+                                <p className="text-xs text-[#94A3B8] px-1">
+                                    Try <button onClick={() => setPromo('SHROOM10')} className="text-[#E93E2B] font-semibold hover:underline cursor-pointer">SHROOM10</button> for 10% off
+                                </p>
+                            )}
+                            {promoError && <p className="text-xs text-[#E93E2B] font-medium px-1">{promoError}</p>}
+                            {promoApplied && (
+                                <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                                    <span className="text-xs font-semibold text-green-700">✓ "{promoApplied.code}" — {promoApplied.label} applied</span>
+                                    <button onClick={() => { setPromoApplied(null); setPromo(''); }} className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer">✕</button>
+                                </div>
+                            )}
                         </div>
 
                         {/* Total */}
@@ -107,7 +156,7 @@ const CartPage = () => {
                             <p className="text-sm text-[#64748B] mb-2">Total Amount</p>
                             <div className="flex items-center justify-between">
                                 <span className="text-[28px] font-extrabold text-[#0F172A]">${total.toFixed(2)}</span>
-                                <span className="text-xs bg-[#F0FDF4] rounded-lg px-2 py-1 text-green-500 font-bold">Save $15.00</span>
+                                <span className="text-xs bg-[#F0FDF4] rounded-lg px-2 py-1 text-green-500 font-bold">{discount > 0 ? `Save $${discount.toFixed(2)}` : 'Save $15.00'}</span>
                             </div>
                         </div>
 
@@ -126,18 +175,18 @@ const CartPage = () => {
                     </div>
 
                     {/* Trust badges */}
-                        <div className="flex items-center justify-around pt-6">
-                            {[
-                                { icon: 'mdi:shield-check-outline', label: '100% Organic' },
-                                { icon: 'ri:truck-line', label: 'Discreet Box' },
-                                { icon: 'lsicon:refresh-done-outline', label: 'Lab Tested' },
-                            ].map(b => (
-                                <div key={b.label} className="flex flex-col items-center gap-1">
-                                    <Icon icon={b.icon} className="text-[#64748B]" width={20} />
-                                    <span className="text-[10px] text-[#94A3B8] font-bold">{b.label}</span>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="flex items-center justify-around pt-6">
+                        {[
+                            { icon: 'mdi:shield-check-outline', label: '100% Organic' },
+                            { icon: 'ri:truck-line', label: 'Discreet Box' },
+                            { icon: 'lsicon:refresh-done-outline', label: 'Lab Tested' },
+                        ].map(b => (
+                            <div key={b.label} className="flex flex-col items-center gap-1">
+                                <Icon icon={b.icon} className="text-[#64748B]" width={20} />
+                                <span className="text-[10px] text-[#94A3B8] font-bold">{b.label}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

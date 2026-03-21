@@ -1,4 +1,5 @@
 import React from 'react';
+import NewsletterForm from './NewsletterForm';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import shroomLogo from "../../assets/images/Logo.png";
@@ -38,12 +39,12 @@ const Footer = () => {
                     <div className="md:col-span-6 lg:col-span-2 ">
                         <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider mb-6 whitespace-nowrap">Quick Links</h3>
                         <ul className="space-y-4 text-[#886663] text-sm font-normal whitespace-nowrap">
-                            <li><Link to="/about">About Us</Link></li>
-                            <li><Link to="/contact">Contact Us</Link></li>
-                            <li><Link to="/my-account">My Account</Link></li>
-                            <li><Link to="/faq-cannabis" >Cannabis FAQ</Link></li>
-                            <li><Link to="/faq-mushroom" >Mushroom FAQ</Link></li>
-                            <li><Link to="/track-order">Track Your Order</Link></li>
+                            <li><Link to="#">About Us</Link></li>
+                            <li><Link to="#">Contact Us</Link></li>
+                            <li><Link to="/store/myaccount">My Account</Link></li>
+                            <li><Link to="#">Cannabis FAQ</Link></li>
+                            <li><Link to="#">Mushroom FAQ</Link></li>
+                            <li><Link to="/store/track-order">Track Your Order</Link></li>
                         </ul>
                     </div>
 
@@ -51,12 +52,12 @@ const Footer = () => {
                     <div className="md:col-span-6 lg:col-span-2 lg:ml-16">
                         <h3 className="text-[14px] font-bold text-[#181211] uppercase tracking-wider mb-6 whitespace-nowrap">Knowledge Center</h3>
                         <ul className="space-y-4 text-[#886663] text-sm font-normal whitespace-nowrap">
-                            <li><Link to="/expect" >What to Expect</Link></li>
-                            <li><Link to="/strains">Mushroom Strains</Link></li>
-                            <li><Link to="/choosing" >Choosing Your Product</Link></li>
-                            <li><Link to="/vs" >Cannabis vs. Psilocybin</Link></li>
-                            <li><Link to="/dosage" >Psilocybin Dosage Guide</Link></li>
-                            <li><Link to="/microdosing">Safe Microdosing Practices</Link></li>
+                            <li><Link to="#">What to Expect</Link></li>
+                            <li><Link to="#">Mushroom Strains</Link></li>
+                            <li><Link to="#">Choosing Your Product</Link></li>
+                            <li><Link to="#">Cannabis vs. Psilocybin</Link></li>
+                            <li><Link to="#">Psilocybin Dosage Guide</Link></li>
+                            <li><Link to="#">Safe Microdosing Practices</Link></li>
                         </ul>
                     </div>
 
@@ -67,20 +68,7 @@ const Footer = () => {
                             <p className="text-sm font-light text-[#FFFFFF] leading-relaxed mb-6">
                                 Receive professional updates on regulatory changes and new product research.
                             </p>
-                            <form className="flex flex-col gap-3">
-                                <input
-                                    type="email"
-                                    placeholder="Corporate Email"
-                                    className="w-full px-4 py-3.5 rounded-md bg-[#2A2A2A] text-white text-[14px] placeholder-[#FFFFFF] placeholder-font-light focus:outline-none focus:ring-1 focus:ring-[var(--store-primary)]"
-                                    required
-                                />
-                                <button
-                                    type="submit"
-                                    className="w-full bg-[var(--store-primary)] text-white font-bold text-[14px] tracking-wider py-3.5 rounded-md uppercase hover:opacity-90 transition-opacity mb-3.5"
-                                >
-                                    Subscribe
-                                </button>
-                            </form>
+                            <NewsletterForm />
                         </div>
                     </div>
                 </div>
@@ -102,9 +90,9 @@ const Footer = () => {
                         &copy; {new Date().getFullYear()} ShroomExpress. All Rights Reserved. Must be 19+ to enter.
                     </p>
                     <div className="flex items-center gap-8">
-                        <Link to="/terms" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Terms of Service</Link>
-                        <Link to="/privacy" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Privacy Policy</Link>
-                        <Link to="/compliance" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Compliance</Link>
+                        <Link to="#" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Terms of Service</Link>
+                        <Link to="#" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Privacy Policy</Link>
+                        <Link to="#" className="text-[11px] font-medium text-[#886663] hover:text-[var(--store-primary)] uppercase tracking-wider transition-colors">Compliance</Link>
                     </div>
                 </div>
 

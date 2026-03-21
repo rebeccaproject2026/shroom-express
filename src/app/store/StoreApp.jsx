@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CategoryProvider } from './context/CategoryContext';
+import { AuthProvider } from './context/AuthContext';
 import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
@@ -30,6 +31,7 @@ function StoreApp() {
     }, [pathname]);
 
     return (
+        <AuthProvider>
         <CartProvider>
             <WishlistProvider>
             <CategoryProvider>
@@ -55,6 +57,7 @@ function StoreApp() {
             </CategoryProvider>
             </WishlistProvider>
         </CartProvider>
+        </AuthProvider>
     );
 }
 
