@@ -1,11 +1,8 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { useNavigate } from "react-router-dom";
 
 
-const ProdSideCard = ({ store, onAddToCart }) => {
-  const navigate = useNavigate();
-
+const ProdSideCard = ({ store, onAddToCart, isSelected, onSelect }) => {
   const {
     id,
     logo = "https://via.placeholder.com/60/fff/000?text=Logo",
@@ -21,12 +18,15 @@ const ProdSideCard = ({ store, onAddToCart }) => {
     avgPrice = "$29.00 - $150.00",
   } = store || {};
 
-  const handleViewStore = () => {
-    navigate(`/store/storeslists/${id}`);
-  };
-
   return (
-    <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5 cursor-pointer w-full h-full p-2" onClick={handleViewStore}>
+    <div
+      className={`bg-white rounded-md flex flex-col group transition-all duration-300 cursor-pointer w-full h-full p-2 ${
+        isSelected
+          ? "border-2 border-(--store-primary) shadow-md"
+          : "border border-[#B7860B]/5"
+      }`}
+      onClick={onSelect}
+    >
       <div className="space-y-3">
         <div className="flex items-center gap-3">
           {/* Logo */}
@@ -87,23 +87,23 @@ const ProdSideCard = ({ store, onAddToCart }) => {
       {/* Content Area */}
       <div className="flex items-center justify-between mt-1 pt-1 border-t border-[#E8E8E8]">
         {/* Headers */}
-       
-            <span className="text-lg font-extrabold text-[#181211] ">
-            {avgPrice}
-            </span>
-        
+
+        <span className="text-lg font-extrabold text-[#181211] ">
+          {avgPrice}
+        </span>
 
 
-        
-          <div>
-            <button
+
+
+        <div>
+          <button
             onClick={(e) => { e.stopPropagation(); onAddToCart && onAddToCart(); }}
             className=" bg-[#E93E2B] rounded-lg p-2"
           >
             <Icon icon="material-symbols:add-shopping-cart-sharp" width="20" height="20" className=" text-white" />
           </button>
-          </div>
-       
+        </div>
+
       </div>
     </div>
   );

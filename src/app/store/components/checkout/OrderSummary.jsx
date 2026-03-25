@@ -7,7 +7,7 @@ const PROMO_CODES = {
     'WELCOME20': { type: 'percent', value: 20, label: '20% off' },
 };
 
-const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Checkout →', showPromo = true, showSavings = false, showBadges = true }) => {
+const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Checkout →', showPromo = true, showSavings = false, showBadges = true, onQuantityChange }) => {
     const [promo, setPromo] = useState('');
     const [appliedPromo, setAppliedPromo] = useState(null);
     const [promoError, setPromoError] = useState('');
@@ -41,8 +41,7 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
             <div className="bg-[#FFFFFF] border border-[#E5DCDC] rounded-2xl shadow-md p-6 flex flex-col gap-4">
                 <h3 className="font-bold text-[#181211] text-xl  pb-3 border-b border-[#F8F6F6]">Order Summary</h3>
 
-                {/* Items list (compact) */}
-                <div className='pt-0.5 flex flex-col gap-4 max-h-60 overflow-y-auto'>
+                <div className='pt-0.5 flex flex-col gap-4 max-h-60 overflow-y-auto pr-2'>
                     {items.map(item => (
                         <div key={item.id} className="flex items-center gap-3 ">
                             <div className="w-16 h-16 rounded-lg overflow-hidden border border-[#E5DCDC] shrink-0">
@@ -50,8 +49,32 @@ const OrderSummary = ({ items, delivery, onProceed, btnLabel = 'Proceed to Check
                             </div>
                             <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
                                 <p className="text-sm font-bold text-[#181211] truncate">{item.name}</p>
-                                <p className="text-xs text-[#886663] truncate">{item.description} | Qty: {item.quantity}</p>
-                                <span className="text-sm font-bold text-[#E93E2B] shrink-0">${(item.price * item.quantity).toFixed(2)}</span>
+                                <p className="text-xs text-[#886663] truncate">{item.description}</p>
+                                <div className="flex items-center justify-between mt-1">
+                                    <span className="text-sm font-bold text-[#E93E2B] shrink-0">${(item.price * item.quantity).toFixed(2)}</span>
+                                    {onQuantityChange ? (
+                                        <div className="flex items-center gap-2 border border-[#E93E2B1A] bg-[#F8F6F6] rounded-md px-1 py-0.5">
+                                            <button
+                                                onClick={() => onQuantityChange(item.id, item.quantity - 1)}
+                                                disabled={item.quantity <= 1}
+                                                className="w-5 h-5 flex items-center justify-center text-gray-600 cursor-pointer transition-colors"
+                                            >
+                                                <Icon icon="mdi:minus" width={14} />
+                                            </button>
+                                            <span className="font-bold text-[#181211] text-xs min-w-[12px] text-center">
+                                                {item.quantity}
+                                            </span>
+                                            <button
+                                                onClick={() => onQuantityChange(item.id, item.quantity + 1)}
+                                                className="w-5 h-5 rounded-[4px] bg-[#E93E2B] flex items-center cursor-pointer justify-center text-white hover:opacity-90 transition-opacity"
+                                            >
+                                                <Icon icon="mdi:plus" width={12} />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <p className="text-xs text-[#886663]">Qty: {item.quantity}</p>
+                                    )}
+                                </div>
                             </div>
 
                         </div>

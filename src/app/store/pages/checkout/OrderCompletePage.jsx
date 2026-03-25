@@ -44,9 +44,10 @@ const OrderCompletePage = () => {
   const { state } = useLocation();
   const delivery = state?.delivery || 'sameday';
   const form = state?.form || {};
+  const currentItems = state?.cartItems || orderItems;
   const deliveryInfo = DELIVERY_LABELS[delivery] || DELIVERY_LABELS.sameday;
 
-  const subtotal = orderItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const subtotal = currentItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const deliveryFee = delivery === 'express' ? 15 : delivery === 'shipping' ? 10 : 0;
   const tax = +(subtotal * 0.08).toFixed(2);
   const total = subtotal + deliveryFee + tax;
@@ -108,11 +109,11 @@ const OrderCompletePage = () => {
           <div className="flex items-center justify-between border-b border-[#E93E2B1A] px-6 py-5">
             <h3 className="font-bold text-[#0F172A] text-lg">Order Summary</h3>
 
-            <p className="text-base font-medium text-[#64748B]">4 Items</p>
+            <p className="text-base font-medium text-[#64748B]">{currentItems.length} Items</p>
           </div>
 
           <div className="px-6 pb-6 flex flex-col gap-5">
-            {orderItems.map((item) => (
+            {currentItems.map((item) => (
               <div key={item.id} className="flex items-center gap-3 ">
                 <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-50 shrink-0 border border-[#E5DCDC]">
                   <img
@@ -168,7 +169,7 @@ const OrderCompletePage = () => {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
           <button
-            onClick={() => navigate("/store/track-order")}
+            onClick={() => navigate("/store/track-order", { state: { ...state, cartItems: currentItems } })}
             className="flex-1 flex items-center justify-center gap-1 bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-4 rounded-full transition-colors text-sm"
           >
             <Icon icon="material-symbols:map-outline" width="24" height="24" />

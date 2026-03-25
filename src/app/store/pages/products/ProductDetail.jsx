@@ -31,18 +31,9 @@ const ProductDetail = () => {
     const [reviewText, setReviewText] = useState("");
     const [userReviews, setUserReviews] = useState([]);
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+    const [storesPanelOpen, setStoresPanelOpen] = useState(true);
 
-    // Look up product by ID from shared data
-    const productData = getProductById(productId) || allProducts[0];
-    const product = {
-        ...productData,
-        weights: productData.weights || ["3.5g", "7g", "14g", "28g"],
-    };
-
-    // Set default selected weight from product
-    const activeWeight = selectedWeight || product.weights[0];
-
-    // Mock stores
+    // Mock stores with per-store product pricing and delivery
     const stores = [
         {
             id: 2,
@@ -51,7 +42,8 @@ const ProductDetail = () => {
             reviewCount: "124",
             estimatedDelivery: "2 - 5 Hours",
             priceRange: "$29.00 - $150.00",
-            location: "Delivery",
+            price: 29.00,
+            location: "779 Somerset St W • Ottawa",
             coverImage: storecard1,
             logo: background,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
@@ -65,7 +57,8 @@ const ProductDetail = () => {
             reviewCount: "89 reviews",
             estimatedDelivery: "Under 2 Hours",
             priceRange: "$26.00 - $146.00",
-            location: "Delivery",
+            price: 26.00,
+            location: "5.2 km away • Etobicoke",
             coverImage: storecard2,
             logo: background2,
             deliveryBadge: { text: "Express Delivery", color: "text-[#7F7F7F]", icon: "carbon:delivery" },
@@ -79,7 +72,8 @@ const ProductDetail = () => {
             reviewCount: "210 reviews",
             estimatedDelivery: "1 - 2 Hours",
             priceRange: "$26.00 - $146.00",
-            location: "Delivery",
+            price: 32.00,
+            location: "5.2 km away • Vancouver",
             coverImage: storecard3,
             logo: background3,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
@@ -87,6 +81,16 @@ const ProductDetail = () => {
             avatars: [],
         },
     ];
+
+    const [selectedStore, setSelectedStore] = useState(stores[0]);
+    const productData = getProductById(productId) || allProducts[0];
+    const product = {
+        ...productData,
+        weights: productData.weights || ["3.5g", "7g", "14g", "28g"],
+    };
+
+    // Set default selected weight from product
+    const activeWeight = selectedWeight || product.weights[0];
 
     const handleQuantityChange = (type) => {
         if (type === "increment") {
@@ -123,11 +127,11 @@ const ProductDetail = () => {
     };
 
     return (
-        <div className="w-full px-10 py-12 bg-[#FAF8F5]">
+        <div className="w-full px-10 py-12 bg-[#FAF8F5] relative">
             {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${storesPanelOpen ? 'lg:grid-cols-[3.1fr_1fr]' : 'lg:grid-cols-1'}`}>
                 {/* Left Column - Product Details (3/4 width) */}
-                <div className="lg:col-span-3">
+                <div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Product Images */}
                         <div>
@@ -174,7 +178,7 @@ const ProductDetail = () => {
                                         <Icon
                                             key={i}
                                             icon={
-                                                i < Math.floor(product.rating)
+                                                i < Math.floor(selectedStore.rating)
                                                     ? "flowbite:star-solid"
                                                     : "basil:star-outline"
                                             }
@@ -185,7 +189,7 @@ const ProductDetail = () => {
                                     ))}
                                 </div>
                                 <span className="text-sm text-[#777777] font-semibold">
-                                    {product.rating} ({product.reviewCount} Review)
+                                    {selectedStore.rating} ({selectedStore.reviewCount} Review)
                                 </span>
                             </div>
 
@@ -207,7 +211,7 @@ const ProductDetail = () => {
 
                             {/* Price */}
                             <div className="text-xl font-bold text-(--store-primary) mb-3">
-                                ${product.price.toFixed(2)}
+                                ${selectedStore.price.toFixed(2)}
                             </div>
 
                             {/* Vendor Info */}
@@ -216,7 +220,7 @@ const ProductDetail = () => {
                                     <div className="flex items-center gap-1">
                                         <Icon icon="iconoir:shop" width="16" height="16" />
                                         <p className="text-sm font-semibold text-[#181211]">
-                                            {product.vendor}
+                                            {selectedStore.name}
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-1">
@@ -226,13 +230,13 @@ const ProductDetail = () => {
                                             height="14"
                                             className="text-[#64748B]"
                                         />
-                                        <p className="text-xs text-[#64748B]">{product.location}</p>
+                                        <p className="text-xs text-[#64748B]">{selectedStore.location}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-0.5 ml-auto mr-auto">
                                     <button className=" px-4 py-2 bg-[#D4E6D5] rounded-full text-[13px] font-semibold flex items-center gap-1">
                                         <Icon icon="mdi:truck-outline" width="18" height="18" />
-                                        Same-day Delivery
+                                        {selectedStore.deliveryBadge?.text || "Delivery"}
                                     </button>
                                     <span className="text-[13px] text-[#64748B] flex items-center gap-1 ml-2">
                                         <Icon
@@ -240,7 +244,7 @@ const ProductDetail = () => {
                                             width="16"
                                             height="16"
                                         />
-                                        1 - 3 Hours
+                                        {selectedStore.estimatedDelivery}
                                     </span>
                                 </div>
                             </div>
@@ -365,28 +369,57 @@ const ProductDetail = () => {
                 </div>
 
                 {/* Right Column - Related Stores (1/4 width) */}
-                <div className="lg:col-span-1 grid grid-cols-[10%_90%] gap-3">
-                    <div className="flex flex-col items-center">
-                        <div className="bg-white p-1 flex justify-center items-center rounded-full shadow-2xl">
+                {storesPanelOpen ? (
+                    <div className="flex">
+                        <div className="flex flex-col items-center w-8 shrink-0 mr-3">
+                            <button
+                                onClick={() => setStoresPanelOpen(prev => !prev)}
+                                className="bg-white p-1 flex justify-center items-center rounded-full shadow-2xl cursor-pointer"
+                            >
+                                <Icon
+                                    icon="si:double-arrow-right-duotone"
+                                    width="26"
+                                    height="26"
+                                />
+                            </button>
+                            <div className="h-full w-px bg-[#BDBDD2]"></div>
+                        </div>
+                        <div className="sticky top-67.5 min-w-0 flex-1">
+                            <div className="flex flex-col gap-6">
+                                {stores.map((store) => (
+                                    <div key={store.id} className="w-full">
+                                        <ProdSideCard
+                                            store={store}
+                                            onAddToCart={handleAddToCart}
+                                            isSelected={selectedStore.id === store.id}
+                                            onSelect={() => setSelectedStore(store)}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="absolute top-12 right-10 flex flex-col items-center gap-2 z-10">
+                        <button
+                            onClick={() => setStoresPanelOpen(prev => !prev)}
+                            className="bg-white p-1 flex justify-center items-center rounded-full shadow-2xl cursor-pointer"
+                        >
                             <Icon
                                 icon="si:double-arrow-right-duotone"
                                 width="26"
                                 height="26"
+                                className="rotate-180"
                             />
-                        </div>
-                        <div className=" h-full w-px bg-[#BDBDD2]"></div>
-                    </div>
-                    <div className="sticky top-67.5">
-                        {/* Stores List */}
-                        <div className="flex flex-col gap-6">
-                            {stores.map((store) => (
-                                <div key={store.id} className="w-full">
-                                    <ProdSideCard store={store} onAddToCart={handleAddToCart} />
-                                </div>
-                            ))}
+                        </button>
+                        <div className="flex flex-col items-center gap-1">
+                            <div className="w-px h-6 bg-[#BDBDD2]"></div>
+                            <span className="text-xs font-semibold text-[#E93E2B] [writing-mode:vertical-rl] rotate-180 tracking-wider">
+                                View Stores
+                            </span>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
 
             {/* Tabs Section */}
@@ -572,71 +605,71 @@ const ProductDetail = () => {
                                 <div className="bg-white border border-[#E8E8E8] rounded-lg p-8 mb-6 text-center">
                                     {user ? (
                                         showLoginForm ? (
-                                        <>
-                                            <h3 className="text-2xl font-bold text-[#0F172A] mb-4 text-left">
-                                                Write a Review
-                                            </h3>
-                                            <p className="text-sm text-[#64748B] text-left mb-4">Posting as <span className="font-semibold text-[#181211]">{user.name}</span></p>
+                                            <>
+                                                <h3 className="text-2xl font-bold text-[#0F172A] mb-4 text-left">
+                                                    Write a Review
+                                                </h3>
+                                                <p className="text-sm text-[#64748B] text-left mb-4">Posting as <span className="font-semibold text-[#181211]">{user.name}</span></p>
 
-                                            <div className="text-left mb-3.5">
-                                                <p className="text-base font-medium leading-1.5 text-[#334155] mb-3">Your Rating</p>
-                                                <div className="flex items-center gap-1">
-                                                    {[1, 2, 3, 4, 5].map((star) => (
-                                                        <button
-                                                            key={star}
-                                                            type="button"
-                                                            onClick={() => setReviewRating(star)}
-                                                            className="focus:outline-none focus:ring-2 focus:ring-[#E85D4C]"
-                                                        >
-                                                            <Icon
-                                                                icon={star <= reviewRating ? "flowbite:star-solid" : "basil:star-outline"}
-                                                                className={star <= reviewRating ? "text-[#FFE100]" : "text-[#181211]"}
-                                                                width={24} height={24}
-                                                            />
-                                                        </button>
-                                                    ))}
+                                                <div className="text-left mb-3.5">
+                                                    <p className="text-base font-medium leading-1.5 text-[#334155] mb-3">Your Rating</p>
+                                                    <div className="flex items-center gap-1">
+                                                        {[1, 2, 3, 4, 5].map((star) => (
+                                                            <button
+                                                                key={star}
+                                                                type="button"
+                                                                onClick={() => setReviewRating(star)}
+                                                                className="focus:outline-none focus:ring-2 focus:ring-[#E85D4C]"
+                                                            >
+                                                                <Icon
+                                                                    icon={star <= reviewRating ? "flowbite:star-solid" : "basil:star-outline"}
+                                                                    className={star <= reviewRating ? "text-[#FFE100]" : "text-[#181211]"}
+                                                                    width={24} height={24}
+                                                                />
+                                                            </button>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div className="text-left mb-3 ml-0.5">
-                                                <p className="text-sm font-medium text-[#334155] mb-1">Review Content</p>
-                                                <textarea
-                                                    value={reviewText}
-                                                    onChange={(e) => setReviewText(e.target.value)}
-                                                    placeholder="Share your experience with this product..."
-                                                    className="w-full min-h-30 resize-none px-4 py-3 border border-[#E5DCDC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E85D4C]"
-                                                />
-                                            </div>
+                                                <div className="text-left mb-3 ml-0.5">
+                                                    <p className="text-sm font-medium text-[#334155] mb-1">Review Content</p>
+                                                    <textarea
+                                                        value={reviewText}
+                                                        onChange={(e) => setReviewText(e.target.value)}
+                                                        placeholder="Share your experience with this product..."
+                                                        className="w-full min-h-30 resize-none px-4 py-3 border border-[#E5DCDC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E85D4C]"
+                                                    />
+                                                </div>
 
-                                            <div className="flex items-center justify-end gap-3">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => { setShowLoginForm(false); setReviewRating(0); setReviewText(""); }}
-                                                    className="px-8 py-3.5 text-sm border border-[#E5E5E5] rounded-lg font-medium text-[#181211] hover:bg-[#F5F5F5] transition-colors"
-                                                >
-                                                    Cancel
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        if (!reviewText.trim()) return;
-                                                        setUserReviews(prev => [{
-                                                            id: Date.now(),
-                                                            name: user.name,
-                                                            rating: reviewRating || 5,
-                                                            text: reviewText.trim(),
-                                                            date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                                                        }, ...prev]);
-                                                        setShowLoginForm(false);
-                                                        setReviewRating(0);
-                                                        setReviewText("");
-                                                    }}
-                                                    className="px-8 py-3.5 text-sm bg-[#E93E2B] text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
-                                                >
-                                                    Submit Review
-                                                </button>
-                                            </div>
-                                        </>
+                                                <div className="flex items-center justify-end gap-3">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => { setShowLoginForm(false); setReviewRating(0); setReviewText(""); }}
+                                                        className="px-8 py-3.5 text-sm border border-[#E5E5E5] rounded-lg font-medium text-[#181211] hover:bg-[#F5F5F5] transition-colors"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            if (!reviewText.trim()) return;
+                                                            setUserReviews(prev => [{
+                                                                id: Date.now(),
+                                                                name: user.name,
+                                                                rating: reviewRating || 5,
+                                                                text: reviewText.trim(),
+                                                                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                                                            }, ...prev]);
+                                                            setShowLoginForm(false);
+                                                            setReviewRating(0);
+                                                            setReviewText("");
+                                                        }}
+                                                        className="px-8 py-3.5 text-sm bg-[#E93E2B] text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
+                                                    >
+                                                        Submit Review
+                                                    </button>
+                                                </div>
+                                            </>
                                         ) : (
                                             <div className="text-center">
                                                 <p className="text-base text-[#181211] mb-4">Logged in as <span className="font-semibold">{user.name}</span></p>

@@ -10,10 +10,15 @@ const CartDrawer = ({ open, onClose }) => {
   useEffect(() => {
     if (open) {
       document.body.style.setProperty("overflow", "hidden", "important");
+      document.documentElement.style.setProperty("overflow", "hidden", "important");
     } else {
       document.body.style.removeProperty("overflow");
+      document.documentElement.style.removeProperty("overflow");
     }
-    return () => document.body.style.removeProperty("overflow");
+    return () => {
+      document.body.style.removeProperty("overflow");
+      document.documentElement.style.removeProperty("overflow");
+    };
   }, [open]);
 
   const subtotal = cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);

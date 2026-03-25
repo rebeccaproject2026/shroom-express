@@ -37,6 +37,7 @@ import Str9 from '../../assets/images/str9.png';
 import Str10 from '../../assets/images/str10.png';
 import FilterDrawer from '../../components/products/FilterDrawer';
 import { useCategory } from '../../context/CategoryContext';
+import StoreAboutDrawer from '../../components/stores/StoreAboutDrawer';
 
 
 const StoreDetails = () => {
@@ -44,6 +45,7 @@ const StoreDetails = () => {
     const { storeId } = useParams();
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
+    const [isAboutDrawerOpen, setIsAboutDrawerOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState(null); // 'mushrooms' | 'edibles' | null
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
@@ -352,7 +354,7 @@ const StoreDetails = () => {
                                 <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => document.getElementById('store-about')?.scrollIntoView({ behavior: 'smooth' })} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
                                 <Icon icon="ix:about" width={18} height={18} />
                                 <span>About</span>
                             </button>
@@ -438,6 +440,13 @@ const StoreDetails = () => {
                 </div>
             </div>
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
+
+            {/* Store About Drawer */}
+            <StoreAboutDrawer 
+                open={isAboutDrawerOpen} 
+                onClose={() => setIsAboutDrawerOpen(false)} 
+                storeData={storeData} 
+            />
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import OrderSummary from '../../components/checkout/OrderSummary';
 // import product1 from '../../assets/images/product1.png';
@@ -33,6 +34,9 @@ const orderItems = [
 ];
 
 const TrackOrderPage = () => {
+    const { state } = useLocation();
+    const currentItems = state?.cartItems || orderItems;
+
     return (
         <div className="grid grid-cols-[70%_30%] gap-5 p-6 bg-[#F9F6F4] max-w-[1400px] mx-auto my-10 min-h-screen ">
 
@@ -145,7 +149,7 @@ xt-[#0F172A] mb-4">Delivery Details</h3>
 
                 {/* Order Summary */}
                 <OrderSummary
-                    items={orderItems}
+                    items={currentItems}
                     delivery="free"
                     showPromo={false}
                     showBadges={false}

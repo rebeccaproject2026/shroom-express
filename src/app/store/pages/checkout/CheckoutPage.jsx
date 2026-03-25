@@ -18,6 +18,7 @@ const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 text-sm t
 
 const CheckoutPage = () => {
     const navigate = useNavigate();
+    const [cartItems, setCartItems] = useState(defaultItems);
     const [delivery, setDelivery] = useState('sameday');
     const [payment, setPayment] = useState('card');
     const [saveCard, setSaveCard] = useState(true);
@@ -36,11 +37,15 @@ const CheckoutPage = () => {
     const handleCardChange = (field, value) => setCardData(prev => ({ ...prev, [field]: value }));
     const handleFormChange = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
 
+    const handleQuantityChange = (id, newQuantity) => {
+        setCartItems(prev => prev.map(item => item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item));
+    };
+
     return (
-        <div className="w-full min-h-screen bg-[#FAF8F5] px-10 ">
+        <div className="w-full min-h-screen bg-[#FAF8F5] px-10 pb-20">
             <Stepper currentStep={2} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-300 mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left - Form */}
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {/* Delivery Method */}
@@ -120,12 +125,13 @@ const CheckoutPage = () => {
                 <div className="lg:col-span-1">
                     <div className="sticky top-67.5">
                         <OrderSummary
-                            items={defaultItems}
+                            items={cartItems}
                             delivery={delivery}
-                            onProceed={() => navigate('/store/order-complete', { state: { delivery, form } })}
+                            onProceed={() => navigate('/store/order-complete', { state: { delivery, form, cartItems } })}
                             btnLabel="Place Secure Order →"
                             showPromo={true}
                             showSavings={false}
+                            onQuantityChange={handleQuantityChange}
                         />
                     </div>
                 </div>
