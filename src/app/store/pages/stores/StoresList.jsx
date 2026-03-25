@@ -34,7 +34,7 @@ const StoresList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterOpen, setFilterOpen] = useState(false);
     const [drawerFilters, setDrawerFilters] = useState({ selectedDelivery: 'All', selectedRating: 'All', isPrimary: false });
-    const [activeCategory, setActiveCategory] = useState(false);
+    const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeShipping, setActiveShipping] = useState(false);
     const stores = [
@@ -76,7 +76,7 @@ const StoresList = () => {
             location: "5.2 km away • Etobicoke",
             coverImage: storecard3,
             logo: background3,
-            deliveryBadge: null,
+            deliveryBadge: { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: []
         },
@@ -132,7 +132,7 @@ const StoresList = () => {
             location: "1/2 Geary Ave, Toronto, ON M6H 4H1",
             coverImage: Planetbanner,
             logo: Planetlogo,
-            deliveryBadge: null,
+            deliveryBadge: { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: []
         },
@@ -183,19 +183,19 @@ const StoresList = () => {
     const filteredStores = stores.filter(s => {
         const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             s.location.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesCategory = !activeCategory || s.isPrimary === true;
+        const matchesExpressDelivery = !activeExpressDelivery || s.deliveryBadge?.text === "Express Delivery";
         const matchesDelivery = !activeDelivery || (s.deliveryBadge?.text === "Same-day Delivery");
-        const matchesShipping = !activeShipping || (s.deliveryBadge?.text === "Express Delivery");
+        const matchesShipping = !activeShipping || (s.deliveryBadge?.text === "Nationwide Shipping");
         const matchesDrawerDelivery = drawerFilters.selectedDelivery === 'All' || s.deliveryBadge?.text === drawerFilters.selectedDelivery;
         const matchesDrawerRating = drawerFilters.selectedRating === 'All' ||
             (drawerFilters.selectedRating === '5.0' ? parseFloat(s.rating) === 5.0 :
                 drawerFilters.selectedRating === '4.5+' ? parseFloat(s.rating) >= 4.5 :
                     parseFloat(s.rating) >= 4.0);
         const matchesDrawerPrimary = !drawerFilters.isPrimary || s.isPrimary === true;
-        return matchesSearch && matchesCategory && matchesDelivery && matchesShipping && matchesDrawerDelivery && matchesDrawerRating && matchesDrawerPrimary;
+        return matchesSearch && matchesExpressDelivery && matchesDelivery && matchesShipping && matchesDrawerDelivery && matchesDrawerRating && matchesDrawerPrimary;
     });
 
-    const activeFilterCount = [activeCategory, activeDelivery, activeShipping].filter(Boolean).length;
+    const activeFilterCount = [activeExpressDelivery, activeDelivery, activeShipping].filter(Boolean).length;
 
     return (
         <div className="w-full px-10 py-20">
@@ -252,10 +252,10 @@ const StoresList = () => {
 
                     {/* Pills */}
                     <button
-                        onClick={() => setActiveCategory(p => !p)}
-                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        onClick={() => setActiveExpressDelivery(p => !p)}
+                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${activeExpressDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                     >
-                        Category
+                        Express Delivery
                     </button>
 
                     <button

@@ -17,11 +17,10 @@ import { allProducts } from '../../data/productsData';
 import { useCategory } from '../../context/CategoryContext';
 
 const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
-    const [deliveryMethod, setDeliveryMethod] = useState('delivery');
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
-    const { selectedEffect, toggleEffect } = useCategory();
+    const { selectedEffect, toggleEffect, deliveryMethod, setDeliveryMethod } = useCategory();
 
     // Search state
     const [searchQuery, setSearchQuery] = useState('');
@@ -109,9 +108,9 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             </div>
 
             {/* SECTION 2: Main Header */}
-            <div className="container mx-auto px-6 py-2 flex items-center justify-between gap-6">
-                {/* Logo and Toggle Group */}
-                <div className="flex items-center gap-8">
+            <div className="container mx-auto px-4 py-1 flex items-center justify-between gap-5">
+                {/* Left: Logo and Toggle Group */}
+                <div className="flex flex-1 items-center justify-start gap-5">
                     {/* Logo */}
                     <Link to="/store" className="flex flex-col items-center justify-center shrink-0">
                         <div className="flex justify-center my-2">
@@ -127,7 +126,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     <div className="hidden lg:flex items-center bg-white border border-[#D1D5DB] rounded-full p-0.5 shadow-sm shrink-0">
                         <button
                             onClick={() => setDeliveryMethod('delivery')}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-full text-[15px] font-semibold transition-colors cursor-pointer ${deliveryMethod === 'delivery'
+                            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-full text-[15px] font-semibold transition-colors cursor-pointer ${deliveryMethod === 'delivery'
                                 ? 'bg-[var(--store-primary)] text-white shadow-md'
                                 : 'text-[#222222] '
                                 }`}
@@ -138,7 +137,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         </button>
                         <button
                             onClick={() => setDeliveryMethod('shipping')}
-                            className={`flex items-center gap-2 px-4 cursor-pointer py-2 rounded-full text-[15px] font-semibold transition-colors ${deliveryMethod === 'shipping'
+                            className={`flex items-center gap-2 px-2 cursor-pointer py-1.5 rounded-full text-[15px] font-semibold transition-colors ${deliveryMethod === 'shipping'
                                 ? 'bg-[var(--store-primary)] text-white shadow-md'
                                 : 'text-[#222222]'
                                 }`}
@@ -150,9 +149,9 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Center: Search Bar */}
-                <div className="flex-1 max-w-xl px-4 hidden md:block" ref={searchRef}>
+                <div className="w-full max-w-[40rem] hidden md:block" ref={searchRef}>
                     <div className="relative">
-                        <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm">
+                        <div className="relative flex items-center w-full h-11 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm">
                             <div className="pl-5 text-[#636363]">
                                 <Search size={20} />
                             </div>
@@ -236,7 +235,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Right: Wishlist & Cart */}
-                <div className="flex items-center gap-12 shrink-0">
+                <div className="flex flex-1 items-center justify-end gap-12 shrink-0">
                     <button
                         onClick={() => navigate('/store/myaccount?tab=wishlist')}
                         className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[var(--store-primary)] transition-colors relative"
@@ -269,7 +268,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             {/* SECTION 3: Category Navigation */}
             <div className="w-full border-t border-b border-[#E5DCDC]">
                 <div className="container mx-auto px-4">
-                    <ul className="flex items-center justify-center space-x-12 h-10 overflow-x-auto no-scrollbar">
+                    <ul className="flex items-center justify-center space-x-12 h-10 w-full relative z-30">
                         {categories.map((cat, idx) => {
                             const categoryPath = cat.name === 'Stores'
                                 ? '/store/storeslists'
@@ -279,6 +278,48 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                             const isEffectSlug = effectSlugs.some(s => location.pathname === `/store/category/${s}`);
                             const isActive = location.pathname === categoryPath ||
                                 (cat.name === 'Magic Mushrooms' && isEffectSlug);
+
+                            if (!isHomePage && ['Magic Mushrooms', 'Microdose', 'Edibles'].includes(cat.name)) {
+                                return (
+                                    <li key={idx} className="shrink-0 flex items-center justify-center relative group">
+                                        <div
+                                            className={`flex items-center gap-2 text-[15px] font-bold transition-colors py-2 cursor-pointer ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] hover:text-[var(--store-primary)]'}`}
+                                        >
+                                            <Icon icon={cat.icon} width={18} height={18} />
+                                            <span>{cat.name}</span>
+                                            <Icon icon="mdi:chevron-down" width={20} height={20} className="ml-0.5 group-hover:rotate-180 transition-transform duration-300" />
+                                        </div>
+
+                                        {/* Dropdown Menu */}
+                                        <div className="absolute top-10 left-1/2 -translate-x-1/2 pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all z-50">
+                                            <div className="bg-white border border-[#E5DCDC] shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-lg flex flex-col pt-1 pb-1 relative">
+                                                {/* Arrow pointer */}
+                                                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-[#E5DCDC] rotate-45"></div>
+                                                
+                                                <Link 
+                                                    to={categoryPath} 
+                                                    className="px-5 py-3 text-[15px] text-[#181211] hover:bg-[#FFF5F4] hover:text-[#E93E2B] font-semibold border-b border-[#F1F5F9] transition-colors relative z-10"
+                                                >
+                                                    All ({cat.name})
+                                                </Link>
+                                                {categoryIcons.map((subItem, sIdx) => {
+                                                    const slug = subItem.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                                                    const iconPath = `${categoryPath}?effect=${slug}`;
+                                                    return (
+                                                        <Link 
+                                                            key={sIdx}
+                                                            to={iconPath}
+                                                            className="px-5 py-3 text-[14px] text-[#444444] hover:bg-[#FFF5F4] border-[#F1F5F9] border-b last:border-0 hover:text-[#E93E2B] font-medium transition-colors relative z-10"
+                                                        >
+                                                            {subItem.name}
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </li>
+                                );
+                            }
 
                             return (
                                 <li key={idx} className="shrink-0 flex items-center justify-center">
@@ -304,6 +345,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             </div>
 
             {/* SECTION 4: Category Icons Row */}
+            {isHomePage && (
             <div className="w-full bg-[#FFFFFF]">
                 <div className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-center gap-10 overflow-x-auto no-scrollbar pb-1">
@@ -336,6 +378,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     </div>
                 </div>
             </div>
+            )}
         </header>
     );
 };

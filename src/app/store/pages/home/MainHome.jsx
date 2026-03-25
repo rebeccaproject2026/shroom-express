@@ -51,7 +51,7 @@ import news3 from "../../assets/images/news3.png";
 const Home = () => {
     const sliderRef = useRef(null);
     const navigate = useNavigate();
-    const { selectedEffect } = useCategory();
+    const { selectedEffect, deliveryMethod } = useCategory();
 
     const slideLeft = () => {
         if (sliderRef.current) {
@@ -80,18 +80,26 @@ const Home = () => {
                         <div className="md:w-[55%] flex flex-col items-start z-10 w-full mb-10 md:mb-0 px-10">
                             {/* Badge */}
                             <div className="bg-[#E93E2B]/10 text-(--store-primary) text-[10px] md:text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-6">
-                                Premium Collection 2026
+                                {deliveryMethod === 'shipping' ? "Nationwide Shipping" : "Premium Collection 2026"}
                             </div>
 
                             {/* Heading */}
-                            <h1 className="text-[#181211] font-extrabold text-6xl md:text-6xl lg:text-6xl  tracking-tight">
-                                Elevate Your <br />
-                                <span className="text-(--store-primary) inline-block mt-2">Wellness Journey</span>
+                            <h1 className="text-[#181211] font-extrabold text-6xl md:text-6xl lg:text-6xl  tracking-tight transition-opacity duration-300">
+                                {deliveryMethod === 'shipping' ? (
+                                    <>Mail Order <br />
+                                        <span className="text-(--store-primary) inline-block mt-2">Canada-Wide Shipping</span></>
+                                ) : (
+                                    <>Elevate Your <br />
+                                        <span className="text-(--store-primary) inline-block mt-2">Wellness Journey</span></>
+                                )}
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-[#886663] text-lg font-normal max-w-md mt-6 leading-relaxed">
-                                Curated selections of premium cannabis and functional mushrooms. Lab tested, legally compliant, and discreetly shipped to your door.
+                            <p className="text-[#886663] text-lg font-normal max-w-md mt-6 leading-relaxed transition-opacity duration-300">
+                                {deliveryMethod === 'shipping'
+                                    ? "Discreet, express mail order shipping across Canada. Securely packaged, legally compliant, and delivered straight to your mailbox."
+                                    : "Curated selections of premium cannabis and functional mushrooms. Lab tested, legally compliant, and discreetly delivered to your door."
+                                }
                             </p>
                         </div>
 

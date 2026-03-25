@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 import Select from '../../components/common/Select';
@@ -40,11 +40,14 @@ const ProductsList = () => {
     const { selectedEffect } = useCategory();
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
-    const [activeCategory, setActiveCategory] = useState(false);
+    const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const [storeSearch, setStoreSearch] = useState('');
     const [drawerFilters, setDrawerFilters] = useState({ onSale: false, inStock: false, priceRange: [0, 200], selectedCategory: 'All' });
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const effectQuery = queryParams.get('effect');
 
     // Category title mapping - only for main nav categories, effect slugs keep parent title
     const categoryTitles = {
@@ -298,20 +301,27 @@ const ProductsList = () => {
 
         // Filter by URL category param (effect-based icon categories)
         const effectCategories = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
+        const slugToName = {
+            'micro-dosing': 'Microdosing',
+            'beginner-friendly': 'Beginner Friendly',
+            'high-potency': 'High Potency',
+            'creative-boost': 'Creative Boost',
+            'relax-and-chill': 'Relax & Chill',
+            'visual-experience': 'Visual Experience',
+            'focus-and-clarity': 'Focus & Clarity',
+            'deep-journey': 'Deep Journey',
+        };
+
         if (effectCategories.includes(category)) {
             // Convert slug back to display name for matching
-            const slugToName = {
-                'micro-dosing': 'Microdosing',
-                'beginner-friendly': 'Beginner Friendly',
-                'high-potency': 'High Potency',
-                'creative-boost': 'Creative Boost',
-                'relax-and-chill': 'Relax & Chill',
-                'visual-experience': 'Visual Experience',
-                'focus-and-clarity': 'Focus & Clarity',
-                'deep-journey': 'Deep Journey',
-            };
             const targetCategory = slugToName[category];
             if (targetCategory) list = list.filter(p => p.categories?.includes(targetCategory));
+        }
+
+        // Filter by query string effect mapping
+        if (effectQuery && effectCategories.includes(effectQuery)) {
+            const targetEffect = slugToName[effectQuery];
+            if (targetEffect) list = list.filter(p => p.categories?.includes(targetEffect));
         }
 
         // Filter by context selectedEffect (from header icon click, no URL change)
@@ -332,7 +342,7 @@ const ProductsList = () => {
             list = list.filter(p => p.price >= drawerFilters.priceRange[0] && p.price <= drawerFilters.priceRange[1]);
         }
 
-        if (activeCategory) list = list.filter(p => p.categories?.some(c => c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'));
+        if (activeExpressDelivery) list = list.filter(p => p.vendor === 'Elevated Solstice' || p.vendor === 'Aether Mushroom Labs');
         if (activeDelivery) list = list.filter(p => p.categories?.some(c => c === 'Beginner Friendly' || c === 'Microdosing'));
         if (activeBestSeller) list = list.filter(p => p.badge?.text === 'BEST SELLER');
         if (sortBy === 'price-low') list.sort((a, b) => a.price - b.price);
@@ -340,7 +350,7 @@ const ProductsList = () => {
         else if (sortBy === 'rating') list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
         return list;
-    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, products, category, selectedEffect, drawerFilters]);
+    }, [activeExpressDelivery, activeDelivery, activeBestSeller, sortBy, products, category, effectQuery, selectedEffect, drawerFilters]);
 
     const filteredStores = useMemo(() =>
         stores.filter(s =>
@@ -348,7 +358,7 @@ const ProductsList = () => {
             s.location.toLowerCase().includes(storeSearch.toLowerCase())
         ), [storeSearch, stores]);
 
-    const activeFilterCount = [activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length;
+    const activeFilterCount = [activeExpressDelivery, activeDelivery, activeBestSeller].filter(Boolean).length;
 
     return (
         <div className="w-full px-12 py-10">
@@ -402,10 +412,10 @@ const ProductsList = () => {
 
                                 {/* Pills */}
                                 <button
-                                    onClick={() => setActiveCategory(p => !p)}
-                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                    onClick={() => setActiveExpressDelivery(p => !p)}
+                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${activeExpressDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                                 >
-                                    Category
+                                    Express Delivery
                                 </button>
 
                                 <button

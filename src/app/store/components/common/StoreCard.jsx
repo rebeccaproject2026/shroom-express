@@ -26,7 +26,7 @@ const StoreCard = ({ store }) => {
     };
 
     return (
-        <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full min-h-85">
+        <div className="bg-white rounded-md flex flex-col group transition-all duration-300 border border-[#B7860B]/5  cursor-pointer w-full h-full min-h-85" onClick={handleViewStore}>
 
             {/* Cover Image Area */}
             <div className="relative w-full h-40 mb-8 shrink-0">

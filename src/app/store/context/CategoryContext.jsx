@@ -4,6 +4,7 @@ const CategoryContext = createContext(null);
 
 export const CategoryProvider = ({ children }) => {
   const [selectedEffect, setSelectedEffect] = useState(null);
+  const [deliveryMethod, setDeliveryMethod] = useState('delivery');
 
   const toggleEffect = (effectName) => {
     setSelectedEffect(prev => prev === effectName ? null : effectName);
@@ -12,7 +13,7 @@ export const CategoryProvider = ({ children }) => {
   const clearEffect = () => setSelectedEffect(null);
 
   return (
-    <CategoryContext.Provider value={{ selectedEffect, toggleEffect, clearEffect }}>
+    <CategoryContext.Provider value={{ selectedEffect, toggleEffect, clearEffect, deliveryMethod, setDeliveryMethod }}>
       {children}
     </CategoryContext.Provider>
   );

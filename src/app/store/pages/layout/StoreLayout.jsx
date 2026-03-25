@@ -19,7 +19,7 @@ const StoreLayout = () => {
             <StickyHeader cartCount={cartCount} wishlistCount={wishlistCount} onCartClick={() => setCartOpen(true)} />
             <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
 
-            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[250px]'}`}>
+            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[130px]'}`}>
                 <Outlet />
             </main>
 
