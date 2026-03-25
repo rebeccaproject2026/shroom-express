@@ -15,12 +15,16 @@ import focusClarityImg from "../../assets/images/focusclarity.png";
 import deepJourneyImg from "../../assets/images/deepjourney.png";
 import { allProducts } from '../../data/productsData';
 import { useCategory } from '../../context/CategoryContext';
+import { useAuth } from '../../context/AuthContext';
 
 const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
     const { selectedEffect, toggleEffect, deliveryMethod, setDeliveryMethod } = useCategory();
+    const { user, logout } = useAuth();
+    const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+    const profileMenuRef = useRef(null);
 
     // Search state
     const [searchQuery, setSearchQuery] = useState('');
@@ -62,6 +66,9 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             if (searchRef.current && !searchRef.current.contains(e.target)) {
                 setSearchOpen(false);
             }
+            if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+                setProfileMenuOpen(false);
+            }
         };
         document.addEventListener('mousedown', handler);
         return () => document.removeEventListener('mousedown', handler);
@@ -90,9 +97,8 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
             <div className="bg-[var(--store-primary)] text-white text-sm py-2 px-4 flex justify-center items-center gap-6">
-                <Link to="/store/storeslists" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                <Link to="/store/create-store" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
                     <Icon icon="clarity:store-line" width={17} height={17} />
-
                     <span>Open Store</span>
                 </Link>
                 <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
@@ -101,10 +107,63 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     <span>Become Driver</span>
                 </Link>
                 <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
-                <Link to="/store/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
-                    <Icon icon="hugeicons:user-02" width={17} height={17} />
-                    <span>Login / Register</span>
-                </Link>
+                {user ? (
+                    <div className="relative" ref={profileMenuRef}>
+                        <button
+                            onClick={() => setProfileMenuOpen(prev => !prev)}
+                            className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium"
+                        >
+                            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xs">
+                                {user.name?.charAt(0).toUpperCase()}
+                            </div>
+                            <span>{user.name}</span>
+                            <Icon icon={profileMenuOpen ? "mdi:chevron-up" : "mdi:chevron-down"} width={16} height={16} />
+                        </button>
+
+                        {profileMenuOpen && (
+                            <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden">
+                                {/* User info */}
+                                <div className="px-4 py-3 border-b border-[#F1F5F9]">
+                                    <p className="text-sm font-bold text-[#181211] truncate">{user.name}</p>
+                                    <p className="text-xs text-[#94A3B8] truncate">{user.email}</p>
+                                </div>
+
+                                {/* Menu items */}
+                                {[
+                                    { label: "My Account", icon: "hugeicons:user-02", path: "/store/myaccount?tab=profile" },
+                                    { label: "My Orders", icon: "mdi:package-variant-closed", path: "/store/myaccount?tab=orders" },
+                                    { label: "Wishlist", icon: "ion:heart-outline", path: "/store/myaccount?tab=wishlist" },
+                                    { label: "Payment Method", icon: "streamline-plump:payment-recieve-7", path: "/store/myaccount?tab=payment" },
+                                ].map((item) => (
+                                    <button
+                                        key={item.label}
+                                        onClick={() => { setProfileMenuOpen(false); navigate(item.path); }}
+                                        className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#181211] hover:bg-[#FAF8F5] transition-colors ${location.pathname === item.path ? 'bg-[#FFF0EE] text-[#E93E2B]' : ''}`}
+                                    >
+                                        <Icon icon={item.icon} width={17} height={17} className={location.pathname === item.path ? 'text-[#E93E2B]' : 'text-[#64748B]'} />
+                                        {item.label}
+                                    </button>
+                                ))}
+
+                                {/* Logout */}
+                                <div className="border-t border-[#F1F5F9]">
+                                    <button
+                                        onClick={() => { logout(); setProfileMenuOpen(false); navigate('/store'); }}
+                                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#E93E2B] hover:bg-[#FFF0EE] transition-colors"
+                                    >
+                                        <Icon icon="hugeicons:logout-02" width={17} height={17} />
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <Link to="/store/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                        <Icon icon="hugeicons:user-02" width={17} height={17} />
+                        <span>Login / Register</span>
+                    </Link>
+                )}
             </div>
 
             {/* SECTION 2: Main Header */}

@@ -26,6 +26,7 @@ import Torontomagicbanner from "../../assets/images/Torontomagicbanner.jpg";
 import magicmashroombanner2 from "../../assets/images/magicmashroombanner2.jpg";
 import magicmashroomlogo2 from "../../assets/images/magicmashroomlogo2.png";
 import StoreFilterDrawer from '../../components/stores/StoreFilterDrawer';
+import { useStores } from '../../context/StoresContext';
 
 
 
@@ -37,148 +38,7 @@ const StoresList = () => {
     const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeShipping, setActiveShipping] = useState(false);
-    const stores = [
-        {
-            id: 1,
-            name: "micro zoomiez",
-            rating: "4.8",
-            reviewCount: "124",
-            estimatedDelivery: "Under 2 Hours",
-            avgPrice: "$27.43",
-            location: "45 Four Winds Dr, North York, ON M3J 2T6, Canada",
-            coverImage: storecard1,
-            logo: background,
-            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-            isPrimary: true,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        {
-            id: 2,
-            name: "The Mushroom",
-            rating: "5.0",
-            reviewCount: "89 reviews",
-            estimatedDelivery: "2 - 5 Hours",
-            avgPrice: "$27.43",
-            location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-            coverImage: storecard2,
-            logo: background2,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        {
-            id: 3,
-            name: "Psilovibin",
-            rating: "4.1",
-            reviewCount: "210 reviews",
-            estimatedDelivery: "1 - 2 Hours",
-            avgPrice: "$27.43",
-            location: "5.2 km away • Etobicoke",
-            coverImage: storecard3,
-            logo: background3,
-            deliveryBadge: { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: []
-        },
-        {
-            id: 4,
-            name: "Shroom Express",
-            rating: "4.7",
-            reviewCount: "340 reviews",
-            estimatedDelivery: "1 - 3 hours",
-            avgPrice: "$27.43",
-            location: "5.2 km away • Medicinal - Vancouver",
-            coverImage: storecard4,
-            logo: background4,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        {
-            id: 5,
-            name: "Shroom For Sale",
-            rating: "4.8",
-            reviewCount: "124",
-            estimatedDelivery: "Under 2 Hours",
-            avgPrice: "$27.43",
-            location: "164 Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: Shroomforsalebanner,
-            logo: Shroomforsalelogo,
-            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg]
-        },
-        {
-            id: 6,
-            name: "Magic Mushroom...",
-            rating: "5.0",
-            reviewCount: "89 reviews",
-            estimatedDelivery: "2 - 5 Hours",
-            avgPrice: "$27.43",
-            location: "85a Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: Magicmushroombanner,
-            logo: Magicmushroomlogo,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg]
-        },
-        {
-            id: 7,
-            name: "Planet 51",
-            rating: "4.1",
-            reviewCount: "210 reviews",
-            estimatedDelivery: "1 - 2 Hours",
-            avgPrice: "$27.43",
-            location: "1/2 Geary Ave, Toronto, ON M6H 4H1",
-            coverImage: Planetbanner,
-            logo: Planetlogo,
-            deliveryBadge: { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: []
-        },
-        {
-            id: 8,
-            name: "Toronto Magic...",
-            rating: "4.7",
-            reviewCount: "340 reviews",
-            estimatedDelivery: "1 - 3 hours",
-            avgPrice: "$27.43",
-            location: "164 Bathurst St, Toronto, ON M5B 1C7",
-            coverImage: Torontomagicbanner,
-            logo: Torontomagiclogo,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg]
-        },
-        {
-            id: 9,
-            name: "Magic Mushroom...",
-            rating: "4.8",
-            reviewCount: "124",
-            estimatedDelivery: "Under 2 Hours",
-            avgPrice: "$27.43",
-            location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-            coverImage: magicmashroombanner2,
-            logo: magicmashroomlogo2,
-            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        // {
-        //     id: 10,
-        //     name: "Danforth Weed",
-        //     rating: "5.0",
-        //     reviewCount: "89 reviews",
-        //     estimatedDelivery: "2 - 5 Hours",
-        //     avgPrice: "$27.43",
-        //     location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-        //     coverImage: storecard2,
-        //     logo: background2,
-        //     deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-        //     isPrimary: false,
-        //     avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg]
-        // }
-    ];
+    const { stores } = useStores();
 
     const filteredStores = stores.filter(s => {
         const matchesSearch = s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

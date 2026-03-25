@@ -5,6 +5,7 @@ import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CategoryProvider } from './context/CategoryContext';
 import { AuthProvider } from './context/AuthContext';
+import { StoresProvider } from './context/StoresContext';
 import StoreLayout from './pages/layout/StoreLayout';
 import Home from './pages/home/MainHome';
 import StoresList from './pages/stores/StoresList';
@@ -21,6 +22,7 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import CheckEmailPage from './pages/auth/CheckEmailPage';
 import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import MyAccountPage from './pages/auth/MyAccountPage';
+import CreateStorePage from './pages/stores/CreateStorePage';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -32,6 +34,7 @@ function StoreApp() {
 
     return (
         <AuthProvider>
+        <StoresProvider>
         <CartProvider>
             <WishlistProvider>
             <CategoryProvider>
@@ -52,11 +55,13 @@ function StoreApp() {
                     <Route path="check-email" element={<CheckEmailPage />} />
                     <Route path="reset-password" element={<ResetPasswordPage />} />
                     <Route path="myaccount" element={<MyAccountPage />} />
+                    <Route path="create-store" element={<CreateStorePage />} />
                 </Route>
             </Routes>
             </CategoryProvider>
             </WishlistProvider>
         </CartProvider>
+        </StoresProvider>
         </AuthProvider>
     );
 }
