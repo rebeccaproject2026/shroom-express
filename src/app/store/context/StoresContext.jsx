@@ -48,7 +48,7 @@ export const StoresProvider = ({ children }) => {
             rating: "0.0",
             reviewCount: "0 reviews",
             estimatedDelivery: formData.estimatedTime,
-            avgPrice: "N/A",
+            avgPrice: "$0",
             location: `${formData.address}, ${formData.city}`,
             coverImage: formData.coverPreview || null,
             logo: formData.logoPreview || null,

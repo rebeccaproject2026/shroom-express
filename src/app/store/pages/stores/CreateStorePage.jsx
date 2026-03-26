@@ -137,13 +137,13 @@ const CreateStorePage = () => {
                                 <Field label="Website" value={form.website} onChange={v => set("website", v)} placeholder="www.yourstore.com" />
                             </div>
                             <div>
-                                <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-1.5 block">About Your Store</label>
+                                <label className="text-[15px] font-semibold text-[#181211] mb-1.5 block">About Your Store</label>
                                 <textarea
                                     rows={3}
                                     value={form.description}
                                     onChange={e => set("description", e.target.value)}
                                     placeholder="Tell customers what makes your store special..."
-                                    className="w-full border border-[#BDBDD2] rounded-lg px-4 py-3 text-sm text-[#181211] placeholder:text-[#94A3B8] outline-none focus:border-[#E93E2B] resize-none transition-colors"
+                                    className="w-full border border-[#E5DCDC] rounded-lg px-4 py-3 text-sm text-[#181211] placeholder:text-[#BDBDBD] outline-none focus:border-[#E93E2B] resize-none transition-colors"
                                 />
                             </div>
                         </div>
@@ -163,7 +163,7 @@ const CreateStorePage = () => {
                             </div>
 
                             <div>
-                                <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-3 block">Operating Hours</label>
+                                <label className="text-[15px] font-semibold text-[#181211] mb-3 block">Operating Hours</label>
                                 <div className="space-y-2">
                                     {DAYS.map(day => (
                                         <div key={day} className="flex items-center gap-3">
@@ -177,9 +177,9 @@ const CreateStorePage = () => {
                                             {form.hours[day].closed
                                                 ? <span className="text-xs text-[#94A3B8] font-medium">Closed</span>
                                                 : <>
-                                                    <input type="time" value={form.hours[day].open} onChange={e => setHour(day, "open", e.target.value)} className="border border-[#BDBDD2] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
+                                                    <input type="time" value={form.hours[day].open} onChange={e => setHour(day, "open", e.target.value)} className="border border-[#E5DCDC] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
                                                     <span className="text-[#94A3B8] text-sm">to</span>
-                                                    <input type="time" value={form.hours[day].close} onChange={e => setHour(day, "close", e.target.value)} className="border border-[#BDBDD2] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
+                                                    <input type="time" value={form.hours[day].close} onChange={e => setHour(day, "close", e.target.value)} className="border border-[#E5DCDC] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
                                                 </>
                                             }
                                         </div>
@@ -195,7 +195,7 @@ const CreateStorePage = () => {
                             <h2 className="text-lg font-bold text-[#181211]">Delivery Settings</h2>
 
                             <div>
-                                <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-3 block">Delivery Types *</label>
+                                <label className="text-[15px] font-semibold text-[#181211] mb-3 block">Delivery Types <span className="text-[#E93E2B]">*</span></label>
                                 <div className="grid grid-cols-3 gap-3">
                                     {[
                                         { key: "same-day", label: "Same-day", icon: "mdi:truck-fast-outline" },
@@ -289,15 +289,17 @@ const CreateStorePage = () => {
     );
 };
 
-const Field = ({ label, value, onChange, placeholder, type = "text" }) => (
+const Field = ({ label, value, onChange, placeholder, type = "text", required = false }) => (
     <div>
-        <label className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-1.5 block">{label}</label>
+        <label className="text-[15px] font-semibold text-[#181211] mb-1.5 block">
+            {label.replace(" *", "")} {required || label.includes("*") ? <span className="text-[#E93E2B]">*</span> : null}
+        </label>
         <input
             type={type}
             value={value}
             onChange={e => onChange(e.target.value)}
             placeholder={placeholder}
-            className="w-full border border-[#BDBDD2] rounded-lg px-4 py-3 text-sm text-[#181211] placeholder:text-[#94A3B8] outline-none focus:border-[#E93E2B] transition-colors bg-white"
+            className="w-full border border-[#E5DCDC] rounded-lg px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] placeholder:text-[#BDBDBD] transition-colors bg-white"
         />
     </div>
 );

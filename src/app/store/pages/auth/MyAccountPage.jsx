@@ -5,6 +5,8 @@ import WishlistView from "../../components/account/WishlistView";
 import AddressDetailsView from "../../components/account/AddressDetailsView";
 import OrderHistoryView from "../../components/account/OrderHistoryView";
 import PaymentMethodPanel from "./tabs/PaymentMethodPanel";
+import CouponsPanel from "./tabs/CouponsPanel";
+import ShroomCashPanel from "./tabs/ShroomCashPanel";
 import profile from "../../assets/images/profile.jpg";
 
 const sidebarItems = [
@@ -37,6 +39,18 @@ const sidebarItems = [
     label: "Address Details",
     sub: "Manage your address details",
     icon: "mdi:map-marker-outline",
+  },
+  {
+    key: "coupons",
+    label: "My Coupons",
+    sub: "Your promo codes & discounts",
+    icon: "mdi:ticket-percent-outline",
+  },
+  {
+    key: "shroomcash",
+    label: "Shroom's Cash",
+    sub: "Your rewards balance",
+    icon: "mdi:mushroom-outline",
   },
 ];
 
@@ -225,6 +239,12 @@ const MyAccountPage = () => {
 
             {/* Order History tab */}
             {activeTab === 'orders' && <OrderHistoryView />}
+
+            {/* Coupons tab */}
+            {activeTab === 'coupons' && <CouponsPanel />}
+
+            {/* Shroom's Cash tab */}
+            {activeTab === 'shroomcash' && <ShroomCashPanel onViewOrders={() => setActiveTab('orders')} />}
 
             {/* Profile tab */}
             {activeTab === 'profile' && <>
