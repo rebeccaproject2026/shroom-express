@@ -30,6 +30,7 @@ const ProductCard = ({ product }) => {
 
     const [quantity, setQuantity] = useState(1);
     const [selectedWeight, setSelectedWeight] = useState(null);
+    const [showError, setShowError] = useState(false);
     const wishlisted = checkWishlisted(id);
 
     const handleDecrement = () => {
@@ -42,6 +43,11 @@ const ProductCard = ({ product }) => {
 
     const handleAddToCart = (e) => {
         e.stopPropagation();
+        if (weights && weights.length > 0 && !selectedWeight) {
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
+            return;
+        }
         addToCart(product, selectedWeight, quantity);
     };
 
@@ -138,7 +144,7 @@ const ProductCard = ({ product }) => {
                         {weights.map((w, idx) => (
                             <button
                                 key={idx}
-                                onClick={(e) => { e.stopPropagation(); setSelectedWeight(w); }}
+                                onClick={(e) => { e.stopPropagation(); setSelectedWeight(w); setShowError(false); }}
                                 className={`px-3 py-1 cursor-pointer border rounded-sm text-sm font-medium text-center min-w-10 transition-colors ${selectedWeight === w ? 'border-[#E93E2B] bg-[#E93E2B] text-white' : 'border-[#CCCCCC] bg-white text-[#181211] hover:border-[#E93E2B]'}`}
                             >
                                 {w}
@@ -148,33 +154,44 @@ const ProductCard = ({ product }) => {
                 )}
 
                 {/* Bottom Row: Price, Qty, Add to Cart */}
-                <div className="flex items-center justify-between mt-1">
-                    <span className="font-extrabold text-[#181211] text-lg mt-1">
-                        ${Number(price).toFixed(2)}
-                    </span>
+                <div className="flex flex-col mt-1.5 relative">
+                    {/* Error Message Tooltip-style */}
+                    {showError && (
+                        <div className="absolute -top-6 right-0 animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-none">
+                            <span className="bg-[#E93E2B] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                                Please Select Size
+                            </span>
+                        </div>
+                    )}
+                    
+                    <div className="flex items-center justify-between h-10">
+                        <span className="font-extrabold text-[#181211] text-lg">
+                            ${Number(price).toFixed(2)}
+                        </span>
 
-                    <div className="flex items-center gap-2.5">
-                        {/* Qty Selector */}
-                        <div
-                            onClick={(e) => e.stopPropagation()}
-                            className="flex items-center gap-3 px-3 py-1 border border-[#E5DCDC] rounded-md bg-white h-7.5 shadow-sm"
-                        >
-                            <button onClick={handleDecrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
-                                <Icon icon="fa6-solid:minus" width={11} />
-                            </button>
-                            <span className="text-[15px] font-bold text-[#181211] w-4 text-center leading-none select-none">{quantity}</span>
-                            <button onClick={handleIncrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
-                                <Icon icon="fa6-solid:plus" width={11} />
+                        <div className="flex items-center gap-2.5">
+                            {/* Qty Selector */}
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                className="flex items-center gap-3 px-2.5 py-1 border border-[#E5DCDC] rounded-md bg-white h-8 shadow-sm"
+                            >
+                                <button onClick={handleDecrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
+                                    <Icon icon="fa6-solid:minus" width={10} />
+                                </button>
+                                <span className="text-[14px] font-bold text-[#181211] w-4 text-center leading-none select-none">{quantity}</span>
+                                <button onClick={handleIncrement} className="text-[#181211] hover:text-[#EA4031] flex items-center justify-center focus:outline-none">
+                                    <Icon icon="fa6-solid:plus" width={10} />
+                                </button>
+                            </div>
+
+                            {/* Add to Cart */}
+                            <button
+                                onClick={handleAddToCart}
+                                className={`w-8 h-8 rounded-md flex items-center cursor-pointer justify-center transition-all shrink-0 ${showError ? 'bg-[#E93E2B] animate-shake' : 'bg-[#E93E2B] hover:bg-opacity-90'}`}
+                            >
+                                <Icon icon="mdi:cart-plus" width={20} className="text-white" />
                             </button>
                         </div>
-
-                        {/* Add to Cart */}
-                        <button
-                            onClick={handleAddToCart}
-                            className="w-7.5 h-7.5 bg-[#E93E2B] text-white rounded-md flex items-center cursor-pointer justify-center hover:bg-opacity-90 transition-opacity shrink-0"
-                        >
-                            <Icon icon="mdi:cart-plus" width={20} strokeWidth={1.5} />
-                        </button>
                     </div>
                 </div>
             </div>

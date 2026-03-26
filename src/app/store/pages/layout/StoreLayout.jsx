@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import StickyHeader from '../../components/layout/StickyHeader';
 import Footer from '../../components/layout/Footer';
 import CartDrawer from '../../components/layout/CartDrawer';
+import AddedToBagPopup from '../../components/layout/AddedToBagPopup';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
@@ -18,6 +19,7 @@ const StoreLayout = () => {
         <div className="store-app min-h-screen flex flex-col">
             <StickyHeader cartCount={cartCount} wishlistCount={wishlistCount} onCartClick={() => setCartOpen(true)} />
             <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+            <AddedToBagPopup onCartOpen={() => setCartOpen(true)} />
 
             <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[130px]'}`}>
                 <Outlet />
