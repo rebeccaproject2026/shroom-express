@@ -331,6 +331,8 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         {categories.map((cat, idx) => {
                             const categoryPath = cat.name === 'Stores'
                                 ? '/store/storeslists'
+                                : cat.name === 'Deals'
+                                ? '/store/deals'
                                 : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
 
                             const effectSlugs = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
