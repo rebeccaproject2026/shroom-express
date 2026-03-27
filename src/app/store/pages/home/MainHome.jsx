@@ -70,58 +70,59 @@ const Home = () => {
     };
 
     return (
-        <div className="w-full pr-10 pl-10">
+        <div className="w-full px-4 sm:px-6 lg:px-10">
             {/* Hero Section */}
             <section className="font-sans pt-6 pb-4 md:pt-6 md:pb-10">
-                <div className="container mx-auto ">
-                    <div className="bg-[#E93E2B]/5 rounded-3xl flex flex-col md:flex-row items-center justify-between h-[40%]  relative overflow-hidden">
+                <div className="w-full max-w-[1700px] mx-auto">
+                    <div className="bg-[#E93E2B]/5 rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[500px] relative overflow-hidden">
 
                         {/* Left Side */}
-                        <div className="md:w-[55%] flex flex-col items-start z-10 w-full mb-10 md:mb-0 px-10">
+                        <div className="w-[60%] md:w-[55%] flex flex-col items-start z-10 pl-4 pr-2 sm:px-10 lg:pl-16">
                             {/* Badge */}
-                            <div className="bg-[#E93E2B]/10 text-(--store-primary) text-[10px] md:text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-6">
+                            <div className="bg-[#E93E2B]/10 text-(--store-primary) text-[8px] sm:text-[11px] font-extrabold px-2 py-1 sm:px-3 sm:py-1.5 rounded-full uppercase tracking-widest mb-2 sm:mb-4">
                                 {deliveryMethod === 'shipping' ? "Nationwide Shipping" : "Premium Collection 2026"}
                             </div>
 
                             {/* Heading */}
-                            <h1 className="text-[#181211] font-extrabold text-6xl md:text-6xl lg:text-6xl  tracking-tight transition-opacity duration-300">
+                            <h1 className="text-[#181211] font-extrabold text-lg sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight transition-opacity duration-300 leading-tight">
                                 {deliveryMethod === 'shipping' ? (
                                     <>Mail Order <br />
-                                        <span className="text-(--store-primary) inline-block mt-2">Canada-Wide Shipping</span></>
+                                        <span className="text-(--store-primary) inline-block mt-1">Canada-Wide Shipping</span></>
                                 ) : (
                                     <>Elevate Your <br />
-                                        <span className="text-(--store-primary) inline-block mt-2">Wellness Journey</span></>
+                                        <span className="text-(--store-primary) inline-block mt-1">Wellness Journey</span></>
                                 )}
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-[#886663] text-lg font-normal max-w-md mt-6 leading-relaxed transition-opacity duration-300">
+                            <p className="text-[#886663] text-[10px] leading-tight sm:text-lg font-medium max-w-md mt-2 sm:mt-6 transition-opacity duration-300">
                                 {deliveryMethod === 'shipping'
-                                    ? "Discreet, express mail order shipping across Canada. Securely packaged, legally compliant, and delivered straight to your mailbox."
-                                    : "Curated selections of premium cannabis and functional mushrooms. Lab tested, legally compliant, and discreetly delivered to your door."
+                                    ? "Discreet, express mail order shipping across Canada. Securely packaged and delivered straight to your mailbox."
+                                    : "Curated selections of premium cannabis and functional mushrooms. Lab tested and delivered to your door."
                                 }
                             </p>
                         </div>
 
                         {/* Right Side Container */}
-                        <div className="md:w-[45%] h-[30%] flex justify-center items-center w-full relative z-10 ">
-                            <div className="relative w-full max-w-110 aspect-square flex items-center justify-center">
+                        <div className="w-[40%] md:w-[45%] flex justify-center items-center relative z-10  sm:pr-0">
+                            <div className="relative w-full max-w-[140px] sm:max-w-110 aspect-square flex items-center justify-center">
                                 <img
                                     src={home3}
                                     alt="Hero background right"
-                                    className="absolute w-[85%] h-auto rounded-4xl rotate-3 right-9 bottom-8 z-0 object-cover"
+                                    className="absolute w-full md:w-[85%] sm:w-[85%] lg:w-[85%] xl:w-[85%] h-auto rounded-4xl sm:rounded-4xl  rotate-3  sm:right-5 sm:bottom-5 z-0 object-cover md:right-9 md:bottom-8"
+
                                 />
                                 <img
                                     src={home2}
                                     alt="Hero background left"
-                                    className="absolute w-[85%] h-auto rounded-4xl -rotate-3 left-9 top-8 z-10 object-cover"
+                                    className="absolute w-full md:w-[85%] sm:w-[85%] h-auto rounded-xl sm:rounded-4xl -rotate-3  md:left-9 md:top-8 sm:left-7 sm:top-6 z-10"
                                 />
                                 <img
                                     src={home1}
                                     alt="Premium Mushroom Coffee"
-                                    className="w-[85%] h-auto rounded-4xl relative z-20 object-cover"
+                                    className="w-full md:w-[85%] sm:w-[85%] h-auto rounded-lg sm:rounded-3xl relative z-20 object-cover"
                                     id="hero-coffee-image"
-                                    style={{ filter: "drop-shadow(0px 0px 30px 0px #000000)" }}
+                                    style={{ filter: "drop-shadow(0px 10px 40px rgba(0,0,0,0.15))" }}
                                 />
                             </div>
                         </div>
@@ -133,7 +134,7 @@ const Home = () => {
 
             {/* Hot Deal Section */}
             <section className="bg-[#FAF7F7] font-sans pb-7 md:pb-7">
-                <div className="container mx-auto">
+                <div className="w-full max-w-[1700px] mx-auto">
                     {/* Header Row */}
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2.5">
@@ -247,7 +248,7 @@ const Home = () => {
 
             {/* Top-Rated Stores Section */}
             <section
-                className="bg-[#FCF9F9] font-sans py-9 md:py-9 relative -mx-10 px-10"
+                className="bg-[#FCF9F9] font-sans py-9 md:py-9 relative -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10"
                 style={{
                     backgroundImage: `url(${topRateStoreBg})`,
                     backgroundRepeat: 'no-repeat',
@@ -255,7 +256,7 @@ const Home = () => {
                     backgroundPosition: 'center'
                 }}
             >
-                <div className="container mx-auto">
+                <div className="w-full max-w-[1700px] mx-auto ">
                     {/* Header Row */}
                     <div className="flex items-center justify-between mb-7">
                         <h2 className="text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
@@ -342,8 +343,8 @@ const Home = () => {
             </section>
 
             {/* High Vibes, Low Prices Section */}
-            <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-10 px-10">
-                <div className="container mx-auto">
+            <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto">
                     {/* Headers */}
                     <div className="text-center mb-10">
                         <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">High Vibes, Low Prices</h2>
@@ -366,8 +367,8 @@ const Home = () => {
             </section>
 
             {/* Best Selling Products Section */}
-            <section className="bg-[#FAF7F7] font-sans pt-16 pb-10 -mx-10 px-10">
-                <div className="container mx-auto">
+            <section className="bg-[#FAF7F7] font-sans pt-16 pb-10 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto ">
                     {/* Headers */}
                     <div className="text-center mb-10">
                         <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">Best Selling Products</h2>
@@ -375,7 +376,7 @@ const Home = () => {
                     </div>
 
                     {/* Product Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
                         {/* Mock Products Array (Using 8 cards) */}
                         {[
                             {
@@ -436,8 +437,8 @@ const Home = () => {
             </section>
 
             {/* Platform Features Section */}
-            <section className="bg-[#F7ECEB] font-sans pt-16 pb-17 -mx-10 px-10">
-                <div className="container mx-auto">
+            <section className="bg-[#F7ECEB] font-sans pt-16 pb-17 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 text-center">
                         {/* Feature 1 */}
                         <div className="flex flex-col items-center">
@@ -487,8 +488,8 @@ const Home = () => {
             </section>
 
             {/* Latest News Section */}
-            <section className="bg-[#FAF7F7] font-sans pt-14 pb-10  -mx-10 px-10">
-                <div className="container mx-auto">
+            <section className="bg-[#FAF7F7] font-sans pt-14 pb-10  -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto ">
                     {/* Header */}
                     <div className="mb-6">
                         <h2 className="text-2xl font-bold text-[#181211]">Latest News</h2>

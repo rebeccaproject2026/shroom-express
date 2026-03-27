@@ -295,7 +295,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Right: Wishlist & Cart */}
-                <div className="flex items-center justify-end gap-3 lg:gap-8 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
+                <div className="flex items-center justify-end gap-3 md:gap-5 lg:gap-8 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
                     <button
                         onClick={() => navigate('/store/myaccount?tab=wishlist')}
                         className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[#E93E2B] transition-colors relative"
@@ -419,7 +419,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             {isHomePage && (
                 <div className="w-full bg-[#FFFFFF]">
                     <div className="w-full px-3 sm:px-4 md:px-6 lg:px-10 xl:px-14 py-3">
-                        <div className="flex items-center justify-start md:justify-center lg:justify-start xl:justify-center gap-5 lg:gap-10 overflow-x-auto no-scrollbar pb-1">
+                        <div className="flex items-center justify-start md:justify-center lg:justify-start xl:justify-center gap-5 md:gap-7 lg:gap-10 overflow-x-auto no-scrollbar pb-1">
                             {categoryIcons.map((item, idx) => {
                                 const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
                                 const iconPath = `/store/category/${slug}`;
@@ -435,12 +435,12 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                     <div
                                         key={idx}
                                         onClick={handleIconClick}
-                                        className="flex flex-col items-center gap-1.5 lg:gap-2.5 shrink-0 cursor-pointer group text-center lg:text-left"
+                                        className="flex flex-col items-center gap-1.5 md:gap-2.5 lg:gap-2.5 shrink-0 cursor-pointer group text-center lg:text-left"
                                     >
-                                        <div className={`w-[42px] h-[42px] lg:w-[58px] lg:h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white  border-[#E8E8E8] group-hover:border-[#E93E2B] `}>
+                                        <div className={`w-[42px] h-[42px] md:w-[50px] md:h-[50px] lg:w-[58px] lg:h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white  border-[#E8E8E8] group-hover:border-[#E93E2B] `}>
                                             <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                                         </div>
-                                        <span className={`text-[11px] lg:text-sm font-semibold whitespace-normal lg:whitespace-nowrap transition-colors leading-tight lg:leading-normal ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
+                                        <span className={`text-[11px] md:text-[13px] lg:text-sm font-semibold whitespace-normal lg:whitespace-nowrap transition-colors leading-tight lg:leading-normal ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
                                             {item.name}
                                         </span>
                                     </div>
