@@ -4,6 +4,8 @@ import {
     Search,
 } from 'lucide-react';
 import { Icon } from '@iconify/react';
+import MobileMenuDrawer from './MobileMenuDrawer';
+import MobileSearchOverlay from './MobileSearchOverlay';
 import shroomLogo from "../../assets/images/Logo.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
@@ -97,13 +99,13 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     return (
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
-            <div className="bg-[var(--store-primary)] text-white text-[11px] sm:text-sm py-1.5 sm:py-2 px-4 flex justify-center items-center gap-2 sm:gap-6 overflow-hidden whitespace-nowrap">
-                <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium shrink-0">
+            <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex justify-center items-center gap-4 sm:gap-6 overflow-hidden whitespace-nowrap">
+                <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="clarity:store-line" width={16} height={16} />
                     <span>Open Store</span>
                 </Link>
                 <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
-                <Link to="" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium shrink-0">
+                <Link to="" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="fluent-mdl2:car" width={16} height={16} />
                     <span>Become Driver</span>
                 </Link>
@@ -112,7 +114,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     <div className="relative" ref={profileMenuRef}>
                         <button
                             onClick={() => setProfileMenuOpen(prev => !prev)}
-                            className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium"
+                            className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium"
                         >
                             <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-[10px] sm:text-xs">
                                 {user.name?.charAt(0).toUpperCase()}
@@ -147,7 +149,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                         onClick={() => { logout(); setProfileMenuOpen(false); navigate('/store'); }}
                                         className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#E93E2B] hover:bg-[#FFF0EE] transition-colors"
                                     >
-                                        <Icon icon="hugeicons:logout-02" width={17} height={17} />
+                                        <Icon icon="'hugeicons:logout-02'" width={17} height={17} />
                                         Logout
                                     </button>
                                 </div>
@@ -155,7 +157,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         )}
                     </div>
                 ) : (
-                    <Link to="/store/login" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium">
+                    <Link to="/store/login" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium">
                         <Icon icon="hugeicons:user-02" width={17} height={17} />
                         <span>Login / Register</span>
                     </Link>
@@ -293,7 +295,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Right: Wishlist & Cart */}
-                <div className="flex items-center justify-end gap-3 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
+                <div className="flex items-center justify-end gap-3 lg:gap-8 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
                     <button
                         onClick={() => navigate('/store/myaccount?tab=wishlist')}
                         className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[#E93E2B] transition-colors relative"
@@ -306,7 +308,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                 </span>
                             )}
                         </div>
-                        <span className="text-sm font-semibold hidden sm:inline">Wishlist</span>
+                        <span className="text-sm font-semibold hidden lg:inline">Wishlist</span>
                     </button>
 
                     <div className="w-px h-5 bg-[#D1D5DB] hidden lg:block"></div>
@@ -314,80 +316,26 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     <button onClick={onCartClick} className="flex items-center gap-2 text-[#181211] hover:text-[#E93E2B] cursor-pointer transition-colors relative">
                         <div className="relative">
                             <Icon icon="mdi:cart-outline" width={26} height={26} className="xl:w-[30px] xl:h-[30px]" />
-                            <span className="absolute -top-1.5 -right-1.5 bg-[#E93E2B] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
-                                {cartCount}
-                            </span>
-                        </div>
-                        <span className="text-sm font-semibold hidden sm:inline">My Cart</span>
-                    </button>
-                </div>
-
-                {/* Mobile Search Overlay */}
-                {searchOpen && (
-                    <div className="lg:hidden absolute inset-0 bg-white z-[500] flex items-center px-4 gap-3 animate-in fade-in duration-200">
-                        <div className="flex-1 relative">
-                            <Icon icon="mdi:magnify" width={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
-                            <input
-                                id="mobile-search-input"
-                                type="text"
-                                placeholder="Search Products..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full h-11 pl-10 pr-10 rounded-xl border border-gray-200 outline-none focus:border-[#E93E2B] transition-all text-sm"
-                            />
-                            {searchQuery && (
-                                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8]">
-                                    <Icon icon="mdi:close-circle" width={18} />
-                                </button>
+                            {cartCount > 0 && (
+                                <span className="absolute -top-1.5 -right-1.5 bg-[#E93E2B] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
+                                    {cartCount}
+                                </span>
                             )}
                         </div>
-                        <button
-                            onClick={() => setSearchOpen(false)}
-                            className="text-sm font-bold text-[#E93E2B] whitespace-nowrap"
-                        >
-                            Cancel
-                        </button>
-
-                        {/* Mobile Search Results Overlay */}
-                        {searchQuery.trim().length > 1 && (
-                            <div className="fixed top-[56px] sm:top-[80px] left-0 right-0 bottom-0 bg-white z-[499] overflow-y-auto px-4 py-2 border-t border-gray-100 no-scrollbar">
-                                {searchResults.length > 0 ? (
-                                    <div className="flex flex-col gap-1">
-                                        {searchResults.map(r => (
-                                            <div
-                                                key={`${r.type}-${r.id}`}
-                                                onClick={() => handleSelect(r)}
-                                                className="flex items-center gap-3 py-3 border-b border-gray-50 active:bg-gray-50 transition-colors"
-                                            >
-                                                <div className="w-12 h-12 rounded-lg bg-[#F5F0EB] overflow-hidden shrink-0 flex items-center justify-center">
-                                                    {r.type === 'product' ? (
-                                                        <img src={r.image} alt={r.name} className="w-full h-full object-contain" />
-                                                    ) : (
-                                                        <Icon icon="mdi:store-outline" width={24} className="text-[#E93E2B]" />
-                                                    )}
-                                                </div>
-                                                <div className="min-w-0 flex-1">
-                                                    <p className="text-sm font-bold text-[#181211] truncate">{r.name}</p>
-                                                    {r.vendor && <p className="text-xs text-[#94A3B8] truncate">{r.vendor}</p>}
-                                                </div>
-                                                <Icon icon="mdi:chevron-right" width={18} className="text-[#CBD5E1]" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="flex flex-col items-center justify-center py-20 text-center">
-                                        <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
-                                            <Icon icon="mdi:magnify-close" width={32} className="text-[#94A3B8]" />
-                                        </div>
-                                        <p className="text-base font-bold text-[#181211]">No results found</p>
-                                        <p className="text-sm text-[#94A3B8]">Try adjusting your search terms</p>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                )}
+                        <span className="text-sm font-semibold hidden lg:inline">My Cart</span>
+                    </button>
+                </div>
             </div>
+
+            {/* High-Fidelity Mobile Search Overlay */}
+            <MobileSearchOverlay
+                isOpen={searchOpen}
+                onClose={() => setSearchOpen(false)}
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                searchResults={searchResults}
+                handleSelect={handleSelect}
+            />
 
             {/* SECTION 3: Category Navigation */}
             <div className="w-full border-t border-b border-[#E5DCDC] hidden lg:block bg-white">
@@ -503,67 +451,14 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
             )}
 
-            {/* Mobile Menu Drawer */}
-            <div className={`fixed inset-0 z-[1000] lg:hidden transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="absolute inset-0 bg-black/40" onClick={() => setMobileMenuOpen(false)} />
-                <div className="relative w-[85%] max-w-[320px] h-full bg-white shadow-2xl flex flex-col pt-10 px-5">
-                    <button
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="absolute right-4 top-4 p-2 text-[#64748B] cursor-pointer"
-                    >
-                        <Icon icon="mdi:close" width={24} />
-                    </button>
-
-                    <div className="mb-10 pt-5 text-center">
-                        <img src={shroomLogo} className="h-10 w-auto mx-auto" alt="Logo" />
-                    </div>
-
-                    <div className="flex flex-col gap-1 overflow-y-auto no-scrollbar pb-10">
-                        <div className="flex items-center bg-gray-50 border border-gray-100 rounded-2xl p-1 mb-8">
-                            <button
-                                onClick={() => { setDeliveryMethod('delivery'); setMobileMenuOpen(false); }}
-                                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${deliveryMethod === 'delivery' ? 'bg-white text-[var(--store-primary)] shadow-sm' : 'text-[#64748B]'}`}
-                            >
-                                <Icon icon="hugeicons:truck-delivery" width={20} />
-                                Delivery
-                            </button>
-                            <button
-                                onClick={() => { setDeliveryMethod('shipping'); setMobileMenuOpen(false); }}
-                                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${deliveryMethod === 'shipping' ? 'bg-white text-[var(--store-primary)] shadow-sm' : 'text-[#64748B]'}`}
-                            >
-                                <Icon icon="stash:pin-place-duotone" width={22} />
-                                Shipping
-                            </button>
-                        </div>
-
-                        <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-widest px-4 mb-2">Navigation</p>
-                        {categories.map((cat, idx) => {
-                            const categoryPath = cat.name === 'Stores'
-                                ? '/store/storeslists'
-                                : cat.name === 'Deals'
-                                    ? '/store/deals'
-                                    : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
-
-                            const isActive = location.pathname === categoryPath;
-
-                            return (
-                                <Link
-                                    key={idx}
-                                    to={categoryPath}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className={`flex items-center gap-4 px-4 py-4 rounded-xl font-bold transition-all ${isActive ? 'bg-[#FFF0EE] text-[#E93E2B]' : 'text-[#181211] hover:bg-gray-50'}`}
-                                >
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? 'bg-[#E93E2B] text-white' : 'bg-gray-100 text-[#64748B]'}`}>
-                                        <Icon icon={cat.icon} width={20} />
-                                    </div>
-                                    <span className="text-base">{cat.name}</span>
-                                    <Icon icon="mdi:chevron-right" width={20} className="ml-auto opacity-30" />
-                                </Link>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+            {/* Refined Mobile Menu Drawer */}
+            <MobileMenuDrawer
+                isOpen={mobileMenuOpen}
+                onClose={() => setMobileMenuOpen(false)}
+                user={user}
+                categories={categories}
+                logout={logout}
+            />
         </header>
     );
 };

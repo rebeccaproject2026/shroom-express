@@ -3,6 +3,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import StickyHeader from '../../components/layout/StickyHeader';
 import Footer from '../../components/layout/Footer';
 import CartDrawer from '../../components/layout/CartDrawer';
+import MobileCartDrawer from '../../components/layout/MobileCartDrawer';
+import MobileBottomNav from '../../components/layout/MobileBottomNav';
 import AddedToBagPopup from '../../components/layout/AddedToBagPopup';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -11,19 +13,36 @@ const StoreLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
-    const { cartCount } = useCart();
+    const { cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
     const { wishlistCount } = useWishlist();
     const [cartOpen, setCartOpen] = useState(false);
 
     return (
         <div className="store-app min-h-screen flex flex-col">
             <StickyHeader cartCount={cartCount} wishlistCount={wishlistCount} onCartClick={() => setCartOpen(true)} />
-            <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+            
+            {/* Desktop Drawer */}
+            <div className="hidden lg:block">
+                <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+            </div>
+
+            {/* Mobile/Tablet Bottom Sheet */}
+            <MobileCartDrawer 
+                isOpen={cartOpen} 
+                onClose={() => setCartOpen(false)} 
+                cartItems={cartItems}
+                cartCount={cartCount}
+                removeFromCart={removeFromCart}
+                updateQuantity={updateQuantity}
+            />
+
             <AddedToBagPopup onCartOpen={() => setCartOpen(true)} />
 
-            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[130px]'}`}>
+            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[130px]'} pb-32 lg:pb-0`}>
                 <Outlet />
             </main>
+
+            <MobileBottomNav />
 
             <Footer />
         </div>
