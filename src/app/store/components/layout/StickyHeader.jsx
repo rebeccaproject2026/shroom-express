@@ -30,6 +30,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchOpen, setSearchOpen] = useState(false);
     const searchRef = useRef(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const allStores = [
         { id: 1, name: "micro zoomiez", type: 'store' },
@@ -96,24 +97,24 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     return (
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar */}
-            <div className="bg-[var(--store-primary)] text-white text-sm py-2 px-4 flex justify-center items-center gap-6">
-                <Link to="/store/create-store" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
-                    <Icon icon="clarity:store-line" width={17} height={17} />
+            <div className="bg-[var(--store-primary)] text-white text-[11px] sm:text-sm py-1.5 sm:py-2 px-4 flex justify-center items-center gap-2 sm:gap-6 overflow-hidden whitespace-nowrap">
+                <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium shrink-0">
+                    <Icon icon="clarity:store-line" width={16} height={16} />
                     <span>Open Store</span>
                 </Link>
-                <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
-                <Link to="" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
-                    <Icon icon="fluent-mdl2:car" width={17} height={17} />
+                <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
+                <Link to="" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium shrink-0">
+                    <Icon icon="fluent-mdl2:car" width={16} height={16} />
                     <span>Become Driver</span>
                 </Link>
-                <div className="w-px h-5 bg-[#FFFFFFCC]"></div>
+                <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
                 {user ? (
                     <div className="relative" ref={profileMenuRef}>
                         <button
                             onClick={() => setProfileMenuOpen(prev => !prev)}
-                            className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium"
+                            className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium"
                         >
-                            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xs">
+                            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-[10px] sm:text-xs">
                                 {user.name?.charAt(0).toUpperCase()}
                             </div>
                             <span>{user.name}</span>
@@ -122,13 +123,10 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
 
                         {profileMenuOpen && (
                             <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden">
-                                {/* User info */}
                                 <div className="px-4 py-3 border-b border-[#F1F5F9]">
                                     <p className="text-sm font-bold text-[#181211] truncate">{user.name}</p>
                                     <p className="text-xs text-[#94A3B8] truncate">{user.email}</p>
                                 </div>
-
-                                {/* Menu items */}
                                 {[
                                     { label: "My Account", icon: "hugeicons:user-02", path: "/store/myaccount?tab=profile" },
                                     { label: "My Orders", icon: "mdi:package-variant-closed", path: "/store/myaccount?tab=orders" },
@@ -144,8 +142,6 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                         {item.label}
                                     </button>
                                 ))}
-
-                                {/* Logout */}
                                 <div className="border-t border-[#F1F5F9]">
                                     <button
                                         onClick={() => { logout(); setProfileMenuOpen(false); navigate('/store'); }}
@@ -159,7 +155,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         )}
                     </div>
                 ) : (
-                    <Link to="/store/login" className="flex items-center gap-2 hover:opacity-80 transition-opacity font-medium">
+                    <Link to="/store/login" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-bold sm:font-medium">
                         <Icon icon="hugeicons:user-02" width={17} height={17} />
                         <span>Login / Register</span>
                     </Link>
@@ -167,50 +163,62 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             </div>
 
             {/* SECTION 2: Main Header */}
-            <div className="container mx-auto px-4 py-1 flex items-center justify-between gap-5">
-                {/* Left: Logo and Toggle Group */}
-                <div className="flex flex-1 items-center justify-start gap-5">
-                    {/* Logo */}
-                    <Link to="/store" className="flex flex-col items-center justify-center shrink-0">
-                        <div className="flex justify-center my-2">
-                            <img
-                                src={shroomLogo}
-                                alt="shroomLogo"
-                                className="h-12 w-auto cursor-pointer"
-                            />
-                        </div>
+            <div className="w-full px-3 sm:px-4 md:px-4 lg:px-4 xl:px-4 py-1.5 sm:py-2 flex items-center justify-between gap-2 lg:gap-5 relative h-14 sm:h-20">
+                {/* Mobile: Left side icons (Menu & Search) */}
+                <div className="flex items-center gap-2 sm:gap-4 lg:hidden z-10">
+                    <button
+                        onClick={() => setMobileMenuOpen(true)}
+                        className="p-1 flex items-center justify-center cursor-pointer text-[#181211] hover:text-[#E93E2B]"
+                    >
+                        <Icon icon="mdi:menu" width={30} height={30} />
+                    </button>
+                    <button
+                        onClick={() => { setSearchOpen(true); setTimeout(() => document.getElementById('mobile-search-input')?.focus(), 100); }}
+                        className="p-1 flex items-center justify-center cursor-pointer text-[#181211] hover:text-[#E93E2B]"
+                    >
+                        <Icon icon="mdi:magnify" width={30} height={30} />
+                    </button>
+                </div>
+
+                {/* Left/Center: Logo and Desktop Toggle */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:static lg:left-auto lg:top-auto lg:translate-x-0 lg:translate-y-0 lg:flex lg:flex-1 lg:items-center lg:justify-start gap-2 xl:gap-5">
+                    <Link to="/store" className="flex items-center justify-center shrink-0">
+                        <img
+                            src={shroomLogo}
+                            alt="shroomLogo"
+                            className="h-10 sm:h-12 w-auto cursor-pointer"
+                        />
                     </Link>
 
-                    {/* Delivery/Shipping Toggle */}
+                    {/* Delivery Toggle - Only on desktop */}
                     <div className="hidden lg:flex items-center bg-white border border-[#D1D5DB] rounded-full p-0.5 shadow-sm shrink-0">
                         <button
                             onClick={() => setDeliveryMethod('delivery')}
-                            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-full text-[15px] font-semibold transition-colors cursor-pointer ${deliveryMethod === 'delivery'
+                            className={`flex items-center gap-1.5 xl:gap-2 px-2 xl:px-2.5 py-1.5 rounded-full text-[14px] xl:text-[15px] font-semibold transition-colors cursor-pointer ${deliveryMethod === 'delivery'
                                 ? 'bg-[var(--store-primary)] text-white shadow-md'
                                 : 'text-[#222222] '
                                 }`}
                         >
-                            <Icon icon="hugeicons:truck-delivery" width={24} height={24} />
-
+                            <Icon icon="hugeicons:truck-delivery" width={22} height={22} className="xl:w-6 xl:h-6" />
                             <span>Delivery</span>
                         </button>
                         <button
                             onClick={() => setDeliveryMethod('shipping')}
-                            className={`flex items-center gap-2 px-2 cursor-pointer py-1.5 rounded-full text-[15px] font-semibold transition-colors ${deliveryMethod === 'shipping'
+                            className={`flex items-center gap-1.5 xl:gap-2 px-2 xl:px-2 cursor-pointer py-1.5 rounded-full text-[14px] xl:text-[15px] font-semibold transition-colors ${deliveryMethod === 'shipping'
                                 ? 'bg-[var(--store-primary)] text-white shadow-md'
                                 : 'text-[#222222]'
                                 }`}
                         >
-                            <Icon icon="stash:pin-place-duotone" width={25} height={25} />
+                            <Icon icon="stash:pin-place-duotone" width={23} height={23} className="xl:w-[25px] xl:h-[25px]" />
                             <span>Shipping</span>
                         </button>
                     </div>
                 </div>
 
-                {/* Center: Search Bar */}
-                <div className="w-full max-w-[40rem] hidden md:block" ref={searchRef}>
+                {/* Center: Search Bar (Desktop only) */}
+                <div className="hidden lg:block w-full lg:max-w-[25rem] xl:max-w-[40rem] lg:px-2 xl:px-4" ref={searchRef}>
                     <div className="relative">
-                        <div className="relative flex items-center w-full h-11 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm">
+                        <div className="relative flex items-center w-full h-11 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm focus-within:border-[#E93E2B]">
                             <div className="pl-5 text-[#636363]">
                                 <Search size={20} />
                             </div>
@@ -223,16 +231,15 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                 className="w-full h-full px-4 text-sm text-gray-700 outline-none placeholder-[#636363] placeholder:text-center placeholder:leading-4"
                             />
                             {searchQuery && (
-                                <button onClick={() => { setSearchQuery(''); setSearchOpen(false); }} className="pr-4 text-[#999] hover:text-[#E93E2B]">
+                                <button onClick={() => { setSearchQuery(''); setSearchOpen(false); }} className="pr-4 text-[#999] hover:text-[#E93E2B] cursor-pointer">
                                     <Icon icon="mdi:close" width={18} />
                                 </button>
                             )}
                         </div>
 
-                        {/* Dropdown results */}
+                        {/* Search results dropdown for desktop */}
                         {searchOpen && searchResults.length > 0 && (
                             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden">
-                                {/* Products */}
                                 {searchResults.filter(r => r.type === 'product').length > 0 && (
                                     <div>
                                         <p className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase px-4 pt-3 pb-1">Products</p>
@@ -254,7 +261,6 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                         ))}
                                     </div>
                                 )}
-                                {/* Stores */}
                                 {searchResults.filter(r => r.type === 'store').length > 0 && (
                                     <div className="border-t border-[#F1F5F9]">
                                         <p className="text-[10px] font-bold text-[#94A3B8] tracking-widest uppercase px-4 pt-3 pb-1">Stores</p>
@@ -283,26 +289,19 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                 </div>
                             </div>
                         )}
-
-                        {/* No results */}
-                        {searchOpen && searchQuery.trim().length > 1 && searchResults.length === 0 && (
-                            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] px-4 py-5 text-center">
-                                <p className="text-sm text-[#94A3B8] font-medium">No results for "{searchQuery}"</p>
-                            </div>
-                        )}
                     </div>
                 </div>
 
                 {/* Right: Wishlist & Cart */}
-                <div className="flex flex-1 items-center justify-end gap-12 shrink-0">
+                <div className="flex items-center justify-end gap-3 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
                     <button
                         onClick={() => navigate('/store/myaccount?tab=wishlist')}
-                        className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[var(--store-primary)] transition-colors relative"
+                        className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[#E93E2B] transition-colors relative"
                     >
                         <div className="relative">
-                            <Icon icon="mdi:heart-outline" width={26} height={26} strokeWidth={2} />
+                            <Icon icon="mdi:heart-outline" width={26} height={26} className="xl:w-[30px] xl:h-[30px]" />
                             {wishlistCount > 0 && (
-                                <span className="absolute -top-2 -right-2 bg-[var(--store-primary)] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                                <span className="absolute -top-1.5 -right-1.5 bg-[#E93E2B] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
                                     {wishlistCount}
                                 </span>
                             )}
@@ -310,30 +309,96 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         <span className="text-sm font-semibold hidden sm:inline">Wishlist</span>
                     </button>
 
-                    <div className="w-px h-5 bg-[#181211] hidden sm:block"></div>
+                    <div className="w-px h-5 bg-[#D1D5DB] hidden lg:block"></div>
 
-                    <button onClick={onCartClick} className="flex items-center gap-2 text-[#181211] hover:text-[var(--store-primary)] cursor-pointer transition-colors relative">
+                    <button onClick={onCartClick} className="flex items-center gap-2 text-[#181211] hover:text-[#E93E2B] cursor-pointer transition-colors relative">
                         <div className="relative">
-                            <Icon icon="mdi:cart-outline" width={26} height={26} strokeWidth={2} />
-                            <span className="absolute -top-2 -right-2 bg-[var(--store-primary)] text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                            <Icon icon="mdi:cart-outline" width={26} height={26} className="xl:w-[30px] xl:h-[30px]" />
+                            <span className="absolute -top-1.5 -right-1.5 bg-[#E93E2B] text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
                                 {cartCount}
                             </span>
                         </div>
-                        <span className="text-sm font-semibold   hidden sm:inline">My Cart</span>
+                        <span className="text-sm font-semibold hidden sm:inline">My Cart</span>
                     </button>
                 </div>
+
+                {/* Mobile Search Overlay */}
+                {searchOpen && (
+                    <div className="lg:hidden absolute inset-0 bg-white z-[500] flex items-center px-4 gap-3 animate-in fade-in duration-200">
+                        <div className="flex-1 relative">
+                            <Icon icon="mdi:magnify" width={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
+                            <input
+                                id="mobile-search-input"
+                                type="text"
+                                placeholder="Search Products..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full h-11 pl-10 pr-10 rounded-xl border border-gray-200 outline-none focus:border-[#E93E2B] transition-all text-sm"
+                            />
+                            {searchQuery && (
+                                <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8]">
+                                    <Icon icon="mdi:close-circle" width={18} />
+                                </button>
+                            )}
+                        </div>
+                        <button
+                            onClick={() => setSearchOpen(false)}
+                            className="text-sm font-bold text-[#E93E2B] whitespace-nowrap"
+                        >
+                            Cancel
+                        </button>
+
+                        {/* Mobile Search Results Overlay */}
+                        {searchQuery.trim().length > 1 && (
+                            <div className="fixed top-[56px] sm:top-[80px] left-0 right-0 bottom-0 bg-white z-[499] overflow-y-auto px-4 py-2 border-t border-gray-100 no-scrollbar">
+                                {searchResults.length > 0 ? (
+                                    <div className="flex flex-col gap-1">
+                                        {searchResults.map(r => (
+                                            <div
+                                                key={`${r.type}-${r.id}`}
+                                                onClick={() => handleSelect(r)}
+                                                className="flex items-center gap-3 py-3 border-b border-gray-50 active:bg-gray-50 transition-colors"
+                                            >
+                                                <div className="w-12 h-12 rounded-lg bg-[#F5F0EB] overflow-hidden shrink-0 flex items-center justify-center">
+                                                    {r.type === 'product' ? (
+                                                        <img src={r.image} alt={r.name} className="w-full h-full object-contain" />
+                                                    ) : (
+                                                        <Icon icon="mdi:store-outline" width={24} className="text-[#E93E2B]" />
+                                                    )}
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-sm font-bold text-[#181211] truncate">{r.name}</p>
+                                                    {r.vendor && <p className="text-xs text-[#94A3B8] truncate">{r.vendor}</p>}
+                                                </div>
+                                                <Icon icon="mdi:chevron-right" width={18} className="text-[#CBD5E1]" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center py-20 text-center">
+                                        <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
+                                            <Icon icon="mdi:magnify-close" width={32} className="text-[#94A3B8]" />
+                                        </div>
+                                        <p className="text-base font-bold text-[#181211]">No results found</p>
+                                        <p className="text-sm text-[#94A3B8]">Try adjusting your search terms</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
             {/* SECTION 3: Category Navigation */}
-            <div className="w-full border-t border-b border-[#E5DCDC]">
-                <div className="container mx-auto px-4">
-                    <ul className="flex items-center justify-center space-x-12 h-10 w-full relative z-30">
+            <div className="w-full border-t border-b border-[#E5DCDC] hidden lg:block bg-white">
+                <div className="w-full px-3 sm:px-4 md:px-6 lg:px-10 xl:px-14">
+                    <ul className="flex items-center justify-center gap-4 xl:gap-8 2xl:gap-14 h-10 w-full relative z-30">
                         {categories.map((cat, idx) => {
                             const categoryPath = cat.name === 'Stores'
                                 ? '/store/storeslists'
                                 : cat.name === 'Deals'
-                                ? '/store/deals'
-                                : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
+                                    ? '/store/deals'
+                                    : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
 
                             const effectSlugs = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
                             const isEffectSlug = effectSlugs.some(s => location.pathname === `/store/category/${s}`);
@@ -351,14 +416,11 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                             <Icon icon="mdi:chevron-down" width={20} height={20} className="ml-0.5 group-hover:rotate-180 transition-transform duration-300" />
                                         </div>
 
-                                        {/* Dropdown Menu */}
                                         <div className="absolute top-10 left-1/2 -translate-x-1/2 pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all z-50">
                                             <div className="bg-white border border-[#E5DCDC] shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-lg flex flex-col pt-1 pb-1 relative">
-                                                {/* Arrow pointer */}
                                                 <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-[#E5DCDC] rotate-45"></div>
-                                                
-                                                <Link 
-                                                    to={categoryPath} 
+                                                <Link
+                                                    to={categoryPath}
                                                     className="px-5 py-3 text-[15px] text-[#181211] hover:bg-[#FFF5F4] hover:text-[#E93E2B] font-semibold border-b border-[#F1F5F9] transition-colors relative z-10"
                                                 >
                                                     All ({cat.name})
@@ -367,7 +429,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                                     const slug = subItem.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
                                                     const iconPath = `${categoryPath}?effect=${slug}`;
                                                     return (
-                                                        <Link 
+                                                        <Link
                                                             key={sIdx}
                                                             to={iconPath}
                                                             className="px-5 py-3 text-[14px] text-[#444444] hover:bg-[#FFF5F4] border-[#F1F5F9] border-b last:border-0 hover:text-[#E93E2B] font-medium transition-colors relative z-10"
@@ -407,39 +469,101 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
 
             {/* SECTION 4: Category Icons Row */}
             {isHomePage && (
-            <div className="w-full bg-[#FFFFFF]">
-                <div className="container mx-auto px-6 py-3">
-                    <div className="flex items-center justify-center gap-10 overflow-x-auto no-scrollbar pb-1">
-                        {categoryIcons.map((item, idx) => {
-                            const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-                            const iconPath = `/store/category/${slug}`;
-                            const isActiveRoute = location.pathname === iconPath;
-                            const isActiveContext = selectedEffect === item.name;
-                            const isActive = isActiveRoute || isActiveContext;
+                <div className="w-full bg-[#FFFFFF]">
+                    <div className="w-full px-3 sm:px-4 md:px-6 lg:px-10 xl:px-14 py-3">
+                        <div className="flex items-center justify-start md:justify-center lg:justify-start xl:justify-center gap-5 lg:gap-10 overflow-x-auto no-scrollbar pb-1">
+                            {categoryIcons.map((item, idx) => {
+                                const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                                const iconPath = `/store/category/${slug}`;
+                                const isActiveRoute = location.pathname === iconPath;
+                                const isActiveContext = selectedEffect === item.name;
+                                const isActive = isActiveRoute || isActiveContext;
 
-                            const handleIconClick = () => {
-                                toggleEffect(item.name);
-                            };
+                                const handleIconClick = () => {
+                                    toggleEffect(item.name);
+                                };
+
+                                return (
+                                    <div
+                                        key={idx}
+                                        onClick={handleIconClick}
+                                        className="flex flex-col items-center gap-1.5 lg:gap-2.5 shrink-0 cursor-pointer group text-center lg:text-left"
+                                    >
+                                        <div className={`w-[42px] h-[42px] lg:w-[58px] lg:h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white  border-[#E8E8E8] group-hover:border-[#E93E2B] `}>
+                                            <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                                        </div>
+                                        <span className={`text-[11px] lg:text-sm font-semibold whitespace-normal lg:whitespace-nowrap transition-colors leading-tight lg:leading-normal ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
+                                            {item.name}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Mobile Menu Drawer */}
+            <div className={`fixed inset-0 z-[1000] lg:hidden transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className="absolute inset-0 bg-black/40" onClick={() => setMobileMenuOpen(false)} />
+                <div className="relative w-[85%] max-w-[320px] h-full bg-white shadow-2xl flex flex-col pt-10 px-5">
+                    <button
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="absolute right-4 top-4 p-2 text-[#64748B] cursor-pointer"
+                    >
+                        <Icon icon="mdi:close" width={24} />
+                    </button>
+
+                    <div className="mb-10 pt-5 text-center">
+                        <img src={shroomLogo} className="h-10 w-auto mx-auto" alt="Logo" />
+                    </div>
+
+                    <div className="flex flex-col gap-1 overflow-y-auto no-scrollbar pb-10">
+                        <div className="flex items-center bg-gray-50 border border-gray-100 rounded-2xl p-1 mb-8">
+                            <button
+                                onClick={() => { setDeliveryMethod('delivery'); setMobileMenuOpen(false); }}
+                                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${deliveryMethod === 'delivery' ? 'bg-white text-[var(--store-primary)] shadow-sm' : 'text-[#64748B]'}`}
+                            >
+                                <Icon icon="hugeicons:truck-delivery" width={20} />
+                                Delivery
+                            </button>
+                            <button
+                                onClick={() => { setDeliveryMethod('shipping'); setMobileMenuOpen(false); }}
+                                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${deliveryMethod === 'shipping' ? 'bg-white text-[var(--store-primary)] shadow-sm' : 'text-[#64748B]'}`}
+                            >
+                                <Icon icon="stash:pin-place-duotone" width={22} />
+                                Shipping
+                            </button>
+                        </div>
+
+                        <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-widest px-4 mb-2">Navigation</p>
+                        {categories.map((cat, idx) => {
+                            const categoryPath = cat.name === 'Stores'
+                                ? '/store/storeslists'
+                                : cat.name === 'Deals'
+                                    ? '/store/deals'
+                                    : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
+
+                            const isActive = location.pathname === categoryPath;
 
                             return (
-                                <div
+                                <Link
                                     key={idx}
-                                    onClick={handleIconClick}
-                                    className="flex flex-col items-center gap-2.5 shrink-0 cursor-pointer group"
+                                    to={categoryPath}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className={`flex items-center gap-4 px-4 py-4 rounded-xl font-bold transition-all ${isActive ? 'bg-[#FFF0EE] text-[#E93E2B]' : 'text-[#181211] hover:bg-gray-50'}`}
                                 >
-                                    <div className={`w-[58px] h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white border-[#E8E8E8]`}>
-                                        <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? 'bg-[#E93E2B] text-white' : 'bg-gray-100 text-[#64748B]'}`}>
+                                        <Icon icon={cat.icon} width={20} />
                                     </div>
-                                    <span className={`text-sm font-semibold whitespace-nowrap transition-colors ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
-                                        {item.name}
-                                    </span>
-                                </div>
+                                    <span className="text-base">{cat.name}</span>
+                                    <Icon icon="mdi:chevron-right" width={20} className="ml-auto opacity-30" />
+                                </Link>
                             );
                         })}
                     </div>
                 </div>
             </div>
-            )}
         </header>
     );
 };
