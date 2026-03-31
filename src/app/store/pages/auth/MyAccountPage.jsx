@@ -147,7 +147,7 @@ const MyAccountPage = () => {
   // };
   return (
     <div className="min-h-screen bg-[#F5F0EB]">
-      <div className="max-w-[1400px] mx-auto px-6 py-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-base mb-5">
           <button

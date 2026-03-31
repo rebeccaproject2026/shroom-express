@@ -7,14 +7,6 @@ import StoreCard from '../../components/common/StoreCard';
 import Select from '../../components/common/Select';
 import FilterDrawer from '../../components/products/FilterDrawer';
 import { useCategory } from '../../context/CategoryContext';
-import microDosingImg from "../../assets/images/microdosing.png";
-import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
-import highPotencyImg from "../../assets/images/highpotency.png";
-import creativeBoostImg from "../../assets/images/creativeboost.png";
-import deepjourneyImg from "../../assets/images/deepjourney.png";
-import relaxChillImg from "../../assets/images/relaxchill.png";
-import visualExperienceImg from "../../assets/images/visualexperience.png";
-import focusClarityImg from "../../assets/images/focusclarity.png";
 import albinoChodaImg from "../../assets/images/Albinochoda.png";
 import Aztecgod from "../../assets/images/Aztecgod.png";
 import albinohillbilyImg from "../../assets/images/Albinohillbilly.png";
@@ -360,40 +352,10 @@ const ProductsList = () => {
 
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeBestSeller].filter(Boolean).length;
 
-    const effectsList = [
-        { name: "Micro dosing", image: microDosingImg },
-        { name: "Beginner Friendly", image: beginnerFriendlyImg },
-        { name: "High Potency", image: highPotencyImg },
-        { name: "Creative Boost", image: creativeBoostImg },
-        { name: "Relax & Chill", image: relaxChillImg },
-        { name: "Visual Experience", image: visualExperienceImg },
-        { name: "Focus & Clarity", image: focusClarityImg },
-        { name: "Deep Journey", image: deepjourneyImg },
-    ];
-
     return (
         <div className="w-full px-4 sm:px-6 lg:px-12 py-2 sm:py-10">
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
-            {/* Sub-categories Row (Mobile/Tablet only) */}
-            <div className="lg:hidden mb-4 -mx-4 px-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className="flex items-center justify-center gap-6 min-w-max pb-2">
-                    {effectsList.map((effect, idx) => (
-                        <div
-                            key={idx}
-                            className="flex flex-col items-center gap-2 cursor-pointer group"
-                            onClick={() => navigate(`/store/category/${effect.name.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`)}
-                        >
-                            <div className="w-14 h-14 rounded-full bg-white border border-[#E5DCDC] shadow-sm flex items-center justify-center p-2 group-hover:border-[var(--store-primary)] transition-all">
-                                <img src={effect.image} alt={effect.name} className="w-full h-full object-contain" />
-                            </div>
-                            <span className="text-[11px] font-bold text-[#181211] text-center max-w-[70px] leading-tight">
-                                {effect.name}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div>
             {/* Page Header */}
             <div className="bg-transparent lg:bg-white lg:rounded-[20px] p-0 lg:p-12 mb-8 border-0 lg:border border-[#E5DCDC]">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>
@@ -513,7 +475,7 @@ const ProductsList = () => {
                                     </div>
                                 )) : (
                                     <div className="flex flex-col items-center justify-center py-8 text-center">
-                                        <Icon icon="streamline:shopping-store-2-store-shop-shops-stores" width={36} className="text-[#E5DCDC] mb-2" />
+                                        <Icon icon="streamline:shopping-store-2-store-shop-shops-shops-stores" width={36} className="text-[#E5DCDC] mb-2" />
                                         <p className="text-xs font-semibold text-[#BDBDBD]">No stores found</p>
                                     </div>
                                 )}

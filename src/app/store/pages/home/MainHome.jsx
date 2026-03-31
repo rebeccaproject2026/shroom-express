@@ -154,7 +154,7 @@ const Home = () => {
                     </div>
 
                     {/* Product Cards Row */}
-                    <div ref={sliderRef} className="flex gap-4 sm:gap-7 overflow-x-auto py-4 -mx-0 sm:-mx-4 px-3 sm:px-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <div ref={sliderRef} className="flex gap-5 sm:gap-7 overflow-x-auto py-4 -mx-0 sm:-mx-4 px-3 sm:px-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                         {/* Mock Products Array */}
                         {[
                             {
@@ -238,7 +238,8 @@ const Home = () => {
                                 ]
                             },
                         ].filter(p => !selectedEffect || p.categories?.includes(selectedEffect)).map((prod) => (
-                            <div key={prod.id} className="min-w-67.5 w-full max-w-85.25 shrink-0">
+                            <div key={prod.id} className="min-w-[160px] w-full max-w-[200px] shrink-0 
+             sm:min-w-67.5 sm:max-w-85.25">
                                 <ProductCard product={prod} />
                             </div>
                         ))}
@@ -261,7 +262,7 @@ const Home = () => {
                     <div className="flex items-center justify-between mb-7">
                         <h2 className="text-[18px] sm:text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
                         <button onClick={handleViewAllStores} className="flex items-center gap-1.5 text-[#E93E2B] font-bold text-sm hover:opacity-80 transition-opacity cursor-pointer">
-                            View All <Icon icon="solar:alt-arrow-right-bold-duotone" width={20} height={20} />
+                            View All <Icon icon="streamline:next" width={20} height={20} />
                         </button>
                     </div>
 
@@ -334,7 +335,7 @@ const Home = () => {
                                     visualExperienceImg, creativeBoostImg, relaxChillImg,]
                             }
                         ].map(store => (
-                            <div key={store.id} className="min-w-77.5  w-full max-w-85.25 shrink-0">
+                            <div key={store.id} className="sm:min-w-77.5  w-full sm:max-w-85.25 min-w-77 w-full max-w-78 shrink-0">
                                 <StoreCard store={store} />
                             </div>
                         ))}

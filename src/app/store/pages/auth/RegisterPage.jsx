@@ -19,8 +19,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F6F4] flex items-center justify-center p-6">
-      <div className="grid grid-cols-2 w-full max-w-336 rounded-2xl overflow-hidden shadow-xl">
+    <div className="min-h-screen bg-[#F9F6F4] flex flex-col items-center justify-center p-4 sm:p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-336 rounded-2xl overflow-hidden shadow-xl">
         {/* Left panel — form */}
         <div className=" bg-white p-12 flex flex-col justify-center">
           <h1 className="text-[26px] font-bold text-[#181211] mb-3">

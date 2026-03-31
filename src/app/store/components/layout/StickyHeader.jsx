@@ -98,8 +98,8 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
 
     return (
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
-            {/* SECTION 1: Top Red Bar */}
-            <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex justify-center items-center gap-4 sm:gap-6 overflow-hidden whitespace-nowrap">
+            {/* SECTION 1: Top Red Bar (Enhanced with Scroll for Small Screens) */}
+            <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex lg:justify-center items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth">
                 <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="clarity:store-line" width={16} height={16} />
                     <span>Open Store</span>
@@ -111,7 +111,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </Link>
                 <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
                 {user ? (
-                    <div className="relative" ref={profileMenuRef}>
+                    <div className="relative shrink-0" ref={profileMenuRef}>
                         <button
                             onClick={() => setProfileMenuOpen(prev => !prev)}
                             className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium"
@@ -119,12 +119,12 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                             <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-[10px] sm:text-xs">
                                 {user.name?.charAt(0).toUpperCase()}
                             </div>
-                            <span>{user.name}</span>
+                            <span className="max-w-[80px] sm:max-w-none truncate">{user.name}</span>
                             <Icon icon={profileMenuOpen ? "mdi:chevron-up" : "mdi:chevron-down"} width={16} height={16} />
                         </button>
 
                         {profileMenuOpen && (
-                            <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden">
+                            <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] border border-[#F1F5F9] z-[200] overflow-hidden whitespace-normal">
                                 <div className="px-4 py-3 border-b border-[#F1F5F9]">
                                     <p className="text-sm font-bold text-[#181211] truncate">{user.name}</p>
                                     <p className="text-xs text-[#94A3B8] truncate">{user.email}</p>
@@ -149,7 +149,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                         onClick={() => { logout(); setProfileMenuOpen(false); navigate('/store'); }}
                                         className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-[#E93E2B] hover:bg-[#FFF0EE] transition-colors"
                                     >
-                                        <Icon icon="'hugeicons:logout-02'" width={17} height={17} />
+                                        <Icon icon="hugeicons:logout-02" width={17} height={17} />
                                         Logout
                                     </button>
                                 </div>
@@ -157,7 +157,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                         )}
                     </div>
                 ) : (
-                    <Link to="/store/login" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium">
+                    <Link to="/store/login" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                         <Icon icon="hugeicons:user-02" width={17} height={17} />
                         <span>Login / Register</span>
                     </Link>
@@ -220,6 +220,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 {/* Center: Search Bar (Desktop only) */}
                 <div className="hidden lg:block w-full lg:max-w-[25rem] xl:max-w-[40rem] lg:px-2 xl:px-4" ref={searchRef}>
                     <div className="relative">
+                        {/* Search Input */}
                         <div className="relative flex items-center w-full h-11 rounded-full border border-gray-300 bg-white overflow-hidden transition-all shadow-sm focus-within:border-[#E93E2B]">
                             <div className="pl-5 text-[#636363]">
                                 <Search size={20} />
@@ -416,40 +417,38 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
             </div>
 
             {/* SECTION 4: Category Icons Row */}
-            {isHomePage && (
-                <div className="w-full bg-[#FFFFFF]">
-                    <div className="w-full px-3 sm:px-4 md:px-6 lg:px-10 xl:px-14 py-3">
-                        <div className="flex items-center justify-start md:justify-center lg:justify-start xl:justify-center gap-5 md:gap-7 lg:gap-10 overflow-x-auto no-scrollbar pb-1">
-                            {categoryIcons.map((item, idx) => {
-                                const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-                                const iconPath = `/store/category/${slug}`;
-                                const isActiveRoute = location.pathname === iconPath;
-                                const isActiveContext = selectedEffect === item.name;
-                                const isActive = isActiveRoute || isActiveContext;
+            <div className={`w-full bg-[#FFFFFF] ${!isHomePage ? 'lg:hidden border-b border-[#E5DCDC]' : ''}`}>
+                <div className={`${isHomePage ? 'w-full px-3 sm:px-4 md:px-6 lg:px-10 xl:px-14 py-3' : 'px-4 py-2'}`}>
+                    <div className="flex items-center justify-start md:justify-center lg:justify-start xl:justify-center gap-5 md:gap-7 lg:gap-10 overflow-x-auto no-scrollbar pb-1">
+                        {categoryIcons.map((item, idx) => {
+                            const slug = item.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                            const iconPath = `/store/category/${slug}`;
+                            const isActiveRoute = location.pathname === iconPath;
+                            const isActiveContext = selectedEffect === item.name;
+                            const isActive = isActiveRoute || isActiveContext;
 
-                                const handleIconClick = () => {
-                                    toggleEffect(item.name);
-                                };
+                            const handleIconClick = () => {
+                                toggleEffect(item.name);
+                            };
 
-                                return (
-                                    <div
-                                        key={idx}
-                                        onClick={handleIconClick}
-                                        className="flex flex-col items-center gap-1.5 md:gap-2.5 lg:gap-2.5 shrink-0 cursor-pointer group text-center lg:text-left"
-                                    >
-                                        <div className={`w-[42px] h-[42px] md:w-[50px] md:h-[50px] lg:w-[58px] lg:h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white  border-[#E8E8E8] group-hover:border-[#E93E2B] `}>
-                                            <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                                        </div>
-                                        <span className={`text-[11px] md:text-[13px] lg:text-sm font-semibold whitespace-normal lg:whitespace-nowrap transition-colors leading-tight lg:leading-normal ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
-                                            {item.name}
-                                        </span>
+                            return (
+                                <div
+                                    key={idx}
+                                    onClick={handleIconClick}
+                                    className="flex flex-col items-center gap-1.5 md:gap-2.5 lg:gap-2.5 shrink-0 cursor-pointer group text-center lg:text-left min-w-[75px]"
+                                >
+                                    <div className={`w-[42px] h-[42px] md:w-[50px] md:h-[50px] lg:w-[58px] lg:h-[58px] rounded-full flex items-center justify-center border overflow-hidden transition-colors bg-white border-[#E8E8E8] group-hover:border-[#E93E2B] `}>
+                                        <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                                     </div>
-                                );
-                            })}
-                        </div>
+                                    <span className={`text-[11px] md:text-[13px] lg:text-sm font-semibold whitespace-normal lg:whitespace-nowrap transition-colors leading-tight lg:leading-normal ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] group-hover:text-[var(--store-primary)]'}`}>
+                                        {item.name}
+                                    </span>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
-            )}
+            </div>
 
             {/* Refined Mobile Menu Drawer */}
             <MobileMenuDrawer

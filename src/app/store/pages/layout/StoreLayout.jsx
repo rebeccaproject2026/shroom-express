@@ -38,7 +38,7 @@ const StoreLayout = () => {
 
             <AddedToBagPopup onCartOpen={() => setCartOpen(true)} />
 
-            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[100px] lg:pt-[130px]'}  lg:pb-0`}>
+            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[160px] lg:pt-[130px]'}  lg:pb-0`}>
                 <Outlet />
             </main>
 

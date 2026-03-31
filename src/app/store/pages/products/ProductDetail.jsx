@@ -127,7 +127,7 @@ const ProductDetail = () => {
     };
 
     return (
-        <div className="w-full px-4 sm:px-10 pt-6 sm:pt-12  sm:pb-10 md:pb-10 lg:pb-12 xl:pb-35 bg-[#FAF8F5] relative">
+        <div className="w-full px-4 sm:px-10 pt-6 sm:pt-15 md:pt-18  sm:pb-10 md:pb-10 lg:pb-12 xl:pb-35 bg-[#FAF8F5] relative">
             {/* Main Content Grid */}
             <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${storesPanelOpen ? 'lg:grid-cols-[3.1fr_1.1fr]' : 'lg:grid-cols-1'}`}>
                 {/* Left Column - Product Details (3/4 width) */}

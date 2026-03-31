@@ -292,20 +292,18 @@ const StoreDetails = () => {
         },
     ];
     return (
-        <div className="w-full bg-[#FAF8F5]">
-            {/* Store Profile Header Section */}
-            <div className="px-10 pt-11">
+        <div className="w-full bg-[#FAF8F5] overflow-x-hidden">
+            {/* Desktop Header Section (UNTOUCHED Structure, Refined Responsiveness) */}
+            <div className="hidden md:block px-6 lg:px-10 pt-11">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-70 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}
-                    <div className="relative h-full flex items-end justify-between px-10 pb-4">
+                    <div className="relative h-full flex items-end justify-between px-6 lg:px-10 pb-4">
                         {/* Left side - Store Info (with space for logo) */}
-
-                        <div className="flex items-center gap-6">
-
+                        <div className="flex-1 flex items-center min-w-0">
                             {/* Logo */}
                             <div
-                                className="absolute -bottom-22 left-7 w-60 h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-6 ring-[#FAF8F5]"
+                                className="absolute -bottom-22 left-4 lg:left-7 w-48 lg:w-60 h-48 lg:h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 lg:ring-6 ring-[#FAF8F5]"
                                 style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#FAF8F5' }}
                             >
                                 <img
@@ -314,18 +312,18 @@ const StoreDetails = () => {
                                     className={`w-full h-full object-contain ${storeData.logo === Bg5 || storeData.logo === Bg6
                                         || storeData.logo === Bg7 || storeData.logo === Bg8 || storeData.logo === Bg9
                                         ? "p-0"
-                                        : "p-5"
+                                        : "p-4 lg:p-5"
                                         }`}
                                 />
                             </div>
 
-                            {/* Store Info */}
-                            <div className="ml-65">
-                                <h1 className="text-[40px] font-bold leading-tight" style={{ color: storeData.nameColor }}>
+                            {/* Store Info - Responsive Margin-Left to clear absolute logo */}
+                            <div className="ml-56 lg:ml-65 flex-1 min-w-0 pb-1">
+                                <h1 className="text-3xl lg:text-[40px] font-bold leading-tight truncate" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
 
-                                <div className="flex items-center gap-1 text-lg">
+                                <div className="flex items-center gap-1 text-sm lg:text-lg">
                                     <button onClick={() => navigate('/store')} className="text-(--store-primary) hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
@@ -334,46 +332,111 @@ const StoreDetails = () => {
                                         Stores
                                     </button>
                                     <span style={{ color: storeData.nameColor }}>/</span>
-                                    <span className="font-medium" style={{ color: storeData.nameColor }}>{storeData.name}</span>
+                                    <span className="font-medium truncate" style={{ color: storeData.nameColor }}>{storeData.name}</span>
                                 </div>
                             </div>
-
                         </div>
 
-                        {/* Right side - Action Buttons */}
-                        <div className="flex items-center mb-4.5 gap-3 shrink-0">
-                            <button className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                        {/* Right side - Action Buttons (Shrink controlled) */}
+                        <div className="flex items-center mb-4.5 gap-2 lg:gap-3 shrink-0">
+                            <button className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
                                 <Icon icon="hugeicons:truck-delivery" width={18} height={18} />
                                 <span>Delivery {storeData.deliveryTime}</span>
                             </button>
-                            <button onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
                                 <Icon icon="proicons:call" width={18} height={18} />
                                 <span>{storeData.phone}</span>
                             </button>
-                            <button className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
                                 <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-2 bg-white text-[#181211] px-5 py-2.5 rounded-full text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
                                 <Icon icon="ix:about" width={18} height={18} />
                                 <span>About</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                {/* Store Description - Below banner */}
-                <div className="flex justify-end px-30 w-[108%]">
-                    <div className="w-62.5"></div>
-                    <p className="mt-5 text-[#777777] font-normal text-sm">
+                {/* Store Description - Refined Layout without hacks */}
+                <div className="flex px-6 lg:px-10 mt-5">
+                    <div className="w-56 lg:w-65 shrink-0"></div>
+                    <p className="text-[#777777] font-normal text-sm lg:text-base leading-relaxed max-w-4xl">
+                        {storeData.description}
+                    </p>
+                </div>
+            </div>
+
+            {/* Mobile Header Section (Visible below md) */}
+            <div className="md:hidden px-4 pt-6">
+                {/* Banner with rounded corners */}
+                <div className="relative rounded-[20px] overflow-visible h-40 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
+                    <div className="relative h-full flex items-end justify-end px-4 pb-4">
+                        {/* Logo */}
+                        <div
+                            className="absolute -bottom-16 left-4 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 ring-[#FAF8F5] shadow-lg"
+                            style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#FAF8F5' }}
+                        >
+                            <img
+                                src={storeData.logo}
+                                alt={storeData.name}
+                                className={`w-full h-full object-contain ${storeData.logo === Bg5 || storeData.logo === Bg6
+                                    || storeData.logo === Bg7 || storeData.logo === Bg8 || storeData.logo === Bg9
+                                    ? "p-0"
+                                    : "p-4"
+                                    }`}
+                            />
+                        </div>
+
+                        {/* Action Buttons on Banner */}
+                        <div className="flex items-center gap-2 shrink-0">
+                            <button className="flex items-center gap-2 bg-white text-[#181211] px-4 py-2 rounded-full text-[13px] font-semibold shadow-md">
+                                <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
+                                <span>Website</span>
+                            </button>
+                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-2 bg-white text-[#181211] px-4 py-2 rounded-full text-[13px] font-semibold shadow-md">
+                                <Icon icon="ix:about" width={18} height={18} />
+                                <span>About</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Store Info Stack */}
+                <div className="mt-20 flex flex-col gap-2">
+                    <h1 className="text-3xl font-bold leading-tight text-[#181211]">
+                        {storeData.name}
+                    </h1>
+
+                    <div className="flex items-center gap-2 text-sm mb-2">
+                        <button onClick={() => navigate('/store')} className="text-[#E93E2B] font-semibold hover:underline">Home</button>
+                        <span className="text-[#777777]">/</span>
+                        <button onClick={() => navigate('/store/storeslists')} className="text-[#777777] font-semibold hover:underline">Stores</button>
+                        <span className="text-[#777777]">/</span>
+                        <span className="text-[#777777] font-semibold">{storeData.name}</span>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3 mt-1">
+                        <div className="flex items-center gap-2 bg-white border border-[#E8E8E8] px-4 py-2 rounded-full shadow-sm">
+                            <Icon icon="hugeicons:truck-delivery" width={18} height={18} />
+                            <span className="text-sm font-bold text-[#181211]">Delivery {storeData.deliveryTime}</span>
+                        </div>
+                        <div onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-2 bg-white border border-[#E8E8E8] px-4 py-2 rounded-full shadow-sm">
+                            <Icon icon="proicons:call" width={18} height={18} />
+                            <span className="text-sm font-bold text-[#181211]">{storeData.phone}</span>
+                        </div>
+                    </div>
+
+                    <p className="mt-4 text-[#777777] font-normal text-sm leading-relaxed">
                         {storeData.description}
                     </p>
                 </div>
             </div>
 
             {/* Products Section */}
-            <div className="px-10 mt-30 pb-10">
-                {/* Filter Bar */}
-                <div className="flex items-center gap-3 mb-4.5" >
+            <div className="px-4 md:px-10 mt-10 md:mt-30 pb-10">
+                {/* Desktop Filter Bar (UNTOUCHED) */}
+                <div className="hidden md:flex items-center gap-3 mb-4.5" >
                     {/* Filter Icon */}
                     <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white cursor-pointer"
                         onClick={() => setFilterOpen(true)}
@@ -415,8 +478,32 @@ const StoreDetails = () => {
                     </div>
                 </div>
 
+                {/* Mobile Filter Bar (Visible below md) */}
+                <div className="md:hidden flex items-center justify-between gap-3 mb-8">
+                    {/* Filter Button - Circular Red (Standardized with ProductsList) */}
+                    <button 
+                        onClick={() => setFilterOpen(true)}
+                        className="flex items-center justify-center gap-2 px-4 h-11 rounded-full bg-[#E93E2B] text-white font-bold cursor-pointer transition-transform active:scale-95 shrink-0 shadow-sm"
+                    >
+                        <Icon icon="mage:filter" width={20} />
+                        <span className="bg-white text-[#E93E2B] text-[13px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                            {[activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length || 1}
+                        </span>
+                    </button>
+
+                    {/* Sort Dropdown - Large Rounded */}
+                    <div className="flex-1 min-w-0">
+                        <Select
+                            options={sortOptions}
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="w-full h-11 rounded-full bg-white border border-[#E8E8E8] text-sm font-semibold px-5 shadow-sm"
+                        />
+                    </div>
+                </div>
+
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-7">
                     {products.map((product) => (
                         <div key={product.id} className="w-full">
                             <ProductCard product={product} />
@@ -424,16 +511,26 @@ const StoreDetails = () => {
                     ))}
                 </div>
             </div>
-            <div className="px-10 mt-3 mb-7">
+            <div className="px-4 md:px-10 mt-3 mb-7">
                 <div className="flex items-center justify-between mb-7">
                     <h2 className="text-2xl font-bold text-[#181211]">Similar Store</h2>
                     <button onClick={() => navigate('/store/storeslists')} className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity cursor-pointer">
                         View All <Icon icon="streamline:next" width={17} height={17} />
                     </button>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+                {/* Similar Stores: Desktop Grid (md and up) */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
                     {stores.map(store => (
                         <div key={store.id} className="w-full">
+                            <StoreCard store={store} />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Similar Stores: Mobile Scroller (under md) */}
+                <div className="md:hidden flex gap-5 overflow-x-auto pb-6 no-scrollbar -mx-4 px-4 scroll-smooth">
+                    {stores.map(store => (
+                        <div key={store.id} className="min-w-[310px] w-[85vw] max-w-[360px] shrink-0">
                             <StoreCard store={store} />
                         </div>
                     ))}
