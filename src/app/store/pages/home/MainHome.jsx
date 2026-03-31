@@ -98,7 +98,7 @@ const Home = () => {
                             <p className="text-[#886663] text-[10px] leading-tight sm:text-lg font-medium max-w-md mt-2 sm:mt-6 transition-opacity duration-300">
                                 {deliveryMethod === 'shipping'
                                     ? "Discreet, express mail order shipping across Canada. Securely packaged and delivered straight to your mailbox."
-                                    : "Curated selections of premium cannabis and functional mushrooms. Lab tested and delivered to your door."
+                                    : "Curated selections of premium cannabis and functional mushrooms. Lab tested, legally compliant,and discreetly shipped to your door."
                                 }
                             </p>
                         </div>
@@ -139,7 +139,7 @@ const Home = () => {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2.5">
                             <Icon icon="solar:fire-bold-duotone" color='#E93E2B' width={30} height={30} />
-                            <h2 className="text-2xl font-extrabold text-[#181211]">Hot Deal</h2>
+                            <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Hot Deal</h2>
                         </div>
 
                         {/* Carousel Controls */}
@@ -154,7 +154,7 @@ const Home = () => {
                     </div>
 
                     {/* Product Cards Row */}
-                    <div ref={sliderRef} className="flex gap-7 overflow-x-auto py-4 -mx-4 px-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <div ref={sliderRef} className="flex gap-4 sm:gap-7 overflow-x-auto py-4 -mx-0 sm:-mx-4 px-3 sm:px-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                         {/* Mock Products Array */}
                         {[
                             {
@@ -248,7 +248,7 @@ const Home = () => {
 
             {/* Top-Rated Stores Section */}
             <section
-                className="bg-[#FCF9F9] font-sans py-9 md:py-9 relative -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10"
+                className="bg-[#FCF9F9] font-sans py-9 md:py-9 relative -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10"
                 style={{
                     backgroundImage: `url(${topRateStoreBg})`,
                     backgroundRepeat: 'no-repeat',
@@ -256,12 +256,12 @@ const Home = () => {
                     backgroundPosition: 'center'
                 }}
             >
-                <div className="w-full max-w-[1700px] mx-auto ">
+                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
                     {/* Header Row */}
                     <div className="flex items-center justify-between mb-7">
-                        <h2 className="text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
-                        <button onClick={handleViewAllStores} className="flex items-center gap-2 text-[#E93E2B] font-semibold text-sm hover:opacity-80 transition-opacity cursor-pointer">
-                            View All <Icon icon="streamline:next" width={17} height={17} />
+                        <h2 className="text-[18px] sm:text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
+                        <button onClick={handleViewAllStores} className="flex items-center gap-1.5 text-[#E93E2B] font-bold text-sm hover:opacity-80 transition-opacity cursor-pointer">
+                            View All <Icon icon="solar:alt-arrow-right-bold-duotone" width={20} height={20} />
                         </button>
                     </div>
 
@@ -343,8 +343,8 @@ const Home = () => {
             </section>
 
             {/* High Vibes, Low Prices Section */}
-            <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
-                <div className="w-full max-w-[1700px] mx-auto">
+            <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
                     {/* Headers */}
                     <div className="text-center mb-10">
                         <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">High Vibes, Low Prices</h2>
@@ -367,8 +367,8 @@ const Home = () => {
             </section>
 
             {/* Best Selling Products Section */}
-            <section className="bg-[#FAF7F7] font-sans pt-16 pb-10 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
-                <div className="w-full max-w-[1700px] mx-auto ">
+            <section className="bg-[#FAF7F7] font-sans pt-16 pb-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
                     {/* Headers */}
                     <div className="text-center mb-10">
                         <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">Best Selling Products</h2>
@@ -376,7 +376,7 @@ const Home = () => {
                     </div>
 
                     {/* Product Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-7">
                         {/* Mock Products Array (Using 8 cards) */}
                         {[
                             {
@@ -429,7 +429,7 @@ const Home = () => {
                             }
                         ].filter(p => !selectedEffect || p.categories?.includes(selectedEffect)).map((prod) => (
                             <div key={prod.id} className="w-full">
-                                <ProductCard product={prod} />
+                                <ProductCard product={{ ...prod, isVerticalOnMobile: true, isOverlayEffects: true }} />
                             </div>
                         ))}
                     </div>
@@ -437,17 +437,17 @@ const Home = () => {
             </section>
 
             {/* Platform Features Section */}
-            <section className="bg-[#F7ECEB] font-sans pt-16 pb-17 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
-                <div className="w-full max-w-[1700px] mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 text-center">
+            <section className="bg-[#F7ECEB] font-sans pt-16 pb-17 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 lg:gap-6 text-center">
                         {/* Feature 1 */}
                         <div className="flex flex-col items-center">
                             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="hugeicons:wellness" className="text-[#E93E2B] *:stroke-[1px]" width={28} height={28} />
                             </div>
-                            <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">First-Time Customer?</h3>
-                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
-                                Enjoy 20% off your first order, your wellness journey starts here.
+                            <h3 className="text-[#181211] text-lg sm:text-xl font-extrabold mb-2.5 tracking-tight px-1.5 leading-tight">First-Time Customer?</h3>
+                            <p className="text-[#886663] text-sm sm:text-[16px] max-w-65 mx-auto leading-relaxed">
+                                Enjoy 20% off your first order, starting here.
                             </p>
                         </div>
 
@@ -456,31 +456,31 @@ const Home = () => {
                             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="streamline-plump:shipping-box-1" className="text-[#E93E2B] *:stroke-[2px]" width={28} height={28} />
                             </div>
-                            <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Bundle & Save</h3>
-                            <p className="text-[#886663] text-[16px] max-w-72.5 mx-auto leading-relaxed">
+                            <h3 className="text-[#181211] text-lg sm:text-xl font-extrabold mb-2.5 tracking-tight px-1.5 leading-tight">Bundle & Save</h3>
+                            <p className="text-[#886663] text-sm sm:text-[16px] max-w-72.5 mx-auto leading-relaxed">
                                 Curated mushroom & cannabis combos at up to 30% off.
                             </p>
                         </div>
 
-                        {/* Feature 3 */}
-                        <div className="flex flex-col items-center">
-                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
-                                <Icon icon="la:shipping-fast" className="text-[#E93E2B] *:stroke-[0.5px]" width={28} height={28} />
-                            </div>
-                            <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Free Shipping Canada-Wide</h3>
-                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
-                                On all orders over $150. Delivered discreetly to your door.
-                            </p>
-                        </div>
-
-                        {/* Feature 4 */}
+                        {/* Feature 3: Daily Dose Discount */}
                         <div className="flex flex-col items-center">
                             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
                                 <Icon icon="stash:data-date-light" className="text-[#E93E2B] *:stroke-[1px]" width={28} height={28} />
                             </div>
-                            <h3 className="text-[#181211] text-xl font-extrabold mb-2.5 tracking-tight">Daily Dose Discount</h3>
-                            <p className="text-[#886663] text-[16px] max-w-65 mx-auto leading-relaxed">
-                                Subscribe & save 25% on your monthly microdosing essentials.
+                            <h3 className="text-[#181211] text-lg sm:text-xl font-extrabold mb-2.5 tracking-tight px-1.5 leading-tight">Daily Dose Discount</h3>
+                            <p className="text-[#886663] text-sm sm:text-[16px] max-w-65 mx-auto leading-relaxed">
+                                Subscribe & save 25% on your monthly essentials.
+                            </p>
+                        </div>
+
+                        {/* Feature 4: Free Shipping Canada-Wide */}
+                        <div className="flex flex-col items-center">
+                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-[0px_0px_27px_0px_#E93E2B2B] mb-5">
+                                <Icon icon="la:shipping-fast" className="text-[#E93E2B] *:stroke-[0.5px]" width={28} height={28} />
+                            </div>
+                            <h3 className="text-[#181211] text-lg sm:text-xl font-extrabold mb-2.5 tracking-tight px-1.5 leading-tight">Free Shipping Canada-Wide</h3>
+                            <p className="text-[#886663] text-sm sm:text-[16px] max-w-65 mx-auto leading-relaxed">
+                                On all orders over $150. Delivered discreetly to your door.
                             </p>
                         </div>
                     </div>
@@ -488,8 +488,8 @@ const Home = () => {
             </section>
 
             {/* Latest News Section */}
-            <section className="bg-[#FAF7F7] font-sans pt-14 pb-10  -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10">
-                <div className="w-full max-w-[1700px] mx-auto ">
+            <section className="bg-[#FAF7F7] font-sans pt-14 pb-10  -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
+                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
                     {/* Header */}
                     <div className="mb-6">
                         <h2 className="text-2xl font-bold text-[#181211]">Latest News</h2>

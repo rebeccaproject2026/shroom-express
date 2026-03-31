@@ -24,6 +24,8 @@ const ProductCard = ({ product }) => {
         weights = ["3g", "10g"],
         price = 50.00,
         customShadowClass = "hover:shadow-[0px_8px_8px_0px_#E93E2B3D] cursor-pointer",
+        isVerticalOnMobile = false,
+        isOverlayEffects = false,
     } = product || {};
 
     const activeEffects = effects.length > 0 ? effects : (effectImage ? [{ image: effectImage, name: effectName }] : []);
@@ -100,6 +102,20 @@ const ProductCard = ({ product }) => {
                     alt={title}
                 />
 
+                {/* Effect Avatar Stack - Overlay on Image (Only if isOverlayEffects is true on mobile) */}
+                {isOverlayEffects && activeEffects.length > 0 && (
+                    <div className="absolute sm:hidden bottom-2 right-2 flex items-center -space-x-4 justify-end z-20 pointer-events-none">
+                        {activeEffects.map((effect, idx) => (
+                            <div key={idx} className={`relative flex items-center justify-center group/tooltip shrink-0 z-[${10 - idx}] ${effect.hasBorder !== false ? 'w-8 h-8 bg-white rounded-full shadow-sm border border-[#E8E8E8]' : 'w-10 h-10'}`}>
+                                <img
+                                    src={effect.image}
+                                    className={effect.hasBorder !== false ? "w-[85%] h-[85%] rounded-full object-cover" : "w-full h-full object-contain drop-shadow-sm"}
+                                    alt={effect.name || "Effect"}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Content Container */}
@@ -112,9 +128,9 @@ const ProductCard = ({ product }) => {
                         <span className="text-xs font-bold text-[#181211]">{rating}</span>
                     </div>
 
-                    {/* Effect Avatar Stack */}
+                    {/* Effect Avatar Stack - Hidden on mobile if isOverlayEffects is true */}
                     {activeEffects.length > 0 && (
-                        <div className="flex items-center -space-x-2 justify-end z-20">
+                        <div className={`flex items-center -space-x-2 justify-end z-20 ${isOverlayEffects ? 'hidden sm:flex' : 'flex'}`}>
                             {activeEffects.map((effect, idx) => (
                                 <div key={idx} className={`relative flex items-center justify-center group/tooltip cursor-pointer shrink-0 z-[${10 - idx}] hover:z-30 ${effect.hasBorder !== false ? 'w-8.5 h-8.5 bg-white rounded-full shadow-sm border border-[#E8E8E8]' : 'w-10.5 h-10.5'}`}>
                                     <img
@@ -135,8 +151,8 @@ const ProductCard = ({ product }) => {
                 </div>
 
                 {/* Title & Vendor */}
-                <h3 className="font-bold text-[#181211] text-base mb-1.5 truncate ">{title}</h3>
-                <p className="text-xs text-[#886663] mb-1 truncate font-normal leading-tight">{vendor}</p>
+                <h3 className="font-bold text-[#181211] text-base mb-1.5 leading-tight whitespace-normal">{title}</h3>
+                <p className="text-xs text-[#886663] mb-1 font-normal leading-tight whitespace-normal">{vendor}</p>
 
                 {/* Weights / Variants */}
                 {weights && weights.length > 0 && (
@@ -164,12 +180,12 @@ const ProductCard = ({ product }) => {
                         </div>
                     )}
                     
-                    <div className="flex items-center justify-between h-10">
-                        <span className="font-extrabold text-[#181211] text-lg">
+                    <div className="flex flex-wrap items-center justify-between gap-y-3 gap-x-2 min-h-[36px]">
+                        <span className="font-extrabold text-[#181211] text-lg lg:text-xl shrink-0">
                             ${Number(price).toFixed(2)}
                         </span>
 
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2 ml-auto sm:ml-0">
                             {/* Qty Selector */}
                             <div
                                 onClick={(e) => e.stopPropagation()}

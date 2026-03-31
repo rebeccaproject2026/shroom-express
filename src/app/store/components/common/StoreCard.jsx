@@ -35,7 +35,7 @@ const StoreCard = ({ store }) => {
                 {deliveryBadge && (
                     <div className="absolute top-3 right-3 bg-[#F8F8F8] backdrop-blur-[15px] rounded-full px-2.5 py-1 flex items-center gap-1 shadow-[0px_0px_6px_0px_#181211] border border-[#E8E8E8]">
                         <Icon icon={deliveryBadge.icon} className={deliveryBadge.color} width={14} height={14} />
-                        <span className={`text-[10px] sm:text-[10px] font-bold ${deliveryBadge.color}`}>
+                        <span className={`text-[9px] sm:text-[10px] font-bold ${deliveryBadge.color}`}>
                             {deliveryBadge.text}
                         </span>
                     </div>
@@ -61,11 +61,11 @@ const StoreCard = ({ store }) => {
             {/* Content Area */}
             <div className="flex flex-col flex-1 px-4.5 pb-10 mt-1.5">
                 {/* Headers */}
-                <div className="flex justify-between items-start mb-3">
-                    <div className="flex flex-col pr-2">
-                        <div className="relative group/name cursor-default mb-1">
-                            <h3 className="font-bold text-[#181211] text-xl leading-tight truncate max-w-37.5">{name}</h3>
-                            <span className="absolute bottom-full left-0 mb-1.5 bg-[#181211] text-white text-xs font-semibold px-2.5 py-1.5 rounded-md whitespace-nowrap opacity-0 group-hover/name:opacity-100 transition-opacity pointer-events-none z-[200]
+                <div className="flex justify-between items-start mb-3 gap-2">
+                    <div className="flex flex-col flex-1 min-w-0 pr-1">
+                        <div className="relative group/name cursor-default mb-1 max-w-full">
+                            <h3 className="font-bold text-[#181211] text-[18px] sm:text-xl leading-tight whitespace-normal">{name}</h3>
+                            <span className="absolute bottom-full left-0 mb-1.5 bg-[#181211] text-white text-[10px] sm:text-xs font-semibold px-2.5 py-1.5 rounded-md whitespace-nowrap opacity-0 group-hover/name:opacity-100 transition-opacity pointer-events-none z-[200]
                                 after:content-[''] after:absolute after:top-full after:left-4 after:border-[5px] after:border-transparent after:border-t-[#181211]">
                                 {name}
                             </span>
@@ -92,16 +92,16 @@ const StoreCard = ({ store }) => {
                 {/* Location Line */}
                 <div className="flex items-start gap-1.5 mb-5 mt-auto text-[#64748B]">
                     <Icon icon="lucide:navigation" className=" mt-0.5 shrink-0 -rotate-45" width={12} />
-                    <p className="text-xs text-[#64748B] leading-snug line-clamp-2">{location}</p>
+                    <p className="text-[11px] sm:text-xs text-[#64748B] leading-snug line-clamp-2">{location}</p>
                 </div>
 
                 {/* Action Button */}
                 <div className="mt-auto">
                     <button
                         onClick={handleViewStore}
-                        className={`w-full py-3 cursor-pointer rounded-md font-semibold text-base transition-colors flex items-center justify-center ${isPrimary
-                            ? 'bg-white text-[#181211] border-2 hover:border-[#E93E2B] hover:text-[#E93E2B]'
-                            : 'bg-white text-[#181211] border-2 border-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B]'
+                        className={`w-full py-2.5 sm:py-3 cursor-pointer rounded-md font-extrabold text-[15px] sm:text-base border-2 border-[#181211] transition-all flex items-center justify-center ${isPrimary
+                            ? 'bg-[#E93E2B] text-white border-[#E93E2B] hover:opacity-90'
+                            : 'bg-white text-[#181211] border-[#181211] hover:border-[#E93E2B] hover:text-[#E93E2B]'
                             }`}
                     >
                         View Store

@@ -20,16 +20,16 @@ const StoreLayout = () => {
     return (
         <div className="store-app min-h-screen flex flex-col">
             <StickyHeader cartCount={cartCount} wishlistCount={wishlistCount} onCartClick={() => setCartOpen(true)} />
-            
+
             {/* Desktop Drawer */}
             <div className="hidden lg:block">
                 <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
             </div>
 
             {/* Mobile/Tablet Bottom Sheet */}
-            <MobileCartDrawer 
-                isOpen={cartOpen} 
-                onClose={() => setCartOpen(false)} 
+            <MobileCartDrawer
+                isOpen={cartOpen}
+                onClose={() => setCartOpen(false)}
                 cartItems={cartItems}
                 cartCount={cartCount}
                 removeFromCart={removeFromCart}
@@ -38,11 +38,11 @@ const StoreLayout = () => {
 
             <AddedToBagPopup onCartOpen={() => setCartOpen(true)} />
 
-            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[130px]'} pb-32 lg:pb-0`}>
+            <main className={`flex-1 bg-[#F8F6F6] ${isHomePage ? '' : 'pt-[100px] lg:pt-[130px]'}  lg:pb-0`}>
                 <Outlet />
             </main>
 
-            <MobileBottomNav />
+            {!location.pathname.startsWith('/store/product/') && <MobileBottomNav />}
 
             <Footer />
         </div>

@@ -360,24 +360,55 @@ const ProductsList = () => {
 
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeBestSeller].filter(Boolean).length;
 
+    const effectsList = [
+        { name: "Micro dosing", image: microDosingImg },
+        { name: "Beginner Friendly", image: beginnerFriendlyImg },
+        { name: "High Potency", image: highPotencyImg },
+        { name: "Creative Boost", image: creativeBoostImg },
+        { name: "Relax & Chill", image: relaxChillImg },
+        { name: "Visual Experience", image: visualExperienceImg },
+        { name: "Focus & Clarity", image: focusClarityImg },
+        { name: "Deep Journey", image: deepjourneyImg },
+    ];
+
     return (
-        <div className="w-full px-12 py-10">
+        <div className="w-full px-4 sm:px-6 lg:px-12 py-2 sm:py-10">
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
-            {/* Page Header - White Background Card */}
-            <div className="bg-white rounded-[20px] p-12 mb-8  border border-[#E5DCDC]">
-                <h1 className="text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>
+
+            {/* Sub-categories Row (Mobile/Tablet only) */}
+            <div className="lg:hidden mb-4 -mx-4 px-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex items-center justify-center gap-6 min-w-max pb-2">
+                    {effectsList.map((effect, idx) => (
+                        <div
+                            key={idx}
+                            className="flex flex-col items-center gap-2 cursor-pointer group"
+                            onClick={() => navigate(`/store/category/${effect.name.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-')}`)}
+                        >
+                            <div className="w-14 h-14 rounded-full bg-white border border-[#E5DCDC] shadow-sm flex items-center justify-center p-2 group-hover:border-[var(--store-primary)] transition-all">
+                                <img src={effect.image} alt={effect.name} className="w-full h-full object-contain" />
+                            </div>
+                            <span className="text-[11px] font-bold text-[#181211] text-center max-w-[70px] leading-tight">
+                                {effect.name}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            {/* Page Header */}
+            <div className="bg-transparent lg:bg-white lg:rounded-[20px] p-0 lg:p-12 mb-8 border-0 lg:border border-[#E5DCDC]">
+                <h1 className="text-2xl sm:text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-lg mb-4">
+                <div className="flex items-center gap-2 text-base sm:text-lg mb-4">
                     <button onClick={() => navigate('/store')} className="text-[var(--store-primary)] hover:underline font-semibold cursor-pointer">
                         Home
                     </button>
-                    <span className="text-[#777777]">/</span>
-                    <span className="text-[#777777] font-semibold">{pageTitle}</span>
+                    <span className="text-[#BDBDBD]">/</span>
+                    <span className="text-[#181211] font-semibold">{pageTitle}</span>
                 </div>
 
                 {/* Description */}
-                <p className="text-[#777777] text-sm tracking-wide pb-2.5">
+                <p className="text-[#777777] text-sm tracking-wide leading-relaxed font-normal">
                     Magic mushrooms are natural fungi containing psilocybin, a compound known for its psychoactive effects. For centuries, they have been used in traditional spiritual and cultural practices. When consumed, they can alter perception, mood, and thinking patterns, often leading to introspection and heightened awareness. In recent years, scientific research from institutions like Johns Hopkins University has explored their potential role in mental health treatments under controlled settings. While interest continues to grow, laws regarding magic mushrooms vary by region. Understanding their effects, risks, and legal status is essential before considering their use.
                 </p>
             </div>
@@ -385,68 +416,58 @@ const ProductsList = () => {
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Left Column - Products (3/4 width) */}
-                <div className="lg:col-span-3 pr-8 border-r border-[#E8E8E8]">
+                <div className="lg:col-span-3 lg:pr-8 lg:border-r lg:border-[#E8E8E8]">
                     {/* Most Popular Mushroom Section */}
                     <div className="mb-8">
-                        <h2 className="text-[22px] font-bold text-[#181211] mb-6">Most popular Mushroom</h2>
+                        <h2 className="text-[20px] sm:text-[22px] font-bold text-[#181211] mb-6">Most popular Mushroom</h2>
 
                         {/* Filter Bar */}
-                        <div className="px-2 py-2">
-                            {/* Filter Bar */}
-                            <div className="flex items-center gap-3 mb-4.5" >
+                        <div className="flex items-center justify-between gap-4 mb-8">
+                            {/* Filter Button with Badge */}
+                            <button
+                                onClick={() => setFilterOpen(true)}
+                                className="flex items-center gap-2 px-4 h-11 rounded-full bg-[#E93E2B] text-white font-bold cursor-pointer transition-transform active:scale-95 shrink-0"
+                            >
+                                <Icon icon="mage:filter" width={20} />
+                                <span className="bg-white text-[#E93E2B] text-[13px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                                    {activeFilterCount || 1}
+                                </span>
+                            </button>
 
-                                {/* Filter Icon */}
-                                <div
-                                    onClick={() => setFilterOpen(true)}
-                                    className="flex items-center gap-2 px-3 h-[40px] rounded-full bg-[var(--store-primary)] text-white cursor-pointer"
-                                >
-
-                                    <Icon icon="mage:filter" width={22} height={22} />
-
-                                    {/* Badge */}
-                                    <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                                        {activeFilterCount || 1}
-                                    </span>
-
-                                </div>
-
-                                {/* Pills */}
+                            {/* Quick Pills - Desktop Only */}
+                            <div className="hidden sm:flex items-center gap-2.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-1">
                                 <button
                                     onClick={() => setActiveExpressDelivery(p => !p)}
-                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${activeExpressDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                    className={`px-5 h-11 rounded-full border text-[14px] font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${activeExpressDelivery ? 'bg-[#E93E2B] text-white border-[#E93E2B]' : 'bg-white border-[#E8E8E8] text-[#181211]'}`}
                                 >
                                     Express Delivery
                                 </button>
-
-                                <button
-                                    onClick={() => setActiveDelivery(p => !p)}
-                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
-                                >
-                                    Delivery
-                                </button>
-
                                 <button
                                     onClick={() => setActiveBestSeller(p => !p)}
-                                    className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeBestSeller ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                                    className={`px-5 h-11 rounded-full border text-[14px] font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${activeBestSeller ? 'bg-[#E93E2B] text-white border-[#E93E2B]' : 'bg-white border-[#E8E8E8] text-[#181211]'}`}
                                 >
                                     Best Seller
                                 </button>
-                                <div className=" w-[22%] ml-auto">
-                                    <Select
-                                        options={sortOptions}
-                                        value={sortBy}
-                                        onChange={(e) => setSortBy(e.target.value)}
-                                        placeholder="Select your country"
-
-                                    />
-                                </div>
                             </div>
 
-                            {/* Products Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-7">
+                            {/* Sort Dropdown */}
+                            <div className="flex-1 sm:w-64 sm:flex-none sm:ml-auto">
+                                <Select
+                                    options={sortOptions}
+                                    value={sortBy}
+                                    onChange={(e) => setSortBy(e.target.value)}
+                                    className="h-11 font-semibold text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Products Grid */}
+                        <div className="px-0">
+
+                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-7">
                                 {filteredProducts.length > 0 ? filteredProducts.map((product) => (
                                     <div key={product.id} className="w-full">
-                                        <ProductCard product={product} />
+                                        <ProductCard product={{ ...product, isVerticalOnMobile: true, isOverlayEffects: true }} />
                                     </div>
                                 )) : (
                                     <div className="col-span-3 flex flex-col items-center justify-center py-16 text-center">
@@ -459,8 +480,8 @@ const ProductsList = () => {
                     </div>
                 </div>
 
-                {/* Right Column - Trending Stores (1/4 width) */}
-                <div className="lg:col-span-1">
+                {/* Right Column - Trending Stores */}
+                <div className="lg:col-span-1 mt-12 lg:mt-0">
                     <div className="mb-6">
                         {/* Trending Store Header */}
                         <div className="flex items-center justify-between mb-4.5">
@@ -472,7 +493,7 @@ const ProductsList = () => {
 
                         {/* Search Store Input */}
                         <div className='px-2 py-2'>
-                            <div className="mb-4.5">
+                            <div className="mb-4.5 hidden lg:block">
                                 <div className="relative">
                                     <input
                                         type="text"
@@ -484,10 +505,10 @@ const ProductsList = () => {
                                     <Icon icon="mdi:magnify" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" width={20} height={20} />
                                 </div>
                             </div>
-                            {/* Stores List - Vertical Stack */}
-                            <div className="flex flex-col gap-6">
+                            {/* Stores List - Horizontal Scroll on Mobile, Vertical on Desktop */}
+                            <div className="flex flex-row lg:flex-col gap-5 sm:gap-7 overflow-x-auto lg:overflow-visible pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                                 {filteredStores.length > 0 ? filteredStores.map(store => (
-                                    <div key={store.id} className="w-full">
+                                    <div key={store.id} className="w-[84%] sm:w-[320px] lg:w-full shrink-0">
                                         <StoreCard store={store} />
                                     </div>
                                 )) : (

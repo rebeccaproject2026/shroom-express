@@ -36,13 +36,13 @@ const FilterDrawer = ({ open, onClose, onApply }) => {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 top-[250px] z-40 bg-black/40 transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-[2000] bg-black/40 transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={onClose}
       />
 
       {/* Drawer */}
       <div
-        className={`fixed top-[273px] left-0 z-50 bottom-0 w-[280px] bg-white shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 z-[2001] bottom-0 w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#E8E8E8]">

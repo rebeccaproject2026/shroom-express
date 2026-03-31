@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useAuth } from "../../context/AuthContext";
@@ -127,30 +127,32 @@ const ProductDetail = () => {
     };
 
     return (
-        <div className="w-full px-10 py-12 bg-[#FAF8F5] relative">
+        <div className="w-full px-4 sm:px-10 pt-6 sm:pt-12 pb-44 lg:pb-12 bg-[#FAF8F5] relative">
             {/* Main Content Grid */}
-            <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${storesPanelOpen ? 'lg:grid-cols-[3.1fr_1fr]' : 'lg:grid-cols-1'}`}>
+            <div className={`grid grid-cols-1 gap-8 transition-all duration-300 ${storesPanelOpen ? 'lg:grid-cols-[3.1fr_1.1fr]' : 'lg:grid-cols-1'}`}>
                 {/* Left Column - Product Details (3/4 width) */}
                 <div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Product Images */}
-                        <div>
-                            {/* Main Image */}
-                            <div className="bg-white border border-[#E5DCDC] rounded-2xl p-8 mb-4 shadow-[0px_0px_21px_0px_#0000001A]">
-                                <img
-                                    src={product.images[selectedImage]}
-                                    alt={product.name}
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
+                    {/* Breadcrumbs - Only for mobile and tablet */}
+                    <nav className="flex lg:hidden items-center gap-1.5 text-[15px] pb-5 sm:pb-8">
+                        <Link to="/store" className="text-(--store-primary) font-bold hover:underline transition-all">Home</Link>
+                        <span className="text-[#181211] font-bold">/</span>
+                        <Link to="/store/storeslists" className="text-(--store-primary) font-bold hover:underline transition-all">Stores</Link>
+                        <span className="text-[#181211] font-bold">/</span>
+                        <Link to={`/store/storeslists/${selectedStore.id}`} className="text-(--store-primary) font-bold hover:underline transition-all">{selectedStore.name}</Link>
+                        <span className="text-[#181211] font-bold">/</span>
+                        <span className="text-[#181211] font-bold">{product.name}</span>
+                    </nav>
 
-                            {/* Thumbnail Images */}
-                            <div className="flex gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Product Images and Gallery - Side-by-side on mobile/tablet, Stacked on desktop */}
+                        <div className="flex flex-row lg:flex-col gap-4">
+                            {/* Thumbnail Images - Vertical on Left (mobile), Horizontal at Bottom (desktop) */}
+                            <div className="flex flex-col lg:flex-row gap-3 min-w-[80px] sm:min-w-[100px] lg:min-w-0 max-h-[480px] sm:max-h-[600px] lg:max-h-none overflow-y-auto lg:overflow-x-auto scrollbar-hide lg:order-2">
                                 {product.images.map((img, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`w-26 h-26 bg-white rounded-lg p-2 border-2 transition-all shadow-[0px_5px_16px_0px_#00000029] ${selectedImage === idx
+                                        className={`w-20 h-20 sm:w-26 sm:h-26 lg:w-24 lg:h-24 shrink-0 bg-white rounded-2xl p-2 border-2 transition-all shadow-[0px_5px_16px_0px_#00000029] ${selectedImage === idx
                                             ? "border-(--store-primary)"
                                             : "border-[#E5DCDC] "
                                             }`}
@@ -158,10 +160,19 @@ const ProductDetail = () => {
                                         <img
                                             src={img}
                                             alt={`${product.name} ${idx + 1}`}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover rounded-lg"
                                         />
                                     </button>
                                 ))}
+                            </div>
+
+                            {/* Main Image - Right on mobile, Top on desktop */}
+                            <div className="bg-white border border-[#E5DCDC] rounded-3xl p-6 sm:p-10 shadow-[0px_0px_21px_0px_#0000001A] flex-1 flex items-center justify-center lg:order-1">
+                                <img
+                                    src={product.images[selectedImage]}
+                                    alt={product.name}
+                                    className="w-full h-auto object-cover"
+                                />
                             </div>
                         </div>
 
@@ -209,40 +220,59 @@ const ProductDetail = () => {
                                 ))}
                             </div>
 
-                            {/* Price */}
-                            <div className="text-xl font-bold text-(--store-primary) mb-3">
-                                ${selectedStore.price.toFixed(2)}
+                            {/* Price and Social Actions Row */}
+                            <div className="flex justify-between items-center mb-4">
+                                <div className="text-3xl font-bold text-(--store-primary)">
+                                    ${selectedStore.price.toFixed(2)}
+                                </div>
+                                <div className="flex gap-2.5 lg:hidden">
+                                    <button onClick={handleWishlist} className="w-10 h-10 flex items-center justify-center border border-[#E5DCDC] rounded-full bg-white shadow-sm">
+                                        <Icon
+                                            icon={isWishlisted(product.id) ? "ion:heart" : "ion:heart-outline"}
+                                            width={20}
+                                            className={isWishlisted(product.id) ? "text-[#E93E2B]" : "text-[#181211]"}
+                                        />
+                                    </button>
+                                    <button onClick={handleShare} className="w-10 h-10 flex items-center justify-center border border-[#E5DCDC] rounded-full bg-white shadow-sm">
+                                        <Icon
+                                            icon="majesticons:share-line"
+                                            width={20}
+                                            className="text-[#181211]"
+                                        />
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Vendor Info */}
-                            <div className="flex items-center gap-1 mb-6 p-2 border-t border-b border-[#E5DCDC] ">
-                                <div className="flex flex-col gap-1">
-                                    <div className="flex items-center gap-1">
-                                        <Icon icon="iconoir:shop" width="16" height="16" />
-                                        <p className="text-sm font-semibold text-[#181211]">
-                                            {selectedStore.name}
-                                        </p>
+                            <div className="flex flex-col gap-3 mb-6 p-4 border-y border-[#E5DCDC] bg-[#F1F5F9]/30 rounded-lg sm:bg-transparent sm:p-2 sm:border-x-0">
+                                {/* Row 1: Store Name and Delivery Badge */}
+                                <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-2">
+                                        <Icon icon="iconoir:shop" width="18" height="18" className="text-[#0F3540]" />
+                                        <p className="text-[15px] font-bold text-[#181211]">{selectedStore.name}</p>
                                     </div>
-                                    <div className="flex items-center gap-1">
+                                    <button className="px-4 py-1.5 bg-[#D4E6D5] rounded-full text-[13px] font-bold flex items-center gap-1.5 whitespace-nowrap">
+                                        <Icon icon="mdi:truck-outline" width={18} height={18} />
+                                        {selectedStore.deliveryBadge?.text || "Delivery"}
+                                    </button>
+                                </div>
+
+                                {/* Row 2: Address and Delivery Time */}
+                                <div className="flex justify-between items-center w-full">
+                                    <div className="flex items-center gap-2">
                                         <Icon
                                             icon="streamline-sharp:mail-send-email-message"
                                             width="14"
                                             height="14"
                                             className="text-[#64748B]"
                                         />
-                                        <p className="text-xs text-[#64748B]">{selectedStore.location}</p>
+                                        <p className="text-xs text-[#64748B] leading-tight">{selectedStore.location}</p>
                                     </div>
-                                </div>
-                                <div className="flex flex-col gap-0.5 ml-auto mr-auto">
-                                    <button className=" px-4 py-2 bg-[#D4E6D5] rounded-full text-[13px] font-semibold flex items-center gap-1">
-                                        <Icon icon="mdi:truck-outline" width="18" height="18" />
-                                        {selectedStore.deliveryBadge?.text || "Delivery"}
-                                    </button>
-                                    <span className="text-[13px] text-[#64748B] flex items-center gap-1 ml-2">
+                                    <span className="text-[13px] text-[#64748B] flex items-center gap-1.5 font-medium whitespace-nowrap">
                                         <Icon
                                             icon="ic:outline-watch-later"
-                                            width="16"
-                                            height="16"
+                                            width={16}
+                                            height={16}
                                         />
                                         {selectedStore.estimatedDelivery}
                                     </span>
@@ -264,21 +294,21 @@ const ProductDetail = () => {
                                 ))}
                             </div>
 
-                            {/* Quantity */}
-                            <div className="mb-3">
+                            {/* Quantity and Actions - Hidden on mobile, shown on desktop */}
+                            <div className="hidden lg:block mb-6">
                                 <h3 className="text-base font-bold text-[#181211] mb-3">
-                                    Quantity
+                                    Quantity (Select Size)
                                 </h3>
 
                                 {/* Weight Options */}
-                                <div className="flex gap-2 mb-4">
+                                <div className="flex flex-wrap gap-2 mb-6">
                                     {product.weights.map((weight) => (
                                         <button
                                             key={weight}
                                             onClick={() => setSelectedWeight(weight)}
-                                            className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all ${activeWeight === weight
-                                                ? "bg-(--store-primary) text-white"
-                                                : "bg-white border border-gray-300 text-[#181211] hover:border-(--store-primary)"
+                                            className={`px-6 py-2 rounded-full text-[14px] font-bold transition-all cursor-pointer ${activeWeight === weight
+                                                ? "bg-(--store-primary) text-white shadow-lg scale-105"
+                                                : "bg-white border border-[#E5DCDC] text-[#181211] hover:border-(--store-primary)"
                                                 }`}
                                         >
                                             {weight}
@@ -286,61 +316,60 @@ const ProductDetail = () => {
                                     ))}
                                 </div>
 
-                                {/* Quantity Counter */}
-                                <div className="flex items-center gap-2 w-full">
-                                    <div className="flex items-center justify-between border border-gray-300 bg-white rounded-full w-full">
-                                        <button
-                                            onClick={() => handleQuantityChange("decrement")}
-                                            className="w-14 h-12 flex items-center justify-center text-black border-r border-gray-300"
-                                        >
-                                            <Icon icon="mdi:minus" width={24} height={24} />
-                                        </button>
-                                        <span className="w-16 text-center font-semibold text-[#181211]">
-                                            {quantity}
-                                        </span>
-                                        <button
-                                            onClick={() => handleQuantityChange("increment")}
-                                            className="w-14 h-12 flex items-center justify-center text-black border-l border-gray-300"
-                                        >
-                                            <Icon icon="mdi:plus" width={24} height={24} />
-                                        </button>
+                                {/* Quantity Selector and Action Buttons Row */}
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex items-center gap-3">
+                                        {/* Quantity Counter */}
+                                        <div className="flex items-center justify-between border border-[#E5DCDC] bg-white rounded-full flex-1 h-12 overflow-hidden">
+                                            <button
+                                                onClick={() => handleQuantityChange("decrement")}
+                                                className="w-14 h-full flex items-center justify-center text-black border-r border-[#E5DCDC] hover:bg-gray-50 transition-colors"
+                                            >
+                                                <Icon icon="mdi:minus" width={22} />
+                                            </button>
+                                            <span className="flex-1 text-center font-bold text-[#181211] text-lg">
+                                                {quantity}
+                                            </span>
+                                            <button
+                                                onClick={() => handleQuantityChange("increment")}
+                                                className="w-14 h-full flex items-center justify-center text-black border-l border-[#E5DCDC] hover:bg-gray-50 transition-colors"
+                                            >
+                                                <Icon icon="mdi:plus" width={22} />
+                                            </button>
+                                        </div>
+
+                                        {/* Wishlist and Share Mobile */}
+                                        <div className="flex gap-2">
+                                            <button onClick={handleWishlist} className="w-12 h-12 flex items-center justify-center border cursor-pointer border-[#E5DCDC] rounded-full bg-white hover:border-(--store-primary) transition-all">
+                                                <Icon
+                                                    icon={isWishlisted(product.id) ? "ion:heart" : "ion:heart-outline"}
+                                                    width={22}
+                                                    className={isWishlisted(product.id) ? "text-[#E93E2B]" : "text-[#181211]"}
+                                                />
+                                            </button>
+
+                                            <button onClick={handleShare} className="w-12 h-12 flex items-center justify-center border cursor-pointer border-[#E5DCDC] rounded-full bg-white hover:border-(--store-primary) transition-all">
+                                                <Icon
+                                                    icon="majesticons:share-line"
+                                                    width={22}
+                                                    className="text-[#181211]"
+                                                />
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <button onClick={handleWishlist} className="w-16 h-12 flex items-center justify-center border cursor-pointer border-gray-300 rounded-full bg-white">
-                                        <Icon
-                                            icon={isWishlisted(product.id) ? "ion:heart" : "ion:heart-outline"}
-                                            width={24}
-                                            height={24}
-                                            className={isWishlisted(product.id) ? "text-[#E93E2B]" : "text-gray-800"}
-                                        />
-                                    </button>
-
-                                    <button onClick={handleShare} className="w-16 h-12 flex items-center justify-center border cursor-pointer border-gray-300 rounded-full bg-white">
-                                        <Icon
-                                            icon="majesticons:share-line"
-                                            width={24}
-                                            height={24}
-                                            className="text-gray-800"
-                                        />
-                                    </button>
+                                    {/* Primary Action Buttons */}
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <button onClick={handleAddToCart} className="flex-1 bg-(--store-primary) text-white h-14 rounded-xl cursor-pointer font-bold text-base hover:opacity-95 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98]">
+                                            <Icon icon="proicons:cart" width="22" />
+                                            Add to cart
+                                        </button>
+                                        <button onClick={handleBuyNow} className="flex-1 bg-white border-2 border-[#181211] cursor-pointer text-[#181211] h-14 rounded-xl font-bold text-base hover:bg-[#181211] hover:text-white transition-all flex items-center justify-center gap-2.5 active:scale-[0.98]">
+                                            <Icon icon="iconamoon:shopping-bag-light" width="22" />
+                                            Buy Now
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex gap-4 mb-4">
-                                <button onClick={handleAddToCart} className="flex-1 bg-(--store-primary) text-white py-4 rounded-lg cursor-pointer font-semibold text-base hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-                                    <Icon icon="proicons:cart" width="22" height="22" />
-                                    Add to cart
-                                </button>
-                                <button onClick={handleBuyNow} className="flex-1 bg-white border border-gray-300 cursor-pointer text-black py-4 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
-                                    <Icon
-                                        icon="iconamoon:shopping-bag-light"
-                                        width="24"
-                                        height="24"
-                                        className="*:stroke-2"
-                                    />
-                                    Buy Now
-                                </button>
                             </div>
 
                             {/* Promo Message */}
@@ -370,8 +399,8 @@ const ProductDetail = () => {
 
                 {/* Right Column - Related Stores (1/4 width) */}
                 {storesPanelOpen ? (
-                    <div className="flex">
-                        <div className="flex flex-col items-center w-8 shrink-0 mr-3">
+                    <div className="flex flex-col lg:flex-row">
+                        <div className="hidden lg:flex flex-col items-center w-8 shrink-0 mr-3">
                             <button
                                 onClick={() => setStoresPanelOpen(prev => !prev)}
                                 className="bg-white p-1 flex justify-center items-center rounded-full shadow-2xl cursor-pointer"
@@ -385,6 +414,7 @@ const ProductDetail = () => {
                             <div className="h-full w-px bg-[#BDBDD2]"></div>
                         </div>
                         <div className="sticky top-67.5 min-w-0 flex-1">
+                            <h2 className="text-[20px] font-bold text-[#181211] mb-5 lg:hidden">Similar Dispensaries</h2>
                             <div className="flex flex-col gap-6">
                                 {stores.map((store) => (
                                     <div key={store.id} className="w-full">
@@ -400,7 +430,7 @@ const ProductDetail = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="absolute top-12 right-10 flex flex-col items-center gap-2 z-10">
+                    <div className="hidden lg:flex absolute top-12 right-10 flex-col items-center gap-2 z-10">
                         <button
                             onClick={() => setStoresPanelOpen(prev => !prev)}
                             className="bg-white p-1 flex justify-center items-center rounded-full shadow-2xl cursor-pointer"
@@ -423,43 +453,43 @@ const ProductDetail = () => {
             </div>
 
             {/* Tabs Section */}
-            <div className="mt-12">
+            <div className="mt-12 overflow-hidden">
                 {/* Tab Headers */}
-                <div className="flex ml-4">
+                <div className="flex border-b border-[#E5DCDC] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     <button
                         onClick={() => setActiveTab("description")}
-                        className={`px-8 py-4 cursor-pointer text-base font-semibold transition-colors relative ${activeTab === "description"
+                        className={`flex-1 px-2 sm:px-8 py-4 cursor-pointer text-sm sm:text-base font-bold transition-all relative whitespace-nowrap ${activeTab === "description"
                             ? "text-[#E85D4C]"
                             : "text-[#777777] hover:text-[#181211]"
                             }`}
                     >
                         Description
                         {activeTab === "description" && (
-                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E85D4C]"></div>
+                            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#E85D4C] rounded-t-full"></div>
                         )}
                     </button>
                     <button
                         onClick={() => setActiveTab("reviews")}
-                        className={`px-8 py-4 cursor-pointer text-base font-semibold transition-colors relative ${activeTab === "reviews"
+                        className={`flex-1 px-2 sm:px-8 py-4 cursor-pointer text-sm sm:text-base font-bold transition-all relative whitespace-nowrap ${activeTab === "reviews"
                             ? "text-[#E85D4C]"
                             : "text-[#777777] hover:text-[#181211]"
                             }`}
                     >
                         Reviews (124)
                         {activeTab === "reviews" && (
-                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E85D4C]"></div>
+                            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#E85D4C] rounded-t-full"></div>
                         )}
                     </button>
                     <button
                         onClick={() => setActiveTab("shipping")}
-                        className={`px-8 py-4 text-base cursor-pointer font-semibold transition-colors relative ${activeTab === "shipping"
+                        className={`flex-1 px-2 sm:px-8 py-4 text-sm sm:text-base cursor-pointer font-bold transition-all relative whitespace-nowrap ${activeTab === "shipping"
                             ? "text-[#E85D4C]"
                             : "text-[#777777] hover:text-[#181211]"
                             }`}
                     >
                         Shipping & Delivery
                         {activeTab === "shipping" && (
-                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E85D4C]"></div>
+                            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#E85D4C] rounded-t-full"></div>
                         )}
                     </button>
                 </div>
@@ -1017,6 +1047,64 @@ const ProductDetail = () => {
 
             {/* FAQ Section */}
             <FAQ />
+            {/* Fixed Bottom Bar for Mobile/Tablet */}
+            <div className="fixed bottom-0 left-0 right-0 bg-white/50 backdrop-blur-xl border-t border-gray-100 px-2 py-2 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] lg:hidden z-50">
+                <div className="flex flex-col gap-4 max-w-lg mx-auto">
+                    {/* Row 1: Size Options */}
+                    <div className="flex flex-wrap gap-2 justify-start md:justify-center">
+                        {product.weights.map((weight) => (
+                            <button
+                                key={weight}
+                                onClick={() => setSelectedWeight(weight)}
+                                className={`px-5 py-1.5 rounded-full text-[13px] font-bold transition-all border ${activeWeight === weight
+                                    ? "bg-(--store-primary) text-white border-(--store-primary)"
+                                    : "bg-white border-[#E5DCDC] text-[#181211]"
+                                    }`}
+                            >
+                                {weight}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Row 2: Action Row */}
+                    <div className="flex items-center gap-3">
+                        {/* Compact Quantity Selector */}
+                        <div className="flex items-center justify-between bg-[#FDF2F1]/30 rounded-2xl p-1 border border-[#FDBA74]/20 h-11 w-32 shadow-sm">
+                            <button
+                                onClick={() => handleQuantityChange("decrement")}
+                                className="w-8 h-8 flex items-center justify-center text-[#181211]"
+                            >
+                                <Icon icon="mdi:minus" width={20} />
+                            </button>
+                            <span className="font-bold text-base text-[#181211]">{quantity}</span>
+                            <button
+                                onClick={() => handleQuantityChange("increment")}
+                                className="w-9 h-9 flex items-center justify-center bg-[#E93E2B] text-white rounded-xl shadow-md active:scale-95 transition-all"
+                            >
+                                <Icon icon="mdi:plus" width={20} />
+                            </button>
+                        </div>
+
+                        {/* Add to Cart */}
+                        <button
+                            onClick={handleAddToCart}
+                            className="flex-1 bg-[#E93E2B] text-white h-11 rounded-2xl font-bold text-[13px] flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all"
+                        >
+                            <Icon icon="proicons:cart" width={18} />
+                            Add to cart
+                        </button>
+
+                        {/* Buy Now */}
+                        <button
+                            onClick={handleBuyNow}
+                            className="px-4 border border-[#E5DCDC] h-11 rounded-2xl font-bold text-[13px] text-[#181211] bg-white flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm"
+                        >
+                            <Icon icon="iconamoon:shopping-bag-light" width={18} />
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

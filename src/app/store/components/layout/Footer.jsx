@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NewsletterForm from './NewsletterForm';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
@@ -6,58 +6,83 @@ import shroomLogo from "../../assets/images/Logo.png";
 import { AlertTriangle } from 'lucide-react';
 
 const Footer = () => {
+    const [openSection, setOpenSection] = useState('links');
+
+    const toggleSection = (section) => {
+        setOpenSection(openSection === section ? null : section);
+    };
     return (
-        <footer className="bg-white pt-12 md:pt-16 pb-8 font-sans border-t border-[#F4F1F0]">
+        <footer className="bg-white pt-12 md:pt-16 pb-28 md:pb-8 font-sans border-t border-[#F4F1F0]">
             <div className="w-full max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16">
 
                 {/* Main Content Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-12 mb-12">
 
                     {/* Column 1: Logo & Info */}
-                    <div className="lg:col-span-3">
-                        <Link to="/store" className="inline-block mb-6">
-                            <img src={shroomLogo} alt="Shroom Express" className="h-16 md:h-20 w-auto" />
+                    <div className="lg:col-span-3 flex flex-col items-center text-center md:items-start md:text-left">
+                        <Link to="/store" className="inline-block mb-6 transition-transform hover:scale-105 duration-300">
+                            <img src={shroomLogo} alt="Shroom Express" className="h-20 md:h-20 w-auto" />
                         </Link>
-                        <p className="text-sm text-[#886663] tracking-normal leading-relaxed mb-6 font-normal max-w-sm">
+                        <p className="text-sm text-[#886663] tracking-normal leading-relaxed mb-8 font-normal max-w-sm">
                             The world's premium marketplace for legal cannabis and functional fungi.
                             Elevating wellness through quality and transparency.
                         </p>
-                        <div className="flex items-center gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1">
-                                <Icon icon="hugeicons:new-twitter" width="22" height="22" />
+                        <div className="flex items-center gap-4 mb-4 md:mb-0">
+                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1 shadow-sm">
+                                <Icon icon="fa6-brands:x-twitter" width="18" height="18" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1">
-                                <Icon icon="iconoir:pinterest" width="22" height="22" />
+                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1 shadow-sm">
+                                <Icon icon="iconoir:pinterest" width="20" height="20" />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1">
-                                <Icon icon="hugeicons:reddit" width="22" height="22" />
+                            <a href="#" className="w-10 h-10 rounded-full bg-[#F4F1F0] flex items-center justify-center text-[var(--store-primary)] hover:bg-[var(--store-primary)] hover:text-white transition-all transform hover:-translate-y-1 shadow-sm">
+                                <Icon icon="hugeicons:reddit" width="20" height="20" />
                             </a>
                         </div>
                     </div>
 
-                    {/* Column 2: Quick Links */}
-                    <div className="lg:col-span-2">
-                        <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider mb-6">Quick Links</h3>
-                        <ul className="space-y-4 text-[#886663] text-sm font-normal">
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">About Us</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Contact Us</Link></li>
-                            <li><Link to="/store/myaccount" className="hover:text-[var(--store-primary)] transition-colors">My Account</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Cannabis FAQ</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Mushroom FAQ</Link></li>
-                            <li><Link to="/store/track-order" className="hover:text-[var(--store-primary)] transition-colors">Track Your Order</Link></li>
+                    {/* Column 2: Quick Links (Accordion on mobile) */}
+                    <div className="lg:col-span-2 border-b border-[#F4F1F0] md:border-none pb-4 md:pb-0">
+                        <div 
+                            className="flex items-center justify-between cursor-pointer md:cursor-default group"
+                            onClick={() => toggleSection('links')}
+                        >
+                            <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider md:mb-6">Quick Links</h3>
+                            <Icon 
+                                icon="solar:alt-arrow-down-bold-duotone" 
+                                className={`md:hidden transition-transform duration-300 ${openSection === 'links' ? 'rotate-180' : ''}`}
+                                width="20"
+                            />
+                        </div>
+                        <ul className={`${openSection === 'links' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">About Us</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Contact Us</Link></li>
+                            <li><Link to="/store/myaccount" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">My Account</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Cannabis FAQ</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom FAQ</Link></li>
+                            <li><Link to="/store/track-order" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Track Your Order</Link></li>
                         </ul>
                     </div>
 
-                    {/* Column 3: Knowledge Center */}
-                    <div className="lg:col-span-2">
-                        <h3 className="text-[14px] font-bold text-[#181211] uppercase tracking-wider mb-6">Knowledge Center</h3>
-                        <ul className="space-y-4 text-[#886663] text-sm font-normal">
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">What to Expect</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Mushroom Strains</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Choosing Your Product</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Cannabis vs. Psilocybin</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Psilocybin Dosage Guide</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors">Safe Microdosing Practices</Link></li>
+                    {/* Column 3: Knowledge Center (Accordion on mobile) */}
+                    <div className="lg:col-span-2 border-b border-[#F4F1F0] md:border-none pb-4 md:pb-0">
+                        <div 
+                            className="flex items-center justify-between cursor-pointer md:cursor-default group"
+                            onClick={() => toggleSection('knowledge')}
+                        >
+                            <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider md:mb-6">Knowledge Center</h3>
+                            <Icon 
+                                icon="solar:alt-arrow-down-bold-duotone" 
+                                className={`md:hidden transition-transform duration-300 ${openSection === 'knowledge' ? 'rotate-180' : ''}`}
+                                width="20"
+                            />
+                        </div>
+                        <ul className={`${openSection === 'knowledge' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Cannabis vs. Psilocybin</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>
                         </ul>
                     </div>
 
