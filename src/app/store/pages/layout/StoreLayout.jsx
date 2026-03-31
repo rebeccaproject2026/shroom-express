@@ -42,7 +42,13 @@ const StoreLayout = () => {
                 <Outlet />
             </main>
 
-            {!location.pathname.startsWith('/store/product/') && <MobileBottomNav />}
+            {/* Hide standard mobile nav on product detail, checkout flow, and track order pages */}
+            {!location.pathname.startsWith('/store/product/') && 
+             !location.pathname.startsWith('/store/cart') && 
+             !location.pathname.startsWith('/store/checkout') && 
+             !location.pathname.startsWith('/store/order-complete') && 
+             !location.pathname.startsWith('/store/track-order') && 
+             <MobileBottomNav />}
 
             <Footer />
         </div>

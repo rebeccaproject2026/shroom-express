@@ -54,9 +54,9 @@ import { Icon } from '@iconify/react';
 
 const CartItem = ({ item, onQuantityChange, onRemove }) => {
     return (
-        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#E93E2B]/10 flex items-start gap-5 sm:gap-7">
+        <div className="bg-white rounded-3xl p-3 sm:p-6 border border-[#E93E2B]/10 flex items-start gap-3 sm:gap-7">
             {/* Product Image */}
-            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
                 <img
                     src={item.image}
                     alt={item.name}
@@ -70,48 +70,48 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
                 <div className="flex-1">
                     {item.badge && (
                         <span
-                            className={`text-[10px] sm:text-xs font-bold uppercase px-2.5 py-1 rounded-full inline-block mb-2 ${item.badgeColor || 'bg-red-50 text-[#E93E2B]'
+                            className={`text-[9px] sm:text-xs font-bold uppercase px-2 py-0.5 rounded-full inline-block mb-1.5 ${item.badgeColor || 'bg-red-50 text-[#E93E2B]'
                                 }`}
                         >
                             {item.badge}
                         </span>
                     )}
 
-                    <h3 className="font-bold text-[#0F172A] text-base sm:text-lg leading-tight">
+                    <h3 className="font-bold text-[#0F172A] text-sm sm:text-lg leading-tight break-words">
                         {item.name}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-[#64748B] mt-1 line-clamp-2">
+                    <p className="text-[11px] sm:text-sm text-[#64748B] mt-1">
                         {item.description}
                     </p>
                 </div>
 
                 {/* Quantity controller – number below buttons */}
-                <div className="mt-4 flex items-center gap-3">
-                    <div className="flex items-center gap-6 border border-[#E93E2B1A] bg-[#F8F6F6] rounded-xl px-1 py-1">
+                <div className="mt-3 flex items-center gap-2">
+                    <div className="flex items-center gap-4 sm:gap-6 border border-[#E93E2B1A] bg-[#F8F6F6] rounded-xl px-1 py-1 shrink-0">
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity - 1)}
                             disabled={item.quantity <= 1}
-                            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-gray-600 cursor-pointer transition-colors"
+                            className="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center text-gray-600 cursor-pointer transition-colors"
                         >
-                            <Icon icon="mdi:minus" width={20} />
+                            <Icon icon="mdi:minus" width={18} />
                         </button>
 
-                        <span className="font-bold text-[#181211] text-base sm:text-lg">
+                        <span className="font-bold text-[#181211] text-sm sm:text-lg">
                             {item.quantity}
                         </span>
 
                         <button
                             onClick={() => onQuantityChange(item.id, item.quantity + 1)}
-                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#E93E2B] flex items-center cursor-pointer justify-center text-white hover:opacity-90 transition-opacity"
+                            className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-[#E93E2B] flex items-center cursor-pointer justify-center text-white hover:opacity-90 transition-opacity"
                         >
-                            <Icon icon="mdi:plus" width={16} />
+                            <Icon icon="mdi:plus" width={14} />
                         </button>
                     </div>
 
                     {/* Subtotal price – aligned to the right */}
                     <div className="flex-1 flex justify-end items-end">
-                        <span className="font-bold text-[#181211] text-base sm:text-lg">
+                        <span className="font-bold text-[#181211] text-sm sm:text-lg">
                             ${(item.price * item.quantity).toFixed(2)}
                         </span>
                     </div>
@@ -121,9 +121,9 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
             {/* Delete button – top right */}
             <button
                 onClick={() => onRemove(item.id)}
-                className="text-gray-400 hover:text-red-500 transition-colors shrink-0 pt-1"
+                className="text-gray-400 hover:text-red-500 transition-colors shrink-0 pt-0.5"
             >
-                <Icon icon="mdi:trash-can-outline" width={22} />
+                <Icon icon="mdi:trash-can-outline" width={20} />
             </button>
         </div>
     );

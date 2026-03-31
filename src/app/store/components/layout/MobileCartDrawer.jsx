@@ -124,7 +124,7 @@ const MobileCartDrawer = ({ isOpen, onClose, cartItems, cartCount, removeFromCar
                         </div>
 
                         <button
-                            onClick={() => { onClose(); navigate("/store/checkout"); }}
+                            onClick={() => { onClose(); navigate("/store/cart"); }}
                             className="w-full bg-[#E93E2B] text-white py-3.5 rounded-lg font-bold text-[18px] shadow-[0_12px_24px_rgba(233,62,43,0.25)] flex items-center justify-center gap-3 active:scale-[0.98] transition-all"
                         >
                             <Icon icon="mdi:cart-outline" width={24} />

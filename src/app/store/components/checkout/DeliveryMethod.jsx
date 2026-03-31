@@ -7,51 +7,37 @@ const methods = [
     { id: 'shipping', label: 'Shipping', sub: 'Delivery with in 1 to 3 days', price: '$10', priceVal: 10, icon: 'lucide:ship' },
 ];
 
-const DeliveryMethod = ({ selected, onChange, variant = 'cards' }) => {
-    if (variant === 'cards') {
-        return (
-            <div className="flex gap-3 flex-wrap">
-                {methods.map(m => (
-                    <button
-                        key={m.id}
-                        onClick={() => onChange(m.id)}
-                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all text-left ${selected === m.id
-                                ? 'border-[#E93E2B] bg-red-50'
-                                : 'border-gray-200 bg-white hover:border-gray-300'
-                            }`}
-                    >
-                        <Icon icon={m.icon} width={20} className={selected === m.id ? 'text-[#E93E2B]' : 'text-gray-900'} />
-                        <div className="flex-1 min-w-0">
-                            <p className={`text-sm font-bold ${selected === m.id ? 'text-[#181211]' : 'text-[#181211]'}`}>{m.label}</p>
-                            <p className="text-[11px] text-[#181211]">{m.sub}</p>
-                        </div>
-                        <span className={`text-sm font-bold shrink-0 ${m.priceVal === 0 ? 'text-[#E93E2B]' : 'text-[#181211]'}`}>{m.price}</span>
-                    </button>
-                ))}
-            </div>
-        );
-    }
-
-    // Radio variant for cart page
+const DeliveryMethod = ({ selected, onChange }) => {
     return (
-        <div className="flex flex-col gap-2">
-            {methods.slice(0, 2).map(m => (
+        <div className="flex flex-col  gap-3 lg:gap-4">
+            {methods.map((m, index) => (
                 <button
                     key={m.id}
                     onClick={() => onChange(m.id)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${selected === m.id ? 'border-[#E93E2B1A] bg-[#E93E2B0D]' : 'border-[#E2E8F0] bg-white'
+                    className={`flex items-center gap-4 transition-all text-left group
+                        ${/* Mobile/Tablet Style */ 'w-full px-5 py-4 rounded-[24px] border'} 
+                        ${/* Desktop Style Override */ 'lg:px-4 lg:py-3 lg:rounded-xl lg:border-2'} 
+                        ${/* Full width for shipping on desktop */ index === 2 ? 'lg:col-span-2' : ''}
+                        ${selected === m.id
+                            ? 'border-[#E93E2B] bg-[#FFF5F4] lg:bg-red-50'
+                            : 'border-[#F1F1F1] bg-white hover:border-[#E93E2B50] lg:border-gray-200'
                         }`}
                 >
-                    <div className="flex items-center gap-3">
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${selected === m.id ? 'bg-[#E93E2B]' : 'border-2 border-gray-300'}`}>
-                            {selected === m.id && <div className="w-2 h-2 rounded-full bg-white" />}
-                        </div>
-                        <div className="text-left">
-                            <p className="text-sm font-semibold text-[#0F172A]">{m.label}</p>
-                            <p className="text-xs text-[#64748B]">{m.sub}</p>
-                        </div>
+                    {/* Icon Container */}
+                    <div className={`w-11 h-11 lg:w-9 lg:h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${selected === m.id ? 'bg-white shadow-sm text-[#E93E2B]' : 'bg-[#F8F6F6] text-[#181211]'}`}>
+                        <Icon icon={m.icon} width={22} />
                     </div>
-                    <span className={`text-sm font-bold ${m.priceVal === 0 ? 'text-[#0F172A]' : 'text-[#181211]'}`}>{m.price}</span>
+
+                    {/* Text Info (Desktop: more vertical centered look) */}
+                    <div className="flex-1 min-w-0">
+                        <p className="text-[15px] lg:text-[13px] font-bold leading-tight text-[#181211]">{m.label}</p>
+                        <p className="text-[12px] lg:text-[10px] text-[#64748B] mt-1 font-medium lg:font-normal">{m.sub}</p>
+                    </div>
+
+                    {/* Price Tag */}
+                    <span className={`text-[15px] lg:text-[13px] font-bold shrink-0 ${m.priceVal === 0 ? 'text-[#E93E2B]' : 'text-[#181211]'}`}>
+                        {m.price}
+                    </span>
                 </button>
             ))}
         </div>

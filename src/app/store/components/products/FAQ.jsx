@@ -44,16 +44,16 @@ const FAQ = ({ faqs = [] }) => {
   };
 
   return (
-    <div className="w-full py-12 bg-[#FAF8F5]">
+    <div className="w-full pt-6 lg:pt-12 pb-2 lg:pb-12 bg-[#FAF8F5]">
       {/* Header */}
-      <div className="px-10 mb-8">
-        <h2 className="text-3xl font-bold text-[#161C2D] text-center">
-          Frequently Ask Questions
+      <div className="px-4 lg:px-10 mb-8 max-w-4xl mx-auto">
+        <h2 className="text-2xl lg:text-3xl font-bold text-[#161C2D] text-center">
+          Frequently Asked Questions
         </h2>
       </div>
 
       {/* FAQ Items */}
-      <div className="px-10 max-w-4xl mx-auto">
+      <div className="sm:px-0 lg:px-10 md:px-4 max-w-4xl mx-auto pb-4 lg:pb-0">
         <div className="space-y-4">
           {displayFAQs.map((faq, index) => (
             <div

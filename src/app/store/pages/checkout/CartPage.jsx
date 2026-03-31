@@ -26,8 +26,8 @@ const CartPage = () => {
 
     const PROMO_CODES = {
         'SHROOM10': { discount: 10, type: 'percent', label: '10% off' },
-        'SAVE15':   { discount: 15, type: 'flat',    label: '$15 off' },
-        'WELCOME20':{ discount: 20, type: 'percent', label: '20% off' },
+        'SAVE15': { discount: 15, type: 'flat', label: '$15 off' },
+        'WELCOME20': { discount: 20, type: 'percent', label: '20% off' },
     };
 
     const handleApplyPromo = () => {
@@ -64,16 +64,27 @@ const CartPage = () => {
     const total = subtotal + tax + deliveryFee - discount;
 
     return (
-        <div className="w-full min-h-screen bg-[#F5F0EB] px-10 pt-8 pb-20">
+        <div className="w-full min-h-screen bg-[#F5F0EB] px-4 sm:px-10 pt-6 sm:pb-20 pb-5">
+            {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
+            <div className="mt-6 mb-0 lg:hidden">
+                <button
+                    onClick={() => navigate('/store')}
+                    className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"
+                >
+                    <Icon icon="mdi:arrow-left" width={22} className="transition-transform group-hover:-translate-x-1" />
+                    Continue Shopping
+                </button>
+            </div>
+
             <Stepper currentStep={1} />
 
             {/* Title */}
             <div className="mb-6 max-w-300">
-                <h1 className="text-4xl font-extrabold text-[#0F172A]">My Cart</h1>
-                <p className="text-base text-[#64748B] mt-2">Review your premium selection before final checkout.</p>
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A]">My Cart</h1>
+                <p className="text-sm sm:text-base text-[#64748B] mt-2">Review your premium selection before final checkout.</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20 lg:mb-0">
                 {/* Left — Cart Items */}
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {cartItems.map(item => (
@@ -84,10 +95,9 @@ const CartPage = () => {
                             onRemove={handleRemove}
                         />
                     ))}
-
                     <button
                         onClick={() => navigate('/store')}
-                        className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-sm mt-2 hover:opacity-80 transition-opacity w-fit"
+                        className="hidden lg:flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-sm mt-4 hover:opacity-80 transition-opacity w-fit"
                     >
                         <Icon icon="mdi:arrow-left" width={16} />
                         Continue Shopping
@@ -96,7 +106,7 @@ const CartPage = () => {
 
                 {/* Right — Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col gap-4">
+                    <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col gap-4 sticky top-[150px]">
                         <h3 className="font-bold text-[#181211] text-lg">Order Summary</h3>
 
                         {/* Subtotal & Tax */}
@@ -137,22 +147,17 @@ const CartPage = () => {
                                 />
                                 <button onClick={handleApplyPromo} className="text-sm font-bold text-[#E93E2B] cursor-pointer hover:opacity-80">Apply</button>
                             </div>
-                            {!promoApplied && !promoError && (
-                                <p className="text-xs text-[#94A3B8] px-1">
-                                    Try <button onClick={() => setPromo('SHROOM10')} className="text-[#E93E2B] font-semibold hover:underline cursor-pointer">SHROOM10</button> for 10% off
-                                </p>
-                            )}
                             {promoError && <p className="text-xs text-[#E93E2B] font-medium px-1">{promoError}</p>}
                             {promoApplied && (
                                 <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-                                    <span className="text-xs font-semibold text-green-700">✓ "{promoApplied.code}" — {promoApplied.label} applied</span>
+                                    <span className="text-xs font-semibold text-green-700">✓ "{promoApplied.code}" applied</span>
                                     <button onClick={() => { setPromoApplied(null); setPromo(''); }} className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer">✕</button>
                                 </div>
                             )}
                         </div>
 
-                        {/* Total */}
-                        <div className="border-t border-[#F1F5F9] py-6">
+                        {/* Total (Desktop Only) */}
+                        <div className="hidden lg:block border-t border-[#F1F5F9] py-6">
                             <p className="text-sm text-[#64748B] mb-2">Total Amount</p>
                             <div className="flex items-center justify-between">
                                 <span className="text-[28px] font-extrabold text-[#0F172A]">${total.toFixed(2)}</span>
@@ -160,18 +165,13 @@ const CartPage = () => {
                             </div>
                         </div>
 
+                        {/* Action Button (Desktop Only) */}
                         <button
                             onClick={() => navigate('/store/checkout')}
-                            className="w-full bg-[#E93E2B] cursor-pointer hover:bg-red-600 text-white font-bold py-3.5 shadow-md rounded-full transition-colors text-base"
+                            className="hidden lg:block w-full bg-[#E93E2B] cursor-pointer hover:bg-red-600 text-white font-bold py-3.5 shadow-md rounded-full transition-colors text-base"
                         >
                             Proceed to Checkout →
                         </button>
-
-                        <div className="flex items-center justify-center gap-2 font-semibold text-[11px] text-[#94A3B8]">
-                            <Icon icon="mdi:lock-outline" width={18} />
-                            <span>SECURE SSL ENCRYPTED CHECKOUT</span>
-                        </div>
-
                     </div>
 
                     {/* Trust badges */}
@@ -188,6 +188,22 @@ const CartPage = () => {
                         ))}
                     </div>
                 </div>
+            </div>
+
+            {/* Mobile Fixed Bottom Bar (Redesigned with Glassmorphism and Reduced Size) */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/50 backdrop-blur-xl border-t border-gray-100 px-2 py-2 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] flex items-center justify-between gap-3 lg:hidden">
+                <div className="flex flex-col gap-0.5 ml-2">
+                    <span className="text-2xl font-black text-[#0F172A] tracking-tight whitespace-nowrap">${total.toFixed(2)}</span>
+                    <div className="bg-[#F0FDF4] text-[#16A34A] px-2 py-1 rounded-md font-bold text-[10px] w-fit shadow-sm uppercase tracking-wide">
+                        Save $15.00
+                    </div>
+                </div>
+                <button
+                    onClick={() => navigate('/store/checkout')}
+                    className="flex-1 bg-[#E93E2B] text-white font-bold h-11 rounded-[14px] text-[13px] shadow-[0_6px_12px_-3px_rgba(233,62,43,0.3)] flex items-center justify-center gap-1 active:scale-95 transition-transform"
+                >
+                    Proceed to Checkout →
+                </button>
             </div>
         </div>
     );

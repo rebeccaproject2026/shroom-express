@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Icon } from '@iconify/react';
 import Stepper from '../../components/checkout/Stepper';
 import DeliveryMethod from '../../components/checkout/DeliveryMethod';
 import PaymentMethod from '../../components/checkout/PaymentMethod';
@@ -42,7 +43,18 @@ const CheckoutPage = () => {
     };
 
     return (
-        <div className="w-full min-h-screen bg-[#FAF8F5] px-10 pb-20">
+        <div className="w-full min-h-screen bg-[#FAF8F5] px-4 sm:px-10 pt-6 sm:pb-10">
+            {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
+            <div className="mb-6 lg:hidden">
+                <button
+                    onClick={() => navigate('/store')}
+                    className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"
+                >
+                    <Icon icon="mdi:arrow-left" width={22} className="transition-transform group-hover:-translate-x-1" />
+                    Continue Shopping
+                </button>
+            </div>
+
             <Stepper currentStep={2} />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -50,19 +62,19 @@ const CheckoutPage = () => {
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {/* Delivery Method */}
                     <div className="py-4">
-                        <h2 className="text-2xl font-bold text-[#181211] mb-5">Delivery Method</h2>
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#181211] mb-5">Delivery Method</h2>
                         <DeliveryMethod selected={delivery} onChange={setDelivery} variant="cards" />
                     </div>
 
                     {/* Billing & Delivery Form */}
                     <div className="py-4">
                         <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-2xl font-bold text-[#181211]">Billing and Delivery</h2>
+                            <h2 className="text-xl sm:text-2xl font-bold text-[#181211]">Billing and Delivery</h2>
                             <button onClick={() => navigate('/store/login')} className="text-sm text-[#E93E2B] font-medium hover:opacity-80">Log in for faster checkout</button>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid  grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-sm text-[#181211] font-semibold mb-1 block">Full Name</label>
                                     <input className={inputClass} value={form.fullName} onChange={e => handleFormChange('fullName', e.target.value)} placeholder="Alex Johnson" />
@@ -80,7 +92,7 @@ const CheckoutPage = () => {
                                 <label className="text-sm text-[#181211] font-semibold mb-1 block">Street Address</label>
                                 <input className={inputClass} value={form.address} onChange={e => handleFormChange('address', e.target.value)} placeholder="420 High St." />
                             </div>
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div>
                                     <label className="text-sm text-[#181211] font-semibold mb-1 block">City</label>
                                     <input className={inputClass} value={form.city} onChange={e => handleFormChange('city', e.target.value)} placeholder="San Francisco" />
@@ -108,7 +120,7 @@ const CheckoutPage = () => {
 
                     {/* Payment Method */}
                     <div className="py-4">
-                        <h2 className="text-2xl font-bold text-[#181211] mb-1">Payment Method</h2>
+                        <h2 className="text-xl sm:text-2xl font-bold text-[#181211] mb-1">Payment Method</h2>
                         <p className="text-sm text-[#64748B] mb-5">Choose how you'd like to pay for your order securely.</p>
                         <PaymentMethod
                             selected={payment}
@@ -121,7 +133,7 @@ const CheckoutPage = () => {
                     </div>
                 </div>
 
-                {/* Right - Order Summary */}
+                {/* Order Summary (Handles both Desktop Sidebar and Mobile Drawer) */}
                 <div className="lg:col-span-1">
                     <div className="sticky top-67.5">
                         <OrderSummary
@@ -130,7 +142,7 @@ const CheckoutPage = () => {
                             onProceed={() => navigate('/store/order-complete', { state: { delivery, form, cartItems } })}
                             btnLabel="Place Secure Order →"
                             showPromo={true}
-                            showSavings={false}
+                            showSavings={true}
                             onQuantityChange={handleQuantityChange}
                         />
                     </div>

@@ -7,9 +7,9 @@ import cart2 from '../../assets/images/cart2.png';
 import cart3 from '../../assets/images/cart3.jpg';
 
 const DELIVERY_LABELS = {
-    sameday:  { label: 'Same Day Delivery',  time: 'Today, 2–4 PM',        fee: 'Free' },
-    express:  { label: 'Express Delivery',   time: 'Today, within 1 hour', fee: '$15.00' },
-    shipping: { label: 'Standard Shipping',  time: '3–5 Business Days',    fee: '$10.00' },
+  sameday: { label: 'Same Day Delivery', time: 'Today, 2–4 PM', fee: 'Free' },
+  express: { label: 'Express Delivery', time: 'Today, within 1 hour', fee: '$15.00' },
+  shipping: { label: 'Standard Shipping', time: '3–5 Business Days', fee: '$10.00' },
 };
 
 const orderItems = [
@@ -53,7 +53,18 @@ const OrderCompletePage = () => {
   const total = subtotal + deliveryFee + tax;
 
   return (
-    <div className="w-full min-h-screen bg-[#F8F6F6] px-10 py-8">
+    <div className="w-full min-h-screen bg-[#F8F6F6] px-4 sm:px-10 pt-6 sm:pb-20 pb-5">
+      {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
+      <div className="mb-6 lg:hidden">
+        <button
+          onClick={() => navigate('/store')}
+          className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"
+        >
+          <Icon icon="mdi:arrow-left" width={22} className="transition-transform group-hover:-translate-x-1" />
+          Continue Shopping
+        </button>
+      </div>
+
       <Stepper currentStep={3} />
 
       <div className="max-w-175 mx-auto flex flex-col gap-6">
@@ -66,7 +77,7 @@ const OrderCompletePage = () => {
               width={45}
             />
           </div>
-          <h1 className="text-4xl font-extrabold text-[#181211]">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#181211]">
             Thank you for your order!
           </h1>
           <p className="text-[#475569] text-sm">
@@ -166,18 +177,18 @@ const OrderCompletePage = () => {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        {/* Action Buttons (Fixed on Mobile/Tablet with Glassmorphism) */}
+        <div className="fixed bottom-0 left-0 right-0 lg:static z-50 bg-white/50 backdrop-blur-xl lg:bg-transparent border-t lg:border-t-0 border-gray-100 px-2 py-2 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] lg:shadow-none flex flex-row gap-2.5 lg:p-0">
           <button
             onClick={() => navigate("/store/track-order", { state: { ...state, cartItems: currentItems } })}
-            className="flex-1 flex items-center justify-center gap-1 bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-4 rounded-full transition-colors text-sm"
+            className="flex-1 flex items-center justify-center gap-1 bg-[#E93E2B] hover:bg-red-600 text-white font-bold h-11 rounded-[14px] transition-colors text-[13px] shadow-[0_6px_12px_-3px_rgba(233,62,43,0.3)]"
           >
-            <Icon icon="material-symbols:map-outline" width="24" height="24" />
+            <Icon icon="material-symbols:map-outline" width={18} />
             Track My Order
           </button>
           <button
             onClick={() => navigate("/store")}
-            className="flex-1 bg-white border-2 border-[#E93E2B33] text-[#E93E2B] font-bold py-4 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+            className="flex-1 bg-white border-2 border-[#E93E2B33] text-[#E93E2B] font-bold h-11 rounded-[14px] hover:bg-gray-50 transition-colors text-[13px]"
           >
             Continue Shopping
           </button>

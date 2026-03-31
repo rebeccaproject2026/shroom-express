@@ -90,9 +90,9 @@ const SimilarProducts = ({ products = [] }) => {
     : baseProducts;
 
   return (
-    <div className="w-full py-12 bg-[#FAF8F5]">
+    <div className="w-full pt-16 lg:pt-24 pb-6 lg:pb-12 bg-[#FAF8F5]">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8 px-4 sm:px-10">
+      <div className="flex items-center justify-between mb-8 px-4 lg:px-10">
         <h2 className="text-2xl font-bold text-[#181211]">Similar Product</h2>
         <a onClick={() => navigate('/store/category/all')} className="text-[#E93E2B] font-semibold flex items-center gap-1 hover:underline cursor-pointer">
           View All
@@ -100,12 +100,14 @@ const SimilarProducts = ({ products = [] }) => {
         </a>
       </div>
 
-      {/* Products Grid and Horizontal Scroll for Mobile/Tablet */}
+      {/* Products Slider and Horizontal Scroll - Matching ProductList style */}
       <div className="px-4 lg:px-10 overflow-hidden">
         <div className="flex lg:grid lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {displayProducts.map((product) => (
-            <div key={product.id} className="min-w-[160px] lg:min-w-0 flex-shrink-0">
-              <ProductCard product={product} />
+            <div key={product.id} className="min-w-[170px] lg:min-w-0 flex-shrink-0">
+              <ProductCard 
+                product={{ ...product, isVerticalOnMobile: true, isOverlayEffects: true }} 
+              />
             </div>
           ))}
         </div>

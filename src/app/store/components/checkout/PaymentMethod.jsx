@@ -12,22 +12,37 @@ const PaymentMethod = ({ selected, onChange, cardData, onCardChange, saveCard, o
     return (
         <div>
             {/* Method Selector */}
-            <div className="flex gap-3 flex-wrap mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:flex lg:flex-row gap-3 lg:gap-4 mb-6">
                 {methods.map(m => (
                     <button
                         key={m.id}
                         onClick={() => onChange(m.id)}
-                        className={`flex-1 min-w-[140px] flex items-center gap-3 px-4 py-4 rounded-xl border-2 transition-all text-left ${selected === m.id ? 'border-[#E93E2B] bg-red-50' : 'border-[#E2E8F0] bg-white hover:border-gray-300'
+                        className={`flex items-center gap-4 transition-all text-left group
+                            ${/* Base Style (All screens) */ 'px-5 py-4 border'} 
+                            ${/* Responsive Layout Overrides */ 'rounded-[24px] md:rounded-xl lg:border-2 xl:flex-1 xl:min-w-[160px]'} 
+                            ${selected === m.id
+                                ? 'border-[#E93E2B] bg-[#FFF5F4] lg:bg-red-50'
+                                : 'border-[#F1F1F1] bg-white hover:border-[#E93E2B50] lg:border-gray-200'
                             }`}
                     >
-                        <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selected === m.id ? 'border-[#E93E2B]' : 'border-gray-300'}`}>
+                        {/* Radio box (Desktop only) */}
+                        <div className={`hidden lg:flex w-4 h-4 rounded-full border-2 items-center justify-center shrink-0 ${selected === m.id ? 'border-[#E93E2B]' : 'border-gray-300'}`}>
                             {selected === m.id && <div className="w-2 h-2 rounded-full bg-[#E93E2B]" />}
                         </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-[#181211]">{m.label}</p>
-                            <p className="text-xs text-[#64748B]">{m.sub}</p>
+
+                        {/* Icon Container (Mobile/Tablet only) */}
+                        <div className={`lg:hidden w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors ${selected === m.id ? 'bg-white shadow-sm text-[#E93E2B]' : 'bg-[#F8F6F6] text-[#181211]'}`}>
+                            <Icon icon={m.icon} width={22} />
                         </div>
-                        <Icon icon={m.icon} className={`${selected === m.id ? 'text-[#E93E2B]' : 'text-[#94A3B8]'} shrink-0`} width={22} />
+
+                        {/* Text Info */}
+                        <div className="flex-1 min-w-0">
+                            <p className="text-[15px] lg:text-sm font-bold leading-tight text-[#181211]">{m.label}</p>
+                            <p className="text-[12px] lg:text-[11px] text-[#64748B] mt-1 font-medium lg:font-normal">{m.sub}</p>
+                        </div>
+
+                        {/* Icon (Desktop only) */}
+                        <Icon icon={m.icon} className={`hidden lg:block ${selected === m.id ? 'text-[#E93E2B]' : 'text-[#94A3B8]'} shrink-0`} width={22} />
                     </button>
                 ))}
             </div>
