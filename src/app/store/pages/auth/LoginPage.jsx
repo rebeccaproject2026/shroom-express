@@ -20,12 +20,12 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#F9F6F4] flex flex-col items-center justify-center p-4 sm:p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-[1340px] border border-[#F1F5F9] rounded-2xl overflow-hidden shadow-xl">
+        <div className=" bg-[#F9F6F4] flex flex-col items-center p-4 sm:p-10 pt-10 sm:pt-16 md:pt-18">
+            <div className="lg:grid lg:grid-cols-2 w-full max-w-[1340px] bg-white border border-[#F1F5F9] rounded-2xl overflow-hidden shadow-xl">
 
-                {/* Left panel */}
+                {/* Left panel (Hidden on Mobile/Tablet as per request) */}
                 <div
-                    className="relative flex flex-col justify-center items-center pb-12 px-10 min-h-[580px]"
+                    className="hidden lg:flex relative flex-col justify-center items-center pb-12 px-10 min-h-[580px]"
                     style={{
                         backgroundImage: `url(${LoginBg})`,
                         backgroundSize: 'cover',
@@ -52,13 +52,13 @@ const LoginPage = () => {
                     </div>
                 </div>
 
-                {/* Right panel */}
-                <div className="flex-1 bg-white p-16 flex flex-col justify-center">
-                    <h1 className="text-[26px] font-bold text-[#181211] mb-1.5">Welcome Back</h1>
-                    <p className="text-sm text-[#181211] leading-relaxed tracking-wider mb-8">Please enter your credentials to access your account.</p>
+                {/* Right panel (Updated to match High-Fidelity Design) */}
+                <div className="flex-1 bg-white p-6 lg:p-16 flex flex-col justify-center text-left">
+                    <h1 className="text-[26px]  font-bold text-[#181211] mb-1.5 leading-tight">Welcome Back</h1>
+                    <p className="text-sm  text-[#181211] leading-snug mb-8">Please enter your credentials to access your account.</p>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                        {/* Email */}
+                        {/* Email Address */}
                         <div>
                             <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Email Address</label>
                             <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">

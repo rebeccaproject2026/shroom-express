@@ -19,25 +19,25 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F6F4] flex flex-col items-center justify-center p-4 sm:p-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-336 rounded-2xl overflow-hidden shadow-xl">
+    <div className=" bg-[#F9F6F4] flex flex-col items-center pt-10 sm:pt-16 md:pt-18 p-4 sm:p-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 w-full max-w-336 bg-white rounded-2xl overflow-hidden shadow-xl">
         {/* Left panel — form */}
-        <div className=" bg-white p-12 flex flex-col justify-center">
-          <h1 className="text-[26px] font-bold text-[#181211] mb-3">
+        <div className=" p-6 sm:p-12 flex flex-col justify-center">
+          <h1 className="text-[24px] sm:text-[26px] font-bold text-[#181211] mb-3">
             Create Account
           </h1>
-          <p className="text-sm text-[#181211] mb-8 max-w-100 tracking-wide">
+          <p className="text-[13px] sm:text-sm text-[#181211] mb-5 sm:mb-8 max-w-100 tracking-wide">
             Join our exclusive community for curated cannabis and mushroom
             products.
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 sm:gap-4">
             {/* Full Name */}
             <div>
-              <label className="text-sm font-semibold text-[#181211] mb-1.5 block">
+              <label className="text-[13px] sm:text-sm font-semibold text-[#181211] mb-1.5 block px-0.5">
                 Full Name
               </label>
-              <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
+              <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-2.5 sm:py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
                 <Icon
                   icon="mdi:account-outline"
                   className="text-[#181211] shrink-0"
@@ -48,17 +48,17 @@ const RegisterPage = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="John Doe"
-                  className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent"
+                  className="flex-1 text-[13px] sm:text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent"
                 />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="text-sm font-semibold text-[#181211] mb-1.5 block">
+              <label className="text-[13px] sm:text-sm font-semibold text-[#181211] mb-1.5 block px-0.5">
                 Email Address
               </label>
-              <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
+              <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-2.5 sm:py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
                 <Icon
                   icon="mdi:email-outline"
                   className="text-[#181211] shrink-0"
@@ -69,18 +69,18 @@ const RegisterPage = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="john@example.com"
-                  className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent"
+                  className="flex-1 text-[13px] sm:text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent"
                 />
               </div>
             </div>
 
             {/* Password + Confirm Password side by side */}
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-3">
               <div className="flex-1">
-                <label className="text-sm font-semibold text-[#181211] mb-1.5 block">
+                <label className="text-[13px] sm:text-sm font-semibold text-[#181211] mb-1.5 block px-0.5">
                   Password
                 </label>
-                <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
+                <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-2.5 sm:py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
                   <Icon
                     icon="mdi:lock-outline"
                     className="text-[#181211] shrink-0"
@@ -91,7 +91,7 @@ const RegisterPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent min-w-0"
+                    className="flex-1 text-[13px] sm:text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent min-w-0"
                   />
                   <button
                     type="button"
@@ -108,10 +108,10 @@ const RegisterPage = () => {
                 </div>
               </div>
               <div className="flex-1">
-                <label className="text-sm font-semibold text-[#181211] mb-1.5 block">
+                <label className="text-[13px] sm:text-sm font-semibold text-[#181211] mb-1.5 block px-0.5">
                   Confirm Password
                 </label>
-                <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
+                <div className="flex items-center gap-3 border border-[#E5DCDC] rounded-xl px-4 py-2.5 sm:py-3 bg-white focus-within:border-[#E93E2B] transition-colors">
                   <Icon
                     icon="mdi:lock-outline"
                     className="text-[#181211] shrink-0"
@@ -122,7 +122,7 @@ const RegisterPage = () => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="flex-1 text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent min-w-0"
+                    className="flex-1 text-[13px] sm:text-sm outline-none text-[#181211] placeholder:text-[#BDBDBD] bg-transparent min-w-0"
                   />
                   <button
                     type="button"
@@ -141,14 +141,14 @@ const RegisterPage = () => {
             </div>
 
             {/* Age confirmation checkbox */}
-            <label className="flex items-start gap-2.5 cursor-pointer">
+            <label className="flex items-start gap-2.5 cursor-pointer mt-1">
               <input
                 type="checkbox"
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
                 className="w-4 h-4 mt-0.5 rounded border-[#E5DCDC] accent-[#E93E2B] shrink-0"
               />
-              <span className="text-sm text-[#181211] leading-relaxed">
+              <span className="text-[12.5px] sm:text-sm text-[#181211] leading-relaxed">
                 I confirm that I am <strong>21 years of age or older</strong>{" "}
                 and agree to the{" "}
                 <button
@@ -170,14 +170,14 @@ const RegisterPage = () => {
             {/* Create Account button */}
             <button
               type="submit"
-              className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition-colors text-base flex items-center justify-center gap-2"
+              className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-3 sm:py-3.5 rounded-xl transition-colors text-sm sm:text-base flex items-center justify-center gap-2 mt-2"
             >
               Create Account →
             </button>
           </form>
 
           {/* Login link */}
-          <p className="text-sm text-[#181211] text-center mt-5">
+          <p className="text-sm text-[#181211] text-center mt-6 sm:mt-8">
             Already have an account?{" "}
             <button
               onClick={() => navigate("/store/login")}
@@ -190,7 +190,7 @@ const RegisterPage = () => {
 
         {/* Right panel — dark olive with bottle image */}
         <div
-          className="relative flex flex-col justify-center items-center pb-12 px-12 min-h-157.5"
+          className="hidden lg:flex relative flex-col justify-center items-center pb-12 px-12 min-h-157.5"
           style={{
             backgroundImage: `url(${RegisterBg})`,
             backgroundSize: "cover",
