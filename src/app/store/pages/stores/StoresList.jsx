@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
+import MobileLocationOverlay from '../../components/layout/MobileLocationOverlay';
 import StoreCard from '../../components/common/StoreCard';
 // import storecard1 from "../../assets/images/storecard1.png";
 // import background from "../../assets/images/background1.png";
@@ -34,6 +35,7 @@ const StoresList = () => {
     const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeShipping, setActiveShipping] = useState(false);
+    const [locationOpen, setLocationOpen] = useState(false);
     const { stores } = useStores();
 
     const filteredStores = stores.filter(s => {
@@ -75,7 +77,7 @@ const StoresList = () => {
             </div>
 
             {/* Description */}
-            <p className="text-[#777777] text-[15px] sm:text-[16px] leading-[26px] tracking-normal max-w-4xl mb-12">
+            <p className="text-[#777777] text-[15px] sm:text-[16px] leading-[26px] tracking-normal max-w-[200%] mb-12">
                 Welcome to our marketplace, where you can explore a wide variety of premium
                 mushroom products from multiple trusted stores. Our platform brings
                 together carefully selected vendors who specialize in fresh, dried, and
@@ -100,24 +102,24 @@ const StoresList = () => {
                         </span>
                     </div>
 
-                    {/* Pills */}
+                    {/* Pills (Hidden on Tablet, shown on XL Desktop) */}
                     <button
                         onClick={() => setActiveExpressDelivery(p => !p)}
-                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${activeExpressDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        className={`hidden lg:block px-5 h-[40px] rounded-full border text-[15px] font-semibold whitespace-nowrap transition-colors cursor-pointer ${activeExpressDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                     >
                         Express Delivery
                     </button>
 
                     <button
                         onClick={() => setActiveDelivery(p => !p)}
-                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        className={`hidden lg:block px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                     >
                         Delivery
                     </button>
 
                     <button
                         onClick={() => setActiveShipping(p => !p)}
-                        className={`px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeShipping ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        className={`hidden lg:block px-5 h-[40px] rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeShipping ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                     >
                         Shipping
                     </button>
@@ -134,12 +136,12 @@ const StoresList = () => {
                     </div>
 
                     {/* Location */}
-                    <div className="flex items-center gap-3 px-4 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8] w-[350px]">
+                    <div className="flex items-center gap-3 px-4 h-[40px] rounded-full bg-[#FFFFFF] border border-[#E8E8E8] md:w-60 lg:w-[350px]">
                         <Icon icon="tabler:location" width={18} className="text-[#64748B]" />
                         <span className="text-sm font-semibold text-[#181211] flex-1 truncate">
                             Toronto Central
                         </span>
-                        <button onClick={() => alert('Location change coming soon.')} className="text-sm font-bold text-[#E93E2B] hover:underline whitespace-nowrap">
+                        <button onClick={() => setLocationOpen(true)} className="text-sm font-bold text-[#E93E2B] hover:underline whitespace-nowrap">
                             Change
                         </button>
                     </div>
@@ -157,7 +159,7 @@ const StoresList = () => {
                             <span className="text-sm sm:text-base font-bold text-[#181211] leading-tight">Toronto Central</span>
                         </div>
                         <button
-                            onClick={() => alert('Location change coming soon.')}
+                            onClick={() => setLocationOpen(true)}
                             className="text-sm sm:text-base font-bold text-[#E93E2B] hover:underline whitespace-nowrap"
                         >
                             Change
@@ -193,6 +195,11 @@ const StoresList = () => {
                 )}
             </div>
 
+            <MobileLocationOverlay 
+                isOpen={locationOpen}
+                onClose={() => setLocationOpen(false)}
+                onSelect={(city) => console.log('Location selected:', city)}
+            />
         </div >
     );
 };

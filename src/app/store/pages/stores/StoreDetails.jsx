@@ -293,8 +293,8 @@ const StoreDetails = () => {
     ];
     return (
         <div className="w-full bg-[#FAF8F5] overflow-x-hidden">
-            {/* Desktop Header Section (UNTOUCHED Structure, Refined Responsiveness) */}
-            <div className="hidden md:block px-6 lg:px-10 pt-11">
+            {/* Desktop Header Section (Visible on lg and up) */}
+            <div className="hidden lg:block px-6 lg:px-10 pt-11">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-70 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}
@@ -319,11 +319,11 @@ const StoreDetails = () => {
 
                             {/* Store Info - Responsive Margin-Left to clear absolute logo */}
                             <div className="ml-56 lg:ml-65 flex-1 min-w-0 pb-1">
-                                <h1 className="text-3xl lg:text-[40px] font-bold leading-tight truncate" style={{ color: storeData.nameColor }}>
+                                <h1 className="text-xl md:text-2xl xl:text-[40px] font-bold leading-tight truncate" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
 
-                                <div className="flex items-center gap-1 text-sm lg:text-lg">
+                                <div className="flex items-center gap-1 text-[12px] md:text-sm xl:text-lg">
                                     <button onClick={() => navigate('/store')} className="text-(--store-primary) hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
@@ -337,44 +337,44 @@ const StoreDetails = () => {
                             </div>
                         </div>
 
-                        {/* Right side - Action Buttons (Shrink controlled) */}
-                        <div className="flex items-center mb-4.5 gap-2 lg:gap-3 shrink-0">
-                            <button className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
-                                <Icon icon="hugeicons:truck-delivery" width={18} height={18} />
+                        {/* Right side - Action Buttons (Tiered max-width for wrapping and improved vertical spacing) */}
+                        <div className="flex items-center mb-2 md:mb-4.5 gap-x-1.5 lg:gap-x-3 gap-y-2.5 flex-wrap justify-end max-w-[300px] md:max-w-[285px] lg:max-w-[380px] xl:max-w-[580px] 2xl:max-w-none ml-auto">
+                            <button className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
+                                <Icon icon="hugeicons:truck-delivery" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>Delivery {storeData.deliveryTime}</span>
                             </button>
-                            <button onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
-                                <Icon icon="proicons:call" width={18} height={18} />
+                            <button onClick={() => window.open(`tel:${storeData.phone}`)} className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
+                                <Icon icon="proicons:call" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>{storeData.phone}</span>
                             </button>
-                            <button className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
-                                <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
+                            <button className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
+                                <Icon icon="bitcoin-icons:globe-outline" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1.5 lg:gap-2 bg-white text-[#181211] px-3 lg:px-5 py-2 lg:py-2.5 rounded-full text-[12px] lg:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
-                                <Icon icon="ix:about" width={18} height={18} />
+                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
+                                <Icon icon="ix:about" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>About</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 {/* Store Description - Refined Layout without hacks */}
-                <div className="flex px-6 lg:px-10 mt-5">
+                <div className="flex px-6 lg:px-10 mt-4">
                     <div className="w-56 lg:w-65 shrink-0"></div>
-                    <p className="text-[#777777] font-normal text-sm lg:text-base leading-relaxed max-w-4xl">
+                    <p className="text-[#777777] font-normal text-sm lg:text-base leading-relaxed max-w-6xl">
                         {storeData.description}
                     </p>
                 </div>
             </div>
 
-            {/* Mobile Header Section (Visible below md) */}
-            <div className="md:hidden px-4 pt-6">
+            {/* Mobile/Tablet Header Section (Visible below lg) */}
+            <div className="lg:hidden px-4 pt-6 sm:pt-13 md:pt-17">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-40 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     <div className="relative h-full flex items-end justify-end px-4 pb-4">
-                        {/* Logo */}
+                        {/* Logo (Responsive size for small mobile) */}
                         <div
-                            className="absolute -bottom-16 left-4 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 ring-[#FAF8F5] shadow-lg"
+                            className="absolute -bottom-14 sm:-bottom-16 left-4 w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 ring-[#FAF8F5] shadow-lg"
                             style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#FAF8F5' }}
                         >
                             <img
@@ -388,14 +388,14 @@ const StoreDetails = () => {
                             />
                         </div>
 
-                        {/* Action Buttons on Banner */}
-                        <div className="flex items-center gap-2 shrink-0">
-                            <button className="flex items-center gap-2 bg-white text-[#181211] px-4 py-2 rounded-full text-[13px] font-semibold shadow-md">
-                                <Icon icon="bitcoin-icons:globe-outline" width={18} height={18} />
+                        {/* Action Buttons on Banner (Responsive for small mobile) */}
+                        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                            <button className="flex items-center gap-1 sm:gap-2 bg-white text-[#181211] px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-semibold shadow-md active:scale-95 transition-transform">
+                                <Icon icon="bitcoin-icons:globe-outline" width={16} height={16} className="sm:w-[18px] sm:h-[18px]" />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-2 bg-white text-[#181211] px-4 py-2 rounded-full text-[13px] font-semibold shadow-md">
-                                <Icon icon="ix:about" width={18} height={18} />
+                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1 sm:gap-2 bg-white text-[#181211] px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-semibold shadow-md active:scale-95 transition-transform">
+                                <Icon icon="ix:about" width={16} height={16} className="sm:w-[18px] sm:h-[18px]" />
                                 <span>About</span>
                             </button>
                         </div>
@@ -434,9 +434,9 @@ const StoreDetails = () => {
             </div>
 
             {/* Products Section */}
-            <div className="px-4 md:px-10 mt-10 md:mt-30 pb-10">
+            <div className="px-4 lg:px-10 mt-10 lg:mt-30 pb-10">
                 {/* Desktop Filter Bar (UNTOUCHED) */}
-                <div className="hidden md:flex items-center gap-3 mb-4.5" >
+                <div className="hidden lg:flex items-center gap-3 mb-4.5" >
                     {/* Filter Icon */}
                     <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white cursor-pointer"
                         onClick={() => setFilterOpen(true)}
@@ -478,10 +478,10 @@ const StoreDetails = () => {
                     </div>
                 </div>
 
-                {/* Mobile Filter Bar (Visible below md) */}
-                <div className="md:hidden flex items-center justify-between gap-3 mb-8">
+                {/* Mobile Filter Bar (Visible below lg) */}
+                <div className="lg:hidden flex items-center justify-between gap-3 mb-8">
                     {/* Filter Button - Circular Red (Standardized with ProductsList) */}
-                    <button 
+                    <button
                         onClick={() => setFilterOpen(true)}
                         className="flex items-center justify-center gap-2 px-4 h-11 rounded-full bg-[#E93E2B] text-white font-bold cursor-pointer transition-transform active:scale-95 shrink-0 shadow-sm"
                     >
@@ -518,8 +518,8 @@ const StoreDetails = () => {
                         View All <Icon icon="streamline:next" width={17} height={17} />
                     </button>
                 </div>
-                {/* Similar Stores: Desktop Grid (md and up) */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+                {/* Similar Stores: Desktop Grid (lg and up) */}
+                <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-7">
                     {stores.map(store => (
                         <div key={store.id} className="w-full">
                             <StoreCard store={store} />
@@ -527,10 +527,10 @@ const StoreDetails = () => {
                     ))}
                 </div>
 
-                {/* Similar Stores: Mobile Scroller (under md) */}
-                <div className="md:hidden flex gap-5 overflow-x-auto pb-6 no-scrollbar -mx-4 px-4 scroll-smooth">
+                {/* Similar Stores: Mobile Scroller (under lg) */}
+                <div className="lg:hidden flex gap-4 md:gap-5 overflow-x-auto pb-6 no-scrollbar -mx-4 px-4 scroll-smooth">
                     {stores.map(store => (
-                        <div key={store.id} className="min-w-[310px] w-[85vw] max-w-[360px] shrink-0">
+                        <div key={store.id} className="min-w-[285px] sm:min-w-77.5 w-[80vw] sm:w-full max-w-[320px] sm:max-w-85.25 shrink-0">
                             <StoreCard store={store} />
                         </div>
                     ))}
@@ -539,10 +539,10 @@ const StoreDetails = () => {
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Store About Drawer */}
-            <StoreAboutDrawer 
-                open={isAboutDrawerOpen} 
-                onClose={() => setIsAboutDrawerOpen(false)} 
-                storeData={storeData} 
+            <StoreAboutDrawer
+                open={isAboutDrawerOpen}
+                onClose={() => setIsAboutDrawerOpen(false)}
+                storeData={storeData}
             />
         </div>
     );
