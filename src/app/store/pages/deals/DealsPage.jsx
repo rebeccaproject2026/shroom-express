@@ -1,148 +1,33 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "../../styles/CouponsPanel.css";
-import couponV1 from "../../assets/images/coupon-v1.webp";
-import couponV2 from "../../assets/images/coupon-v2.webp";
-import couponV3 from "../../assets/images/coupon-v3.webp";
-import couponV4 from "../../assets/images/coupon-v4.webp";
+import ProductCard from "../../components/common/ProductCard";
 
-const slides = [
-    { image: couponV1, couponIdx: 0 },
-    { image: couponV2, couponIdx: 1 },
-    { image: couponV3, couponIdx: 2 },
-    { image: couponV4, couponIdx: 3 },
-];
+// Real Product Assets for Weekly Specials (from Home)
+import product1 from "../../assets/images/product1.png";
+import product2 from "../../assets/images/product2.png";
+import product3 from "../../assets/images/product3.png";
+import product4 from "../../assets/images/product4.png";
+import product5 from "../../assets/images/product5.png";
+import product6 from "../../assets/images/product6.png";
+import product7 from "../../assets/images/product7.png";
+import product8 from "../../assets/images/product8.png";
+import microDosingImg from "../../assets/images/microdosing.png";
+import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
+import highPotencyImg from "../../assets/images/highpotency.png";
+import deepJourneyImg from "../../assets/images/deepjourney.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
+import relaxChillImg from "../../assets/images/relaxchill.png";
+import visualExperienceImg from "../../assets/images/visualexperience.png";
+import focusClarityImg from "../../assets/images/focusclarity.png";
+import dealsImg from "../../assets/images/deals.png";
+// Store Banner Assets for Bundles
+import storecard1 from "../../assets/images/storecard1.png";
+import storecard2 from "../../assets/images/storecard2.png";
 
-const coupons = [
-    {
-        theme: 2, code: "REFERRAL20", icon: "🤝", badge: "$20",
-        title: "GET $20 CREDIT",
-        desc: "Refer a Friend & Get $20 CREDIT for both you and your friend! When you refer a friend to Shroom's, you'll both receive a $20 credit after their first purchase is completed. It's the perfect way to share your love for premium psilocybin products.",
-        terms: "Credit applied automatically after friend's first purchase.",
-        detail: "Refer a Friend & Get $20 CREDIT for both you and your friend! When you refer a friend to Shroom's, you'll both receive a $20 credit after their first purchase is completed. It's the perfect way to share your love for premium psilocybin products while enjoying a bonus for yourself. Once your friend's order is completed, credits will automatically be applied to both accounts. Start spreading the word today and earn extra rewards with Shroom's.",
-        valid: "March 31st, 2026",
-    },
-    {
-        theme: 1, code: "BONUS20", icon: "💰", badge: "$20 OFF",
-        title: "GET $20 OFF",
-        desc: "Enjoy a Shroom's Bonus Deal with $20 OFF your order when you spend over $200! This exclusive offer applies to any subtotal exceeding $200, giving you more value for your money. Excludes items already on sale.",
-        terms: "Whether you're stocking up on magic mushrooms, the savings are real.",
-        detail: "Enjoy a Shroom's Bonus Deal with $20 OFF your order when you spend over $200! This exclusive offer applies to any subtotal exceeding $200, giving you more value for your money. Excludes items already on sale. Whether you're stocking up on magic mushrooms, microdose capsules, or psilocybin edibles, this deal makes it easy to save big on your next order. Take advantage of this offer and elevate your experience with Shroom's today.",
-        valid: "March 31st, 2026",
-    },
-    {
-        theme: 3, code: "FLASH30", icon: "🍄", badge: "30%",
-        title: "GET 30% OFF",
-        desc: "For a limited time only, get 30% OFF all psilocybin products at Shroom's! This special offer applies to our entire premium selection, including magic mushrooms, microdose capsules, and delicious edibles. Stock up on your favorites or try something new.",
-        terms: "First order only. Minimum order $100.",
-        detail: "For a limited time only, get 30% OFF all psilocybin products at Shroom's! This special offer applies to our entire premium selection, including magic mushrooms, microdose capsules, and delicious edibles. Stock up on your favorites or try something new while saving big. This first time buyer deal is the perfect opportunity to enjoy more for less and explore the world of psilocybin. Don't wait, the clock is ticking, and your next adventure awaits.",
-        valid: "March 31st, 2026",
-    },
-    {
-        theme: 2, code: "EARNCASH", icon: "💵", badge: "CA$H",
-        title: "EARN CA$H",
-        desc: "Earn CA$H on every purchase you make at Shroom's! For every dollar you spend, you'll earn three cents in SHROOM CA$H. Your rewards add up fast, turning every order into an opportunity to save more on your next purchase. Whether you're buying shrooms.",
-        terms: "CA$H rewards applied automatically to your account.",
-        detail: "Earn CA$H on every purchase you make at Shroom's! For every dollar you spend, you'll earn three cents in SHROOM CA$H. Your rewards add up fast, turning every order into an opportunity to save more on your next purchase. Whether you're buying shrooms, microdose capsules, or psilocybin edibles, this loyalty program makes it easy to stack up savings. Start shopping today and watch your rewards grow with every order at Shroom's.",
-        valid: "March 31st, 2026",
-    },
-];
 
-function CouponCard({ c, index, onGetCoupon }) {
-    const [open, setOpen] = useState(false);
-    const detailRef = useRef(null);
-    const navigate = useNavigate();
-    const patternClass = c.theme === 2 ? "pattern-squares" : c.theme === 3 ? "pattern-circles" : "";
 
-    useEffect(() => {
-        if (detailRef.current) {
-            detailRef.current.style.maxHeight = open ? detailRef.current.scrollHeight + "px" : "0px";
-        }
-    }, [open]);
 
-    return (
-        <div className="col-lg-6 couponspage-couponcol" style={{ animationDelay: `${0.1 + index * 0.1}s` }}>
-            <div className={`modern-coupon-card modern-coupon-theme-${c.theme}`}>
-                {/* Left */}
-                <div className="coupon-left-section">
-                    <div className={`coupon-pattern-overlay ${patternClass}`} />
-                    <div className="confetti-container">
-                        <span className="confetti confetti-1">✨</span>
-                        <span className="confetti confetti-2">🎉</span>
-                        <span className="confetti confetti-3">⭐</span>
-                        <span className="confetti confetti-4">💫</span>
-                        <span className="confetti confetti-5">🌟</span>
-                    </div>
-                    <div className="coupon-left-content">
-                        <p className="coupon-label-small">PROMO CODE</p>
-                        <h2 className="coupon-promo-code">{c.code}</h2>
-                        <div className="coupon-gift-box">
-                            <div className="gift-box-icon">{c.icon}</div>
-                            {c.badge && <div className="gift-box-percent">{c.badge}</div>}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Torn line */}
-                <div className="coupon-torn-line"><div className="torn-line-dots" /></div>
-
-                {/* Right */}
-                <div className="coupon-right-section">
-                    <div className="coupon-right-top">
-                        <span className="coupon-type-badge">DISCOUNT COUPON</span>
-                        <span className="coupon-validity-badge">⏰ Limited Time</span>
-                    </div>
-                    <h1 className="coupon-discount-amount">{c.title}</h1>
-                    <div className="coupon-divider" />
-                    <p className="coupon-desc-text text-truncate-2" style={{ minHeight: '32px' }}>{c.desc}</p>
-                    <p className="coupon-terms">{c.terms}</p>
-
-                    {/* VIEW PRODUCTS + ACTIVATE side by side */}
-                    <div className="coupon-actions" style={{ gap: "12px", marginTop: "10px" }}>
-                        <button
-                            className="cou-vp-btn-link"
-                            onClick={() => navigate("/store/category/magic-mushrooms")}
-                        >
-                            View Products
-                        </button>
-                        <button
-                            className={`my-coupons-coupon-activate-btn`}
-                            onClick={() => onGetCoupon(c)}
-                        >
-                            GET A COUPON
-                        </button>
-                    </div>
-
-                    {/* Valid Until + Offer Details footer bar */}
-                    <div className="coupon-footer-bar" style={{ marginTop: "12px" }}>
-                        <span className="coupon-footer-valid">
-                            <Icon icon="mdi:clock-outline" width={13} />
-                            Valid Until {c.valid}
-                        </span>
-                        <button className="coupon-footer-toggle" onClick={() => setOpen(p => !p)}>
-                            Offer Details
-                            <Icon icon={open ? "mdi:chevron-up" : "mdi:chevron-down"} width={14} />
-                        </button>
-                    </div>
-
-                    {/* Collapsible detail — integrated feel */}
-                    <div ref={detailRef} className="coupon-collapsible-wrapper" style={{ maxHeight: "0px" }}>
-                        <div className={`coupon-detail-panel coupon-detail-panel-theme-${c.theme}`}>
-                            <p className="coupon-detail-text">
-                                <strong>Offer:</strong> {c.detail}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 const CouponModal = ({ coupon, onClose }) => {
     const [loading, setLoading] = useState(false);
@@ -150,7 +35,6 @@ const CouponModal = ({ coupon, onClose }) => {
 
     const handleRedeem = () => {
         setLoading(true);
-        // Simulate API call
         setTimeout(() => {
             setLoading(false);
             setSuccess(true);
@@ -228,106 +112,330 @@ const CouponModal = ({ coupon, onClose }) => {
 };
 
 const DealsPage = () => {
-    const swiperRef = useRef(null);
-    const prevRef = useRef(null);
-    const nextRef = useRef(null);
+    const navigate = useNavigate();
     const [selectedCoupon, setSelectedCoupon] = useState(null);
 
-    useEffect(() => {
-        const sw = swiperRef.current;
-        if (sw?.params?.navigation && typeof sw.params.navigation !== "boolean") {
-            sw.params.navigation.prevEl = prevRef.current;
-            sw.params.navigation.nextEl = nextRef.current;
-            sw.navigation.destroy();
-            sw.navigation.init();
-            sw.navigation.update();
+    // Mock Timer Data for Mobile
+    const [timeLeft, setTimeLeft] = useState({ hrs: "04", min: "22", sec: "59" });
+
+    // Flash Sales Data (Hot Deals from Home)
+    const flashSales = [
+        {
+            id: 1,
+            badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" },
+            isWishlisted: false, inStock: true, onSale: true,
+            image: product1,
+            title: "Albino Choda",
+            vendor: "Green Valley Organics",
+            rating: '4.9',
+            weights: ['3g', '10g'],
+            price: 50.00,
+            categories: ["Micro dosing", "Creative Boost"],
+            effects: [
+                { image: creativeBoostImg, name: "Creative Boost" },
+                { image: microDosingImg, name: "Micro dosing" }
+            ]
+        },
+        {
+            id: 2,
+            badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" },
+            isWishlisted: false, inStock: true, onSale: false,
+            image: product1,
+            title: "Albino Hillbilly",
+            vendor: "Aether Mushroom Labs",
+            rating: '4.8',
+            weights: ['3g', '10g'],
+            price: 50.00,
+            categories: ["Beginner Friendly", "Micro dosing"],
+            effects: [
+                { image: beginnerFriendlyImg, name: "Beginner Friendly" },
+                { image: microDosingImg, name: "Microdosing" }
+            ]
+        },
+        {
+            id: 3,
+            badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" },
+            isWishlisted: true, inStock: false, onSale: false,
+            image: product1,
+            title: "Albino Penis Envy",
+            vendor: "Elevated Solstice",
+            rating: '5.0',
+            weights: ['3g', '10g'],
+            price: 55.00,
+            categories: ["High Potency", "Visual Experience"],
+            effects: [
+                { image: highPotencyImg, name: "High Potency" },
+                { image: visualExperienceImg, name: "Visual Experience" }
+            ]
+        },
+        {
+            id: 4,
+            badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" },
+            isWishlisted: false, inStock: true, onSale: true,
+            image: product1,
+            title: "Aztec God",
+            vendor: "Green Valley Organics",
+            rating: '4.7',
+            weights: ['3g', '10g'],
+            price: 45.00,
+            categories: ["Focus & Clarity", "Relax & Chill"],
+            effects: [
+                { image: focusClarityImg, name: "Focus & Clarity" },
+                { image: relaxChillImg, name: "Relax & Chill" }
+            ]
         }
-    }, []);
+    ];
+
+    const bundles = [
+        {
+            id: 1,
+            name: "The Explorer Pack",
+            desc: "3 strains + rolling accessories",
+            price: 65.00,
+            oldPrice: 85.00,
+            badge: "VALUE",
+            image: storecard1
+        },
+        {
+            id: 2,
+            name: "Zen Master Set",
+            desc: "Tincture + Infusion Tea Pack",
+            price: 82.00,
+            oldPrice: 110.00,
+            image: storecard2
+        }
+    ];
+
+    // Weekly Specials Data (Best Sellers from Home)
+    const bestSellers = [
+        {
+            id: 101, badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, inStock: true, onSale: true, image: product1,
+            title: "Blue Meanies", vendor: "Green Valley Organics", rating: '4.9', weights: ['3g', '10g'], price: 50.00,
+            categories: ["Creative Boost", "Visual Experience", "High Potency"],
+            effects: [{ image: microDosingImg, name: "Micro dosing" }, { image: visualExperienceImg, name: "Visual Experience" }, { image: highPotencyImg, name: "High Potency" }]
+        },
+        {
+            id: 102, badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" }, isWishlisted: true, inStock: true, onSale: false, image: product2,
+            title: "Melmac (Dried)", vendor: "Aether Mushroom Labs", rating: '4.8', weights: ['3g', '10g'], price: 35.00,
+            categories: ["Creative Boost", "Relax & Chill"],
+            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: relaxChillImg, name: "Relax & Chill" }]
+        },
+        {
+            id: 103, badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, inStock: false, onSale: false, image: product3,
+            title: "Chocolate Bar Golden Teacher", vendor: "Elevated Solstice", rating: '5.0', weights: ['3g', '10g'], price: 45.00,
+            categories: ["Beginner Friendly", "Micro dosing"],
+            effects: [{ image: beginnerFriendlyImg, name: "Beginner Friendly" }, { image: microDosingImg, name: "Micro dosing" }]
+        },
+        {
+            id: 104, badge: { text: "5% OFF", colorClass: "bg-[#E93E2B]" }, isWishlisted: false, inStock: true, onSale: true, image: product4,
+            title: "Tidal Wave", vendor: "Green Valley Organics", rating: '4.7', weights: ['3g', '10g'], price: 60.00,
+            categories: ["Focus & Clarity", "Relax & Chill"],
+            effects: [{ image: focusClarityImg, name: "Focus & Clarity" }, { image: relaxChillImg, name: "Relax & Chill" }]
+        }
+    ];
 
     return (
-        <div className="w-full px-10 py-10 bg-[#FAF8F5]">
-            {/* Promo slider */}
-            <div className="relative mb-8">
-                <Swiper
-                    className="offer-slider-1"
-                    modules={[Navigation, Autoplay]}
-                    spaceBetween={24}
-                    slidesPerView={4}
-                    loop
-                    autoplay={{ delay: 3000, disableOnInteraction: false }}
-                    onSwiper={sw => { swiperRef.current = sw; }}
-                    breakpoints={{
-                        0: { slidesPerView: 1 },
-                        640: { slidesPerView: 2 },
-                        900: { slidesPerView: 3 },
-                        1200: { slidesPerView: 4 }
-                    }}
-                >
-                    {[...slides, ...slides].map((s, i) => (
-                        <SwiperSlide key={i}>
-                            <div className="item text-center">
-                                <div
-                                    className="promo-card-image-wrap"
-                                    onClick={() => setSelectedCoupon(coupons[s.couponIdx])}
-                                >
-                                    <img src={s.image} alt="promo coupon" className="promo-card-img-full" />
+        <div className="w-full bg-[#FAF8F5] overflow-x-hidden pt-10 sm:pt-16 md:pt-18">
+            <div className="max-w-[1700px] mx-auto">
+                {/* Header section - Unified for all screens */}
+                <div className="px-5 lg:px-10 mb-8">
+                    <h1 className="text-[32px] lg:text-[36px] font-bold text-[#181211] leading-tight mb-2">Hot Deals</h1>
+                    <nav className="flex items-center gap-1.5 text-base mb-6">
+                        <span className="text-[#E93E2B] font-bold cursor-pointer" onClick={() => navigate('/store')}>Home</span>
+                        <span className="text-[#777777] font-semibold">/</span>
+                        <span className="text-[#777777] font-semibold">Deals</span>
+                    </nav>
+
+                    <p className="text-[#64748B] text-[15px] leading-[1.6] max-w-8xl">
+                        Welcome to our Hot Deals section, where you can discover the best discounts and limited-time offers on a wide range of mushroom products from our trusted stores. This page highlights special promotions, seasonal offers, and exclusive deals designed to help you get premium quality mushrooms at the best possible prices.
+                        Our partner stores regularly update their offers to bring you fresh deals on popular mushroom varieties, gourmet selections, and specialty products. Whether you are purchasing for daily cooking, health benefits, or culinary experimentation, the Hot Deals section makes it easy to find great value while exploring high-quality products.
+                    </p>
+                </div>
+
+                {/* Deal of the Day Hero card - Proportions matched to StoreDetails banner */}
+                <div className="px-5 lg:px-10 mb-10">
+                    <div
+                        className="relative w-full rounded-[24px] overflow-hidden bg-[#181211] h-70 lg:h-80 shadow-xl p-6 lg:px-12 lg:py-8 flex flex-col justify-between bg-cover bg-center"
+                        style={{
+                            backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.4) 100%), url(${dealsImg})`
+                        }}
+                    >
+                        {/* Top Badges */}
+                        <div className="relative z-10 flex justify-between items-center">
+                            <span className="bg-[#E93E2B] text-white text-[11px] lg:text-[13px] font-bold tracking-wider px-3.5 py-1.5 lg:px-5 lg:py-2 rounded-full uppercase shadow-lg shadow-[#E93E2B4D]">
+                                Deal of the day
+                            </span>
+                            <span className="bg-[#FFFFFF1A] backdrop-blur-md text-white text-[13px] lg:text-[15px] font-bold px-4 py-1.5 lg:px-6 lg:py-2 rounded-xl border border-[#FFFFFF26]">
+                                40% OFF
+                            </span>
+                        </div>
+
+                        {/* Middle Content - Adjusted for compact h-70 */}
+                        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mt-2">
+                            <div>
+                                <h2 className="text-2xl lg:text-4xl font-bold text-white mb-1 lg:mb-2 max-w-[280px] lg:max-w-[450px] leading-tight">
+                                    Golden Teacher Bundle
+                                </h2>
+                                <p className="text-[#FFFFFFCC] text-xs lg:text-base font-medium">
+                                    Premium dried caps + infusion kit
+                                </p>
+                            </div>
+
+                            {/* Timer Component - More compact */}
+                            <div className="flex gap-3">
+                                {[
+                                    { val: timeLeft.hrs, label: "HRS" },
+                                    { val: timeLeft.min, label: "MIN" },
+                                    { val: timeLeft.sec, label: "SEC" }
+                                ].map((t, i) => (
+                                    <div key={i} className="flex flex-col items-center">
+                                        <div className="w-[48px] h-[48px] lg:w-[56px] lg:h-[56px] bg-[#FFFFFF12] backdrop-blur-xl border border-[#FFFFFF1A] rounded-xl flex items-center justify-center text-lg lg:text-xl font-bold text-white">
+                                            {t.val}
+                                        </div>
+                                        <span className="text-[8px] lg:text-[9px] font-bold text-[#FFFFFF80] tracking-widest uppercase mt-1">
+                                            {t.label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Bottom Actions */}
+                        <div className="relative z-10 flex items-center justify-between gap-4">
+                            <div className="flex flex-row items-center gap-3">
+                                <span className="text-[#E93E2B] text-3xl lg:text-4xl font-bold">$80.00</span>
+                                <span className="text-white opacity-50 text-sm lg:text-lg line-through font-medium">$120.00</span>
+                            </div>
+                            <button
+                                className="bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-3 lg:py-4 px-8 lg:px-10 rounded-[16px] text-base lg:text-lg shadow-lg active:scale-95 transition-all text-center"
+                                onClick={() => navigate('/store/product/golden-teacher-bundle')}
+                            >
+                                Claim Deal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Flash Sales Section - Hybrid Layout */}
+                <div className="mb-10 px-5 lg:px-10">
+                    <div className="flex items-center justify-between mb-5">
+                        <div className="flex items-center gap-2.5 text-[#181211]">
+                            <Icon icon="iconoir:flash" className="text-[#E93E2B]" width={30} />
+                            <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Flash Sales</h2>
+                        </div>
+                    </div>
+
+                    {/* Desktop View (lg and up) - Grid of 4 */}
+                    <div className="hidden lg:grid lg:grid-cols-4 lg:gap-8">
+                        {flashSales.slice(0, 4).map(item => (
+                            <div key={item.id} className="w-full">
+                                <ProductCard
+                                    product={{
+                                        ...item,
+                                        isOverlayEffects: true
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Mobile/Tablet View (below lg) - Scrolling Row */}
+                    <div 
+                        className="lg:hidden flex gap-4 overflow-x-auto py-2 -mx-2 px-2 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                    >
+                        {flashSales.map(item => (
+                            <div key={item.id} className="min-w-[240px] sm:min-w-[280px]">
+                                <ProductCard
+                                    product={{
+                                        ...item,
+                                        isOverlayEffects: true
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Bundle & Save Section - 1 Column Mobile, 2 Columns Desktop */}
+                <div className="mb-10 px-5 lg:px-10">
+                    <div className="flex items-center gap-2.5 text-[#181211] mb-5">
+                        <Icon icon="mdi:stars-outline" className="text-[#E93E2B]" width={30} />
+                        <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Bundle & Save</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                        {bundles.map(bundle => (
+                            <div key={bundle.id} className="bg-white rounded-[20px] p-3.5 lg:p-5 shadow-[0px_4px_25px_rgba(0,0,0,0.06)] border border-[#F1F5F9] flex gap-4 lg:gap-6 group hover:shadow-xl transition-all cursor-pointer items-center">
+                                <div className="w-24 h-24 lg:w-32 lg:h-32 shrink-0 bg-[#FAF8F5] rounded-2xl overflow-hidden relative">
+                                    {bundle.badge && (
+                                        <span className="absolute top-1.5 right-1.5 bg-[#22C55E] text-white text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-md z-10 shadow-md uppercase">
+                                            {bundle.badge}
+                                        </span>
+                                    )}
+                                    <img src={bundle.image} alt={bundle.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                </div>
+                                <div className="flex-1 flex flex-col justify-between pt-1">
+                                    <div>
+                                        <h3 className="text-base lg:text-lg font-bold text-[#181211] mb-1">{bundle.name}</h3>
+                                        <p className="text-xs lg:text-sm text-[#777777] font-medium leading-relaxed">{bundle.desc}</p>
+                                    </div>
+                                    <div className="flex items-end justify-between mt-3 lg:mt-4">
+                                        <div className="flex flex-col">
+                                            <span className="text-[#181211] text-xs font-medium mb-0.5 line-through opacity-60">${bundle.oldPrice.toFixed(2)}</span>
+                                            <span className="text-xl lg:text-2xl font-bold text-[#E93E2B]">${bundle.price.toFixed(2)}</span>
+                                        </div>
+                                        <button className="bg-[#E93E2B] text-white px-5 py-2.5 lg:px-6 lg:py-2.5 rounded-xl text-sm font-bold shadow-md shadow-[#E93E2B33] active:scale-95 hover:bg-red-600 transition-all">
+                                            Claim Bundle
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-                <button ref={prevRef} className="offer-slider-1-arrow offer-slider-1-arrow-prev">
-                    <Icon icon="mdi:chevron-left" width={20} />
-                </button>
-                <button ref={nextRef} className="offer-slider-1-arrow offer-slider-1-arrow-next">
-                    <Icon icon="mdi:chevron-right" width={20} />
-                </button>
-            </div>
-
-            {/* Hero section */}
-            <div className="offers-hero-section mb-6">
-                <div className="offers-hero-content">
-                    <div className="offers-hero-header-row">
-                        <div className="offers-hero-icon-wrapper">
-                            <div className="offers-hero-icon">🎁</div>
-                            <div className="offers-hero-icon-bg" />
-                        </div>
-                        <h1 className="offers-hero-title">Exclusive Shroom's Deals!</h1>
+                        ))}
                     </div>
-                    <p className="offers-hero-description">
-                        Welcome to Shroom's deals page, where you can unlock incredible discounts and savings on our premium magic mushroom products!
-                        We understand how important it is to enjoy the finest products while saving, which is why we've created these exclusive offers just for you.
-                        Take advantage of these deals to indulge in our premium selection at discounted prices.
-                    </p>
+                </div>
+
+                {/* Weekly Specials - Hybrid Layout */}
+                <div className="pb-10 px-5 lg:px-10">
+                    <div className="flex items-center justify-between mb-5">
+                        <div className="flex items-center gap-2.5 text-[#181211]">
+                            <Icon icon="uil:calendar" className="text-[#E93E2B]" width={30} />
+                            <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Weekly Specials</h2>
+                        </div>
+                    </div>
+
+                    {/* Desktop View (lg and up) - Grid of 4 */}
+                    <div className="hidden lg:grid lg:grid-cols-4 lg:gap-8">
+                        {bestSellers.slice(0, 4).map(item => (
+                            <div key={item.id} className="w-full">
+                                <ProductCard
+                                    product={{
+                                        ...item,
+                                        isOverlayEffects: true
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Mobile/Tablet View (below lg) - Scrolling Row */}
+                    <div 
+                        className="lg:hidden flex gap-4 overflow-x-auto py-2 -mx-2 px-2 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                    >
+                        {bestSellers.map(item => (
+                            <div key={item.id} className="min-w-[240px] sm:min-w-[280px]">
+                                <ProductCard
+                                    product={{
+                                        ...item,
+                                        isOverlayEffects: true
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            {/* Coupon cards grid */}
-            <div className="row clearfix couponspage-row mt-6">
-                {coupons.map((c, i) => (
-                    <CouponCard
-                        key={c.code}
-                        c={c}
-                        index={i}
-                        onGetCoupon={(coupon) => setSelectedCoupon(coupon)}
-                    />
-                ))}
-            </div>
-
-            {/* Coupon Modal */}
+            {/* Coupon Modal (Shared for any manual code redemption) */}
             {selectedCoupon && <CouponModal coupon={selectedCoupon} onClose={() => setSelectedCoupon(null)} />}
-
-            {/* CTA section */}
-            <div className="offers-cta-section mt-1">
-                <div className="offers-cta-content">
-                    <p className="offers-cta-text">
-                        At Shroom's, we offer a wide range of high-quality mushroom products to suit your needs, whether you're looking for relaxation, mental clarity, or a boost of inspiration. With our fast and reliable service, you can enjoy a seamless and enriching mushroom journey from the comfort of your home.
-                    </p>
-                    <p className="offers-cta-footer-text">
-                        Don't miss out on these <b>exclusive offers</b> and incredible deals! Claim your coupon code today and take advantage of exclusive offers, and be sure to register to stay updated on our monthly specials. Get ready to elevate your experience with Shroom's.🍄✨.
-                    </p>
-                </div>
-            </div>
         </div>
     );
 };

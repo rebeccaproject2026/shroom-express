@@ -61,7 +61,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div
-            className={`bg-white rounded-3xl p-3 sm:p-4 flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full`}
+            className={`bg-white rounded-3xl p-3 sm:p-4 flex flex-col group transition-all duration-300 border border-[#E5DCDC] ${customShadowClass} w-full h-full max-w-[280px] sm:max-w-none `}
         >
             {/* Image Container */}
             <div
@@ -179,7 +179,7 @@ const ProductCard = ({ product }) => {
                             </span>
                         </div>
                     )}
-                    
+
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-y-2 sm:gap-y-0 gap-x-1 sm:gap-x-2 min-h-[32px] sm:min-h-[36px]">
                         <span className="font-extrabold text-[#181211] text-[15px] sm:text-lg lg:text-xl shrink-0">
                             ${Number(price).toFixed(2)}

@@ -361,7 +361,7 @@ const ProductsList = () => {
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeBestSeller].filter(Boolean).length;
 
     return (
-        <div className="w-full px-4 sm:px-6 lg:px-12 py-2 sm:py-10">
+        <div className="w-full px-4 sm:px-6 lg:px-12 pt-10 sm:pt-16 md:pt-18">
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Page Header */}

@@ -294,7 +294,7 @@ const StoreDetails = () => {
     return (
         <div className="w-full bg-[#FAF8F5] overflow-x-hidden">
             {/* Desktop Header Section (Visible on lg and up) */}
-            <div className="hidden lg:block px-6 lg:px-10 pt-11">
+            <div className="hidden lg:block px-6 lg:px-10 pt-10 sm:pt-16 md:pt-18">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-70 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}

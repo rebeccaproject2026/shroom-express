@@ -56,7 +56,7 @@ const StoresList = () => {
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeShipping].filter(Boolean).length;
 
     return (
-        <div className="w-full px-4 sm:px-10 pt-10 sm:pt-20 pb-10 sm:pb-20">
+        <div className="w-full px-4 sm:px-10 pt-10 sm:pt-16 md:pt-18 pb-10 sm:pb-20">
             <StoreFilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Page Header */}
@@ -195,7 +195,7 @@ const StoresList = () => {
                 )}
             </div>
 
-            <MobileLocationOverlay 
+            <MobileLocationOverlay
                 isOpen={locationOpen}
                 onClose={() => setLocationOpen(false)}
                 onSelect={(city) => console.log('Location selected:', city)}
