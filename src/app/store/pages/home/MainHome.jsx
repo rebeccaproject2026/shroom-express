@@ -280,7 +280,7 @@ const Home = () => {
                                 coverImage: storecard1,
                                 logo: background,
                                 deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-                                isPrimary: true,
+                                isPrimary: false,
                                 avatars: [beginnerFriendlyImg,
                                     highPotencyImg,
                                     microDosingImg,

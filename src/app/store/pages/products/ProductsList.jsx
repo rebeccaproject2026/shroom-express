@@ -25,6 +25,14 @@ import storecard2 from "../../assets/images/storecard2.png";
 import background2 from "../../assets/images/background2.png";
 import storecard3 from "../../assets/images/storecard3.png";
 import background3 from "../../assets/images/background3.png";
+import creativeBoostImg from "../../assets/images/creativeboost.png";
+import relaxChillImg from "../../assets/images/relaxchill.png";
+import microDosingImg from "../../assets/images/microdosing.png";
+import highPotencyImg from "../../assets/images/highpotency.png";
+import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
+import visualExperienceImg from "../../assets/images/visualexperience.png";
+import focusClarityImg from "../../assets/images/focusclarity.png";
+import deepjourneyImg from "../../assets/images/deepjourney.png";
 
 const ProductsList = () => {
     const { category } = useParams();
@@ -255,7 +263,7 @@ const ProductsList = () => {
             coverImage: storecard1,
             logo: background,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-            isPrimary: true,
+            isPrimary: false,
             avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
         },
         {
