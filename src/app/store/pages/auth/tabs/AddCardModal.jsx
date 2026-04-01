@@ -28,13 +28,13 @@ const AddCardModal = ({ onClose, onSave }) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto py-10">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/45 " onClick={onClose} />
 
       {/* Modal */}
-      <div className="relative top-[19%] bg-white rounded-2xl shadow-xl w-full max-w-[35%] mx-4 overflow-hidden">
-
+      <div className="relative bg-white rounded-2xl shadow-2xl w-[94%] shadow-xl sm:max-w-[450px] mx-auto overflow-hidden animate-in fade-in zoom-in duration-300 z-10">
+        
         {/* Grey header */}
         <div className="bg-[#FAF8F8] px-3.5 pt-5 pb-5 relative border-b border-[#E8E8E8]">
           <button
@@ -43,7 +43,7 @@ const AddCardModal = ({ onClose, onSave }) => {
           >
             <Icon icon="mdi:close" width={28} height={25} />
           </button>
-          <h3 className="text-2xl font-bold text-[#181211] mb-1">Add New payment method</h3>
+          <h3 className="text-lg sm:text-2xl font-bold text-[#181211] mb-1">Add New payment method</h3>
           <p className="text-xs font-semibold text-[#181211]/60">your information is protected by industry - standard encryption</p>
         </div>
 

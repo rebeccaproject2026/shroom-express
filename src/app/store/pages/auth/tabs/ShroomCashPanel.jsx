@@ -62,72 +62,78 @@ const ShroomCashPanel = ({ onViewOrders }) => {
             </div>
             <p className="text-xs text-[#64748B] mb-4">Track your earnings and transactions.</p>
 
-            {/* Table */}
-            <div className="border border-[#E8E8E8] rounded-xl overflow-hidden">
-                {/* Header row */}
-                <div className="grid grid-cols-5 bg-[#F8F9FA] px-4 py-3 border-b border-[#E8E8E8]">
-                    {["ORDER NO", "DATE", "EARNED CA$H", "STATUS", "ACTION"].map(h => (
-                        <p key={h} className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider m-0">{h}</p>
-                    ))}
-                </div>
-
-                {/* Data rows */}
-                {transactions.map(t => {
-                    const isCredit = t.amount > 0;
-                    return (
-                        <div
-                            key={t.id}
-                            className="grid grid-cols-5 items-center px-4 py-3 border-b border-[#F1F5F9] last:border-0 hover:bg-[#FAFAFA] transition-colors"
-                        >
-                            {/* Order no */}
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-lg bg-[#22C55E] flex items-center justify-center shrink-0">
-                                    <Icon icon="mdi:mushroom-outline" width={15} className="text-white" />
-                                </div>
-                                <span className="text-sm font-bold text-[#181211]">{t.order}</span>
-                            </div>
-
-                            {/* Date */}
-                            <div className="flex items-center gap-1 text-sm text-[#64748B]">
-                                <Icon icon="mdi:calendar-outline" width={13} className="text-[#94A3B8]" />
-                                {t.date}
-                            </div>
-
-                            {/* Amount */}
-                            <div className="flex items-center gap-1">
-                                <Icon icon="mdi:mushroom" width={14} className="text-[#22C55E]" />
-                                <span className={`text-sm font-bold ${isCredit ? "text-[#22C55E]" : "text-[#E93E2B]"}`}>
-                                    {isCredit ? "+" : "-"}${Math.abs(t.amount).toFixed(2)}
-                                </span>
-                            </div>
-
-                            {/* Status */}
-                            <div>
-                                <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full ${
-                                    t.status === "Completed"
-                                        ? "bg-[#DCFCE7] text-[#16A34A]"
-                                        : "bg-[#FFF0EE] text-[#E93E2B]"
-                                }`}>
-                                    <Icon
-                                        icon={t.status === "Completed" ? "mdi:check-circle" : "mdi:swap-horizontal"}
-                                        width={12}
-                                    />
-                                    {t.status}
-                                </span>
-                            </div>
-
-                            {/* Action */}
-                            <div>
-                                <button
-                                    onClick={onViewOrders}
-                                    className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E5DCDC] bg-white text-[#181211] hover:bg-[#F8F9FA] transition-colors cursor-pointer"
-                                >
-                                    Details
-                                </button>
-                            </div>
+            {/* Table with Horizontal Scrolling */}
+            <div className="border border-[#E8E8E8] rounded-xl overflow-hidden bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)]">
+                <div className="overflow-x-auto custom-scrollbar">
+                    <div className="min-w-[650px]">
+                        {/* Header row */}
+                        <div className="grid grid-cols-5 bg-[#F8F9FA] px-4 py-3 border-b border-[#E8E8E8]">
+                            {["ORDER NO", "DATE", "EARNED CA$H", "STATUS", "ACTION"].map(h => (
+                                <p key={h} className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider m-0">{h}</p>
+                            ))}
                         </div>
-                    );
-                })}
+
+                        {/* Data rows */}
+                        <div className="flex flex-col divide-y divide-[#F1F5F9]">
+                            {transactions.map(t => {
+                                const isCredit = t.amount > 0;
+                                return (
+                                    <div
+                                        key={t.id}
+                                        className="grid grid-cols-5 items-center px-4 py-3 hover:bg-gray-50/50 transition-colors"
+                                    >
+                                        {/* Order no */}
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="w-8 h-8 rounded-lg bg-[#22C55E] flex items-center justify-center shrink-0">
+                                                <Icon icon="mdi:mushroom-outline" width={15} className="text-white" />
+                                            </div>
+                                            <span className="text-sm font-bold text-[#181211]">{t.order}</span>
+                                        </div>
+
+                                        {/* Date */}
+                                        <div className="flex items-center gap-1.5 text-sm text-[#64748B] font-medium">
+                                            <Icon icon="mdi:calendar-outline" width={14} className="text-[#94A3B8]" />
+                                            {t.date}
+                                        </div>
+
+                                        {/* Amount */}
+                                        <div className="flex items-center gap-1.5">
+                                            <Icon icon="mdi:mushroom" width={14} className="text-[#22C55E]" />
+                                            <span className={`text-sm font-bold ${isCredit ? "text-[#22C55E]" : "text-[#E93E2B]"}`}>
+                                                {isCredit ? "+" : "-"}${Math.abs(t.amount).toFixed(2)}
+                                            </span>
+                                        </div>
+
+                                        {/* Status */}
+                                        <div>
+                                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-lg ${
+                                                t.status === "Completed"
+                                                    ? "bg-[#DCFCE7] text-[#16A34A]"
+                                                    : "bg-[#FFF0EE] text-[#E93E2B]"
+                                            }`}>
+                                                <Icon
+                                                    icon={t.status === "Completed" ? "mdi:check-circle" : "mdi:swap-horizontal"}
+                                                    width={12}
+                                                />
+                                                {t.status}
+                                            </span>
+                                        </div>
+
+                                        {/* Action */}
+                                        <div>
+                                            <button
+                                                onClick={onViewOrders}
+                                                className="text-xs font-bold px-4 py-2 rounded-lg border border-[#E8E8E8] bg-white text-[#181211] hover:bg-gray-50 transition-all active:scale-[0.98] cursor-pointer"
+                                            >
+                                                Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

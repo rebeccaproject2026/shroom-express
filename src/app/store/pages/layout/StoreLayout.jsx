@@ -42,12 +42,13 @@ const StoreLayout = () => {
                 <Outlet />
             </main>
 
-            {/* Hide standard mobile nav on product detail, checkout flow, and track order pages */}
+            {/* Hide standard mobile nav on product detail, checkout flow, track order, and account edit pages */}
             {!location.pathname.startsWith('/store/product/') && 
              !location.pathname.startsWith('/store/cart') && 
              !location.pathname.startsWith('/store/checkout') && 
              !location.pathname.startsWith('/store/order-complete') && 
              !location.pathname.startsWith('/store/track-order') && 
+             !location.search.includes('mode=edit') && 
              <MobileBottomNav />}
 
             <Footer />

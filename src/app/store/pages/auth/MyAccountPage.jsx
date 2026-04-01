@@ -96,13 +96,33 @@ const MyAccountPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("profile");
+  const [showMobileDetail, setShowMobileDetail] = useState(false);
+  const [orderState, setOrderState] = useState({ order: null, isTracking: false });
+
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
-    if (tab) setActiveTab(tab);
+    const mode = params.get("mode");
+    if (tab) {
+      setActiveTab(tab);
+      if (window.innerWidth < 1024) setShowMobileDetail(true);
+    }
+    // Set edit mode from URL
+    setEditMode(mode === 'edit' &&(!tab || tab === 'profile'));
   }, [location.search]);
-  const [editMode, setEditMode] = useState(false);
+
+  const toggleEditMode = () => {
+    const params = new URLSearchParams(location.search);
+    if (!editMode) {
+      params.set('mode', 'edit');
+      params.set('tab', 'profile');
+    } else {
+      params.delete('mode');
+    }
+    navigate({ search: params.toString() }, { replace: true });
+  };
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -138,53 +158,118 @@ const MyAccountPage = () => {
   //     fileInputRef.current.click();
   //   }
   // };
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setProfileImage(imageUrl);
-  //   }
-  // };
+
+  // Sidebar labels mapping for breadcrumbs
+  const getBreadcrumbLabel = (key) => {
+    if (key === 'orders') return orderState.order ? 'My Orders' : 'Order History';
+    return sidebarItems.find(item => item.key === key)?.label || '';
+  };
+
   return (
-    <div className="min-h-screen bg-[#F5F0EB]">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-base mb-5">
+    <div className={`bg-[#F5F0EB] ${activeTab === 'profile' && editMode ? 'pb-24 lg:pb-0' : ''}`}>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-5 sm:pt-12 md:pt-16 lg:pt-10 pb-5">
+        {/* Breadcrumb - Dynamic for all tabs and screens */}
+        <div className="flex items-center gap-1.5  text-base mb-4 sm:mb-5">
           <button
-            onClick={() => navigate("/store")}
+            onClick={() => {
+              if (orderState.order) setOrderState({ order: null, isTracking: false });
+              else if (showMobileDetail) setShowMobileDetail(false);
+              else navigate("/store");
+            }}
             className="text-[#E93E2B] font-semibold hover:underline"
           >
             Home
           </button>
           <span className="text-[#777777]">/</span>
-          <span className="text-[#777777] font-semibold">My Account</span>
-        </div>
-
-        {/* Header card */}
-        <div className="bg-white rounded-2xl border border-[#F1F5F9] shadow-sm px-7 py-5 flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-[#181211]">Hi, Frank Nava</h1>
-            <p className="text-sm text-[#181211] mt-0.5">
-              Your fungi journey continues here.
-            </p>
-          </div>
-          <button
-            onClick={() => navigate("/store/login")}
-            className="flex items-center gap-2 bg-[#E93E2B] hover:bg-red-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors"
+          <span
+            onClick={() => {
+              setShowMobileDetail(false);
+              setOrderState({ order: null, isTracking: false });
+            }}
+            className={`font-semibold cursor-pointer ${showMobileDetail || orderState.order ? 'text-[#E93E2B]' : 'text-[#777777]'}`}
           >
-            <Icon icon="solar:logout-outline" width="24" height="24" />
-            Logout
-          </button>
+            My Account
+          </span>
+          {/* Third level breadcrumb (Always on desktop, conditional on mobile) */}
+          {(window.innerWidth >= 1024 || showMobileDetail) && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-[#777777]">/</span>
+              <span
+                onClick={() => setOrderState({ order: null, isTracking: false })}
+                className={`font-semibold cursor-pointer ${orderState.order ? 'text-[#E93E2B]' : 'text-[#777777]'}`}
+              >
+                {getBreadcrumbLabel(activeTab)}
+              </span>
+            </div>
+          )}
+          {/* Fourth level breadcrumb for specific Order (Matching Image 2) */}
+          {orderState.order && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-[#777777]">/</span>
+              <span className="text-[#777777] font-semibold">
+                {orderState.order.orderNo}
+              </span>
+            </div>
+          )}
+          {/* Fifth level breadcrumb for Edit Mode */}
+          {activeTab === 'profile' && editMode && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-[#777777]">/</span>
+              <span className="text-[#777777] font-semibold">
+                Edit Mode
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Main grid */}
-        <div className="grid grid-cols-[340px_1fr] bg-white border border-[#F1F5F9] rounded-2xl shadow-sm overflow-hidden">
+        {/* Dashboard Header section - Always visible on desktop, hidden on mobile when viewing detail */}
+        <div className={`lg:block ${showMobileDetail ? 'hidden lg:block' : 'block'}`}>
+          {/* Header card */}
+          <div className="lg:bg-white lg:rounded-2xl lg:border lg:border-[#F1F5F9] lg:shadow-sm lg:px-7 lg:py-5 flex items-center justify-between mb-2 lg:mb-8">
+            <div>
+              <h1 className="text-2xl font-bold text-[#181211]">Hi, Frank Nava</h1>
+              <p className="text-sm text-[#181211] mt-0.5 opacity-70 lg:opacity-100">
+                Your fungi journey continues here.
+              </p>
+            </div>
+            <button
+              onClick={() => navigate("/store/login")}
+              className="hidden lg:flex items-center gap-2 bg-[#E93E2B] hover:bg-red-600 text-white font-semibold px-5 py-2.5 rounded-lg text-sm transition-colors"
+            >
+              <Icon icon="solar:logout-outline" width="24" height="24" />
+              Logout
+            </button>
+          </div>
+
+          {/* Mobile-Only Activity Card & Quick Links */}
+          <div className="lg:hidden flex flex-col gap-4 mb-1">
+            {/* Activity Card */}
+            <div className="bg-white rounded-lg p-2 border border-[#F1F5F9] shadow-sm relative overflow-hidden">
+              <div className="flex justify-between items-start mb-2">
+                <Icon icon="fluent:cart-16-regular" className="text-[#E93E2B]" width={28} />
+                <span className="text-[11px] font-bold text-[#A0A0BF] tracking-widest uppercase mt-1">Activity</span>
+              </div>
+              <div>
+                <p className="text-[30px] font-bold text-[#181211] leading-none mb-1">12</p>
+                <p className="text-base font-medium text-[#181211]">Recent Orders</p>
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-bold text-[#181211] ml-1.5">Quick Links</h2>
+          </div>
+        </div>
+
+        {/* Main grid - Show sidebar only when NOT in detail on mobile */}
+        <div className={`block lg:grid lg:grid-cols-[340px_1fr] bg-transparent lg:bg-white lg:border lg:border-[#F1F5F9] lg:rounded-2xl lg:shadow-sm overflow-hidden mb-10`}>
           {/* Sidebar */}
-          <div className="h-fit p-3 flex flex-col gap-2.5">
+          <div className={`h-fit p-1 sm:p-3 flex flex-col gap-2.5 ${showMobileDetail ? 'hidden lg:flex' : 'flex'}`}>
             {sidebarItems.map((item) => (
               <button
                 key={item.key}
-                onClick={() => setActiveTab(item.key)}
+                onClick={() => {
+                  setActiveTab(item.key);
+                  if (window.innerWidth < 1024) setShowMobileDetail(true);
+                }}
                 className={`w-full flex items-center gap-3 p-3 text-left rounded-[12px] transition-colors border border-[#F1F5F9]  ${activeTab === item.key
                   ? "bg-[#E93E2B] text-white"
                   : "bg-white hover:bg-[#FFF5F4]"
@@ -226,8 +311,8 @@ const MyAccountPage = () => {
             ))}
           </div>
 
-          {/* Right panel */}
-          <div className="p-3 mr-1">
+          {/* Right panel - Responsive visibility */}
+          <div className={`p-3 mr-1 ${showMobileDetail ? 'block' : 'hidden lg:block'}`}>
             {/* Payment Method tab */}
             {activeTab === "payment" && <PaymentMethodPanel />}
 
@@ -238,7 +323,7 @@ const MyAccountPage = () => {
             {activeTab === 'address' && <AddressDetailsView />}
 
             {/* Order History tab */}
-            {activeTab === 'orders' && <OrderHistoryView />}
+            {activeTab === 'orders' && <OrderHistoryView orderState={orderState} setOrderState={setOrderState} />}
 
             {/* Coupons tab */}
             {activeTab === 'coupons' && <CouponsPanel />}
@@ -248,8 +333,24 @@ const MyAccountPage = () => {
 
             {/* Profile tab */}
             {activeTab === 'profile' && <>
-              {/* Avatar + name */}
-              <div className="flex items-center gap-4 mb-6">
+              {/* Mobile-Specific Header (Image 475) */}
+              <div className="lg:hidden flex items-center gap-5 mt-2 mb-4 px-1">
+                <div className="relative w-[100px] h-[100px] shrink-0">
+                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-[#F1F5F9]">
+                    <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                  </div>
+                  <button onClick={handleAvatarClick} className="absolute bottom-0 right-0 w-8 h-8 bg-[#E93E2B] rounded-full flex items-center justify-center border-2 border-white shadow-md">
+                    <Icon icon="solar:camera-outline" width="18" className="text-white" />
+                  </button>
+                </div>
+                <div>
+                  <h2 className="text-[28px] font-bold text-[#181211] leading-tight">Frank Nava</h2>
+                  <p className="text-sm text-[#181211] opacity-60 font-medium">Member since March 2024</p>
+                </div>
+              </div>
+
+              {/* Desktop Avatar header - Hidden on mobile */}
+              <div className="hidden lg:flex items-center gap-4 mb-6">
                 <div className="relative shrink-0">
                   <input
                     type="file"
@@ -281,13 +382,13 @@ const MyAccountPage = () => {
                 {editMode && (
                   <div className="flex items-center gap-3 shrink-0">
                     <button
-                      onClick={() => setEditMode(false)}
+                      onClick={toggleEditMode}
                       className="bg-[#E93E2B] border-2 border-[#E93E2B] hover:bg-red-600 text-white font-semibold px-8 py-2.5 rounded-md text-sm transition-colors"
                     >
                       Update
                     </button>
                     <button
-                      onClick={() => setEditMode(false)}
+                      onClick={toggleEditMode}
                       className="border-2 border-[#E93E2B33] text-[#E93E2B] hover:bg-[#FFF0EE] font-semibold px-8 py-2.5 rounded-md text-sm transition-colors bg-white"
                     >
                       Cancel
@@ -297,15 +398,15 @@ const MyAccountPage = () => {
               </div>
 
               {/* Edit Mode row */}
-              <div className="flex items-center justify-between mb-2.5 border border-[#E8E8E8] rounded-lg p-4">
+              <div className="flex items-center justify-between mb-2.5 border border-[#E8E8E8] rounded-lg p-5 bg-white shadow-sm">
                 <div>
-                  <p className="text-sm font-bold text-[#181211]">Edit Mode</p>
-                  <p className="text-xs text-[#181211] font-medium tracking-wide mt-0.5">
+                  <p className="text-[17px] font-bold text-[#181211]">Edit Mode</p>
+                  <p className="text-sm text-[#181211] opacity-60 font-medium mt-0.5">
                     Unlock fields to modify info
                   </p>
                 </div>
                 <button
-                  onClick={() => setEditMode((p) => !p)}
+                  onClick={toggleEditMode}
                   className={`relative w-12 h-7 rounded-full cursor-pointer transition-colors shrink-0 ${editMode ? "bg-[#E93E2B]" : "bg-[#BDBDD2]"}`}
                 >
                   <span
@@ -315,7 +416,7 @@ const MyAccountPage = () => {
               </div>
 
               {/* Personal Information */}
-              <div className="mb-2.5 border border-[#E8E8E8] rounded-lg py-4">
+              <div className="mb-2 border border-[#E8E8E8] rounded-lg py-4 bg-white shadow-sm">
                 <div className="px-4">
                   <p className="text-base font-bold text-[#181211]">
                     Personal Information
@@ -401,7 +502,7 @@ const MyAccountPage = () => {
               </div>
 
               {/* Password Change */}
-              <div className="border border-[#E5DCDC] pt-4 pb-2 rounded-lg mb-2">
+              <div className="border border-[#E5DCDC] pt-4 pb-2 rounded-lg mb-2 bg-white shadow-sm">
                 <div className="px-3 mr-1 flex items-center justify-between border-b border-[#E5DCDC]">
                   <div className="flex flex-col mb-1">
                     <p className="text-base font-bold text-[#181211]">
@@ -455,6 +556,17 @@ const MyAccountPage = () => {
           </div>
         </div>
       </div>
+      {/* Sticky Footer Button for Mobile Profile Edit (Overlays Nav effectively) */}
+      {activeTab === 'profile' && editMode && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/70 backdrop-blur-xl border-t border-gray-100 px-4 py-2 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] z-50">
+          <button
+            onClick={toggleEditMode}
+            className="w-full bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-4 rounded-2xl text-base shadow-sm transition-all active:scale-[0.98] cursor-pointer"
+          >
+            Update Profile
+          </button>
+        </div>
+      )}
     </div>
   );
 };

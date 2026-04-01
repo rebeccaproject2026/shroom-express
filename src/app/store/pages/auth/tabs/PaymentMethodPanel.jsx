@@ -30,11 +30,11 @@ const PaymentMethodPanel = () => {
   };
 
   return (
-    <div className="pt-4">
+    <div className="pt-0 lg:pt-4">
       {showModal && <AddCardModal onClose={() => setShowModal(false)} onSave={handleSaveCard} />}
 
-      {/* Header */}
-      <div className="flex items-center justify-between mb-5">
+      {/* Desktop Header - Hidden on Mobile/Tablet */}
+      <div className="hidden lg:flex items-center justify-between mb-5">
         <h2 className="text-2xl font-bold text-[#181211]">Payment Method</h2>
         <button
           onClick={() => setShowModal(true)}
@@ -114,6 +114,15 @@ const PaymentMethodPanel = () => {
             <Icon icon="mdi:chevron-right" width={20} className="text-[#A0A0BF]" />
           </button>
         ))}
+
+        {/* Mobile/Tablet Only Add Card Button (Hidden on Desktop) */}
+        <button
+          onClick={() => setShowModal(true)}
+          className="lg:hidden w-full flex items-center justify-center gap-2.5 border-2 border-dashed border-[#E93E2B66] rounded-2xl px-4 py-2.5 hover:bg-[#E93E2B0D] transition-colors group mt-2"
+        >
+          <Icon icon="solar:add-circle-linear" width="28" className="text-[#E93E2B]" />
+          <span className="text-lg font-bold text-[#E93E2B]">Add New Card</span>
+        </button>
       </div>
     </div>
   );
