@@ -70,7 +70,7 @@ const CreateStorePage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FAF8F5] py-10 px-4">
+        <div className="bg-[#FAF8F5] pt-10 sm:pt-16 md:pt-18 px-4 pb-6">
             <div className="max-w-3xl mx-auto">
 
                 {/* Header */}
@@ -95,7 +95,7 @@ const CreateStorePage = () => {
                 </div>
 
                 {/* Card */}
-                <div className="bg-white rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#F1F5F9] p-8">
+                <div className="bg-white rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#F1F5F9] p-5 sm:p-8">
 
                     {/* STEP 0 — Store Info */}
                     {step === 0 && (
@@ -214,8 +214,8 @@ const CreateStorePage = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-3 gap-4">
-                                <Field label="Estimated Delivery Time *" value={form.estimatedTime} onChange={v => set("estimatedTime", v)} placeholder="e.g. 1 - 2 Hours" />
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                <Field label="Est. Delivery Time *" value={form.estimatedTime} onChange={v => set("estimatedTime", v)} placeholder="e.g. 1 - 2 Hours" />
                                 <Field label="Delivery Fee ($)" value={form.deliveryFee} onChange={v => set("deliveryFee", v)} placeholder="0.00" type="number" />
                                 <Field label="Min. Order ($)" value={form.minOrder} onChange={v => set("minOrder", v)} placeholder="0.00" type="number" />
                             </div>
@@ -291,7 +291,7 @@ const CreateStorePage = () => {
 
 const Field = ({ label, value, onChange, placeholder, type = "text", required = false }) => (
     <div>
-        <label className="text-[15px] font-semibold text-[#181211] mb-1.5 block">
+        <label className="text-sm sm:text-[15px] font-semibold text-[#181211] mb-1.5 block leading-tight sm:leading-normal">
             {label.replace(" *", "")} {required || label.includes("*") ? <span className="text-[#E93E2B]">*</span> : null}
         </label>
         <input

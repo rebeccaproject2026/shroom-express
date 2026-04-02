@@ -41,6 +41,7 @@ const ProductsList = () => {
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
     const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const [storeSearch, setStoreSearch] = useState('');
@@ -316,6 +317,13 @@ const ProductsList = () => {
             // Convert slug back to display name for matching
             const targetCategory = slugToName[category];
             if (targetCategory) list = list.filter(p => p.categories?.includes(targetCategory));
+        } else if (category && !categoryTitles[category]) {
+            // General search handle: use category slug as search term if not a known category
+            const searchTerm = category.replace(/-/g, ' ').toLowerCase();
+            list = list.filter(p => 
+                (p.title || p.name || '').toLowerCase().includes(searchTerm) ||
+                (p.vendor || '').toLowerCase().includes(searchTerm)
+            );
         }
 
         // Filter by query string effect mapping
@@ -455,8 +463,8 @@ const ProductsList = () => {
                     <div className="mb-6">
                         {/* Trending Store Header */}
                         <div className="flex items-center justify-between mb-4.5">
-                            <h2 className="text-[22px] font-bold text-[#181211]">Trending Store</h2>
-                            <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] font-semibold text-base hover:opacity-80 transition-opacity cursor-pointer mr-2">
+                            <h2 className="text-[22px] xl:text-[22px] 2xl:text-[24px] font-bold text-[#181211]">Trending Store</h2>
+                            <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] font-semibold text-base xl:text-base 2xl:text-lg hover:opacity-80 transition-opacity cursor-pointer mr-2">
                                 View All
                             </button>
                         </div>
@@ -475,8 +483,8 @@ const ProductsList = () => {
                                     <Icon icon="mdi:magnify" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" width={20} height={20} />
                                 </div>
                             </div>
-                            {/* Stores List - Horizontal Scroll on Mobile, Vertical on Desktop */}
-                            <div className="flex flex-row lg:flex-col gap-5 sm:gap-7 overflow-x-auto lg:overflow-visible pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                            {/* Stores List - Horizontal Scroll on Mobile/Tablet, Vertical on Desktop */}
+                            <div className="flex flex-row lg:flex-col gap-4 sm:gap-6 lg:gap-5 overflow-x-auto lg:overflow-visible pb-4 -mx-4 px-4 lg:mx-0 lg:px-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                                 {filteredStores.length > 0 ? filteredStores.map(store => (
                                     <div key={store.id} className="w-[84%] sm:w-[320px] lg:w-full shrink-0">
                                         <StoreCard store={store} />

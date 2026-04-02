@@ -180,12 +180,12 @@ const ProductCard = ({ product }) => {
                         </div>
                     )}
 
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-y-2 sm:gap-y-0 gap-x-1 sm:gap-x-2 min-h-[32px] sm:min-h-[36px]">
+                    <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row sm:items-center lg:items-start xl:items-center justify-between gap-y-2 sm:gap-y-0 lg:gap-y-2 xl:gap-y-0 gap-x-1 sm:gap-x-2 min-h-[32px] sm:min-h-[36px]">
                         <span className="font-extrabold text-[#181211] text-[15px] sm:text-lg lg:text-xl shrink-0">
                             ${Number(price).toFixed(2)}
                         </span>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-1.5 sm:gap-2 w-full sm:w-auto">
+                        <div className="flex items-center justify-between sm:justify-end lg:justify-between xl:justify-end gap-1.5 sm:gap-2 w-full">
                             {/* Qty Selector */}
                             <div
                                 onClick={(e) => e.stopPropagation()}

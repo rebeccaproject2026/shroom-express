@@ -63,10 +63,10 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
         else navigate(`/store/storeslists/${result.id}`);
     };
 
-    // Close on outside click
+    // Close on outside click (Desktop only)
     useEffect(() => {
         const handler = (e) => {
-            if (searchRef.current && !searchRef.current.contains(e.target)) {
+            if (window.innerWidth >= 1024 && searchRef.current && !searchRef.current.contains(e.target)) {
                 setSearchOpen(false);
             }
             if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
@@ -97,7 +97,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     ];
 
     return (
-        <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} z-[100] bg-white  flex flex-col w-full font-sans`}>
+        <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} ${searchOpen || mobileMenuOpen ? 'z-[2000]' : 'z-[100]'} bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar (Enhanced with Scroll for Small Screens) */}
             <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex justify-center sm:justify-center items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth">
                 <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
@@ -354,19 +354,22 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                             const isActive = location.pathname === categoryPath ||
                                 (cat.name === 'Magic Mushrooms' && isEffectSlug);
 
-                            if (!isHomePage && ['Magic Mushrooms', 'Microdose', 'Edibles'].includes(cat.name)) {
+                            const isDropdownCategory = !isHomePage && ['Magic Mushrooms', 'Microdose', 'Edibles'].includes(cat.name);
+
+                            if (isDropdownCategory) {
                                 return (
                                     <li key={idx} className="shrink-0 flex items-center justify-center relative group">
-                                        <div
+                                        <Link
+                                            to={categoryPath}
                                             className={`flex items-center gap-2 text-[15px] font-bold transition-colors py-2 cursor-pointer ${isActive ? 'text-[var(--store-primary)]' : 'text-[#181211] hover:text-[var(--store-primary)]'}`}
                                         >
                                             <Icon icon={cat.icon} width={18} height={18} />
                                             <span>{cat.name}</span>
                                             <Icon icon="mdi:chevron-down" width={20} height={20} className="ml-0.5 group-hover:rotate-180 transition-transform duration-300" />
-                                        </div>
+                                        </Link>
 
-                                        <div className="absolute top-10 left-1/2 -translate-x-1/2 pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all z-50">
-                                            <div className="bg-white border border-[#E5DCDC] shadow-[0_8px_30px_rgba(0,0,0,0.12)] rounded-lg flex flex-col pt-1 pb-1 relative">
+                                        <div className="absolute top-[38px] left-1/2 -translate-x-1/2 pt-2 w-56 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all z-50">
+                                            <div className="bg-white border border-[#E5DCDC] shadow-[0_8px_30_rgba(0,0,0,0.12)] rounded-lg flex flex-col pt-1 pb-1 relative">
                                                 <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-[#E5DCDC] rotate-45"></div>
                                                 <Link
                                                     to={categoryPath}
@@ -376,7 +379,8 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                                 </Link>
                                                 {categoryIcons.map((subItem, sIdx) => {
                                                     const slug = subItem.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-                                                    const iconPath = `${categoryPath}?effect=${slug}`;
+                                                    const effectSlug = subItem.name === 'Relax & Chill' ? 'relax-and-chill' : slug;
+                                                    const iconPath = `${categoryPath}?effect=${effectSlug}`;
                                                     return (
                                                         <Link
                                                             key={sIdx}
@@ -402,11 +406,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                             : 'text-[#181211] hover:text-[var(--store-primary)]'
                                             }`}
                                     >
-                                        <Icon
-                                            icon={cat.icon}
-                                            width={18}
-                                            height={18}
-                                        />
+                                        <Icon icon={cat.icon} width={18} height={18} />
                                         <span>{cat.name}</span>
                                     </Link>
                                 </li>

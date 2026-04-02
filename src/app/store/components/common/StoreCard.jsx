@@ -64,7 +64,7 @@ const StoreCard = ({ store }) => {
                 <div className="flex justify-between items-start mb-3 gap-2">
                     <div className="flex flex-col flex-1 min-w-0 pr-1">
                         <div className="relative group/name cursor-default mb-1 max-w-full">
-                            <h3 className="font-bold text-[#181211] text-[18px] sm:text-xl leading-tight whitespace-normal">{name}</h3>
+                            <h3 className="font-bold text-[#181211] text-[18px] sm:text-xl lg:text-[16px] xl:text-xl leading-tight whitespace-normal">{name}</h3>
                             <span className="absolute bottom-full left-0 mb-1.5 bg-[#181211] text-white text-[10px] sm:text-xs font-semibold px-2.5 py-1.5 rounded-md whitespace-nowrap opacity-0 group-hover/name:opacity-100 transition-opacity pointer-events-none z-[200]
                                 after:content-[''] after:absolute after:top-full after:left-4 after:border-[5px] after:border-transparent after:border-t-[#181211]">
                                 {name}
@@ -82,10 +82,10 @@ const StoreCard = ({ store }) => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-end text-right shrink-0">
-                        <span className="text-[10.5px] text-[#64748B] font-semibold leading-none mb-1">Est. Delivery</span>
-                        <span className="text-[11px] font-bold text-[#181211] leading-none mb-1">{estimatedDelivery}</span>
-                        <span className="text-[10.5px] font-bold text-[#FF9F40] leading-none">Avg. Price: {avgPrice}</span>
+                    <div className="flex flex-col items-end text-right shrink-0 lg:max-w-[70px] xl:max-w-none">
+                        <span className="text-[10.5px] lg:text-[9px] xl:text-[10.5px] text-[#64748B] font-semibold leading-none mb-1">Est. Delivery</span>
+                        <span className="text-[11px] lg:text-[10px] xl:text-[11px] font-bold text-[#181211] leading-none mb-1">{estimatedDelivery}</span>
+                        <span className="text-[10.5px] lg:text-[9.5px] xl:text-[10.5px] font-bold text-[#FF9F40] leading-none whitespace-nowrap">Avg: {avgPrice}</span>
                     </div>
                 </div>
 
