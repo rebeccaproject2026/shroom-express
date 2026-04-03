@@ -4,6 +4,8 @@ import Layout from "./pages/layout/Layout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import "./index.css";
 
+import AllStores from "./pages/stores/AllStores";
+
 function SuperAdminApp() {
   return (
     <div className="superadmin-root min-h-screen">
@@ -12,6 +14,7 @@ function SuperAdminApp() {
         <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="stores/all" element={<AllStores />} />
         </Route>
         <Route path="*" element={<Navigate to="login" replace />} />
       </Routes>

@@ -163,7 +163,7 @@ const GeoPerformance = ({ defaultQuery = "", onViewAll }) => {
     }, [defaultQuery, useHeatMap]);
 
     return (
-        <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col">
+        <div className="bg-white rounded-lg shadow p-4 flex flex-col h-[100%] min-h-[100%]">
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
                 <h1 className="text-lg font-semibold text-[#0F172A] tracking-wide leading-none">GEO Performance</h1>
@@ -176,7 +176,7 @@ const GeoPerformance = ({ defaultQuery = "", onViewAll }) => {
             </div>
 
             {/* Map */}
-            <div className="relative flex-1 min-h-[350px]">
+            <div className="relative flex-1 min-h-[375px]">
                 <div
                     ref={mapContainerRef}
                     className="w-full h-full rounded-sm overflow-hidden"

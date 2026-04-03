@@ -6,6 +6,8 @@ import RecentOrdersTable from "../../components/dashboard/RecentOrdersTable";
 import DatePickerMap from "../../components/DatePickerMap";
 import UserGrowthSnapshot from "../../components/dashboard/UserGrowthSnapshot";
 import AnalyticsBottomGrid from "../../components/dashboard/AnalyticsBottomGrid";
+import OrderCharts from "../../components/dashboard/OrderCharts";
+import TopPerformingStores from "../../components/dashboard/TopPerformingStores";
 
 const Dashboard = () => {
     const onDateUpdate = (dateRange) => {
@@ -34,6 +36,8 @@ const Dashboard = () => {
                 {/* Detailed Analytics */}
                 <DetailedStats />
 
+
+
                 <div className="space-y-6">
                     <h1 className="text-lg font-semibold text-[#0F172A] tracking-wide leading-none">Orders & Operations Summary</h1>
                     {/* Operational Metrics Cards */}
@@ -51,6 +55,18 @@ const Dashboard = () => {
 
                 {/* Performance & Activity Grid */}
                 <AnalyticsBottomGrid />
+                {/* Orders Distribution & Trends */}
+                {/* Orders Distribution & Trends */}
+                <div className="space-y-6">
+                    {/* <h1 className="text-lg font-semibold text-[#0F172A] tracking-wide leading-none">Order Distribution & Performance</h1> */}
+                    <OrderCharts />
+                </div>
+
+                {/* Top Performing Stores Section */}
+                <div className="space-y-6">
+                    {/* <h1 className="text-lg font-semibold text-[#0F172A] tracking-wide leading-none">Top Performing Stores Highlights</h1> */}
+                    <TopPerformingStores />
+                </div>
             </div>
         </div>
     );

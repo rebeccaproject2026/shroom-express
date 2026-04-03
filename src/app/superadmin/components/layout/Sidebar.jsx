@@ -79,7 +79,7 @@ const Sidebar = ({ setSidebar }) => {
                         className={({ isActive }) =>
                             `px-3 py-2.5 flex items-center gap-3 rounded-md transition-colors ${isActive && activeMenu === null
                                 ? "bg-(--color-primary-soft) text-(--color-primary) font-medium"
-                                : "text-[#212121] font-medium tracking-wide hover:bg-(--color-primary-soft)"
+                                : "text-[#212121] font-medium tracking-wide hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                             }`
                         }
                     >
@@ -98,7 +98,7 @@ const Sidebar = ({ setSidebar }) => {
                             onClick={handleStoresClick}
                             className={`w-full px-3 py-2.5 flex items-center justify-between rounded-md transition-colors ${activeMenu === "stores"
                                 ? "bg-(--color-primary-soft) text-(--color-primary) font-medium "
-                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft)"
+                                : "text-[#181211] font-medium hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -142,7 +142,7 @@ const Sidebar = ({ setSidebar }) => {
                             onClick={handleDriversClick}
                             className={`w-full px-3 py-2.5 flex items-center justify-between rounded-md transition-colors ${activeMenu === "drivers"
                                 ? "bg-(--color-primary-soft) text-(--color-primary) font-medium "
-                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft)"
+                                : "text-[#181211] font-medium hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -188,7 +188,7 @@ const Sidebar = ({ setSidebar }) => {
                             onClick={handleOrdersClick}
                             className={`w-full px-3 py-2.5 flex items-center justify-between rounded-md transition-colors ${activeMenu === "orders"
                                 ? "bg-(--color-primary-soft) text-(--color-primary) font-medium "
-                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft)"
+                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft) hover:text-(--color-primary)"
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -232,7 +232,7 @@ const Sidebar = ({ setSidebar }) => {
                             onClick={handleCustomersClick}
                             className={`w-full px-3 py-2.5 flex items-center justify-between rounded-md transition-colors ${activeMenu === "customers"
                                 ? "bg-(--color-primary-soft) text-(--color-primary) font-medium "
-                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft)"
+                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft) hover:text-(--color-primary)"
                                 }`}
                         >
                             <div className="flex items-center gap-3">
@@ -281,7 +281,7 @@ const Sidebar = ({ setSidebar }) => {
                             className={({ isActive }) =>
                                 `px-3 py-2.5 flex items-center gap-3 rounded-md transition-colors ${isActive && activeMenu === null
                                     ? "bg-(--color-primary) text-white shadow-md shadow-(--color-primary)/20"
-                                    : "text-[#212121] font-medium tracking-wide hover:bg-(--color-primary-soft)"
+                                    : "text-[#212121] font-medium tracking-wide hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                                 }`
                             }
                         >
@@ -305,7 +305,7 @@ const Sidebar = ({ setSidebar }) => {
                             className={({ isActive }) =>
                                 `px-3 py-2.5 flex items-center gap-3 rounded-md transition-colors ${isActive && activeMenu === null
                                     ? "bg-(--color-primary) text-white shadow-md shadow-(--color-primary)/20"
-                                    : "text-[#212121] font-medium tracking-wide hover:bg-(--color-primary-soft)"
+                                    : "text-[#212121] font-medium tracking-wide hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                                 }`
                             }
                         >
