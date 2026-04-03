@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "./styles/variable.css";
+@import "./styles/fonts.css";
+
+
+
+/* =========================
+   GLOBAL FONT APPLICATION
+   ========================= */
+* {
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  line-height: var(--line-height-base);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Custom Styled Scrollbar Global */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
