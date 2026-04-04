@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import StoreTable from "../../components/stores/StoreTable";
+
 
 const AllStores = () => {
     const stats = [
@@ -85,7 +87,11 @@ const AllStores = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Main Data Table */}
+            <StoreTable />
         </div>
+
     );
 };
 
