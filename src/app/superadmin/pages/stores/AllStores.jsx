@@ -42,7 +42,7 @@ const AllStores = () => {
     return (
         <div className="space-y-8 animate-in fade-in duration-700 font-manrope">
             {/* Breadcrumbs & Header Section */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
                 {/* Breadcrumbs */}
                 <nav className="flex items-center gap-2 text-sm font-medium">
                     <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline">Dashboard</Link>
@@ -53,14 +53,14 @@ const AllStores = () => {
                 {/* Header Title & Actions */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1">
-                        <h1 className="text-lg font-bold text-[#181211] tracking-tight">All Stores</h1>
-                        <p className="text-[#475569] font0-medium text-sm">Manage and monitor all vendor stores in your network.</p>
+                        <h1 className="text-lg font-bold text-[#181211]">All Stores</h1>
+                        <p className="text-[#475569] font-medium text-sm">Manage and monitor all vendor stores in your network.</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <button className="bg-[#EA3D2A] text-white px-5 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
+                        <Link to="/superadmin/stores/add" className="bg-[#EA3D2A] text-white px-5 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
                             <Icon icon="mdi:store-plus" width="20" />
                             Create Store
-                        </button>
+                        </Link>
                         <div className="relative group">
                             <button className="bg-white border border-[#E2E8F0] text-[#181211] px-4 py-2.5 rounded-[8px] text-[14px] font-bold flex items-center gap-2 hover:bg-gray-50 transition-all shadow-sm">
                                 <Icon icon="lucide:calendar" width="18" className="text-[#64748B]" />

@@ -17,7 +17,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div 
+        <div
             className="min-h-screen flex flex-col items-center justify-center p-4"
             style={{
                 background: 'linear-gradient(135deg, rgba(234, 61, 42, 0.05) 0%, rgba(234, 61, 42, 0) 50%, rgba(234, 61, 42, 0.1) 100%)'
@@ -30,7 +30,7 @@ const LoginPage = () => {
 
             {/* Login Card */}
             <div className="bg-white rounded-3xl shadow-[0px_4px_20px_rgba(0,0,0,0.15)] border border-[#E2E8F0] p-8 sm:p-10 w-full max-w-[33rem]">
-                <h1 className="text-2xl font-bold text-[#0F172A] mb-1">Secure Admin Access</h1>
+                <h1 className="text-2xl font-semibold text-[#0F172A] mb-1">Secure Admin Access</h1>
                 <p className="text-sm text-[#64748B] font-medium mb-8">
                     Enter your enterprise credentials to access the delivery dashboard.
                 </p>

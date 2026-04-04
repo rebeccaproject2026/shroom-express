@@ -295,11 +295,11 @@ const Sidebar = ({ setSidebar }) => {
                     {[
                         { to: "/superadmin/analytics", label: "Analytics", icon: "glyphs:analytics-bold" },
                         { to: "/superadmin/audit-logs", label: "Audit Logs", icon: "majesticons:paper-fold-text-line" },
-                        { to: "/superadmin/audit-logs", label: "Setting", icon: "lsicon:setting-outline" },
-                        { to: "/superadmin/analytics", label: " Support", icon: "tdesign:support" },
+                        { to: "/superadmin/settings", label: "Setting", icon: "lsicon:setting-outline" },
+                        { to: "/superadmin/support", label: " Support", icon: "tdesign:support" },
                     ].map((item) => (
                         <NavLink
-                            key={item.to}
+                            key={item.label}
                             to={item.to}
                             onClick={handleNavClick}
                             className={({ isActive }) =>

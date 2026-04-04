@@ -11,21 +11,22 @@ const Input = ({
   required = false,
   leftIcon,
   rightIcon,
+  borderClass = "",
   className = "",
   containerClassName = "",
   labelClassName = "",
   ...rest
 }) => {
-  const borderStyle = error ? { border: '1.13px solid #EF4444' } : { border: '1.25px solid #E2E8F0' };
+  const borderStyle = error ? { border: '1.13px solid #EF4444' } : (borderClass ? {} : { border: '1.25px solid #E2E8F0' });
 
-  const inputClass = `w-full rounded-sm ${leftIcon ? "pl-11" : "px-4"} ${rightIcon ? "pr-11" : "px-4"} py-3.5 text-sm text-[#181211] bg-white outline-none focus:border-[#E93E2B] focus:ring-1 focus:ring-[#E93E2B]/10 placeholder:text-[#94A3B8] transition-all ${className}`.trim();
+  const inputClass = `w-full rounded-sm ${leftIcon ? "pl-11" : "px-4"} ${rightIcon ? "pr-11" : "px-4"} py-3.5 text-sm text-[#181211] bg-white outline-none transition-all ${borderClass} ${className}`.trim();
 
   return (
     <div className={`w-full ${containerClassName}`.trim()}>
       {label && (
         <label
           htmlFor={id}
-          className={`text-base font-semibold text-[#334155] mb-1.5 block ${labelClassName}`.trim()}
+          className={`mb-1.5 block ${labelClassName || "text-base font-semibold text-[#334155]"}`.trim()}
         >
           {label}
           {required && <span className="text-[#E93E2B] ml-0.5">*</span>}
