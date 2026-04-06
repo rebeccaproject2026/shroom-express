@@ -1,8 +1,8 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import ReusableTableSelect from '../../../components/common/ReusableTableSelect';
-import StoreLocationMap from '../../../components/stores/StoreLocationMap';
-import Input from '../../../components/common/Input';
+import ReusableTableSelect from '../../../../components/common/ReusableTableSelect';
+import StoreLocationMap from '../../../../components/stores/StoreLocationMap';
+import Input from '../../../../components/common/Input';
 
 const Step2Location = ({ formData, setFormData }) => {
   const provinceOptions = [

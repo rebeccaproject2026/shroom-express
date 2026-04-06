@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,10 +9,9 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import storePlaceholder from "../../assets/images/store.png";
-
 import ReusableTableSelect from '../common/ReusableTableSelect';
 import ReusableSearchInput from '../common/ReusableSearchInput';
+import { STORES_DATA } from '../../pages/stores/data/storesData';
 
 
 const TABS = [
@@ -36,208 +36,9 @@ const SORT_OPTIONS = [
   { value: 'rating-high', label: 'Top Rated' },
 ];
 
-const DEFAULT_DATA = [
-  {
-    id: '#SE-8921',
-    name: 'Forest Oasis',
-    image: storePlaceholder,
-    category: 'Micro Dosing',
-    tags: ['Beginner Friendly', 'Lab Tested'],
-    location: 'Toronto Center',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$20.50k',
-    revenueSub: 'Monthly revenue',
-    orders: '386',
-    ordersSub: 'Total Orders',
-    status: 'Suspended',
-    statusTime: '9am - 9pm',
-    rating: '4.9',
-    createdAt: '2026-04-01',
-  },
-  {
-    id: '#SE-8922',
-    name: 'Healthy Greens',
-    image: storePlaceholder,
-    category: 'Full Spectrum',
-    tags: ['Premium', 'Organic'],
-    location: 'Vancouver West',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SAME-DAY', variant: 'teal' }
-    ],
-    revenue: '$3.6K',
-    revenueSub: 'Monthly revenue',
-    orders: '223',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: 'Mon-Fri',
-    rating: '4.8',
-    createdAt: '2026-04-02',
-  },
-  {
-    id: '#SE-8923',
-    name: 'Bloom Essence',
-    image: storePlaceholder,
-    category: 'Wellness',
-    tags: ['Lab Tested', 'Fast Delivery'],
-    location: 'Montreal North',
-    delivery: [
-      { type: 'SAME-DAY', variant: 'teal' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$10.6K',
-    revenueSub: 'Monthly revenue',
-    orders: '287',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: '9am-5pm',
-    rating: '4.3',
-    createdAt: '2026-04-03',
-  },
-  {
-    id: '#SE-8924',
-    name: 'Nature\'s Best',
-    image: storePlaceholder,
-    category: 'Gummies',
-    tags: ['Organic', 'Beginner Friendly'],
-    location: 'Calgary SE',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$10.4K',
-    revenueSub: 'Monthly revenue',
-    orders: '510',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: 'Mon-Sat',
-    rating: '4.8',
-    createdAt: '2026-04-04',
-  },
-  {
-    id: '#SE-8925',
-    name: 'Pure Originals',
-    image: storePlaceholder,
-    category: 'Tinctures',
-    tags: ['Fast Delivery', 'Premium'],
-    location: 'Ottawa East',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SAME-DAY', variant: 'teal' }
-    ],
-    revenue: '$17.5K',
-    revenueSub: 'Monthly revenue',
-    orders: '481',
-    ordersSub: 'Total Orders',
-    status: 'Pending',
-    statusTime: '24/7',
-    rating: '4.5',
-    createdAt: '2026-03-30',
-  },
-  {
-    id: '#SE-8926',
-    name: 'Green Valley',
-    image: storePlaceholder,
-    category: 'Capsules',
-    tags: ['Beginner Friendly', 'Lab Tested'],
-    location: 'Toronto Central',
-    delivery: [
-      { type: 'SAME-DAY', variant: 'teal' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$20.3K',
-    revenueSub: 'Monthly revenue',
-    orders: '62',
-    ordersSub: 'Total Orders',
-    status: 'Suspended',
-    statusTime: '9am-9pm',
-    rating: '4.9',
-    createdAt: '2026-03-25',
-  },
-  {
-    id: '#SE-8927',
-    name: 'Shroom House',
-    image: storePlaceholder,
-    category: 'Wellness',
-    tags: ['Organic', 'Beginner Friendly'],
-    location: 'Vancouver West',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$20.50k',
-    revenueSub: 'Monthly revenue',
-    orders: '457',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: 'Mon-Fri',
-    rating: '4.1',
-    createdAt: '2026-03-20',
-  },
-  {
-    id: '#SE-8928',
-    name: 'Mycel Mart',
-    image: storePlaceholder,
-    category: 'Micro Dosing',
-    tags: ['Premium', 'Organic'],
-    location: 'Montreal North',
-    delivery: [
-      { type: 'SAME-DAY', variant: 'teal' },
-      { type: 'EXPRESS', variant: 'blue' }
-    ],
-    revenue: '$11.9K',
-    revenueSub: 'Monthly revenue',
-    orders: '93',
-    ordersSub: 'Total Orders',
-    status: 'Suspended',
-    statusTime: '9am-5pm',
-    rating: '4.6',
-    createdAt: '2026-03-15',
-  },
-  {
-    id: '#SE-8929',
-    name: 'Spore & Co.',
-    image: storePlaceholder,
-    category: 'Full Spectrum',
-    tags: ['Beginner Friendly', 'Lab Tested'],
-    location: 'Calgary SE',
-    delivery: [
-      { type: 'EXPRESS', variant: 'blue' },
-      { type: 'SHIPPING', variant: 'grey' }
-    ],
-    revenue: '$15.7K',
-    revenueSub: 'Monthly revenue',
-    orders: '232',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: 'Mon-Sat',
-    rating: '4.6',
-    createdAt: '2026-03-10',
-  },
-  {
-    id: '#SE-8930',
-    name: 'The Fungarium',
-    image: storePlaceholder,
-    category: 'Gummies',
-    tags: ['Fast Delivery', 'Premium'],
-    location: 'Ottawa East',
-    delivery: [
-      { type: 'SAME-DAY', variant: 'teal' },
-      { type: 'EXPRESS', variant: 'blue' }
-    ],
-    revenue: '$18.1K',
-    revenueSub: 'Monthly revenue',
-    orders: '431',
-    ordersSub: 'Total Orders',
-    status: 'Active',
-    statusTime: '24/7',
-    rating: '4.2',
-    createdAt: '2026-03-05',
-  }
-];
+
+
+const DEFAULT_DATA = STORES_DATA;
 
 const getStatusBadgeStyle = (status) => {
   switch (status) {
@@ -410,11 +211,14 @@ const StoreTable = ({ data = null }) => {
     {
       header: 'ACTIONS',
       id: 'actions',
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <button className="text-[#3B82F6] hover:bg-[#3B82F6]/10 p-1 rounded-md transition-all">
+          <Link
+            to={`/superadmin/stores/details/${row.original.id.replace('#', '')}`}
+            className="text-[#3B82F6] hover:bg-[#3B82F6]/10 p-1 rounded-md transition-all flex items-center justify-center underline-none"
+          >
             <Icon icon="lucide:eye" width="16" />
-          </button>
+          </Link>
           <button className="text-[#64748B] hover:bg-[#64748B]/10 p-1 rounded-md transition-all">
             <Icon icon="lucide:pencil" width="16" />
           </button>
