@@ -3,7 +3,8 @@ import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./pages/layout/Layout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import AllStores from "./pages/stores/AllStores";
-import AddStore from "./pages/stores/AddStore";
+import AddStore from "./pages/stores/addstore";
+import StoreDetails from "./pages/stores/details";
 import "./index.css";
 
 function SuperAdminApp() {
@@ -16,6 +17,7 @@ function SuperAdminApp() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="stores/all" element={<AllStores />} />
           <Route path="stores/add" element={<AddStore />} />
+          <Route path="stores/details/:id" element={<StoreDetails />} />
         </Route>
         <Route path="*" element={<Navigate to="/superadmin/login" replace />} />
       </Routes>

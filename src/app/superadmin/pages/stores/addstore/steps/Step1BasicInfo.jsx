@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import ReusableTableSelect from '../../../components/common/ReusableTableSelect';
-import Input from '../../../components/common/Input';
+import ReusableTableSelect from '../../../../components/common/ReusableTableSelect';
+import Input from '../../../../components/common/Input';
 
 const Step1BasicInfo = ({ formData, setFormData }) => {
   const categoryOptions = [
