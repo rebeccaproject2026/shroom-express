@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import PendingStoreView from "./PendingStoreView";
 import ActiveStoreView from "./ActiveStoreView";
 import SuspendedStoreView from "./SuspendedStoreView";
-import { STORES_DATA } from "../data/storesData";
+import { STORES_DATA } from "../../../data/storesData";
 import RequestDocsModal from "./tabs/modals/RequestDocsModal";
 import DeclineStoreModal from "./tabs/modals/DeclineStoreModal";
 import SuspendStoreModal from "./tabs/modals/SuspendStoreModal";
@@ -150,7 +150,7 @@ const StoreDetails = () => {
 
                                         {/* Secondary Actions */}
                                         <div className="flex items-center gap-2">
-                                            <button 
+                                            <button
                                                 onClick={() => setIsExtendModalOpen(true)}
                                                 className="flex items-center gap-1 px-5 py-2 border border-[#F2994A] text-[#F2994A] rounded-lg text-[14.5px] font-bold bg-[#FFF7E8] transition-all hover:bg-white shadow-sm active:scale-95"
                                             >

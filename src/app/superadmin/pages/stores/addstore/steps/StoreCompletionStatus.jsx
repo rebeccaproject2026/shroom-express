@@ -31,10 +31,10 @@ const StoreCompletionStatus = ({ currentStep, formData }) => {
       <div className="mt-4 space-y-2 pt-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold text-[#181211]">Profile Complete</span>
-          <span className="text-[12px] font-bold text-[#EA3D2A]">{progress}%</span>
+          <span className="text-[12px] font-bold text-[#219653]">{progress}%</span>
         </div>
         <div className="h-1.5 w-full bg-[#F1F5F9] rounded-full overflow-hidden">
-          <div className="h-full bg-[#EA3D2A] transition-all duration-500" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-[#219653] transition-all duration-500" style={{ width: `${progress}%` }} />
         </div>
       </div>
     </div>

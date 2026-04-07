@@ -5,6 +5,8 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import AllStores from "./pages/stores/AllStores";
 import AddStore from "./pages/stores/addstore";
 import StoreDetails from "./pages/stores/details";
+import InventoryList from "./pages/inventory/InventoryList";
+import AddInventory from "./pages/inventory/addinventory";
 import "./index.css";
 
 function SuperAdminApp() {
@@ -18,6 +20,8 @@ function SuperAdminApp() {
           <Route path="stores/all" element={<AllStores />} />
           <Route path="stores/add" element={<AddStore />} />
           <Route path="stores/details/:id" element={<StoreDetails />} />
+          <Route path="inventory/all" element={<InventoryList />} />
+          <Route path="inventory/add" element={<AddInventory />} />
         </Route>
         <Route path="*" element={<Navigate to="/superadmin/login" replace />} />
       </Routes>

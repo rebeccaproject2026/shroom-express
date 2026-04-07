@@ -6,7 +6,7 @@ const ReusableTableSelect = ({ value, onChange, options, placeholder, borderclas
     <select
       value={value}
       onChange={onChange}
-      className={`appearance-none pl-4 pr-10 py-2 bg-white ${borderclass || "border-2 border-[#E8E8E8] "} rounded-md text-sm font-medium focus:outline-none cursor-pointer hover:bg-gray-50 transition-all w-full text-[#181211] ${className}`}
+      className={`appearance-none pl-4 pr-10 py-2 bg-white ${borderclass || "border-2 border-[#E8E8E8] "} rounded-sm text-sm font-medium focus:outline-none cursor-pointer hover:bg-gray-50 transition-all w-full text-[#181211] ${className}`}
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map((opt, idx) => (

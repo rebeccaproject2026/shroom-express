@@ -111,8 +111,8 @@ const SuspendedStoreView = () => {
             </div>
 
             {/* Modals */}
-            <ReinstateStoreModal 
-                isOpen={isReinstateModalOpen} 
+            <ReinstateStoreModal
+                isOpen={isReinstateModalOpen}
                 onClose={() => setIsReinstateModalOpen(false)}
                 onConfirm={() => {
                     console.log("Store Reinstated");
