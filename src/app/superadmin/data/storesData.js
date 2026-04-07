@@ -1,4 +1,4 @@
-import storePlaceholder from "../../../assets/images/store.png";
+import storePlaceholder from "../assets/images/store.png";
 
 export const STORES_DATA = [
     {

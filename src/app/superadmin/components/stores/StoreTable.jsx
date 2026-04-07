@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-table";
 import ReusableTableSelect from '../common/ReusableTableSelect';
 import ReusableSearchInput from '../common/ReusableSearchInput';
-import { STORES_DATA } from '../../pages/stores/data/storesData';
+import { STORES_DATA } from '../../data/storesData';
 
 
 const TABS = [
