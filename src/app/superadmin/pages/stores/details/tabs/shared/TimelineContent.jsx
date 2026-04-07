@@ -70,7 +70,7 @@ const TimelineContent = ({ status }) => {
                     <div key={idx} className="relative pl-16 pb-12 last:pb-2">
                         {/* Connecting Line */}
                         {idx !== timelineEvents.length - 1 && (
-                            <div className="absolute left-[21px] top-11 bottom-0 w-[2px] h-[60px] bg-[#F1F5F9]" />
+                            <div className="absolute left-[21px] top-13 bottom-0 w-[3.5px] h-[50px] bg-[#F1F5F9]" />
                         )}
 
                         {/* Icon Node */}

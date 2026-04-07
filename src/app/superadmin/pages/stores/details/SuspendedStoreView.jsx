@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import SuspensionDetailsContent from "./tabs/suspended/SuspensionDetailsContent";
-import TimelineContent from "./tabs/shared/TimelineContent";
-import RecentOrdersContent from "./tabs/active/RecentOrdersContent";
+import ViolationContent from "./tabs/suspended/ViolationContent";
+import StatsPerformanceContent from "./tabs/suspended/StatsPerformanceContent";
+import SuspendedRecentOrdersContent from "./tabs/suspended/SuspendedRecentOrdersContent";
+import SuspendedTimelineContent from "./tabs/suspended/SuspendedTimelineContent";
+import ReinstateStoreModal from "./tabs/modals/ReinstateStoreModal";
 import NotesContent from "./tabs/shared/NotesContent";
 
 const SuspendedStoreView = () => {
     const [activeTab, setActiveTab] = useState("Suspension Details");
+    const [isReinstateModalOpen, setIsReinstateModalOpen] = useState(false);
 
     const tabs = [
         "Suspension Details",
@@ -95,23 +99,26 @@ const SuspendedStoreView = () => {
 
                 {/* Tab Content Display */}
                 <div className="p-6">
-                    {activeTab === "Suspension Details" && <SuspensionDetailsContent />}
-                    {activeTab === "Violation (2)" && (
-                        <div className="p-10 text-center text-[#64748B] font-bold text-sm">
-                            <Icon icon="lucide:file-text" className="mx-auto mb-2 opacity-20" width="48" />
-                            Policy Violation Logs (2)
-                        </div>
+                    {activeTab === "Suspension Details" && (
+                        <SuspensionDetailsContent onOpenReinstate={() => setIsReinstateModalOpen(true)} />
                     )}
-                    {activeTab === "Stats & Performance" && (
-                        <div className="p-10 text-center text-[#64748B] font-bold text-sm">
-                            Performance data is currently paused.
-                        </div>
-                    )}
-                    {activeTab === "Recent Orders" && <RecentOrdersContent />}
+                    {activeTab === "Violation (2)" && <ViolationContent />}
+                    {activeTab === "Stats & Performance" && <StatsPerformanceContent />}
+                    {activeTab === "Recent Orders" && <SuspendedRecentOrdersContent />}
                     {activeTab === "Notes (2)" && <NotesContent />}
-                    {activeTab === "Timeline" && <TimelineContent status="Suspended" />}
+                    {activeTab === "Timeline" && <SuspendedTimelineContent />}
                 </div>
             </div>
+
+            {/* Modals */}
+            <ReinstateStoreModal 
+                isOpen={isReinstateModalOpen} 
+                onClose={() => setIsReinstateModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Store Reinstated");
+                    setIsReinstateModalOpen(false);
+                }}
+            />
         </div>
     );
 };

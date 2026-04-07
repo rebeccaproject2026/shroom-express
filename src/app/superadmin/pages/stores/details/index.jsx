@@ -8,6 +8,8 @@ import { STORES_DATA } from "../data/storesData";
 import RequestDocsModal from "./tabs/modals/RequestDocsModal";
 import DeclineStoreModal from "./tabs/modals/DeclineStoreModal";
 import SuspendStoreModal from "./tabs/modals/SuspendStoreModal";
+import ReinstateStoreModal from "./tabs/modals/ReinstateStoreModal";
+import ExtendSuspensionModal from "./tabs/modals/ExtendSuspensionModal";
 
 const StoreDetails = () => {
     const { id } = useParams();
@@ -19,7 +21,8 @@ const StoreDetails = () => {
     const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
     const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
     const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
-
+    const [isReinstateModalOpen, setIsReinstateModalOpen] = useState(false);
+    const [isExtendModalOpen, setIsExtendModalOpen] = useState(false);
     // const toggleStatus = () => {
     //     setStore(prev => ({
     //         ...prev,
@@ -138,7 +141,7 @@ const StoreDetails = () => {
                                     <div className="flex flex-col items-end gap-3.5 mt-2">
                                         {/* Primary Reinstate Button */}
                                         <button
-                                            onClick={() => setStore(prev => ({ ...prev, status: "Active" }))}
+                                            onClick={() => setIsReinstateModalOpen(true)}
                                             className="flex items-center gap-1 px-4 py-2.5 bg-[#219653] text-white rounded-lg text-[15px] font-bold shadow-md hover:bg-opacity-90 transition-all active:scale-95"
                                         >
                                             <Icon icon="icon-park-outline:play" width="20" />
@@ -147,7 +150,10 @@ const StoreDetails = () => {
 
                                         {/* Secondary Actions */}
                                         <div className="flex items-center gap-2">
-                                            <button className="flex items-center gap-1 px-5 py-2 border border-[#F2994A] text-[#F2994A] rounded-lg text-[14.5px] font-bold bg-[#FFF7E8] transition-all hover:bg-white shadow-sm active:scale-95">
+                                            <button 
+                                                onClick={() => setIsExtendModalOpen(true)}
+                                                className="flex items-center gap-1 px-5 py-2 border border-[#F2994A] text-[#F2994A] rounded-lg text-[14.5px] font-bold bg-[#FFF7E8] transition-all hover:bg-white shadow-sm active:scale-95"
+                                            >
                                                 <Icon icon="mingcute:time-line" width="20" />
                                                 Extend
                                             </button>
@@ -195,6 +201,22 @@ const StoreDetails = () => {
                 isOpen={isSuspendModalOpen}
                 onClose={() => setIsSuspendModalOpen(false)}
                 onConfirm={() => setStore(prev => ({ ...prev, status: "Suspended" }))}
+            />
+            <ReinstateStoreModal
+                isOpen={isReinstateModalOpen}
+                onClose={() => setIsReinstateModalOpen(false)}
+                onConfirm={() => {
+                    console.log("Store Reinstated");
+                    setIsReinstateModalOpen(false);
+                }}
+            />
+            <ExtendSuspensionModal
+                isOpen={isExtendModalOpen}
+                onClose={() => setIsExtendModalOpen(false)}
+                onConfirm={(duration, reason) => {
+                    console.log("Extended by", duration, "for reason:", reason);
+                    setIsExtendModalOpen(false);
+                }}
             />
 
             {/* Conditional Views Based on Status */}
