@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import SupplierTable from "../../components/suppliers/SupplierTable";
 
@@ -66,10 +67,13 @@ const Suppliers = () => {
                         <p className="text-[#475569] font-medium text-sm">Manage all vendors and supply partners. Click any row to preview, or use actions to edit and remove.</p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <button className="bg-[#EA3D2A] text-white px-5 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
-                            <Icon icon="lucide:user-plus" width="20" />
+                        <Link
+                            to="/superadmin/suppliers/add"
+                            className="bg-[#EA3D2A] text-white px-5 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group underline-none"
+                        >
+                            <Icon icon="iconoir:user-cart" width="20" />
                             Add Supplier
-                        </button>
+                        </Link>
                         <div className="relative group">
                             <button className="bg-white border border-[#E2E8F0] text-[#181211] px-4 py-2.5 rounded-[8px] text-[14px] font-bold flex items-center gap-2 hover:bg-gray-50 transition-all shadow-sm">
                                 <Icon icon="lucide:calendar" width="18" className="text-[#64748B]" />

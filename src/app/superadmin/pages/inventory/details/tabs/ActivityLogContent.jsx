@@ -8,7 +8,7 @@ const ActivityLogContent = () => {
             description: "80 packs added - Batch BATCH-2026-02",
             by: "Alex Morgan",
             date: "Feb 20, 2026 - 10:14 AM",
-            icon: "fluent:box-24-regular",
+            icon: "fluent-mdl2:product",
             color: "green"
         },
         {
@@ -16,7 +16,7 @@ const ActivityLogContent = () => {
             description: "65 pack added - Batch BATCH-2026-01",
             by: "Tanya Brisk",
             date: "Feb 05, 2026 - 9:30 AM",
-            icon: "fluent:box-24-regular",
+            icon: "fluent-mdl2:product",
             color: "green"
         },
         {
@@ -48,7 +48,7 @@ const ActivityLogContent = () => {
             description: "50 pack added",
             by: "Alex Morgan",
             date: "Dec 05, 2025 - 11:00 AM",
-            icon: "fluent:box-24-regular",
+            icon: "fluent-mdl2:product",
             color: "green"
         },
         {

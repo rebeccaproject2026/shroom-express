@@ -286,6 +286,7 @@ const SupplierTable = ({ data = null }) => {
         {
             header: 'ACTIONS',
             id: 'actions',
+            // eslint-disable-next-line no-unused-vars
             cell: ({ row }) => (
                 <div className="flex items-center gap-2">
                     <button className="text-[#3B82F6] hover:bg-[#3B82F6]/10 p-1 rounded-md transition-all flex items-center justify-center">

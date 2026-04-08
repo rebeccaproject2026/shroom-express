@@ -83,9 +83,9 @@ const StoreLocationMap = ({ latitude, longitude, onLocationChange }) => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
         {/* Optional overlay button if you want to keep the UI look */}
         {!latitude && (
-          <button className="px-6 py-2.5 bg-white border border-[#E2E8F0] rounded-lg text-sm font-bold text-[#181211] shadow-xl flex items-center gap-2 pointer-events-auto">
-             <Icon icon="lucide:map-pin" className="text-[#EA3D2A]" width="18" />
-             Click to set store Location
+          <button className="px-6 py-2.5 bg-white border border-[#BDBDD2] rounded-full text-sm font-bold text-[#181211] shadow-xl flex items-center gap-2 pointer-events-auto">
+             <Icon icon="meteor-icons:map-pin" className="text-[#EA3D2A]" width="20" />
+             Click to set Business Location
           </button>
         )}
       </div>

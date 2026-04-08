@@ -8,9 +8,9 @@ const StoreSuccessState = ({ onReset }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full min-h-[70vh] animate-in fade-in zoom-in duration-500">
       {/* Success Icon */}
-      <div className="relative mb-4">
+      <div className="relative mb-6">
         <div className="flex items-center justify-center text-[#219653]">
-          <Icon icon="hugeicons:store-verified-02" width="50" />
+          <Icon icon="iconoir:user-cart" width="50" />
         </div>
       </div>
 

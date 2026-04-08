@@ -20,11 +20,11 @@ const InventoryLivePreview = ({ formData }) => {
               <div className="text-2xl">🌿</div>
             )}
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex flex-col justify-start mb-2.5">
             <h5 className="text-base font-bold text-[#181211] truncate leading-tight">
               {formData.productName || 'Product Name'}
             </h5>
-            <p className="text-sm font-medium text-[#64748B] mt-1">
+            <p className="text-sm font-medium text-[#64748B] mt-0.5">
               {formData.sku || 'SKU-000'}
             </p>
           </div>
