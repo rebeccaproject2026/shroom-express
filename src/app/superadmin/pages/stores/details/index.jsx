@@ -10,6 +10,7 @@ import DeclineStoreModal from "./tabs/modals/DeclineStoreModal";
 import SuspendStoreModal from "./tabs/modals/SuspendStoreModal";
 import ReinstateStoreModal from "./tabs/modals/ReinstateStoreModal";
 import ExtendSuspensionModal from "./tabs/modals/ExtendSuspensionModal";
+import Breadcrumbs from "../../../components/common/Breadcrumbs";
 
 const StoreDetails = () => {
     const { id } = useParams();
@@ -17,6 +18,12 @@ const StoreDetails = () => {
     // Find store dynamically from shared data based on URL ID
     const foundStore = STORES_DATA.find(s => s.id.replace('#', '') === id);
     const [store, setStore] = useState(foundStore);
+
+    const breadcrumbItems = [
+        { label: "Dashboard", path: "/superadmin/dashboard" },
+        { label: "Stores", path: "/superadmin/stores/all" },
+        { label: store ? store.id : "Store Details" }
+    ];
 
     const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
     const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
@@ -40,13 +47,7 @@ const StoreDetails = () => {
         <div className="space-y-6 font-manrope animate-in fade-in duration-500">
             {/* Header / Breadcrumbs Section */}
             <div className="flex flex-col gap-2 mb-3.5">
-                <nav className="flex items-center gap-2 text-sm font-medium">
-                    <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline">Dashboard</Link>
-                    <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-                    <Link to="/superadmin/stores/all" className="text-[#EA3D2A] hover:underline">Stores</Link>
-                    <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-                    <span className="text-[#64748B]">{store.id}</span>
-                </nav>
+                <Breadcrumbs items={breadcrumbItems} />
 
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all">
                     {/* Store Info Profile */}

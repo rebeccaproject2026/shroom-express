@@ -116,14 +116,14 @@ const Sidebar = ({ setSidebar }) => {
                                 {[
                                     { to: "/superadmin/stores/all", label: "All Stores" },
                                     { to: "/superadmin/inventory/all", label: "Inventory" },
-                                    { to: "/superadmin/stores/suppliers", label: "Suppliers" },
+                                    { to: "/superadmin/suppliers/all", label: "Suppliers" },
                                 ].map((sub) => (
                                     <NavLink
                                         key={sub.to}
                                         to={sub.to}
                                         className={({ isActive }) =>
                                             `flex items-center gap-5 px-3 py-1.5 rounded-md transition-all ${isActive
-                                                ? "text-(--color-primary) font-medium"
+                                                ? "text-(--color-primary) font-bold"
                                                 : "text-[#181211] font-medium hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
                                             }`
                                         }

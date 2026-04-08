@@ -4,7 +4,7 @@ import store from "../assets/images/store.png";
 export const INVENTORY_DATA = [
     {
         id: "INV-8921",
-        product: { name: "Micro Dose...", sku: "SKU-8921", tier: "Nova...", img: home1 },
+        product: { name: "Micro Dose Capsules 15mg", sku: "SKU-8921", tier: "Nova...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Micro Dosing",
         stock: { current: 142, pack: "pack", wt: "300GM/PACK", alert: 2, percentage: 80, color: "bg-[#10B981]" },
@@ -14,7 +14,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8931",
-        product: { name: "Micro Dose...", sku: "SKU-8931", tier: "Nova...", img: home1 },
+        product: { name: "Micro Dose Capsules 15mg", sku: "SKU-8931", tier: "Nova...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Micro Dosing",
         stock: { current: 87, pack: "pack", wt: "45GM/PACK", alert: 20, percentage: 65, color: "bg-[#10B981]" },
@@ -24,7 +24,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-9921",
-        product: { name: "Full Spectrum...", sku: "SKU-9921", tier: "Earth...", img: home1 },
+        product: { name: "Full Spectrum Tincture", sku: "SKU-9921", tier: "EarthDrop Co.", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Full Spectrum",
         stock: { current: 14, pack: "pack", wt: "60GM/PACK", alert: 15, percentage: 15, color: "bg-[#F59E0B]" },
@@ -34,7 +34,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8922",
-        product: { name: "Beginner G...", sku: "SKU-8922", tier: "Sweet...", img: home1 },
+        product: { name: "Beginner Gummy Pack", sku: "SKU-8922", tier: "Sweet...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Gummies",
         stock: { current: 10, pack: "pack", wt: "50GM/PACK", alert: 20, percentage: 10, color: "bg-[#64748B]" },
@@ -44,7 +44,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8923",
-        product: { name: "Wellness C...", sku: "SKU-8923", tier: "Gree...", img: home1 },
+        product: { name: "Wellness Capsules 200mg", sku: "SKU-8923", tier: "Gree...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Wellness",
         stock: { current: 211, pack: "pack", wt: "70GM/PACK", alert: 25, percentage: 95, color: "bg-[#10B981]" },
@@ -54,7 +54,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8924",
-        product: { name: "Lion's Mane...", sku: "SKU-8924", tier: "Mush...", img: home1 },
+        product: { name: "Lion's Mane Powder", sku: "SKU-8924", tier: "Mush...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Capsules",
         stock: { current: 8, pack: "pack", wt: "55GM/PACK", alert: 10, percentage: 10, color: "bg-[#F59E0B]" },
@@ -65,7 +65,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8925",
-        product: { name: "Reishi Tinct...", sku: "SKU-8925", tier: "Nova...", img: home1 },
+        product: { name: "Reishi Tincture", sku: "SKU-8925", tier: "Nova...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Tinctures",
         stock: { current: 0, pack: "pack", wt: "35GM/PACK", alert: 8, percentage: 0, color: "bg-[#64748B]" },
@@ -75,7 +75,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8928",
-        product: { name: "Adaptogen...", sku: "SKU-8928", tier: "Sweet...", img: home1 },
+        product: { name: "Adaptogen Blend Gummies", sku: "SKU-8928", tier: "Sweet...", img: home1 },
         store: { name: "Forest Oasis", status: "Active", img: store },
         category: "Gummies",
         stock: { current: 56, pack: "pack", wt: "40GM/PACK", alert: 12, percentage: 35, color: "bg-[#10B981]" },
@@ -86,7 +86,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8929",
-        product: { name: "Micro Dose...", sku: "SKU-8929", tier: "Nova...", img: home1 },
+        product: { name: "Micro Dose Capsules 15mg", sku: "SKU-8929", tier: "Nova...", img: home1 },
         store: { name: "Healthy Greens", status: "Active", img: store },
         category: "Micro Dosing",
         stock: { current: 142, pack: "pack", wt: "300GM/PACK", alert: 20, percentage: 80, color: "bg-[#10B981]" },
@@ -96,7 +96,7 @@ export const INVENTORY_DATA = [
     },
     {
         id: "INV-8921-2",
-        product: { name: "Full Spectrum...", sku: "SKU-8921", tier: "Earth...", img: home1 },
+        product: { name: "Full Spectrum Tincture", sku: "SKU-8921", tier: "Earth...", img: home1 },
         store: { name: "Healthy Greens", status: "Active", img: store },
         category: "Full Spectrum",
         stock: { current: 14, pack: "pack", wt: "60GM/PACK", alert: 15, percentage: 15, color: "bg-[#F59E0B]" },

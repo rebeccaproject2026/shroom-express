@@ -9,7 +9,14 @@ import Step5Compliance from './steps/Step5Compliance';
 import InventoryLivePreview from './steps/InventoryLivePreview';
 import InventoryCompletionStatus from './steps/InventoryCompletionStatus';
 import InventorySuccessState from './steps/InventorySuccessState';
+import Breadcrumbs from '../../../components/common/Breadcrumbs';
+
 const AddInventory = () => {
+    const breadcrumbItems = [
+        { label: "Dashboard", path: "/superadmin/dashboard" },
+        { label: "Inventory", path: "/superadmin/inventory/all" },
+        { label: "Add Inventory" }
+    ];
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -94,13 +101,7 @@ const AddInventory = () => {
   return (
     <div className="h-full flex flex-col font-manrope animate-in fade-in duration-700 overflow-hidden pb-4">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-sm font-medium">
-        <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline">Dashboard</Link>
-        <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-        <Link to="/superadmin/inventory/all" className="text-[#EA3D2A]">Inventory</Link>
-        <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-        <span className="text-[#64748B]">Add Inventory</span>
-      </nav>
+      <Breadcrumbs items={breadcrumbItems} />
 
       {/* Top Header Section */}
       <div className="shrink-0 space-y-4 mb-4">

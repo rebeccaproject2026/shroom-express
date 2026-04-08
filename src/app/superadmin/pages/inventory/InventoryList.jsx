@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import InventoryTable from "../../components/inventory/InventoryTable";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 const InventoryList = () => {
+    const breadcrumbItems = [
+        { label: "Dashboard", path: "/superadmin/dashboard" },
+        { label: "Inventory" }
+    ];
     const metrics = [
         { label: "Total Products", value: "1,284", sub: "Across all stores", borderColor: "border-[#0066FF]", subtextColor: "text-[#0066FF]", textColor: "text-[#181211]" },
         { label: "In Stock", value: "952", sub: "Ready to sell", borderColor: "border-[#219653]", subtextColor: "text-[#219653]", textColor: "text-[#181211]" },
@@ -17,11 +22,7 @@ const InventoryList = () => {
             {/* Breadcrumbs & Header Section */}
             <div className="flex flex-col gap-2">
                 {/* Breadcrumbs */}
-                <nav className="flex items-center gap-2 text-sm font-medium">
-                    <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline transition-colors uppercase tracking-wide text-[12px]">Dashboard</Link>
-                    <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="14" />
-                    <span className="text-[#64748B] uppercase tracking-wide text-[12px]">Inventory</span>
-                </nav>
+                <Breadcrumbs items={breadcrumbItems} />
 
                 {/* Header Title & Actions */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
