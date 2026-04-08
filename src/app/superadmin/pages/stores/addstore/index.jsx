@@ -11,8 +11,14 @@ import Step5MediaDocs from './steps/Step5MediaDocs';
 import StoreSuccessState from './steps/StoreSuccessState';
 import StoreLivePreview from './steps/StoreLivePreview';
 import StoreCompletionStatus from './steps/StoreCompletionStatus';
+import Breadcrumbs from '../../../components/common/Breadcrumbs';
 
 const AddStore = () => {
+  const breadcrumbItems = [
+    { label: "Dashboard", path: "/superadmin/dashboard" },
+    { label: "Stores", path: "/superadmin/stores" },
+    { label: "Add Store" }
+  ];
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,13 +104,7 @@ const AddStore = () => {
   return (
     <div className="h-full flex flex-col font-manrope animate-in fade-in duration-700 overflow-hidden">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-sm font-medium">
-        <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline">Dashboard</Link>
-        <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-        <Link to="/superadmin/stores" className="text-[#EA3D2A]">Stores</Link>
-        <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-        <span className="text-[#64748B]">Add Store</span>
-      </nav>
+      <Breadcrumbs items={breadcrumbItems} />
 
       {/* Top Header Section */}
       <div className="shrink-0 space-y-4 mb-4">

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   useReactTable,
   getCoreRowModel,
@@ -32,6 +33,7 @@ const getStatusBadgeStyle = (status) => {
 };
 
 const InventoryTable = ({ data = null }) => {
+  const navigate = useNavigate();
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -69,10 +71,10 @@ const InventoryTable = ({ data = null }) => {
             <img src={row.original.product.img} alt={row.original.product.name} className="w-full h-full object-cover" />
           </div>
           <div className="min-w-0">
-            <h4 className="text-sm font-semibold text-[#181211]  truncate">{row.original.product.name}</h4>
+            <h4 className="text-sm font-semibold text-[#181211] w-24 truncate">{row.original.product.name}</h4>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-semibold text-[#EA3D2A]">{row.original.product.sku}</span>
-              <span className="text-xs font-medium text-[#475569]">{row.original.product.tier}</span>
+              <span className="text-xs font-medium text-[#475569] w-12 truncate">{row.original.product.tier}</span>
             </div>
           </div>
         </div>
@@ -172,9 +174,9 @@ const InventoryTable = ({ data = null }) => {
           <button className="text-[#FF9F40]  p-1 rounded-md transition-all">
             <Icon icon="si:alert-line" width="22" />
           </button>
-          <button className="text-[#0066FF] p-1 rounded-md transition-all">
+          <Link to={`/superadmin/inventory/details/${row.original.id}`} className="text-[#0066FF] p-1 rounded-md transition-all">
             <Icon icon="majesticons:eye-line" width="22" />
-          </button>
+          </Link>
           <button className="text-[#219653]  p-1 rounded-md transition-all">
             <Icon icon="iconamoon:edit-light" width="22" />
           </button>
@@ -258,7 +260,12 @@ const InventoryTable = ({ data = null }) => {
               table.getRowModel().rows.map((row, index) => (
                 <tr
                   key={row.id}
-                  className={`hover:bg-[#F8FAFC]/80 transition-colors group ${index % 2 === 0 ? "bg-white" : "bg-[#BABABA]/20"}`}
+                  onClick={(e) => {
+                    // Prevent navigation if a button or link was clicked
+                    if (e.target.closest('button') || e.target.closest('a')) return;
+                    navigate(`/superadmin/inventory/details/${row.original.id}`);
+                  }}
+                  className={`hover:bg-[#F8FAFC]/80 transition-colors group cursor-pointer ${index % 2 === 0 ? "bg-white" : "bg-[#BABABA]/20"}`}
                 >
                   {row.getVisibleCells().map(cell => (
                     <td key={cell.id} className="py-2.5 px-3 whitespace-nowrap">

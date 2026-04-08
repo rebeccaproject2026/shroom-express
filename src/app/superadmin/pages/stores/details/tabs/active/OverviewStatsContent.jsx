@@ -1,7 +1,82 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import ReactApexChart from "react-apexcharts";
 
 const OverviewStatsContent = () => {
+    const chartOptions = {
+        chart: {
+            type: 'area',
+            toolbar: { show: false },
+            fontFamily: 'Manrope, sans-serif',
+            zoom: { enabled: false }
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3,
+            colors: ['#EA3D2A']
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.45,
+                opacityTo: 0.05,
+                stops: [20, 100],
+                colorStops: [
+                    { offset: 0, color: '#EA3D2A', opacity: 0.2 },
+                    { offset: 100, color: '#EA3D2A', opacity: 0 }
+                ]
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        markers: {
+            size: 6,
+            colors: ['#EA3D2A'],
+            strokeColors: '#fff',
+            strokeWidth: 2,
+            hover: { size: 8 }
+        },
+        xaxis: {
+            categories: ['WEEK 1', 'WEEK 2', 'WEEK 3', 'WEEK 4', 'WEEK 5', 'WEEK 6'],
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+            labels: {
+                style: {
+                    colors: '#64748B',
+                    fontSize: '11px',
+                    fontWeight: 600
+                }
+            },
+            crosshairs: {
+                show: false
+            },
+            tooltip: {
+                enabled: false
+            }
+        },
+        yaxis: { show: false },
+        grid: {
+            show: false,
+            padding: {
+                left: 20,
+                right: 20
+            }
+        },
+        tooltip: {
+            enabled: true,
+            x: {
+                show: false
+            }
+        }
+    };
+
+    const chartSeries = [{
+        name: 'Revenue',
+        data: [3500, 7200, 4800, 8000, 6500, 9500]
+    }];
+
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             {/* Live Status Banner */}
@@ -32,46 +107,13 @@ const OverviewStatsContent = () => {
                     </button>
                 </div>
 
-                {/* Mock Chart SVG (Matching the image wave exactly) */}
-                <div className="relative h-[28%] w-full">
-                    <svg className="w-full h-full overflow-visible" viewBox="0 0 1000 250" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#EA3D2A" stopOpacity="0.15" />
-                                <stop offset="100%" stopColor="#EA3D2A" stopOpacity="0" />
-                            </linearGradient>
-                        </defs>
-                        {/* Smooth Cubic Bezier Path */}
-                        <path
-                            d="M0,210 C100,210 120,55 200,55 C280,55 320,135 400,135 C480,135 520,55 600,55 C680,55 720,105 800,105 C880,105 920,10 1000,10"
-                            fill="none"
-                            stroke="#EA3D2A"
-                            strokeWidth="3.5"
-                            strokeLinecap="round"
-                        />
-                        {/* Gradient Fill Path */}
-                        <path
-                            d="M0,210 C100,210 120,55 200,55 C280,55 320,135 400,135 C480,135 520,55 600,55 C680,55 720,105 800,105 C880,105 920,10 1000,10 V250 H0 Z"
-                            fill="url(#revenueGradient)"
-                        />
-                        {/* Data Points (Matching the curve) */}
-                        <circle cx="10" cy="210" r="6" fill="#EA3D2A" />
-                        <circle cx="200" cy="55" r="6" fill="#EA3D2A" />
-                        <circle cx="400" cy="135" r="6" fill="#EA3D2A" />
-                        <circle cx="600" cy="55" r="6" fill="#EA3D2A" />
-                        <circle cx="800" cy="105" r="6" fill="#EA3D2A" />
-                        <circle cx="990" cy="10" r="6" fill="#EA3D2A" />
-                    </svg>
-
-                    {/* X-Axis Labels */}
-                    <div className="absolute bottom-[-20px] left-0 right-0 flex justify-between text-xs font-semibold text-[#64748B] uppercase mb-2">
-                        <span>WEEK 1</span>
-                        <span>WEEK 2</span>
-                        <span>WEEK 3</span>
-                        <span>WEEK 4</span>
-                        <span>WEEK 5</span>
-                        <span>WEEK 6</span>
-                    </div>
+                <div className="h-[250px] w-full">
+                    <ReactApexChart
+                        options={chartOptions}
+                        series={chartSeries}
+                        type="area"
+                        height="100%"
+                    />
                 </div>
             </div>
 

@@ -1,9 +1,14 @@
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import StoreTable from "../../components/stores/StoreTable";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 
 const AllStores = () => {
+    const breadcrumbItems = [
+        { label: "Dashboard", path: "/superadmin/dashboard" },
+        { label: "Stores" }
+    ];
     const stats = [
         {
             label: "Total Stores",
@@ -44,11 +49,7 @@ const AllStores = () => {
             {/* Breadcrumbs & Header Section */}
             <div className="flex flex-col gap-2">
                 {/* Breadcrumbs */}
-                <nav className="flex items-center gap-2 text-sm font-medium">
-                    <Link to="/superadmin/dashboard" className="text-[#EA3D2A] hover:underline">Dashboard</Link>
-                    <Icon icon="lucide:chevron-right" className="text-[#94A3B8]" width="16" />
-                    <span className="text-[#64748B]">Stores</span>
-                </nav>
+                <Breadcrumbs items={breadcrumbItems} />
 
                 {/* Header Title & Actions */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
