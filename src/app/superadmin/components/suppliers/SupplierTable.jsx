@@ -208,7 +208,9 @@ const SupplierTable = ({ data = null }) => {
                         🌿
                     </div>
                     <div className="min-w-0">
-                        <h4 className="text-sm font-semibold text-[#181211] w-25 leading-tight truncate  transition-colors">{row.original.name}</h4>
+                        <Link to={`/superadmin/suppliers/details/${row.original.id}`} className="hover:text-[#EA3D2A] transition-colors">
+                            <h4 className="text-sm font-semibold text-[#181211] w-25 leading-tight truncate">{row.original.name}</h4>
+                        </Link>
                         <span className="text-xs underline font-medium text-[#475569]">{row.original.location}</span>
                     </div>
                 </div>
@@ -289,9 +291,9 @@ const SupplierTable = ({ data = null }) => {
             // eslint-disable-next-line no-unused-vars
             cell: ({ row }) => (
                 <div className="flex items-center gap-2">
-                    <button className="text-[#3B82F6] hover:bg-[#3B82F6]/10 p-1 rounded-md transition-all flex items-center justify-center">
+                    <Link to={`/superadmin/suppliers/details/${row.original.id}`} className="text-[#3B82F6] hover:bg-[#3B82F6]/10 p-1 rounded-md transition-all flex items-center justify-center">
                         <Icon icon="lucide:eye" width="16" />
-                    </button>
+                    </Link>
                     <button className="text-[#64748B] hover:bg-[#64748B]/10 p-1 rounded-md transition-all">
                         <Icon icon="lucide:pencil" width="16" />
                     </button>
