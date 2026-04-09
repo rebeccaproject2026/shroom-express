@@ -10,6 +10,7 @@ const SupplierDetailsIndex = () => {
 
     // Find supplier dynamically from shared data based on URL ID
     const foundSupplier = SUPPLIERS_DATA.find(item => String(item.id) === String(id));
+    // eslint-disable-next-line no-unused-vars
     const [supplier, setSupplier] = useState(foundSupplier);
 
     const breadcrumbItems = [
@@ -31,7 +32,7 @@ const SupplierDetailsIndex = () => {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all">
                     {/* Supplier Info Profile */}
                     <div className="flex items-start gap-3">
-                        <div className="w-18 h-18 rounded-md bg-[#FFFFFF] border border-[#E2E8F0] overflow-hidden flex items-center justify-center shrink-0 shadow-[0px_0px_4px_0px_#00000040] mt-3">
+                        <div className="w-18 h-18 rounded-sm bg-[#FFFFFF] border border-[#E2E8F0] overflow-hidden flex items-center justify-center shrink-0 shadow-[0px_0px_4px_0px_#00000040] mt-3">
                             <span className="text-3xl">🌿</span>
                         </div>
                         <div className="space-y-2">
@@ -86,12 +87,12 @@ const SupplierDetailsIndex = () => {
                                             />
                                         ))}
                                     </div>
-                                    <span>{supplier.rating}</span>
+                                    <span className="text-[#181211]">{supplier.rating}</span>
                                 </div>
-                                <div className="text-[#64748B]">
-                                    Partner since <span className="text-[#181211]">{supplier.partnerSince}</span>
+                                <div className="text-[#64748B] font-medium">
+                                    Partner since {supplier.partnerSince}
                                 </div>
-                                <div className="flex items-center gap-1 px-2.5 py-0.5 bg-[#DAE9FF] text-[#0066FF] text-[11px] font-bold rounded-full border border-[#0066FF]/20">
+                                <div className="flex items-center gap-1 px-2.5 py-0.5 bg-[#DAE9FF] text-[#0066FF] text-[11px] font-bold rounded-full border border-[#0066FF]">
                                     {supplier.category}
                                 </div>
                             </div>
@@ -99,22 +100,22 @@ const SupplierDetailsIndex = () => {
                     </div>
 
                     {/* Right Side Stats */}
-                    <div className="flex items-center gap-4 shrink-0">
-                        <div className="bg-white p-3.5 px-5 rounded-lg border border-[#E2E8F0] shadow-sm min-w-[120px]">
-                            <p className="text-[#64748B] text-[12px] font-bold mb-1">Total Spend</p>
-                            <h3 className="text-xl font-bold text-[#EA3D2A] leading-tight">{supplier.spend}</h3>
+                    <div className="flex items-center gap-2 shrink-0 mb-6">
+                        <div className="bg-white p-2 px-5 rounded-lg border border-[#F8F8F8]  min-w-[120px]">
+                            <p className="text-[#475569] text-xs font-medium mb-1">Total Spend</p>
+                            <h3 className="text-xl font-semibold text-[#EA3D2A] leading-tight">{supplier.spend}</h3>
                         </div>
-                        <div className="bg-white p-3.5 px-5 rounded-lg border border-[#E2E8F0] shadow-sm min-w-[100px]">
-                            <p className="text-[#64748B] text-[12px] font-bold mb-1">Products</p>
-                            <h3 className={`text-xl font-bold text-[#219653] leading-tight`}>{supplier.totalProducts}</h3>
+                        <div className="bg-white p-2 px-5 rounded-lg border border-[#F8F8F8] min-w-[120px]">
+                            <p className="text-[#475569] text-xs font-medium mb-1">Products</p>
+                            <h3 className={`text-xl font-semibold text-[#219653] leading-tight`}>{supplier.totalProducts}</h3>
                         </div>
-                        <div className="bg-white p-3.5 px-5 rounded-lg border border-[#E2E8F0] shadow-sm min-w-[110px]">
-                            <p className="text-[#64748B] text-[12px] font-bold mb-1">Total Orders</p>
-                            <h3 className={`text-xl font-bold text-[#0066FF] leading-tight`}>{supplier.orders}</h3>
+                        <div className="bg-white p-2 px-5 rounded-lg border border-[#F8F8F8] min-w-[120px]">
+                            <p className="text-[#475569] text-xs font-medium mb-1">Total Orders</p>
+                            <h3 className={`text-xl font-semibold text-[#0066FF] leading-tight`}>{supplier.orders}</h3>
                         </div>
-                        <div className="bg-white p-3.5 px-5 rounded-lg border border-[#E2E8F0] shadow-sm min-w-[100px]">
-                            <p className="text-[#64748B] text-[12px] font-bold mb-1">On-time</p>
-                            <h3 className={`text-xl font-bold text-[#F2994A] leading-tight`}>{supplier.onTime}%</h3>
+                        <div className="bg-white p-2 px-5 rounded-lg border border-[#F8F8F8]  min-w-[120px]">
+                            <p className="text-[#475569] text-xs font-medium mb-1">On-time</p>
+                            <h3 className={`text-xl font-semibold text-[#F2994A] leading-tight`}>{supplier.onTime}%</h3>
                         </div>
                     </div>
                 </div>

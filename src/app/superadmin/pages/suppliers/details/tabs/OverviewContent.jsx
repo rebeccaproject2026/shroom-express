@@ -138,14 +138,14 @@ const OverviewContent = ({ supplier }) => {
             value: supplier.orders,
             trend: "42 orders all time",
             trendColor: "text-[#219653]",
-            trendIcon: "lucide:check-circle"
+            trendIcon: "lucide:trending-up"
         },
         {
             label: "Avg Order Value",
             value: supplier.avgOrderValue,
             trend: "Per purchase order",
-            trendColor: "text-[#F2994A]",
-            trendIcon: "lucide:shopping-bag"
+            trendColor: "text-[#219653]",
+            trendIcon: "lucide:trending-up"
         },
         {
             label: "Defect Rate",
@@ -159,7 +159,7 @@ const OverviewContent = ({ supplier }) => {
             value: `${supplier.onTime}%`,
             trend: "Best in platform",
             trendColor: "text-[#64748B]",
-            trendIcon: "lucide:award"
+            trendIcon: ""
         },
     ];
 
@@ -184,12 +184,12 @@ const OverviewContent = ({ supplier }) => {
     return (
         <div className="space-y-10">
             {/* Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-5">
                 {metrics.map((metric, index) => (
-                    <div key={index} className="bg-white p-4.5 rounded-lg border border-[#E2E8F0] shadow-sm">
-                        <p className="text-[#64748B] text-sm font-medium mb-3">{metric.label}</p>
-                        <h3 className="text-2xl font-semibold text-[#181211] mb-2">{metric.value}</h3>
-                        <div className={`flex items-center gap-1.5 text-[12px] font-bold ${metric.trendColor}`}>
+                    <div key={index} className="bg-white p-3 rounded-lg border border-[#E2E8F0] shadow-sm">
+                        <p className="text-[#64748B] text-sm font-medium mb-2">{metric.label}</p>
+                        <h3 className="text-2xl font-semibold text-[#181211] mb-1">{metric.value}</h3>
+                        <div className={`flex items-center gap-1.5 text-[12px] font-semibold ${metric.trendColor}`}>
                             <Icon icon={metric.trendIcon} width="14" />
                             {metric.trend}
                         </div>
@@ -198,14 +198,14 @@ const OverviewContent = ({ supplier }) => {
             </div>
 
             {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
                 {/* Monthly Spend Area Chart */}
-                <div className="space-y-4">
-                    <div className="px-1">
-                        <h4 className="text-xl font-bold text-[#181211]">Monthly Spend</h4>
-                        <p className="text-sm text-[#64748B] font-medium mt-1">Total $ spent with {supplier.name.split(' ')[0]} per month</p>
-                    </div>
-                    <div className="h-[350px] w-full bg-white rounded-2xl border border-[#E2E8F0]/60 p-6 shadow-sm">
+                <div className="h-[350px] w-full bg-white rounded-md border border-[#E2E8F0]/60 p-4 ">
+                    <div className="space-y-4">
+                        <div className="px-1">
+                            <h4 className="text-xl font-semibold text-[#181211]">Monthly Spend</h4>
+                            <p className="text-sm text-[#64748B] font-medium mt-1">Total $ spent with {supplier.name.split(' ')[0]} per month</p>
+                        </div>
                         <ReactApexChart
                             options={areaChartOptions}
                             series={areaSeries}
@@ -216,12 +216,13 @@ const OverviewContent = ({ supplier }) => {
                 </div>
 
                 {/* Orders per Month Bar Chart */}
-                <div className="space-y-4">
-                    <div className="px-1">
-                        <h4 className="text-xl font-bold text-[#181211]">Orders per Month</h4>
-                        <p className="text-sm text-[#64748B] font-medium mt-1">Purchase order volume</p>
-                    </div>
-                    <div className="h-[350px] w-full bg-white rounded-2xl border border-[#E2E8F0]/60 p-6 shadow-sm">
+                <div className="h-[350px] w-full bg-white rounded-md border border-[#E2E8F0]/60 p-4">
+                    <div className="space-y-4">
+                        <div className="px-1">
+                            <h4 className="text-xl font-semibold text-[#181211]">Orders per Month</h4>
+                            <p className="text-sm text-[#64748B] font-medium mt-1">Purchase order volume</p>
+                        </div>
+
                         <ReactApexChart
                             options={barChartOptions}
                             series={barSeries}
@@ -233,15 +234,15 @@ const OverviewContent = ({ supplier }) => {
             </div>
 
             {/* Information Grid - Corrected to Match Image */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4 mb-5">
                 {/* Company Information */}
                 <div className="space-y-5">
-                    <h4 className="text-xl font-bold text-[#181211]">Company Information</h4>
+                    <h4 className="text-xl font-semibold text-[#181211]">Company Information</h4>
                     <div className="space-y-3">
                         {companyInfo.map((info, idx) => (
-                            <div key={idx} className="flex items-center justify-between p-4 px-5 border border-[#E2E8F0] rounded-xl bg-white shadow-sm transition-hover hover:border-[#EA3D2A]/30">
-                                <span className="text-[14px] text-[#181211] font-medium">{info.label}</span>
-                                <span className={`text-[14px] text-[#181211] font-bold text-right max-w-[60%] truncate ${info.underline ? 'underline' : ''}`}>
+                            <div key={idx} className="flex items-center justify-between p-4 px-5 border border-[#E2E8F0] rounded-sm bg-white  transition-hover">
+                                <span className="text-sm text-[#181211] font-semibold">{info.label}</span>
+                                <span className={`text-sm text-[#181211] font-bold text-right max-w-[60%] truncate ${info.underline ? 'underline' : ''}`}>
                                     {info.value}
                                 </span>
                             </div>
@@ -251,12 +252,12 @@ const OverviewContent = ({ supplier }) => {
 
                 {/* Commercial Terms */}
                 <div className="space-y-5">
-                    <h4 className="text-xl font-bold text-[#181211]">Commercial Terms</h4>
+                    <h4 className="text-xl font-semibold text-[#181211]">Commercial Terms</h4>
                     <div className="space-y-3">
                         {commercialTerms.map((info, idx) => (
-                            <div key={idx} className="flex items-center justify-between p-4 px-5 border border-[#E2E8F0] rounded-xl bg-white shadow-sm transition-hover hover:border-[#EA3D2A]/30">
-                                <span className="text-[14px] text-[#181211] font-medium">{info.label}</span>
-                                <span className="text-[14px] text-[#181211] font-bold text-right">
+                            <div key={idx} className="flex items-center justify-between p-4 px-5 border border-[#E2E8F0] rounded-sm bg-white transition-hover">
+                                <span className="text-sm text-[#181211] font-semibold">{info.label}</span>
+                                <span className="text-sm text-[#181211] font-bold text-right">
                                     {info.value}
                                 </span>
                             </div>
@@ -266,12 +267,10 @@ const OverviewContent = ({ supplier }) => {
             </div>
 
             {/* Note Alert */}
-            <div className="bg-[#EBF5FF] border border-[#0066FF] rounded-xl p-4 flex items-start gap-4 shadow-sm">
-                <div className="w-6 h-6 rounded-full bg-white border border-[#0066FF] flex items-center justify-center shrink-0 mt-0.5">
-                    <Icon icon="lucide:info" width="14" className="text-[#0066FF]" />
-                </div>
-                <p className="text-[14px] text-[#0066FF] font-bold leading-relaxed">
-                    Note: <span className="font-regular">Primary micro-dosing supplier. <span className="font-bold underline">COA provided for all batches.</span> Ask for expedited shipping during Q4.</span>
+            <div className="bg-[#DAE9FF] border border-[#0066FF] rounded-md p-2 flex items-start gap-2 shadow-sm">
+                <Icon icon="material-symbols:info-outline" width="22" className="text-[#0066FF]" />
+                <p className="text-[14px] text-[#0066FF] font-medium leading-relaxed">
+                    Note: <span className="font-regular">Primary micro-dosing supplier. <span className="font-semibold underline">COA </span>provided for all batches. Ask for expedited shipping during Q4.</span>
                 </p>
             </div>
         </div>
