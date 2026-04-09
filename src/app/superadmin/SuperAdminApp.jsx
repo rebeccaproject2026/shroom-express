@@ -2,15 +2,19 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
 import Layout from "./pages/layout/Layout";
 import Dashboard from "./pages/dashboard/Dashboard";
-import AllStores from "./pages/stores/AllStores";
-import AddStore from "./pages/stores/addstore";
-import StoreDetails from "./pages/stores/details";
-import InventoryList from "./pages/inventory/InventoryList";
-import AddInventory from "./pages/inventory/addinventory";
-import InventoryDetails from "./pages/inventory/details";
-import Suppliers from "./pages/suppliers/Suppliers";
-import AddSupplier from "./pages/suppliers/addsupplier";
-import SupplierDetails from "./pages/suppliers/details";
+import AllStores from "./pages/stores/allstores/AllStores";
+import AddStore from "./pages/stores/allstores/addstore";
+import StoreDetails from "./pages/stores/allstores/details";
+import InventoryList from "./pages/stores/inventory/InventoryList";
+import AddInventory from "./pages/stores/inventory/addinventory";
+import InventoryDetails from "./pages/stores/inventory/details";
+import Suppliers from "./pages/stores/suppliers/Suppliers";
+import AddSupplier from "./pages/stores/suppliers/addsupplier";
+import SupplierDetails from "./pages/stores/suppliers/details";
+import AllOrders from "./pages/ordersAndDeliveries/orders/AllOrders";
+import NewOrder from "./pages/ordersAndDeliveries/orders/NewOrder";
+import OrderDetails from "./pages/ordersAndDeliveries/orders/OrderDetails";
+
 import "./index.css";
 
 function SuperAdminApp() {
@@ -30,7 +34,12 @@ function SuperAdminApp() {
           <Route path="suppliers/all" element={<Suppliers />} />
           <Route path="suppliers/add" element={<AddSupplier />} />
           <Route path="suppliers/details/:id" element={<SupplierDetails />} />
+          <Route path="orders/all" element={<AllOrders />} />
+          <Route path="orders/add" element={<NewOrder />} />
+          <Route path="orders/details/:id" element={<OrderDetails />} />
         </Route>
+
+
         <Route path="*" element={<Navigate to="/superadmin/login" replace />} />
       </Routes>
     </div>

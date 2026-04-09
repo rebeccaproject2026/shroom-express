@@ -205,8 +205,9 @@ const Sidebar = ({ setSidebar }) => {
                             <div className="ml-2.5 mt-1 space-y-0.5 text-sm">
                                 {[
                                     { to: "/superadmin/orders/all", label: "All Orders" },
-                                    { to: "/superadmin/orders/pending", label: "Pending Orders" },
-                                    { to: "/superadmin/orders/history", label: "Order History" },
+                                    { to: "/superadmin/orders/livetracking", label: "Live Tracking" },
+                                    { to: "/superadmin/orders/deliveryzones", label: "Delivery Zones " },
+                                    { to: "/superadmin/orders/orderreports", label: "Order Reports " },
                                 ].map((sub) => (
                                     <NavLink
                                         key={sub.to}
