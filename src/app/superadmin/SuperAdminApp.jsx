@@ -12,6 +12,8 @@ import Suppliers from "./pages/stores/suppliers/Suppliers";
 import AddSupplier from "./pages/stores/suppliers/addsupplier";
 import SupplierDetails from "./pages/stores/suppliers/details";
 import AllOrders from "./pages/ordersAndDeliveries/orders/AllOrders";
+import NewOrder from "./pages/ordersAndDeliveries/orders/NewOrder";
+import OrderDetails from "./pages/ordersAndDeliveries/orders/OrderDetails";
 
 import "./index.css";
 
@@ -33,7 +35,11 @@ function SuperAdminApp() {
           <Route path="suppliers/add" element={<AddSupplier />} />
           <Route path="suppliers/details/:id" element={<SupplierDetails />} />
           <Route path="orders/all" element={<AllOrders />} />
+          <Route path="orders/add" element={<NewOrder />} />
+          <Route path="orders/details/:id" element={<OrderDetails />} />
         </Route>
+
+
         <Route path="*" element={<Navigate to="/superadmin/login" replace />} />
       </Routes>
     </div>
