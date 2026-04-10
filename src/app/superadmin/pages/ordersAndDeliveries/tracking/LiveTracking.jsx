@@ -5,10 +5,13 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Breadcrumbs from '../../../components/common/Breadcrumbs';
 import ReusableSearchInput from '../../../components/orders/../common/ReusableSearchInput';
 import ReusableTableSelect from '../../../components/orders/../common/ReusableTableSelect';
+import DriverTrackingCard from '../../../components/orders/tracking/DriverTrackingCard';
 import {
     useReactTable,
     getCoreRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
+    getFilteredRowModel,
     flexRender,
 } from "@tanstack/react-table";
 
@@ -27,76 +30,6 @@ const TABS = [
     { label: 'Overdue', count: '3' },
 ];
 
-// Driver Card Component (Matching Admin style)
-const DriverCard = ({ driverName, status, isOnline, eta, address, totalOrders, breakdown }) => {
-    const statusColors = {
-        'Delivered': 'text-[#219653]',
-        'In-progress': 'text-[#FF9500]',
-        'Pending': 'text-[#0066FF]',
-        'Cancelled': 'text-[#EA3D2A]'
-    };
-
-    // const total = Object.values(breakdown).reduce((a, b) => a + b, 0);
-
-    return (
-        <div className="bg-white rounded-lg shadow-xl border border-[#E2E8F0] w-[280px] p-4 pointer-events-auto space-y-3 animate-in zoom-in-95 duration-200">
-            <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="relative">
-                        <div className="w-10 h-10 rounded-full bg-[#E3EEFF] flex items-center justify-center text-[#0066FF] font-bold border border-[#E2E8F0]">
-                            {driverName.charAt(0)}
-                        </div>
-                        <div className={`absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border-2 border-white ${isOnline ? 'bg-[#219653]' : 'bg-[#EA3D2A]'}`}></div>
-                    </div>
-                    <div>
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded uppercase ${isOnline ? 'bg-[#CDFFE2] text-[#219653]' : 'bg-[#FFEDEB] text-[#EA3D2A]'}`}>
-                            {isOnline ? 'Online' : 'Offline'}
-                        </span>
-                        <h4 className="text-sm font-bold text-[#181211] leading-tight">{driverName}</h4>
-                    </div>
-                </div>
-                <div className="flex gap-1.5">
-                    <button className="text-[#0066FF] hover:bg-blue-50 p-1 rounded transition-colors">
-                        <Icon icon="fa6-solid:up-right-from-square" width="14" />
-                    </button>
-                    <button className="text-gray-400 hover:bg-gray-50 p-1 rounded transition-colors">
-                        <Icon icon="material-symbols:close" width="16" />
-                    </button>
-                </div>
-            </div>
-
-            <div className="space-y-1">
-                <div className="flex justify-between items-center text-[11px] font-bold">
-                    <span className="text-[#94A3B8]">ETA: {eta}</span>
-                    <span className={statusColors[status]}>{status}</span>
-                </div>
-                <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${status === 'Delivered' ? 'bg-[#219653] w-full' : status === 'In-progress' ? 'bg-[#FF9500] w-2/3' : 'bg-[#0066FF] w-1/3'}`} />
-                </div>
-                <p className="text-[11px] font-medium text-[#475569] leading-tight pt-1">{address}</p>
-            </div>
-
-            <div className="pt-2 border-t border-[#F1F5F9] space-y-2">
-                <div className="flex items-center gap-1.5">
-                    <Icon icon="mdi:package-variant-closed" width="16" className="text-[#181211]" />
-                    <span className="text-[11px] font-bold text-[#181211]">Total Orders ({totalOrders})</span>
-                </div>
-                <div className="flex h-3.5 w-full rounded overflow-hidden">
-                    <div className="bg-[#0066FF] flex items-center justify-center text-[9px] text-white font-bold" style={{ width: '40%' }}>{breakdown.pending}</div>
-                    <div className="bg-[#FF9500] flex items-center justify-center text-[9px] text-white font-bold" style={{ width: '15%' }}>{breakdown.inProgress}</div>
-                    <div className="bg-[#219653] flex items-center justify-center text-[9px] text-white font-bold" style={{ width: '30%' }}>{breakdown.delivered}</div>
-                    <div className="bg-[#EA3D2A] flex items-center justify-center text-[9px] text-white font-bold" style={{ width: '15%' }}>{breakdown.cancelled}</div>
-                </div>
-                <div className="flex flex-wrap gap-x-3 gap-y-1 text-[10px] font-bold text-[#94A3B8]">
-                    <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" /> Pending</div>
-                    <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-[#FF9500]" /> In-Progress</div>
-                    <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-[#219653]" /> Delivered</div>
-                    <div className="flex items-center gap-1"><div className="w-1.5 h-1.5 rounded-full bg-[#EA3D2A]" /> Canceled</div>
-                </div>
-            </div>
-        </div>
-    );
-};
 
 
 const LiveTracking = () => {
@@ -112,8 +45,8 @@ const LiveTracking = () => {
         { label: "Live Tracking" }
     ];
 
-    // Mock data for table
-    const tableData = [
+    // Mock data for Delivery
+    const deliveryTableData = [
         { driver: 'Sarah K.', orderId: 'SE-2026-041', customer: 'Customer name', custId: '#SE-C4821', product: 'Micro Dose C...', sku: 'NVB-MIC-030 · 200 Pack', weight: '45 gm', amount: '$77.98', tax: '+$9.36', status: 'Delivered', delivery: 'Express', created: 'Mar 03, 2026 at 10:45:00', eta: 'Delivered At 12:20:00, Mar 03, 2026' },
         { driver: 'James T.', orderId: 'SE-2026-038', customer: 'Customer name', custId: '#SE-C4821', product: 'Micro Dose C...', sku: 'NVB-MIC-015 · 150 Pack', weight: '30 gm', amount: '$62.00', tax: '+$7.44', status: 'Preparing', delivery: 'Same Day', created: 'Mar 03, 2026 at 10:00:00', eta: 'Approximate Arrival 12:30:00, Today' },
         { driver: 'Mark D.', orderId: 'SE-2026-036', customer: 'Customer name', custId: '#SE-C4821', product: 'Adaptogen Bl...', sku: 'NVB-ADT-001 · 80 Pack', weight: '55 gm', amount: '$132.00', tax: '+$15.84', status: 'Pending', delivery: 'Express', created: 'Mar 02, 2026 at 17:00:00', eta: 'Approximate Arrival 11:30:00, Tomorrow' },
@@ -123,14 +56,25 @@ const LiveTracking = () => {
         { driver: 'Kyle B.', orderId: 'SE-2026-025', customer: 'Customer name', custId: '#SE-C4821', product: 'Micro Dose C...', sku: 'NVB-MIC-030 · 180 Pack', weight: '45 gm', amount: '$62.00', tax: '+$7.44', status: 'Delivered', delivery: 'Express', created: 'Jan 14, 2026 at 19:00:00', eta: 'Delivered At 20:20:00, Jan 14, 2026' },
     ];
 
+    // Mock data for Shipping
+    const shippingTableData = [
+        { driver: 'Dan R.', orderId: 'SE-2026-031', customer: 'Customer name', custId: '#SE-C4821', product: 'Micro Dose C...', sku: 'MP-MIC-015 · 200 Pack', weight: '30 gm', amount: '$55.00', tax: '+$6.60', status: 'Cancelled', delivery: 'Shipping', created: 'Mar 30, 2026 at 13:20:00', eta: '-' },
+        { driver: 'Nina C.', orderId: 'SE-2026-030', customer: 'Customer name', custId: '#SE-C4821', product: 'Lion\'s Mane C...', sku: 'NVB-LMN-100 · 50 Pack', weight: '70 gm', amount: '$96.00', tax: '+$11.52', status: 'Delivered', delivery: 'Shipping', created: 'Mar 28, 2026 at 15:34:00', eta: 'Delivered At 11:20:00, Mar 24, 2026' },
+        { driver: 'Aisha N.', orderId: 'SE-2026-022', customer: 'Customer name', custId: '#SE-C4821', product: 'Full Spectrum...', sku: 'CL-FSO-060 · 40 units', weight: '42 gm', amount: '$70.00', tax: '+$8.40', status: 'In Transit', delivery: 'Shipping', created: 'Mar 20, 2026 at 12:45:00', eta: 'Approximate Arrival 11:30:00, Tomorrow' },
+    ];
+
+    const currentTableData = useMemo(() => {
+        return deliveryMode === 'delivery' ? deliveryTableData : shippingTableData;
+    }, [deliveryMode]);
+
     const columns = useMemo(() => [
         {
             header: 'DRIVER',
             accessorKey: 'driver',
             cell: ({ row }) => (
                 <div className="flex flex-col">
-                    <span className="text-sm font-bold text-[#181211] whitespace-nowrap">{row.original.driver}</span>
-                    <span className="text-[11px] font-medium text-[#475569] truncate">#SE-D4821</span>
+                    <span className="text-sm font-semibold text-[#181211] leading-tight">{row.original.driver}</span>
+                    <span className="text-xs font-medium underline text-[#475569] mt-0.5">#SE-D4821</span>
                 </div>
             )
         },
@@ -139,11 +83,9 @@ const LiveTracking = () => {
             accessorKey: 'orderId',
             cell: ({ row }) => (
                 <div className="flex flex-col">
-                    <span className="text-[13px] font-bold text-[#EA3D2A] whitespace-nowrap cursor-pointer hover:underline">{row.original.orderId}</span>
-                    <div className="flex items-center gap-1">
-                        <span className="text-[11px] font-medium text-[#475569]">{row.original.customer}</span>
-                        <span className="text-[11px] font-medium text-[#0066FF] underline cursor-pointer">{row.original.custId}</span>
-                    </div>
+                    <span className="text-sm font-semibold text-[#EA3D2A] cursor-pointer hover:underline">{row.original.orderId}</span>
+                    <span className="text-sm font-semibold text-[#181211] leading-tight mt-0.5">{row.original.customer}</span>
+                    <span className="text-xs font-medium  text-[#475569] underline cursor-pointer mt-0.5">{row.original.custId}</span>
                 </div>
             )
         },
@@ -151,20 +93,20 @@ const LiveTracking = () => {
             header: 'PRODUCT',
             accessorKey: 'product',
             cell: ({ row }) => (
-                <div className="flex flex-col">
-                    <h4 className="text-sm font-bold text-[#181211] leading-tight truncate">{row.original.product}</h4>
-                    <span className="text-[11px] font-medium text-[#475569] truncate">{row.original.sku}</span>
+                <div className="flex flex-col max-w-[150px]">
+                    <h4 className="text-sm font-semibold text-[#181211] leading-tight break-words">{row.original.product}</h4>
+                    <span className="text-xs font-medium  text-[#475569] underline mt-0.5 break-words uppercase">{row.original.sku}</span>
                 </div>
             )
         },
-        { header: 'WEIGHT', accessorKey: 'weight', cell: ({ row }) => <span className="text-xs font-medium text-[#181211]">{row.original.weight}</span> },
+        { header: 'WEIGHT', accessorKey: 'weight', cell: ({ row }) => <span className="text-sm font-medium text-[#181211]">{row.original.weight}</span> },
         {
             header: 'AMOUNT',
             accessorKey: 'amount',
             cell: ({ row }) => (
                 <div className="flex flex-col">
-                    <span className="text-sm font-bold text-[#181211]">{row.original.amount}</span>
-                    <span className="text-[11px] font-medium text-[#9AA4B2]">{row.original.tax}</span>
+                    <span className="text-sm font-semibold text-[#181211] leading-tight">{row.original.amount}</span>
+                    <span className="text-xs font-semibold text-[#9AA4B2] mt-0.5">{row.original.tax}</span>
                 </div>
             )
         },
@@ -181,7 +123,7 @@ const LiveTracking = () => {
                     'Cancelled': 'text-[#EA3D2A] bg-[#FFEDEB]'
                 };
                 return (
-                    <span className={`px-2.5 py-1 rounded-sm text-[11px] font-bold whitespace-nowrap ${statusStyles[row.original.status] || 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${statusStyles[row.original.status] || 'bg-gray-100 text-gray-600'}`}>
                         {row.original.status}
                     </span>
                 );
@@ -196,7 +138,7 @@ const LiveTracking = () => {
                     'Same Day': 'text-[#219653]',
                     'Shipping': 'text-[#0066FF]'
                 };
-                return <span className={`text-[13px] font-bold ${deliveryStyles[row.original.delivery]}`}>{row.original.delivery}</span>;
+                return <span className={`text-sm font-semibold ${deliveryStyles[row.original.delivery]}`}>{row.original.delivery}</span>;
             }
         },
         {
@@ -205,9 +147,9 @@ const LiveTracking = () => {
             cell: ({ row }) => {
                 const parts = row.original.created.split(' at ');
                 return (
-                    <div className="flex flex-col">
-                        <span className="text-[13px] font-medium text-[#181211] whitespace-nowrap">{parts[0]}</span>
-                        <span className="text-[13px] font-medium text-[#181211]">at {parts[1]}</span>
+                    <div className="flex flex-col text-[#181211] text-[13px] font-medium leading-tight min-w-[100px]">
+                        <span>{parts[0]}</span>
+                        <span>at {parts[1]}</span>
                     </div>
                 );
             }
@@ -218,9 +160,9 @@ const LiveTracking = () => {
             cell: ({ row }) => {
                 const isDelivered = row.original.eta.includes('Delivered At');
                 return (
-                    <div className="flex flex-col min-w-[140px]">
-                        <span className="text-[11px] font-medium text-[#475569]">{isDelivered ? 'Delivered At' : 'Approximate Arrival'}</span>
-                        <span className="text-[13px] font-bold text-[#181211]">{row.original.eta.replace('Delivered At ', '').replace('Approximate Arrival ', '')}</span>
+                    <div className="flex flex-col min-w-[140px] leading-tight">
+                        <span className="text-[13px] font-medium text-[#181211] mb-0.5">{isDelivered ? 'Delivered At' : 'Approximate Arrival'}</span>
+                        <span className="text-[13px] font-medium text-[#181211]">{row.original.eta.replace('Delivered At ', '').replace('Approximate Arrival ', '')}</span>
                     </div>
                 );
             }
@@ -229,7 +171,7 @@ const LiveTracking = () => {
             header: 'ACTIONS',
             cell: () => (
                 <div className="flex justify-center">
-                    <button className="text-[#0066FF] hover:opacity-80 transition-opacity">
+                    <button className="text-[#0066FF] hover:opacity-80 transition-opacity p-1">
                         <Icon icon="lucide:eye" width="18" />
                     </button>
                 </div>
@@ -238,13 +180,15 @@ const LiveTracking = () => {
     ], []);
 
     const table = useReactTable({
-        data: tableData,
+        data: currentTableData,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         state: {
             pagination: { pageIndex: 0, pageSize: 8 }
-        }
+        },
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
 
     useEffect(() => {
@@ -292,157 +236,159 @@ const LiveTracking = () => {
                 </div>
 
                 {/* Delivery/Shipping Toggle */}
-                <div className="inline-flex items-center p-1 bg-white border border-[#E2E8F0] rounded-full shadow-sm self-start">
+                <div className="flex items-center bg-white border border-[#D1D5DB] rounded-full p-0.5 shadow-sm shrink-0">
                     <button
                         onClick={() => setDeliveryMode('delivery')}
-                        className={`px-6 py-2 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${deliveryMode === 'delivery' ? 'bg-[#EA3D2A] text-white shadow-md' : 'text-[#475569] hover:bg-gray-50'}`}
+                        className={`flex items-center gap-1.5 xl:gap-2 px-6 py-2 rounded-full text-[14px] xl:text-[15px] font-bold transition-all cursor-pointer ${deliveryMode === 'delivery'
+                            ? 'bg-[#EA3D2A] text-white shadow-md'
+                            : 'text-[#222222] hover:bg-gray-50'
+                            }`}
                     >
-                        <Icon icon="solar:box-delivery-bold" width="18" />
-                        Delivery
+                        <Icon icon="hugeicons:truck-delivery" width={22} height={22} className="xl:w-6 xl:h-6" />
+                        <span>Delivery</span>
                     </button>
                     <button
                         onClick={() => setDeliveryMode('shipping')}
-                        className={`px-6 py-2 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${deliveryMode === 'shipping' ? 'bg-[#EA3D2A] text-white shadow-md' : 'text-[#475569] hover:bg-gray-50'}`}
+                        className={`flex items-center gap-1.5 xl:gap-2 px-6 py-2 cursor-pointer rounded-full text-[14px] xl:text-[15px] font-bold transition-all ${deliveryMode === 'shipping'
+                            ? 'bg-[#EA3D2A] text-white shadow-md'
+                            : 'text-[#222222] hover:bg-gray-50'
+                            }`}
                     >
-                        <Icon icon="solar:map-arrow-square-bold" width="18" />
-                        Shipping
+                        <Icon icon="stash:pin-place-duotone" width={23} height={23} className="xl:w-[25px] xl:h-[25px]" />
+                        <span>Shipping</span>
                     </button>
                 </div>
             </div>
 
-            {/* Map Section */}
-            <div className="relative w-full h-[600px] bg-[#F8FAFC] rounded-lg border border-[#E2E8F0] shadow-sm overflow-hidden">
-                <div ref={mapContainerRef} className="w-full h-full" />
+            {/* Map Section - Only show in Delivery Mode */}
+            {deliveryMode === 'delivery' && (
+                <div className="relative w-full h-[600px] bg-[#F8FAFC] rounded-lg border border-[#E2E8F0] shadow-sm overflow-hidden">
+                    <div ref={mapContainerRef} className="w-full h-full" />
 
-                {/* Map Overlays - Top Toolbar */}
-                <div className="absolute top-4 left-4 right-4 z-10 flex flex-col sm:flex-row items-start justify-between gap-3 pointer-events-none">
-                    {/* Map Styles Toggle */}
-                    <div className="flex items-center rounded-md bg-white shadow-md border border-[#E2E8F0] pointer-events-auto overflow-hidden h-9">
-                        <button className="px-4 h-full text-xs font-bold text-[#181211] bg-gray-50 border-r border-[#E2E8F0]">Map</button>
-                        <button className="px-4 h-full text-xs font-medium text-[#475569] hover:bg-gray-50">Satellite</button>
-                    </div>
-
-                    {/* Status Snapshot Toggles */}
-                    <div className="flex items-center gap-2 pointer-events-auto overflow-x-auto hide-scrollbar sm:max-w-none max-w-[calc(100vw-32px)]">
-                        {[
-                            { label: 'Pending', count: '9,999', color: '#0066FF' },
-                            { label: 'In-progress', count: '9,999', color: '#FF9500' },
-                            { label: 'Delivered', count: '9,999', color: '#219653' },
-                            { label: 'Cancelled', count: '9,999', color: '#EA3D2A' },
-                        ].map((filter, i) => (
-                            <button key={i} className="flex items-center justify-between gap-6 px-3 py-2 bg-white rounded-sm shadow-md border border-[#E2E8F0] min-w-[160px] h-12 hover:border-[#0066FF] transition-all group">
-                                <span className="text-[13px] font-bold" style={{ color: filter.color }}>{filter.label}</span>
-                                <span className="text-xl font-extrabold text-[#181211]">{filter.count}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Driver Cards Overlaid on Map (Matches Admin logic) */}
-                <div className="absolute inset-0 pointer-events-none">
-                    <div className="relative w-full h-full">
-                        {/* Card 1: In-progress */}
-                        <div className="absolute top-[38%] left-[8%] pointer-events-auto">
-                            <DriverCard
-                                driverName="Olivia Smith"
-                                status="In-progress"
-                                isOnline={true}
-                                eta="20 Jan 2025 at 11:00pm"
-                                address="123 Main Street, Toronto, ON M5J 2N8"
-                                totalOrders={19}
-                                breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
-                            />
-                        </div>
-                        {/* Card 2: Pending (Offline) */}
-                        <div className="absolute top-[34%] left-[35%] pointer-events-auto">
-                            <DriverCard
-                                driverName="Olivia Smith"
-                                status="Pending"
-                                isOnline={false}
-                                eta="20 Jan 2025 at 11:00pm"
-                                address="123 Main Street, Toronto, ON M5J 2N8"
-                                totalOrders={19}
-                                breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
-                            />
-                        </div>
-                        {/* Card 3: Delivered */}
-                        <div className="absolute top-[12%] right-[20%] pointer-events-auto">
-                            <DriverCard
-                                driverName="Olivia Smith"
-                                status="Delivered"
-                                isOnline={true}
-                                eta="20 Jan 2025 at 11:00pm"
-                                address="123 Main Street, Toronto, ON M5J 2N8"
-                                totalOrders={19}
-                                breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
-                            />
-                        </div>
-                        {/* Card 4: Cancelled */}
-                        <div className="absolute bottom-[20%] right-[6%] pointer-events-auto">
-                            <DriverCard
-                                driverName="Olivia Smith"
-                                status="Cancelled"
-                                isOnline={true}
-                                eta="20 Jan 2025 at 11:00pm"
-                                address="123 Main Street, Toronto, ON M5J 2N8"
-                                totalOrders={19}
-                                breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
-                            />
+                    {/* Map Overlays - Top Toolbar */}
+                    <div className="absolute top-4 left-4 right-4 z-10 flex flex-col sm:flex-row items-start justify-between gap-3 pointer-events-none">
+                        {/* Status Snapshot Toggles */}
+                        <div className="flex items-center justify-between gap-4 pointer-events-auto overflow-x-auto hide-scrollbar sm:max-w-full max-w-full">
+                            {[
+                                { label: `${deliveryMode === 'delivery' ? 'Delivery' : 'Shipping'} Pending`, count: '9,999', color: '#0066FF' },
+                                { label: `${deliveryMode === 'delivery' ? 'Delivery' : 'Shipping'} In-progress`, count: '9,999', color: '#FF9500' },
+                                { label: 'Delivered', count: '9,999', color: '#219653' },
+                                { label: `${deliveryMode === 'delivery' ? 'Delivery' : 'Shipping'} Cancelled`, count: '9,999', color: '#EA3D2A' },
+                            ].map((filter, i) => (
+                                <button key={i} className="flex items-center justify-between gap-6 px-3 py-2 bg-white rounded-lg  border border-[#E2E8F0] min-w-[285px] h-12">
+                                    <span className="text-sm font-semibold" style={{ color: filter.color }}>{filter.label}</span>
+                                    <span className="text-xl font-extrabold text-[#181211]">{filter.count}</span>
+                                </button>
+                            ))}
                         </div>
                     </div>
-                </div>
 
-
-                {/* Left Bottom Tools (Matches Reference Image) */}
-                <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-3 pointer-events-none">
-                    {/* Online/Offline Toggles */}
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-3">
-                            <button className="w-10 h-10 bg-white rounded-2xl border border-[#E2E8F0] shadow-md flex items-center justify-center shrink-0 pointer-events-auto hover:bg-gray-50">
-                                <span className="w-8 h-8 rounded-full bg-[#CDFFE2] flex items-center justify-center">
-                                    <Icon icon="mdi:radar" width="18" className="text-gray-900" />
-                                </span>
-                            </button>
-                            <div className="bg-white px-4 py-2 rounded-xl border border-[#E2E8F0] shadow-md pointer-events-auto flex items-baseline gap-3">
-                                <span className="text-xs font-bold text-[#181211]">Online Drivers</span>
-                                <span className="text-sm font-extrabold text-[#181211]">925</span>
+                    {/* Driver Cards Overlaid on Map (Matches Admin logic) */}
+                    <div className="absolute inset-0 pointer-events-none">
+                        <div className="relative w-full h-full">
+                            {/* Card 1: In-progress */}
+                            <div className="absolute top-[37%] left-[3%] pointer-events-auto">
+                                <DriverTrackingCard
+                                    driverName="Olivia Smith"
+                                    status="In-progress"
+                                    isOnline={true}
+                                    eta="20 Jan 2025 at 11:00pm"
+                                    address="123 Main Street, Toronto, ON M5J 2N8"
+                                    totalOrders={19}
+                                    breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
+                                />
                             </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <button className="w-10 h-10 bg-white rounded-2xl border border-[#E2E8F0] shadow-md flex items-center justify-center shrink-0 pointer-events-auto hover:bg-gray-50 opacity-60">
-                                <span className="w-8 h-8 rounded-full bg-[#FFEDEB] flex items-center justify-center">
-                                    <Icon icon="mdi:radar" width="18" className="text-gray-900" />
-                                </span>
-                            </button>
-                            <div className="bg-white px-4 py-2 rounded-xl border border-[#E2E8F0] shadow-md pointer-events-auto flex items-baseline gap-3 opacity-60">
-                                <span className="text-xs font-bold text-[#181211]">Offline Drivers</span>
-                                <span className="text-sm font-extrabold text-[#181211]">40</span>
+                            {/* Card 2: Pending (Offline) */}
+                            <div className="absolute top-[29%] left-[30%] pointer-events-auto">
+                                <DriverTrackingCard
+                                    driverName="Olivia Smith"
+                                    status="Pending"
+                                    isOnline={false}
+                                    eta="20 Jan 2025 at 11:00pm"
+                                    address="123 Main Street, Toronto, ON M5J 2N8"
+                                    totalOrders={19}
+                                    breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
+                                />
+                            </div>
+                            {/* Card 3: Delivered */}
+                            <div className="absolute top-[15%] right-[18%] pointer-events-auto">
+                                <DriverTrackingCard
+                                    driverName="Olivia Smith"
+                                    status="Delivered"
+                                    isOnline={true}
+                                    eta="20 Jan 2025 at 11:00pm"
+                                    address="123 Main Street, Toronto, ON M5J 2N8"
+                                    totalOrders={19}
+                                    breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
+                                />
+                            </div>
+                            {/* Card 4: Cancelled */}
+                            <div className="absolute bottom-[15%] right-[6%] pointer-events-auto">
+                                <DriverTrackingCard
+                                    driverName="Olivia Smith"
+                                    status="Cancelled"
+                                    isOnline={true}
+                                    eta="20 Jan 2025 at 11:00pm"
+                                    address="123 Main Street, Toronto, ON M5J 2N8"
+                                    totalOrders={19}
+                                    breakdown={{ pending: 10, inProgress: 4, delivered: 2, cancelled: 3 }}
+                                />
                             </div>
                         </div>
                     </div>
 
-                    {/* Layers Button */}
-                    <button className="relative w-10 h-10 rounded-2xl overflow-hidden border border-[#E2E8F0] shadow-md shrink-0 pointer-events-auto">
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#065F46] via-[#22C55E]/40 to-[#B45309]"></div>
-                        <div className="absolute left-2 bottom-1.5 flex items-center gap-1 text-white">
-                            <Icon icon="mdi:layers-outline" width="14" />
-                            <span className="text-[10px] font-bold uppercase tracking-tighter">Layers</span>
+
+                    {/* Left Bottom Tools (Matches Reference Image) */}
+                    <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-3 pointer-events-none">
+                        {/* Online/Offline Toggles */}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-3">
+                                <button className="w-10 h-10 bg-white rounded-2xl border border-[#E2E8F0] shadow-md flex items-center justify-center shrink-0 pointer-events-auto hover:bg-gray-50">
+                                    <span className="w-8 h-8 rounded-full bg-[#CDFFE2] flex items-center justify-center">
+                                        <Icon icon="mdi:radar" width="18" className="text-gray-900" />
+                                    </span>
+                                </button>
+                                <div className="bg-white px-4 py-2 rounded-xl border border-[#E2E8F0] shadow-md pointer-events-auto flex items-baseline gap-3">
+                                    <span className="text-xs font-bold text-[#181211]">Online Drivers</span>
+                                    <span className="text-sm font-extrabold text-[#181211]">925</span>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <button className="w-10 h-10 bg-white rounded-2xl border border-[#E2E8F0] shadow-md flex items-center justify-center shrink-0 pointer-events-auto hover:bg-gray-50 opacity-60">
+                                    <span className="w-8 h-8 rounded-full bg-[#FFEDEB] flex items-center justify-center">
+                                        <Icon icon="mdi:radar" width="18" className="text-gray-900" />
+                                    </span>
+                                </button>
+                                <div className="bg-white px-4 py-2 rounded-xl border border-[#E2E8F0] shadow-md pointer-events-auto flex items-baseline gap-3 opacity-60">
+                                    <span className="text-xs font-bold text-[#181211]">Offline Drivers</span>
+                                    <span className="text-sm font-extrabold text-[#181211]">40</span>
+                                </div>
+                            </div>
                         </div>
-                    </button>
+
+                        {/* Layers Button */}
+                        <button className="relative w-10 h-10 rounded-2xl overflow-hidden border border-[#E2E8F0] shadow-md shrink-0 pointer-events-auto">
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#065F46] via-[#22C55E]/40 to-[#B45309]"></div>
+                            <div className="absolute left-2 bottom-1.5 flex items-center gap-1 text-white">
+                                <Icon icon="mdi:layers-outline" width="14" />
+                                <span className="text-[10px] font-bold uppercase tracking-tighter">Layers</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
 
 
             {/* Table Section */}
             <div className="bg-white rounded-lg border border-[#E2E8F0] shadow-sm overflow-hidden">
                 {/* Search & Tabs Row */}
-                <div className="p-4 bg-white border-b border-[#F1F5F9] space-y-4">
-                    <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center justify-between p-4.5 gap-1 bg-white border-b border-[#F1F5F9]">
+                    <div className="flex-1 min-w-[300px] flex items-center justify-between gap-3 flex-wrap">
                         <ReusableSearchInput
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search order ID, product, customer..."
-                            className="w-96"
+                            className="w-full sm:w-96"
                         />
                         <div className="flex items-center gap-3">
                             <ReusableTableSelect
@@ -451,26 +397,28 @@ const LiveTracking = () => {
                                 onChange={() => { }}
                                 className="w-40"
                             />
-                            <div className="flex items-center border border-[#E8E8E8] rounded-md overflow-hidden shrink-0">
+                            <div className="flex items-center border-2 border-[#E8E8E8] rounded-md overflow-hidden shrink-0">
                                 <button className="p-2 bg-[#EA3D2A] text-white">
-                                    <Icon icon="lucide:list" width="18" />
+                                    <Icon icon="lucide:list" width="20" />
                                 </button>
-                                <button className="p-2 text-[#475569] hover:bg-gray-50 border-l border-[#E8E8E8]">
-                                    <Icon icon="lucide:layout-grid" width="18" />
+                                <button className="p-2 text-[#181211] hover:bg-gray-50">
+                                    <Icon icon="lucide:layout-grid" width="20" />
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="flex items-center gap-6 overflow-x-auto hide-scrollbar pt-2">
+                <div className="px-5 py-4 flex items-center justify-between border-b border-[#F1F5F9] bg-white">
+                    <div className="flex items-center gap-6 overflow-x-auto hide-scrollbar">
                         {TABS.map((tab, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => setActiveTab(tab.label)}
-                                className={`flex items-center gap-2 pb-2 transition-all relative whitespace-nowrap ${activeTab === tab.label ? 'text-[#EA3D2A] font-bold' : 'text-[#475569] font-semibold'}`}
+                                className={`flex items-center gap-2 pb-2 transition-all relative whitespace-nowrap ${activeTab === tab.label ? 'text-[#EA3D2A] font-bold' : 'text-[#181211] font-semibold'}`}
                             >
                                 <span>{tab.label}</span>
-                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${activeTab === tab.label ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#475569]'}`}>
+                                <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${activeTab === tab.label ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#475569]'}`}>
                                     {tab.count}
                                 </span>
                                 {activeTab === tab.label && (
@@ -483,7 +431,7 @@ const LiveTracking = () => {
 
                 <div className="p-3 bg-[#F8FAFC] border-b border-[#F1F5F9]">
                     <p className="text-[13px] font-medium text-[#475569]">
-                        Showing <span className="font-bold text-[#181211]">10</span> of <span className="font-bold text-[#181211]">284 orders</span>
+                        Showing <span className="font-bold text-[#181211]">{currentTableData.length}</span> of <span className="font-bold text-[#181211]">284 orders</span>
                     </p>
                 </div>
 
@@ -491,9 +439,9 @@ const LiveTracking = () => {
                 <div className="w-full overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[11px] font-bold uppercase tracking-wider border-b border-[#F1F5F9]">
+                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[12px] font-bold uppercase border-b border-[#F1F5F9]">
                                 {table.getHeaderGroups()[0].headers.map(header => (
-                                    <th key={header.id} className="py-3 px-4 first:pl-5 last:pr-5">
+                                    <th key={header.id} className="py-3.5 px-3 first:pl-5 last:pr-5">
                                         {flexRender(header.column.columnDef.header, header.getContext())}
                                     </th>
                                 ))}
@@ -501,9 +449,9 @@ const LiveTracking = () => {
                         </thead>
                         <tbody className="divide-y divide-[#F1F5F9]">
                             {table.getRowModel().rows.map(row => (
-                                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                                <tr key={row.id} className="hover:bg-gray-50 transition-colors group">
                                     {row.getVisibleCells().map(cell => (
-                                        <td key={cell.id} className="py-3 px-4 first:pl-5 last:pr-5 whitespace-nowrap">
+                                        <td key={cell.id} className="py-3 px-3 first:pl-5 last:pr-5">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </td>
                                     ))}
@@ -514,22 +462,60 @@ const LiveTracking = () => {
                 </div>
 
                 {/* Pagination */}
-                <div className="flex flex-col sm:flex-row items-center justify-between p-4 gap-4 border-t border-[#F1F5F9]">
-                    <button className="flex items-center gap-2 px-4 py-2 border border-[#E2E8F0] rounded-lg text-sm font-bold text-[#181211] hover:bg-gray-50 transition-all">
-                        <Icon icon="lucide:chevron-left" width="18" />
-                        Previous
-                    </button>
-                    <div className="flex items-center gap-1">
-                        {[1, 2, 3, '...', 29].map((num, i) => (
-                            <button key={i} className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-bold transition-all ${num === 1 ? 'bg-[#EA3D2A] text-white shadow-sm' : 'text-[#475569] hover:bg-gray-50'}`}>
-                                {num}
-                            </button>
-                        ))}
+                <div className="flex flex-col sm:flex-row items-center justify-between p-3 gap-4 border-t border-[#F1F5F9] bg-white">
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                            className="flex items-center gap-2 px-4 py-2 border border-[#E8E8E8] rounded-md text-sm font-semibold text-[#181211] hover:bg-gray-50 disabled:cursor-not-allowed transition-all active:scale-95 shadow-sm"
+                        >
+                            <Icon icon="lucide:chevron-left" width="18" />
+                            <span className="hidden sm:inline">Previous</span>
+                        </button>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 border border-[#E2E8F0] rounded-lg text-sm font-bold text-[#181211] hover:bg-gray-50 transition-all">
-                        Next
-                        <Icon icon="lucide:chevron-right" width="18" />
-                    </button>
+
+                    <div className="flex items-center gap-1.5">
+                        {Array.from({ length: table.getPageCount() }, (_, i) => i + 1)
+                            .filter((p) => {
+                                const current = table.getState().pagination.pageIndex + 1;
+                                const count = table.getPageCount();
+                                return (
+                                    p === 1 ||
+                                    p === count ||
+                                    (p >= current - 1 && p <= current + 1)
+                                );
+                            })
+                            .map((pageNum, idx, arr) => {
+                                const current = table.getState().pagination.pageIndex + 1;
+                                return (
+                                    <React.Fragment key={pageNum}>
+                                        {idx > 0 && arr[idx - 1] !== pageNum - 1 && (
+                                            <span className="px-1 text-[#94A3B8]">...</span>
+                                        )}
+                                        <button
+                                            onClick={() => table.setPageIndex(pageNum - 1)}
+                                            className={`w-9 h-9 flex items-center justify-center rounded-sm font-medium text-sm transition-all active:scale-90 ${current === pageNum
+                                                ? "bg-[#EA3D2A] text-white"
+                                                : "text-[#181211] hover:bg-gray-50"
+                                                }`}
+                                        >
+                                            {pageNum}
+                                        </button>
+                                    </React.Fragment>
+                                );
+                            })}
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => table.nextPage()}
+                            disabled={!table.getCanNextPage()}
+                            className="flex items-center gap-2 px-4 py-2 border border-[#E8E8E8] rounded-md text-sm font-semibold text-[#181211] hover:bg-gray-50 disabled:cursor-not-allowed transition-all active:scale-95 shadow-sm"
+                        >
+                            <span className="hidden sm:inline">Next</span>
+                            <Icon icon="lucide:chevron-right" width="18" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
