@@ -14,6 +14,8 @@ import SupplierDetails from "./pages/stores/suppliers/details";
 import AllOrders from "./pages/ordersAndDeliveries/orders/AllOrders";
 import NewOrder from "./pages/ordersAndDeliveries/orders/NewOrder";
 import OrderDetails from "./pages/ordersAndDeliveries/orders/OrderDetails";
+import LiveTracking from "./pages/ordersAndDeliveries/tracking/LiveTracking";
+import DeliveryZones from "./pages/ordersAndDeliveries/zones/DeliveryZones";
 
 import "./index.css";
 
@@ -37,6 +39,8 @@ function SuperAdminApp() {
           <Route path="orders/all" element={<AllOrders />} />
           <Route path="orders/add" element={<NewOrder />} />
           <Route path="orders/details/:id" element={<OrderDetails />} />
+          <Route path="orders/livetracking" element={<LiveTracking />} />
+          <Route path="orders/deliveryzones" element={<DeliveryZones />} />
         </Route>
 
 
