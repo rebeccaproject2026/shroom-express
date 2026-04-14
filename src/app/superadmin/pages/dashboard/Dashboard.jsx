@@ -8,6 +8,7 @@ import UserGrowthSnapshot from "../../components/dashboard/UserGrowthSnapshot";
 import AnalyticsBottomGrid from "../../components/dashboard/AnalyticsBottomGrid";
 import OrderCharts from "../../components/dashboard/OrderCharts";
 import TopPerformingStores from "../../components/dashboard/TopPerformingStores";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
     const onDateUpdate = (dateRange) => {
@@ -23,8 +24,10 @@ const Dashboard = () => {
                     <p className="text-[#64748B] text-sm">Manage your multi-vendor ecosystem and monitor performance metrics.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <button className="bg-[#EA3D2A] text-white px-4 py-2.5 rounded-[8px] text-[14px] font-semibold tracking-wide  shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
-                        <Icon icon="mdi:store-plus" width="20" /> Create Store </button>
+                    <Link to="/superadmin/stores/add" className="bg-[#EA3D2A] text-white px-5 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
+                        <Icon icon="mdi:store-plus" width="20" />
+                        Create Store
+                    </Link>
                     <DatePickerMap defaultItem={5} onUpdate={onDateUpdate} />
                 </div>
             </div>
