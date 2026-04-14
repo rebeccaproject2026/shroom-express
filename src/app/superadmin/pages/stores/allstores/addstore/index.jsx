@@ -16,7 +16,7 @@ import Breadcrumbs from '../../../../components/common/Breadcrumbs';
 const AddStore = () => {
   const breadcrumbItems = [
     { label: "Dashboard", path: "/superadmin/dashboard" },
-    { label: "Stores", path: "/superadmin/stores" },
+    { label: "Stores", path: "/superadmin/stores/all" },
     { label: "Add Store" }
   ];
   const [currentStep, setCurrentStep] = useState(1);
