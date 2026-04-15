@@ -81,7 +81,16 @@ const ExtendSuspensionModal = ({ isOpen, onClose, onConfirm }) => {
                         Cancel
                     </button>
                     <button 
-                        onClick={() => { onConfirm(duration, reason); onClose(); }}
+                        onClick={() => { 
+                            let days = 1;
+                            if (duration === "+1 Month") days = 30;
+                            else {
+                                const match = duration.match(/\d+/);
+                                if (match) days = parseInt(match[0]);
+                            }
+                            onConfirm(reason, days); 
+                            onClose(); 
+                        }}
                         className="flex-1 px-5 py-2.5 bg-[#F2994A] text-white justify-center rounded-md text-[15.5px] font-bold shadow-[0px_4px_12px_-2px_#F2994A80] hover:bg-[#E88A34] transition-all flex items-center gap-2 active:scale-95"
                     >
                         Extend Suspension

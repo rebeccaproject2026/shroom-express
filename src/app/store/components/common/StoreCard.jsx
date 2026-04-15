@@ -8,8 +8,6 @@ const StoreCard = ({ store }) => {
 
     const {
         id,
-        coverImage = "https://via.placeholder.com/300x140/333/fff?text=Cover+Image",
-        logo = "https://via.placeholder.com/60/fff/000?text=Logo",
         name = "micro zoomiez",
         rating = "4.8",
         reviewCount = "124",
@@ -20,6 +18,16 @@ const StoreCard = ({ store }) => {
         avatars = [productEffectImg, productEffectImg, productEffectImg, productEffectImg],
         isPrimary = false
     } = store || {};
+
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000';
+    const getImageUrl = (url, fallback) => {
+        if (!url) return fallback;
+        if (url.startsWith('http') || url.startsWith('data:')) return url;
+        return `${API_URL}/files/${url}`;
+    };
+
+    const logo = getImageUrl(store?.logo, "https://via.placeholder.com/60/fff/000?text=Logo");
+    const coverImage = getImageUrl(store?.coverImage || store?.image, "https://via.placeholder.com/300x140/333/fff?text=Cover+Image");
 
     const handleViewStore = () => {
         navigate(`/store/storeslists/${id}`);

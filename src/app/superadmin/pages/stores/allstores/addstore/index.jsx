@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // Separate components for each step to keep the main file clean
 import Step1BasicInfo from './steps/Step1BasicInfo';
@@ -12,15 +13,22 @@ import StoreSuccessState from './steps/StoreSuccessState';
 import StoreLivePreview from './steps/StoreLivePreview';
 import StoreCompletionStatus from './steps/StoreCompletionStatus';
 import Breadcrumbs from '../../../../components/common/Breadcrumbs';
+import { createStore, uploadStoreMedia, getStoreDetails, updateStore } from '../../../../services/api';
 
 const AddStore = () => {
+  const { id } = useParams();
+  // const navigate = useNavigate();
+  const isEditMode = !!id;
+
   const breadcrumbItems = [
     { label: "Dashboard", path: "/superadmin/dashboard" },
     { label: "Stores", path: "/superadmin/stores" },
-    { label: "Add Store" }
+    { label: isEditMode ? "Edit Store" : "Add Store" }
   ];
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     // Step 1: Basic Info
     storeName: '',
@@ -63,6 +71,64 @@ const AddStore = () => {
     ]
   });
 
+  // Fetch store details in edit mode
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchStoreData = async () => {
+        try {
+          setIsLoading(true);
+          const response = await getStoreDetails(id);
+          if (response.data.status) {
+            const store = response.data.data;
+            setFormData({
+              storeName: store.name || '',
+              ownerName: store.ownerName || '',
+              email: store.email || '',
+              phone: store.phone || '',
+              website: store.website || '',
+              category: store.category || '',
+              description: store.description || '',
+              // Location
+              streetAddress: store.address || '',
+              city: store.city || '',
+              province: store.province || '',
+              postalCode: store.postalCode || '',
+              country: store.country || 'Canada',
+              latitude: store.location?.coordinates[1]?.toString() || '43.6532',
+              longitude: store.location?.coordinates[0]?.toString() || '-79.3832',
+              // Operations
+              sameDayDelivery: store.estimatedDelivery === "Same-day Delivery",
+              minOrderAmount: store.minOrderAmount?.toString() || '0',
+              maxDeliveryRadius: store.maxDeliveryRadius?.toString() || '15',
+              expressDelivery: store.expressDelivery || false,
+              shippingMailOrder: store.shippingMailOrder || false,
+              operatingDays: store.operatingDays || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+              openingTime: store.openingTime || '09:00 AM',
+              closingTime: store.closingTime || '09:00 PM',
+              autoAcceptOrders: store.autoAcceptOrders !== false,
+              featuredStore: store.isFeatured || false,
+              setStoreAsActive: store.status === "ACTIVE",
+              // Products & Tags
+              productTypes: store.productTypes || [],
+              storeTags: store.storeTags || [],
+              licenseNumber: store.licenseNumber || '',
+              // Media
+              logo: store.logo || null,
+              banner: store.coverImage || null,
+              documents: store.documents || []
+            });
+          }
+        } catch (err) {
+          console.error("Error fetching store data:", err);
+          setError("Failed to load store details for editing.");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchStoreData();
+    }
+  }, [id, isEditMode]);
+
   const steps = [
     { id: 1, label: 'Basic Info' },
     { id: 2, label: 'Location' },
@@ -71,8 +137,102 @@ const AddStore = () => {
     { id: 5, label: 'Media & Docs' },
   ];
 
-  const handlePublish = () => {
-    setIsSuccess(true);
+  const handlePublish = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Handle Media Uploads if they are File objects
+      let logoFilename = formData.logo ? (typeof formData.logo === 'string' ? formData.logo : null) : null;
+      let coverFilename = formData.banner ? (typeof formData.banner === 'string' ? formData.banner : null) : null;
+
+      if (formData.logo && formData.logo instanceof File) {
+        const logoData = new FormData();
+        logoData.append('file', formData.logo);
+        const res = await uploadStoreMedia(logoData);
+        if (res.data.status) {
+          logoFilename = res.data.data;
+        }
+      }
+
+      if (formData.banner && formData.banner instanceof File) {
+        const bannerData = new FormData();
+        bannerData.append('file', formData.banner);
+        const res = await uploadStoreMedia(bannerData);
+        if (res.data.status) {
+          coverFilename = res.data.data;
+        }
+      }
+
+      // Handle Additional Documents Uploads
+      const uploadedDocs = await Promise.all(formData.documents.map(async (doc) => {
+        if (doc.file && doc.file instanceof File) {
+          const docData = new FormData();
+          docData.append('file', doc.file);
+          const res = await uploadStoreMedia(docData);
+          if (res.data.status) {
+            return {
+              name: doc.name,
+              size: doc.size,
+              type: doc.type,
+              url: res.data.data // Store the uploaded filename/path
+            };
+          }
+        }
+        return doc;
+      }));
+
+      const payload = {
+        name: formData.storeName,
+        ownerName: formData.ownerName,
+        email: formData.email,
+        phone: formData.phone,
+        website: formData.website,
+        category: formData.category,
+        description: formData.description,
+        address: formData.streetAddress,
+        city: formData.city,
+        province: formData.province || 'Ontario',
+        postalCode: formData.postalCode,
+        country: formData.country || 'Canada',
+        location: {
+          type: 'Point',
+          coordinates: [parseFloat(formData.longitude || -79.3832), parseFloat(formData.latitude || 43.6532)]
+        },
+        estimatedDelivery: formData.sameDayDelivery ? "Same-day Delivery" : "Standard Delivery",
+        minOrderAmount: parseFloat(formData.minOrderAmount),
+        maxDeliveryRadius: parseFloat(formData.maxDeliveryRadius),
+        operatingDays: formData.operatingDays,
+        openingTime: formData.openingTime,
+        closingTime: formData.closingTime,
+        autoAcceptOrders: formData.autoAcceptOrders,
+        isFeatured: formData.featuredStore,
+        status: formData.setStoreAsActive ? "ACTIVE" : "INACTIVE",
+        expressDelivery: formData.expressDelivery,
+        shippingMailOrder: formData.shippingMailOrder,
+        productTypes: formData.productTypes,
+        storeTags: formData.storeTags,
+        licenseNumber: formData.licenseNumber,
+        logo: logoFilename,
+        coverImage: coverFilename,
+        documents: uploadedDocs.map(({ file, ...rest }) => rest), // Remove file object from final payload
+      };
+
+      const storeResponse = isEditMode
+        ? await updateStore(id, payload)
+        : await createStore(payload);
+
+      if (storeResponse.data.status) {
+        setIsSuccess(true);
+      } else {
+        setError(storeResponse.data.error || `Failed to ${isEditMode ? 'update' : 'create'} store`);
+      }
+    } catch (err) {
+      console.error("Store creation error:", err);
+      setError(err.response?.data?.message || err.message || "An error occurred while publishing the store");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const renderStepContent = () => {
@@ -106,24 +266,42 @@ const AddStore = () => {
       {/* Breadcrumbs */}
       <Breadcrumbs items={breadcrumbItems} />
 
+      {/* Error Message */}
+      {error && (
+        <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm font-medium flex items-center gap-2">
+          <Icon icon="lucide:alert-circle" width="18" />
+          {error}
+        </div>
+      )}
+
       {/* Top Header Section */}
       <div className="shrink-0 space-y-4 mb-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
           <div className="space-y-1">
-            <h1 className="text-lg font-bold text-[#181211]">Add New Store</h1>
-            <p className="text-[#475569] font-medium text-sm">Fill in the details below to register a new vendor store on the platform.</p>
+            <h1 className="text-lg font-bold text-[#181211]">{isEditMode ? 'Edit Store' : 'Add New Store'}</h1>
+            <p className="text-[#475569] font-medium text-sm">
+              {isEditMode ? 'Update the details below to modify existing store information.' : 'Fill in the details below to register a new vendor store on the platform.'}
+            </p>
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="px-7 py-2.5 bg-white border border-[#E8E8E8] rounded-md text-[14px] font-bold text-[#475569] shadow-sm hover:bg-gray-50 transition-all active:scale-95">
+            <button
+              disabled={isLoading}
+              className="px-7 py-2.5 bg-white border border-[#E8E8E8] rounded-md text-[14px] font-bold text-[#475569] shadow-sm hover:bg-gray-50 transition-all active:scale-95 disabled:opacity-50"
+            >
               Save as Draft
             </button>
             <button
               onClick={handlePublish}
-              className="px-7 py-2.5 bg-[#EA3D2A] text-white rounded-md text-[14px] font-bold shadow-[0px_10px_15px_-3px_#EA3D2A55] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
+              disabled={isLoading}
+              className="px-7 py-2.5 bg-[#EA3D2A] text-white rounded-md text-[14px] font-bold shadow-[0px_10px_15px_-3px_#EA3D2A55] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <Icon icon="mdi:store-plus" width="20" />
-              Publish Store
+              {isLoading ? (
+                <Icon icon="lucide:loader-2" className="animate-spin" width="20" />
+              ) : (
+                <Icon icon={isEditMode ? "lucide:save" : "mdi:store-plus"} width={20} />
+              )}
+              {isLoading ? (isEditMode ? 'Updating...' : 'Publishing...') : (isEditMode ? 'Update Store' : 'Publish Store')}
             </button>
           </div>
         </div>
@@ -186,10 +364,15 @@ const AddStore = () => {
                 </button>
                 <button
                   onClick={() => currentStep === 5 ? handlePublish() : setCurrentStep(prev => Math.min(5, prev + 1))}
-                  className="px-5 py-2.5 bg-[#EA3D2A] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
+                  disabled={isLoading}
+                  className="px-5 py-2.5 bg-[#EA3D2A] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {currentStep === 5 ? 'Publish Store' : 'Continue'}
-                  {currentStep === 5 ? <Icon icon="mdi:store-plus" width="18" /> : <Icon icon="lucide:arrow-right" width="16" />}
+                  {isLoading ? (
+                    <Icon icon="lucide:loader-2" className="animate-spin" width="18" />
+                  ) : (
+                    currentStep === 5 ? <Icon icon={isEditMode ? "lucide:save" : "mdi:store-plus"} width="18" /> : <Icon icon="lucide:arrow-right" width="16" />
+                  )}
+                  {isLoading ? (isEditMode ? 'Updating...' : 'Publishing...') : currentStep === 5 ? (isEditMode ? 'Update Store' : 'Publish Store') : 'Continue'}
                 </button>
               </div>
             </div>

@@ -1,19 +1,37 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/Logo.png';
 import Input from '../../components/common/Input';
+import { login } from '../../services/api';
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Superadmin login logic here
-        navigate('/superadmin/dashboard');
+        try {
+            setIsLoading(true);
+            setError('');
+            const response = await login({ email, password });
+            if (response.data.status) {
+                localStorage.setItem('token', response.data.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.data.user));
+                navigate('/superadmin/dashboard');
+            } else {
+                setError(response.data.error || 'Invalid credentials');
+            }
+        } catch (e) {
+            setError('Login failed. Please check your credentials.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -73,13 +91,26 @@ const LoginPage = () => {
                         </button>
                     </div>
 
+                    {/* Error Message */}
+                    {error && (
+                        <div className="bg-red-50 text-red-500 text-sm p-3 rounded-md border border-red-100 flex items-center gap-2">
+                            <Icon icon="mdi:alert-circle-outline" width={18} />
+                            {error}
+                        </div>
+                    )}
+
                     {/* Sign In button */}
                     <button
                         type="submit"
-                        className="w-full bg-[#E93E2B] hover:bg-[#D33624] text-white font-bold py-4 rounded-md transition-all shadow-lg shadow-[#E93E2B]/20 flex items-center justify-center gap-2 group"
+                        disabled={isLoading}
+                        className="w-full bg-[#E93E2B] hover:bg-[#D33624] text-white font-bold py-4 rounded-md transition-all shadow-lg shadow-[#E93E2B]/20 flex items-center justify-center gap-2 group disabled:opacity-70"
                     >
-                        <Icon icon="mdi:login-variant" width={20} className="group-hover:translate-x-1 transition-transform" />
-                        Login to Dashboard
+                        {isLoading ? (
+                            <Icon icon="mdi:loading" className="animate-spin" width={20} />
+                        ) : (
+                            <Icon icon="mdi:login-variant" width={20} className="group-hover:translate-x-1 transition-transform" />
+                        )}
+                        {isLoading ? 'Authenticating...' : 'Login to Dashboard'}
                     </button>
                 </form>
                 <div className='border border-[#F1F5F9] mt-8' />

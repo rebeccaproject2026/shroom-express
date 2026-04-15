@@ -103,8 +103,15 @@ const SuspendStoreModal = ({ isOpen, onClose, onConfirm }) => {
                         Cancel
                     </button>
                     <button 
-                        onClick={() => { onConfirm(); onClose(); }}
-                        className="flex-1 px-5 py-2.5 bg-[#F2994A] text-white justify-center rounded-md text-sm font-semibold shadow-[0px_4px_12px_-2px_#F2994A80] hover:bg-[#F2994A]/90 transition-all flex items-center gap-2 active:scale-95"
+                        onClick={() => { 
+                            // Extract numeric value from string (e.g., "3 Days" -> 3)
+                            let days = 3650; // default for Indefinite (10 years)
+                            if (duration === "1 Month") days = 30;
+                            else if (duration.includes("Day")) days = parseInt(duration.split(" ")[0]);
+                            
+                            onConfirm(selectedReason, days); 
+                        }}
+                        className="flex-1 px-5 py-2.5 bg-[#F2994A] text-white justify-center rounded-md text-[15px] font-bold shadow-[0px_4px_12px_-2px_#F2994A80] hover:bg-[#F2994A]/90 transition-all flex items-center gap-2 active:scale-95"
                     >
                         Confirm Decline
                     </button>

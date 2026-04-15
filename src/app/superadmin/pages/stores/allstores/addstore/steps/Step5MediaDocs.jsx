@@ -1,19 +1,32 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 
-const UploadBox = ({ label, sub, icon, isLogo }) => (
-  <div className={`w-full aspect-[6/1.2] border-2 border-dashed rounded-md flex flex-col items-center justify-center gap-2 bg-[#F8F8F8] cursor-pointer transition-all group ${isLogo ? 'border-[#EA3D2A]' : 'border-[#BDBDD2]'
+const UploadBox = ({ label, sub, icon, isLogo, onChange }) => {
+  const inputRef = React.useRef(null);
+
+  return (
+    <div 
+      onClick={() => inputRef.current?.click()}
+      className={`w-full aspect-[6/1.2] border-2 border-dashed rounded-md flex flex-col items-center justify-center gap-2 bg-[#F8F8F8] cursor-pointer transition-all group ${isLogo ? 'border-[#EA3D2A]' : 'border-[#BDBDD2]'
     }`}>
-    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isLogo ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#64748B]'
-      }`}>
-      <Icon icon={icon || "lucide:upload-cloud"} width="24" />
+      <input 
+        type="file" 
+        ref={inputRef} 
+        onChange={onChange} 
+        className="hidden" 
+        accept="image/*" 
+      />
+      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isLogo ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#64748B]'
+        }`}>
+        <Icon icon={icon || "lucide:upload-cloud"} width="24" />
+      </div>
+      <div className="text-center">
+        <p className="text-sm font-semibold text-[#181211]">{label}</p>
+        <p className="text-xs font-medium text-[#64748B]">{sub}</p>
+      </div>
     </div>
-    <div className="text-center">
-      <p className="text-sm font-semibold text-[#181211]">{label}</p>
-      <p className="text-xs font-medium text-[#64748B]">{sub}</p>
-    </div>
-  </div>
-);
+  );
+};
 
 const DocumentItem = ({ name, size, type, onRemove }) => (
   <div className="flex items-center justify-between p-3 border border-[#BDBDD2] rounded-md bg-white">
@@ -41,6 +54,14 @@ const DocumentItem = ({ name, size, type, onRemove }) => (
 );
 
 const Step5MediaDocs = ({ formData, setFormData }) => {
+  const docInputRef = React.useRef(null);
+  const handleFileChange = (e, field) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, [field]: file });
+    }
+  };
+
   const removeDoc = (index) => {
     const newDocs = formData.documents.filter((_, i) => i !== index);
     setFormData({ ...formData, documents: newDocs });
@@ -68,10 +89,11 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
             Store Logo <span className="text-[#EA3D2A] ml-0.5">*</span>
           </label>
           <UploadBox
-            label="Click to upload logo"
+            label={formData.logo ? `Selected: ${formData.logo.name}` : "Click to upload logo"}
             sub="PNG, JPG up to 5MB"
             isLogo={true}
-            icon="lucide:upload"
+            icon={formData.logo ? "lucide:check-circle" : "lucide:upload"}
+            onChange={(e) => handleFileChange(e, 'logo')}
           />
         </div>
 
@@ -81,10 +103,11 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
             Store Banner Image <span className="text-[#EA3D2A] ml-0.5">*</span>
           </label>
           <UploadBox
-            label="Click to upload banner"
+            label={formData.banner ? `Selected: ${formData.banner.name}` : "Click to upload banner"}
             sub="PNG, JPG up to 10MB, Wide format preferred"
             isLogo={false}
-            icon="lucide:upload"
+            icon={formData.banner ? "lucide:check-circle" : "lucide:upload"}
+            onChange={(e) => handleFileChange(e, 'banner')}
           />
         </div>
 
@@ -95,7 +118,28 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
           </label>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 border border-[#BDBDD2] border-dashed rounded-md bg-white">
+            <div 
+              onClick={() => docInputRef.current?.click()}
+              className="flex items-center justify-between p-4 border border-[#BDBDD2] border-dashed rounded-md bg-white cursor-pointer hover:bg-gray-50 transition-all"
+            >
+              <input 
+                type="file" 
+                ref={docInputRef} 
+                className="hidden" 
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    const newDoc = {
+                      name: file.name,
+                      size: `${(file.size / 1024).toFixed(0)} KB`,
+                      type: file.name.split('.').pop() === 'pdf' ? 'pdf' : 'doc',
+                      file: file
+                    };
+                    setFormData({ ...formData, documents: [...formData.documents, newDoc] });
+                  }
+                }}
+                accept=".pdf,.doc,.docx"
+              />
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#CDFFE2] rounded-md flex items-center justify-center shrink-0">
                   <Icon icon="mi:document" className="text-[#219653]" width="24" />
@@ -105,7 +149,7 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
                   <p className="text-xs font-medium text-[#64748B]">PDF, DOC up to 10MB</p>
                 </div>
               </div>
-              <button className="px-4 py-1.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-bold text-[#475569]  hover:bg-gray-50">
+              <button className="px-4 py-1.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-bold text-[#475569] hover:bg-gray-50">
                 Browse
               </button>
             </div>

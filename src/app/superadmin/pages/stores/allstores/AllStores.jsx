@@ -1,10 +1,34 @@
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import StoreTable from "../../../components/stores/StoreTable";
 import Breadcrumbs from "../../../components/common/Breadcrumbs";
-
+import { getStores } from "../../../services/api";
 
 const AllStores = () => {
+    const [stores, setStores] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchStores();
+    }, []);
+
+    const fetchStores = async () => {
+        try {
+            setIsLoading(true);
+            const response = await getStores();
+            if (response.data.status) {
+                setStores(response.data.data);
+            }
+        } catch (err) {
+            console.error("Error fetching stores:", err);
+            setError("Failed to load stores. Using offline data.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const breadcrumbItems = [
         { label: "Dashboard", path: "/superadmin/dashboard" },
         { label: "Stores" }
@@ -12,7 +36,7 @@ const AllStores = () => {
     const stats = [
         {
             label: "Total Stores",
-            value: "1,284",
+            value: stores.length.toLocaleString(),
             description: "Overall registered",
             icon: "lucide:trending-up",
             color: "text-[#0066FF]",
@@ -20,15 +44,15 @@ const AllStores = () => {
         },
         {
             label: "Active Stores",
-            value: "952",
-            description: "4.2% this month",
+            value: stores.filter(s => s.status?.toUpperCase() === "ACTIVE").length.toLocaleString(),
+            description: "Live on platform",
             icon: "lucide:trending-up",
             color: "text-[#219653]",
             bg: "bg-[#219653]"
         },
         {
             label: "Pending Approval",
-            value: "48",
+            value: stores.filter(s => s.status?.toUpperCase() === "PENDING").length.toLocaleString(),
             description: "Awaiting review",
             icon: "lucide:trending-up",
             color: "text-[#FF9F40]",
@@ -36,7 +60,7 @@ const AllStores = () => {
         },
         {
             label: "In-Active Stores",
-            value: "4",
+            value: stores.filter(s => s.status?.toUpperCase() === "INACTIVE" || s.isSuspended).length.toLocaleString(),
             description: "Needs attention",
             icon: "lucide:trending-up",
             color: "text-[#EA3D2A]",
@@ -90,7 +114,7 @@ const AllStores = () => {
             </div>
 
             {/* Main Data Table */}
-            <StoreTable />
+            <StoreTable data={stores.length > 0 ? stores : null} isLoading={isLoading} />
         </div>
 
     );

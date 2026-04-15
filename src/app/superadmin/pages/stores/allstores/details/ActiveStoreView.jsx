@@ -102,13 +102,13 @@ const ActiveStoreView = ({ store }) => {
 
                 {/* Tab content Padding */}
                 <div className="p-6">
-                    {activeTab === "Overview & Stats" && <OverviewStatsContent />}
-                    {activeTab === "Store Details" && <StoreDetailsContent />}
-                    {activeTab === "Operations" && <OperationsContent />}
-                    {activeTab === "Documents" && <DocumentsContent />}
-                    {activeTab === "Notes (2)" && <NotesContent />}
-                    {activeTab === "Timeline" && <TimelineContent status="Active" />}
-                    {activeTab === "Recent Orders" && <RecentOrdersContent />}
+                    {activeTab === "Overview & Stats" && <OverviewStatsContent store={store} />}
+                    {activeTab === "Store Details" && <StoreDetailsContent store={store} />}
+                    {activeTab === "Operations" && <OperationsContent store={store} />}
+                    {activeTab === "Documents" && <DocumentsContent store={store} />}
+                    {activeTab === "Notes (2)" && <NotesContent store={store} />}
+                    {activeTab === "Timeline" && <TimelineContent status="Active" store={store} />}
+                    {activeTab === "Recent Orders" && <RecentOrdersContent store={store} />}
                 </div>
             </div>
         </div>
