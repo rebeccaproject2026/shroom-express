@@ -19,7 +19,7 @@ const LoginPage = () => {
         try {
             setIsLoading(true);
             setError('');
-            const response = await login({ email, password });
+            const response = await login({ userName: email, password });
             if (response.data.status) {
                 localStorage.setItem('token', response.data.data.token);
                 localStorage.setItem('user', JSON.stringify(response.data.data.user));
