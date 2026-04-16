@@ -409,7 +409,7 @@ const LiveTracking = () => {
                     </div>
                 </div>
 
-                <div className="px-5 py-4 flex items-center justify-between border-b border-[#F1F5F9] bg-white">
+                <div className="px-5 py-4 flex items-center justify-between  bg-white">
                     <div className="flex items-center gap-6 overflow-x-auto hide-scrollbar">
                         {TABS.map((tab, idx) => (
                             <button
@@ -429,7 +429,7 @@ const LiveTracking = () => {
                     </div>
                 </div>
 
-                <div className="p-3 bg-[#F8FAFC] border-b border-[#F1F5F9]">
+                <div className="p-3  border-b border-[#F1F5F9]">
                     <p className="text-[13px] font-medium text-[#475569]">
                         Showing <span className="font-bold text-[#181211]">{currentTableData.length}</span> of <span className="font-bold text-[#181211]">284 orders</span>
                     </p>
@@ -439,9 +439,9 @@ const LiveTracking = () => {
                 <div className="w-full overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[12px] font-bold uppercase border-b border-[#F1F5F9]">
+                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9]">
                                 {table.getHeaderGroups()[0].headers.map(header => (
-                                    <th key={header.id} className="py-3.5 px-3 first:pl-5 last:pr-5">
+                                    <th key={header.id} className="py-3 px-3 font-semibold first:pl-5 last:pr-5">
                                         {flexRender(header.column.columnDef.header, header.getContext())}
                                     </th>
                                 ))}

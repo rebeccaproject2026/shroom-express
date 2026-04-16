@@ -121,14 +121,14 @@ const CatalogContent = ({ supplier }) => {
                 <div className="overflow-x-auto border-t border-[#F1F5F9]">
                     <table className="w-full text-left border-collapse table-fixed lg:table-auto">
                         <thead>
-                            <tr className="bg-[#F8FAFC] text-[13px] font-semibold text-[#64748B] uppercase border-b border-[#F1F5F9]">
-                                <th className="py-4 px-6 font-semibold">PRODUCT</th>
-                                <th className="py-4 px-4 font-semibold">SKU</th>
-                                <th className="py-4 px-6 font-semibold">CATEGORY</th>
-                                <th className="py-4 px-6 font-semibold">COST</th>
-                                <th className="py-4 px-6 font-semibold">PACKET WT</th>
-                                <th className="py-4 px-6 font-semibold">STOCK</th>
-                                <th className="py-4 px-6 font-semibold text-center">ACTIONS</th>
+                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9]">
+                                <th className="py-3 px-3 font-semibold">PRODUCT</th>
+                                <th className="py-3 px-3 font-semibold">SKU</th>
+                                <th className="py-3 px-3 font-semibold">CATEGORY</th>
+                                <th className="py-3 px-3 font-semibold">COST</th>
+                                <th className="py-3 px-3 font-semibold">PACKET WT</th>
+                                <th className="py-3 px-3 font-semibold">STOCK</th>
+                                <th className="py-3 px-3 font-semibold text-center">ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[#F1F5F9]">

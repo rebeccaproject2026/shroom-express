@@ -32,13 +32,13 @@ const SuspendedRecentOrdersContent = () => {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9] bg-[#F8FAFC]">
-                            <th className="py-4 px-6  font-semibold">Order ID</th>
-                            <th className="py-4 px-6 font-semibold">Customer</th>
-                            <th className="py-4 px-6 font-semibold">Product</th>
-                            <th className="py-4 px-6 font-semibold">Amount</th>
-                            <th className="py-4 px-6 font-semibold">Qty</th>
-                            <th className="py-4 px-6 text-center font-semibold">Status</th>
-                            <th className="py-4 px-6 font-semibold">Order Time</th>
+                            <th className="py-3 px-3 font-semibold">Order ID</th>
+                            <th className="py-3 px-3 font-semibold">Customer</th>
+                            <th className="py-3 px-3 font-semibold">Product</th>
+                            <th className="py-3 px-3 font-semibold">Amount</th>
+                            <th className="py-3 px-3 font-semibold">Qty</th>
+                            <th className="py-3 px-3 text-center font-semibold">Status</th>
+                            <th className="py-3 px-3 font-semibold">Order Time</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-[#F1F5F9]">

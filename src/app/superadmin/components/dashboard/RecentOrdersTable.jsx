@@ -30,7 +30,7 @@ const RecentOrdersTable = () => {
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-[#F8FAFC] text-[#64748B] text-sm  uppercase">
+                        <tr className="bg-[#F8FAFC] text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9]">
                             <th className="py-3 px-6 font-semibold">ORDER ID</th>
                             <th className="py-3 px-6 font-semibold">STORE</th>
                             <th className="py-3 px-6 font-semibold">DRIVER</th>

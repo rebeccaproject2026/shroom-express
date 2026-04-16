@@ -63,17 +63,17 @@ const OrdersContent = ({ supplier }) => {
                 <div className="overflow-x-auto border-t border-[#F1F5F9]">
                     <table className="w-full text-left border-collapse table-fixed lg:table-auto">
                         <thead>
-                            <tr className="bg-[#F8FAFC] text-[13px] font-semibold text-[#64748B] uppercase border-b border-[#F1F5F9]">
-                                <th className="py-3 px-3.5 font-semibold">ORDER ID</th>
-                                <th className="py-3 px-3.5 font-semibold">PRODUCT</th>
-                                <th className="py-3 px-3.5 font-semibold">SKU</th>
-                                <th className="py-3 px-3.5 font-semibold">QTY</th>
-                                <th className="py-3 px-3.5 font-semibold text-center">PACKET WT</th>
-                                <th className="py-3 px-3.5 font-semibold">AMOUNT</th>
-                                <th className="py-3 px-3.5 font-semibold">BATCH</th>
-                                <th className="py-3 px-3.5 font-semibold text-center">STATUS</th>
-                                <th className="py-3 px-3.5 font-semibold">ORDERED</th>
-                                <th className="py-3 px-3.5 font-semibold">DELIVERED</th>
+                            <tr className="bg-[#F8FAFC] text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9]">
+                                <th className="py-3 px-3 font-semibold">ORDER ID</th>
+                                <th className="py-3 px-3 font-semibold">PRODUCT</th>
+                                <th className="py-3 px-3 font-semibold">SKU</th>
+                                <th className="py-3 px-3 font-semibold">QTY</th>
+                                <th className="py-3 px-3 font-semibold text-center">PACKET WT</th>
+                                <th className="py-3 px-3 font-semibold">AMOUNT</th>
+                                <th className="py-3 px-3 font-semibold">BATCH</th>
+                                <th className="py-3 px-3 font-semibold text-center">STATUS</th>
+                                <th className="py-3 px-3 font-semibold">ORDERED</th>
+                                <th className="py-3 px-3 font-semibold">DELIVERED</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[#F1F5F9]">
