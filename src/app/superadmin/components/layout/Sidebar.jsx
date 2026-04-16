@@ -228,47 +228,19 @@ const Sidebar = ({ setSidebar }) => {
                     </div>
 
                     {/* Customers Menu */}
-                    <div>
-                        <button
-                            onClick={handleCustomersClick}
-                            className={`w-full px-3 py-2.5 flex items-center justify-between rounded-md transition-colors ${activeMenu === "customers"
-                                ? "bg-(--color-primary-soft) text-(--color-primary) font-medium "
-                                : "text-[#181211] font-medium hover:bg-(--color-primary-soft) hover:text-(--color-primary)"
-                                }`}
-                        >
-                            <div className="flex items-center gap-3">
-                                <Icon icon="mynaui:users-group-solid" width="24" height="24" />
-                                Customers
-                            </div>
-                            {customersOpen ? (
-                                <ChevronUp className={`w-4.5 h-4.5`} />
-                            ) : (
-                                <ChevronDown className="w-4.5 h-4.5" />
-                            )}
-                        </button>
-                        {customersOpen && (
-                            <div className="ml-2.5 mt-1 space-y-0.5 text-sm">
-                                {[
-                                    { to: "/superadmin/customers/list", label: "Customer List" },
-                                    { to: "/superadmin/customers/support", label: "Support Tickets" },
-                                ].map((sub) => (
-                                    <NavLink
-                                        key={sub.to}
-                                        to={sub.to}
-                                        className={({ isActive }) =>
-                                            `flex items-center gap-5 px-3 py-1.5 rounded-md transition-all ${isActive
-                                                ? "text-(--color-primary) font-medium"
-                                                : "text-[#181211] font-medium hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
-                                            }`
-                                        }
-                                    >
-                                        <BulletIcon />
-                                        {sub.label}
-                                    </NavLink>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <NavLink
+                        to="/superadmin/customers"
+                        onClick={handleNavClick}
+                        className={({ isActive }) =>
+                            `px-3 py-2.5 flex items-center gap-3 rounded-md transition-colors ${isActive && activeMenu === null
+                                ? "bg-(--color-primary-soft) text-(--color-primary) font-medium"
+                                : "text-[#212121] font-medium tracking-wide hover:text-(--color-primary) hover:bg-(--color-primary-soft)"
+                            }`
+                        }
+                    >
+                        <Icon icon="mynaui:users-group-solid" width="24" height="24" />
+                        Customers
+                    </NavLink>
 
                     {/* Other Links */}
                     {[

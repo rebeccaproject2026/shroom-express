@@ -47,14 +47,14 @@ const RecentOrdersContent = () => {
             <div className="w-full overflow-hidden mb-4">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-[#F8FAFC] text-[13px] font-semibold text-[#64748B] uppercase ">
-                            <th className="py-3 px-4">Order ID</th>
-                            <th className="py-3 px-4">Customer</th>
-                            <th className="py-3 px-4">Driver</th>
-                            <th className="py-3 px-4">Amount</th>
-                            <th className="py-3 px-4">Qty</th>
-                            <th className="py-3 px-4">Status</th>
-                            <th className="py-3 px-4">Order Time</th>
+                        <tr className="bg-[#F8FAFC] text-[13px] font-semibold text-[#64748B] uppercase border-b border-[#F1F5F9]">
+                            <th className="py-3 px-3">Order ID</th>
+                            <th className="py-3 px-3">Customer</th>
+                            <th className="py-3 px-3">Driver</th>
+                            <th className="py-3 px-3">Amount</th>
+                            <th className="py-3 px-3">Qty</th>
+                            <th className="py-3 px-3">Status</th>
+                            <th className="py-3 px-3">Order Time</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-[#F1F5F9]">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import InventoryTable from "../../../components/inventory/InventoryTable";
 import Breadcrumbs from "../../../components/common/Breadcrumbs";
+import DatePickerMap from "../../../components/DatePickerMap";
 
 const InventoryList = () => {
     const breadcrumbItems = [
@@ -37,13 +38,7 @@ const InventoryList = () => {
                                 Create Inventory
                             </button>
                         </Link>
-                        <div className="relative group shrink-0">
-                            <button className="bg-white border border-[#E2E8F0] text-[#181211] px-4 py-2.5 rounded-[8px] text-[14px] font-bold flex items-center gap-2 hover:bg-gray-50 transition-all shadow-sm">
-                                <Icon icon="lucide:calendar" width="18" className="text-[#64748B]" />
-                                Last Month
-                                <Icon icon="lucide:chevron-down" width="16" className="text-[#94A3B8]" />
-                            </button>
-                        </div>
+                        <DatePickerMap defaultItem={5} onUpdate={(range) => console.log("Inventory date range:", range)} />
                     </div>
                 </div>
             </div>
