@@ -3,7 +3,8 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import StoreTable from "../../../components/stores/StoreTable";
 import Breadcrumbs from "../../../components/common/Breadcrumbs";
-import { getStores } from "../../../services/api";
+import { getStores } from "../../../services/api";import DatePickerMap from "../../../components/DatePickerMap";
+
 
 const AllStores = () => {
     const [stores, setStores] = useState([]);
@@ -86,13 +87,7 @@ const AllStores = () => {
                             <Icon icon="mdi:store-plus" width="20" />
                             Create Store
                         </Link>
-                        <div className="relative group">
-                            <button className="bg-white border border-[#E2E8F0] text-[#181211] px-4 py-2.5 rounded-[8px] text-[14px] font-bold flex items-center gap-2 hover:bg-gray-50 transition-all shadow-sm">
-                                <Icon icon="lucide:calendar" width="18" className="text-[#64748B]" />
-                                Last Month
-                                <Icon icon="lucide:chevron-down" width="16" className="text-[#94A3B8]" />
-                            </button>
-                        </div>
+                        <DatePickerMap defaultItem={5} onUpdate={(range) => console.log("AllStores date range:", range)} />
                     </div>
                 </div>
             </div>

@@ -74,7 +74,7 @@ const Home = () => {
             {/* Hero Section */}
             <section className="font-sans pt-6 pb-4 md:pt-6 md:pb-10">
                 <div className="w-full max-w-[1700px] mx-auto">
-                    <div className="bg-[#E93E2B]/5 rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[500px] relative overflow-hidden">
+                    <div className="bg-[#E93E2B]/5 rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[40%] relative overflow-hidden">
 
                         {/* Left Side */}
                         <div className="w-[60%] md:w-[55%] flex flex-col items-start z-10 pl-4 pr-2 sm:px-10 lg:pl-16">

@@ -22,7 +22,7 @@ const AddStore = () => {
 
   const breadcrumbItems = [
     { label: "Dashboard", path: "/superadmin/dashboard" },
-    { label: "Stores", path: "/superadmin/stores" },
+    { label: "Stores", path: "/superadmin/stores/all" },
     { label: isEditMode ? "Edit Store" : "Add Store" }
   ];
   const [currentStep, setCurrentStep] = useState(1);

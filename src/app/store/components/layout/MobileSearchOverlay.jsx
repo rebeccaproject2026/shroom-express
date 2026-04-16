@@ -70,18 +70,33 @@ const MobileSearchOverlay = ({ isOpen, onClose, searchQuery, setSearchQuery, sea
             {/* Top Search Bar */}
             <div className="px-6 pt-8 pb-6 flex items-center gap-4 border-b border-[#F1F5F9]">
                 <div className="flex-1 relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#181211]">
+                    <div 
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-[#181211] cursor-pointer z-10"
+                        onClick={() => handleSearchClick(searchQuery)}
+                    >
                         <Icon icon="material-symbols:search-rounded" width={22} />
                     </div>
                     <input
+                        id="mobile-search-input"
                         type="text"
                         placeholder="Search Products, Stores"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearchClick(searchQuery)}
-                        className="w-full bg-[#E8E8E880] border-none rounded-2xl py-3.5 pl-12 pr-4 text-[16px] font-medium text-[#181211] outline-none placeholder-[#181211]"
+                        className="w-full bg-[#E8E8E880] border-none rounded-2xl py-3.5 pl-12 pr-12 text-[16px] font-medium text-[#181211] outline-none placeholder-[#181211]"
                         autoFocus
                     />
+                    {searchQuery && (
+                        <button 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setSearchQuery('');
+                            }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] p-1 cursor-pointer hover:text-[#E93E2B] z-10"
+                        >
+                            <Icon icon="mdi:close-circle" width={20} />
+                        </button>
+                    )}
                 </div>
                 <button onClick={onClose} className="text-[#E93E2B] font-bold text-[16px] px-2">
                     Cancel
@@ -89,7 +104,7 @@ const MobileSearchOverlay = ({ isOpen, onClose, searchQuery, setSearchQuery, sea
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto no-scrollbar pb-10">
+            <div className="flex-1 overflow-y-auto no-scrollbar pb-32">
                 {searchQuery.trim().length > 1 ? (
                     <div className="px-6 py-4">
                         <div className="flex items-center justify-between mb-4">
@@ -118,6 +133,15 @@ const MobileSearchOverlay = ({ isOpen, onClose, searchQuery, setSearchQuery, sea
                                 </button>
                             ))}
                         </div>
+                        {searchResults.length > 0 && (
+                            <button 
+                                onClick={() => handleSearchClick(searchQuery)}
+                                className="w-full text-center py-4 text-[#E93E2B] font-bold text-[14px] border-t border-gray-50 mt-4 flex items-center justify-center gap-2"
+                            >
+                                View all results for "{searchQuery}"
+                                <Icon icon="mdi:chevron-right" width={18} />
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <>

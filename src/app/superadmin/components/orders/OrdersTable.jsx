@@ -300,7 +300,7 @@ const OrdersTable = () => {
                 </div>
             </div>
 
-            <div className="px-5 py-4 flex items-center justify-between border-b border-[#F1F5F9]">
+            <div className="px-5 py-4 flex items-center justify-between ">
                 <div className="flex items-center gap-6 shrink-0">
                     {TABS.map((tab, idx) => {
                         const count = tab.label === 'All'

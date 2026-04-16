@@ -152,7 +152,7 @@ const ProductDetail = () => {
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`w-20 h-20 sm:w-26 sm:h-26 lg:w-24 lg:h-24 shrink-0 bg-white rounded-2xl p-2 border-2 transition-all shadow-[0px_5px_16px_0px_#00000029] ${selectedImage === idx
+                                        className={`w-20 h-20 sm:w-26 sm:h-26 lg:w-24 lg:h-24 shrink-0 bg-white rounded-2xl p-2 border-2 transition-all md:shadow-[0px_5px_16px_0px_#00000029] ${selectedImage === idx
                                             ? "border-(--store-primary)"
                                             : "border-[#E5DCDC] "
                                             }`}
@@ -160,7 +160,7 @@ const ProductDetail = () => {
                                         <img
                                             src={img}
                                             alt={`${product.name} ${idx + 1}`}
-                                            className="w-full h-full object-cover rounded-lg"
+                                            className="w-full h-full object-cover rounded-lg shadow-inner"
                                         />
                                     </button>
                                 ))}
@@ -1048,10 +1048,10 @@ const ProductDetail = () => {
             {/* FAQ Section */}
             <FAQ />
             {/* Fixed Bottom Bar for Mobile/Tablet */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white/50 backdrop-blur-xl border-t border-gray-100 px-2 py-2 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] lg:hidden z-50">
-                <div className="flex flex-col gap-4 max-w-lg mx-auto">
+            <div className="fixed bottom-0 left-0 right-0 bg-white/50 backdrop-blur-xl border-t border-gray-100 px-2 py-2 pt-2 pb-2.5 shadow-[0_-8px_24px_rgba(0,0,0,0.06)] lg:hidden z-50">
+                <div className="flex flex-col gap-2.5 max-w-lg mx-auto">
                     {/* Row 1: Size Options */}
-                    <div className="flex flex-wrap gap-2 justify-start md:justify-center">
+                    <div className="flex flex-wrap gap-2 justify-center sm:justify-center">
                         {product.weights.map((weight) => (
                             <button
                                 key={weight}

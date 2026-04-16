@@ -89,12 +89,12 @@ const TopPerformingStores = () => {
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead className="bg-[#F8FAFC]">
-                        <tr className="bg-[#F8FAFC] text-[#64748B] text-sm  uppercase">
-                            <th className="py-4  px-6 font-semibold">Store</th>
-                            <th className="py-4  px-6 font-semibold">CATEGORY</th>
-                            <th className="py-4  px-6 font-semibold">LOCATION</th>
-                            <th className="py-4  px-6 font-semibold">DELIVERY / SHIPPING</th>
-                            <th className="py-4  px-6 font-semibold">STATUS</th>
+                        <tr className="bg-[#F8FAFC] text-[#64748B] text-[13px] uppercase border-b border-[#F1F5F9]">
+                            <th className="py-3 px-6 font-semibold">Store</th>
+                            <th className="py-3 px-6 font-semibold">CATEGORY</th>
+                            <th className="py-3 px-6 font-semibold">LOCATION</th>
+                            <th className="py-3 px-6 font-semibold">DELIVERY / SHIPPING</th>
+                            <th className="py-3 px-6 font-semibold">STATUS</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-[#E8E8E8]">
