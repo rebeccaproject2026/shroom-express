@@ -114,7 +114,7 @@ const Step3Commercial = ({ formData, setFormData }) => {
                             { id: 'preferredSupplier', label: 'Mark as Preferred Supplier', sub: 'Appears first in restock recommendations' },
                             { id: 'autoReorder', label: 'Enable Auto-Reorder', sub: 'System automatically places orders when stock is low' }
                         ].map((setting) => (
-                            <div key={setting.id} className="p-4 border border-[#BDBDD2] rounded-lg flex items-center justify-between">
+                            <div key={setting.id} className="p-3 border border-[#BDBDD2] rounded-lg flex items-center justify-between">
                                 <div className="space-y-0.5">
                                     <h4 className="text-sm font-semibold text-[#181211]">{setting.label}</h4>
                                     <p className="text-xs font-medium text-[#475569]">{setting.sub}</p>
