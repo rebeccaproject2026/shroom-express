@@ -2,6 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 import DatePickerMap from "../../components/DatePickerMap";
+import { Link } from "react-router-dom";
 import CustomerTable from "../../components/customers/CustomerTable";
 
 const Customers = () => {
@@ -60,6 +61,10 @@ const Customers = () => {
                         <p className="text-[#475569] font-medium text-sm">Manage your user base, view order history, and handle account statuses.</p>
                     </div>
                     <div className="flex items-center gap-3">
+                        <Link to="/superadmin/customers/add" className="bg-[#EA3D2A] text-white px-3 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
+                            <Icon icon="mdi:account-plus" width="20" />
+                            Add Customer
+                        </Link>
                         <DatePickerMap defaultItem={5} onUpdate={(range) => console.log("Customers date range:", range)} />
                     </div>
                 </div>

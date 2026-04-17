@@ -110,14 +110,14 @@ const CustomerDetails = () => {
                     {tabs.map((tab) => (
                         <button
                             key={tab}
-                            onClick={() => setActiveTab(tab.split('(')[0])}
-                            className={`relative pt-5 pb-4 text-[15px] font-semibold transition-all whitespace-nowrap ${activeTab === tab.split('(')[0]
+                            onClick={() => setActiveTab(tab.split('(')[0].trim())}
+                            className={`relative pt-5 pb-4 text-[15px] font-semibold transition-all whitespace-nowrap ${activeTab === tab.split('(')[0].trim()
                                 ? "text-[#EA3D2A]"
                                 : "text-[#181211] hover:text-[#EA3D2A]"
                                 }`}
                         >
                             {tab}
-                            {activeTab === tab.split('(')[0] && (
+                            {activeTab === tab.split('(')[0].trim() && (
                                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#EA3D2A] rounded-t-full" />
                             )}
                         </button>
@@ -128,7 +128,7 @@ const CustomerDetails = () => {
                 <div className="p-6">
                     {activeTab === "Profile" && <ProfileTab customer={customer} />}
                     {activeTab === "Orders" && <OrdersTab />}
-                    {activeTab === "Spend" && <SpendTab />}
+                    {activeTab === "Spend" && <SpendTab customer={customer} />}
                     {activeTab === "Notes" && <NotesTab />}
                 </div>
             </div>

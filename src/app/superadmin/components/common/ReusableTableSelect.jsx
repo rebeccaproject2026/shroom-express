@@ -9,9 +9,11 @@ const ReusableTableSelect = ({ value, onChange, options, placeholder, borderclas
       className={`appearance-none pl-4 pr-10 py-2 bg-white ${borderclass || "border-2 border-[#E8E8E8] "} rounded-sm text-sm font-medium focus:outline-none cursor-pointer hover:bg-gray-50 transition-all w-full text-[#181211] ${className}`}
     >
       {placeholder && <option value="">{placeholder}</option>}
-      {options.map((opt, idx) => (
-        <option key={idx} value={opt.value}>{opt.label}</option>
-      ))}
+      {options.map((opt, idx) => {
+        const val = typeof opt === 'object' ? opt.value : opt;
+        const label = typeof opt === 'object' ? opt.label : opt;
+        return <option key={idx} value={val}>{label}</option>;
+      })}
     </select>
     <Icon
       icon="lucide:chevron-down"
