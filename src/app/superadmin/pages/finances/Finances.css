@@ -1,0 +1,60 @@
+.finances-container {
+    padding-bottom: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom shadow for cards */
+.finances-container .bg-white {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s ease;
+}
+
+.finances-container .bg-white:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+}
+
+/* Legend chip styling */
+.finances-container .cursor-pointer:hover {
+    transform: scale(1.02);
+}
+
+/* Table styling refinement */
+.finances-container table thead th {
+    letter-spacing: 0.05em;
+}
+
+
+
+/* ApexCharts customization */
+.apexcharts-canvas {
+    margin: 0 auto;
+}
+
+.apexcharts-tooltip {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #F1F5F9 !important;
+    border-radius: 8px !important;
+}
+
+/* Scrollbar for table */
+.overflow-x-auto::-webkit-scrollbar {
+    height: 6px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+    background: #F1F5F9;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #E2E8F0;
+    border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #CBD5E1;
+}
