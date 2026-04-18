@@ -20,6 +20,7 @@ import OrderReports from "./pages/ordersAndDeliveries/reports/OrderReports";
 import Customers from "./pages/customers/Customers";
 import AddCustomer from "./pages/customers/add";
 import CustomerDetails from "./pages/customers/details";
+import Finances from "./pages/finances/Finances";
 
 import "./index.css";
 
@@ -49,6 +50,7 @@ function SuperAdminApp() {
           <Route path="customers" element={<Customers />} />
           <Route path="customers/add" element={<AddCustomer />} />
           <Route path="customers/details/:id" element={<CustomerDetails />} />
+          <Route path="finances" element={<Finances />} />
         </Route>
 
 

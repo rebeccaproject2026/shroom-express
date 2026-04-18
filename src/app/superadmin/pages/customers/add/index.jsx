@@ -88,10 +88,10 @@ const AddCustomer = () => {
                                     onClick={() => setCurrentStep(step.id)}
                                 >
                                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[15px] font-bold transition-all border-2 ${currentStep === step.id
-                                            ? 'bg-[#EA3D2A] text-white border-[#EA3D2A]'
-                                            : currentStep > step.id
-                                                ? 'bg-[#219653] text-white border-[#219653]'
-                                                : 'bg-white text-[#BABABA] border-[#BDBDD2]'
+                                        ? 'bg-[#EA3D2A] text-white border-[#EA3D2A]'
+                                        : currentStep > step.id
+                                            ? 'bg-[#219653] text-white border-[#219653]'
+                                            : 'bg-white text-[#BABABA] border-[#BDBDD2]'
                                         }`}>
                                         {currentStep > step.id ? <Icon icon="lucide:check" width="18" /> : step.id}
                                     </div>
