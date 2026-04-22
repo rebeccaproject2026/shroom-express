@@ -59,11 +59,11 @@ const DriverDetails = () => {
                             <div className="flex flex-wrap items-center gap-2 mb-0.5">
                                 <h1 className="text-xl font-semibold text-[#181211]">{driver.name}</h1>
                                 <div className="flex items-center gap-1.5">
-                                    <span className="flex items-center gap-1 px-3 py-1 bg-[#ECFDF5] border border-[#10B981] rounded-full text-[#10B981] text-xs font-semibold">
+                                    <span className="flex items-center gap-1 px-3 py-1 bg-[#CDFFE2] border border-[#219653] rounded-full text-[#219653] text-xs font-semibold">
                                         <Icon icon="charm:tick" width="14" />
                                         {driver.status}
                                     </span>
-                                    <span className="flex items-center gap-1 px-3 py-1 bg-[#ECFDF5] border border-[#10B981] rounded-full text-[#10B981] text-xs font-semibold">
+                                    <span className="flex items-center gap-1 px-3 py-1 bg-[#CDFFE2] border border-[#219653] rounded-full text-[#219653] text-xs font-semibold">
                                         <Icon icon="charm:tick" width="14" />
                                         KYC Verified
                                     </span>
@@ -88,7 +88,7 @@ const DriverDetails = () => {
                                 </span>
                                 <span className="text-[#94A3B8]">|</span>
                                 <span className="flex items-center gap-1 leading-none">
-                                    <Icon icon="lucide:car" width="14" /> {driver.vehicle || 'Toyota Corolla - ABC-1234'}
+                                    <Icon icon="solar:screencast-2-linear" width="14" /> {driver.vehicle || 'Toyota Corolla - ABC-1234'}
                                 </span>
                             </div>
                         </div>
