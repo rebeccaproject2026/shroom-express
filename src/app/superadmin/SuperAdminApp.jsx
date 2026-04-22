@@ -21,6 +21,9 @@ import Customers from "./pages/customers/Customers";
 import AddCustomer from "./pages/customers/add";
 import CustomerDetails from "./pages/customers/details";
 import Finances from "./pages/finances/Finances";
+import Drivers from "./pages/drivers/Drivers";
+import DriverDetails from "./pages/drivers/details";
+
 
 import "./index.css";
 
@@ -51,6 +54,13 @@ function SuperAdminApp() {
           <Route path="customers/add" element={<AddCustomer />} />
           <Route path="customers/details/:id" element={<CustomerDetails />} />
           <Route path="finances" element={<Finances />} />
+          <Route path="drivers/all" element={<Drivers />} />
+          <Route path="drivers/store" element={<Drivers />} />
+          <Route path="drivers/shroom" element={<Drivers />} />
+          <Route path="drivers/in-house" element={<Drivers />} />
+          <Route path="drivers/resume" element={<Drivers />} />
+          <Route path="drivers/details/:id" element={<DriverDetails />} />
+
         </Route>
 
 

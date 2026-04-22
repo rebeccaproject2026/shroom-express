@@ -181,11 +181,11 @@ const CustomerTable = () => {
                         onSelect={(val) => console.log(val)}
                         className="w-40"
                     />
-                    <div className="flex items-center border border-[#E2E8F0] rounded-lg overflow-hidden h-10">
-                        <button className="px-3 h-full bg-[#EA3D2A] text-white">
+                    <div className="flex items-center border-2 border-[#E8E8E8] rounded-md overflow-hidden shrink-0">
+                        <button className="p-2 bg-[#EA3D2A] text-white">
                             <Icon icon="lucide:list" width="20" />
                         </button>
-                        <button className="px-3 h-full text-[#64748B] hover:bg-gray-50">
+                        <button className="p-2 text-[#181211] hover:bg-gray-50">
                             <Icon icon="lucide:layout-grid" width="20" />
                         </button>
                     </div>
