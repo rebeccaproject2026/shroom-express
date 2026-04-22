@@ -231,12 +231,12 @@ const Finances = () => {
             <h1 className="text-lg font-bold text-[#181211]">Finances</h1>
             <p className="text-[#475569] font-medium text-sm">Track revenue, expenses, profit, and collection metrics.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="bg-[#EA3D2A] text-white px-3 py-2.5 rounded-[8px] text-[14px] font-bold tracking-wide shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:opacity-90 transition-all flex items-center gap-2 active:scale-95 group">
-              <Icon icon="lucide:upload" width="18" />
+          <div className="flex items-center">
+            <DatePickerMap defaultItem={5} onUpdate={(range) => console.log("Finances date range:", range)} />
+            <button className="flex items-center gap-2 px-4 py-2.5 bg-white text-[#475569] rounded-md text-sm font-semibold  transition-all shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] shrink-0 ml-4">
+              <Icon icon="bytesize:export" width="16" />
               Export CSV
             </button>
-            <DatePickerMap defaultItem={5} onUpdate={(range) => console.log("Finances date range:", range)} />
           </div>
         </div>
       </div>
