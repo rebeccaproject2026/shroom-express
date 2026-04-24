@@ -26,6 +26,7 @@ import DriverDetails from "./pages/drivers/details";
 import Marketing from "./pages/marketing/Marketing";
 import Analytics from "./pages/analytics/Analytics";
 import AuditLogs from "./pages/auditlogs/AuditLogs";
+import Support from "./pages/support/Support";
 
 
 
@@ -67,6 +68,7 @@ function SuperAdminApp() {
           <Route path="marketing" element={<Marketing />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="audit-logs" element={<AuditLogs />} />
+          <Route path="support" element={<Support />} />
 
 
         </Route>
