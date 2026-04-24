@@ -42,7 +42,7 @@ const CreateCampaignModal = ({ isOpen, onClose }) => {
                         required
                         placeholder="e.g. Spring Flash Sale"
                         borderClass="border border-[#E2E8F0]"
-                        className="w-full h-11 px-5 bg-[#F8F8F8] rounded-lg text-sm outline-none focus:border-[#EA3D2A] transition-all placeholder:text-[#94A3B8] placeholder:font-medium text-[#181211] font-medium"
+                        className="w-full h-11 px-5 bg-[#F8F8F8] rounded-lg text-sm outline-none transition-all placeholder:text-[#94A3B8] placeholder:font-medium text-[#181211] font-medium"
                         labelClassName="text-[14.5px] font-semibold text-[#181211]"
                     />
 
@@ -76,7 +76,7 @@ const CreateCampaignModal = ({ isOpen, onClose }) => {
                             type="number"
                             placeholder="500"
                             borderClass="border border-[#E2E8F0]"
-                            className="w-full h-11 px-5 bg-[#F8F8F8] rounded-lg text-sm outline-none focus:border-[#EA3D2A] transition-all text-[#181211] font-medium"
+                            className="w-full h-11 px-5 bg-[#F8F8F8] rounded-lg text-sm outline-none  transition-all text-[#181211] font-medium"
                             labelClassName="text-[14.5px] font-semibold text-[#181211]"
                         />
                     </div>

@@ -1,32 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+import ReusableTableSelect from "../../../components/common/ReusableTableSelect";
+import TicketChatDrawer from "./TicketChatDrawer";
 
-const TicketCard = ({ title, user, email, status, priority, type, time, id, initial, initialBg }) => {
+const TicketCard = ({ title, user, email, status, priority, type, time, id, initial, initialBg, messages, onChatClick }) => {
     return (
-        <div className="flex items-center justify-between py-4 px-5 bg-white border border-[#E2E8F0] rounded-xl hover:shadow-sm transition-all group">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
+        <div className="flex items-center justify-between py-3.5 px-4 transition-all group cursor-pointer">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
                 {/* Avatar Initial */}
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${initialBg}`}>
+                <div className={`w-11 h-11 rounded-full flex items-center mb-4 justify-center text-sm font-bold shrink-0 ${initialBg}`}>
                     {initial}
                 </div>
 
                 {/* Ticket Info */}
                 <div className="flex flex-col gap-1 min-w-0">
-                    <h4 className="text-[15px] font-bold text-[#181211] leading-tight truncate">{title}</h4>
-                    <p className="text-[13px] font-medium text-[#64748B]">
-                        {user} · <span className="text-[#64748B]/70">{email}</span>
+                    <h4 className="text-[15px] font-semibold text-[#181211] leading-tight truncate">{title}</h4>
+                    <p className="text-[13px] font-medium text-[#475569]">
+                        {user} · <span className="text-[#475569]">{email}</span>
                     </p>
-                    
+
                     {/* Badges */}
-                    <div className="flex items-center gap-2 mt-0.5">
-                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-[#219653] bg-[#ECFDF5] text-[#219653] text-[11px] font-bold">
+                    <div className="flex items-center gap-2 mt-1">
+                        <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border-2 border-[#219653] bg-[#FFFFF] text-[#219653] text-[11px] font-bold">
                             <span className="w-1.5 h-1.5 rounded-full bg-current" />
                             {status}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full border border-[#F2994A] bg-[#FFF7ED] text-[#F2994A] text-[11px] font-bold">
+                        <span className="px-2 py-0.5 rounded-full border-2 border-[#F2994A] bg-[#FFF5E3] text-[#F2994A] text-[11px] font-bold">
                             {priority}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full border border-[#0066FF] bg-[#EFF6FF] text-[#0066FF] text-[11px] font-bold">
+                        <span className="px-2 py-0.5 rounded-full border-2 border-[#0066FF] bg-[#DAE9FF] text-[#0066FF] text-[11px] font-bold">
                             {type}
                         </span>
                     </div>
@@ -35,18 +37,32 @@ const TicketCard = ({ title, user, email, status, priority, type, time, id, init
 
             {/* Metadata */}
             <div className="flex flex-col items-end gap-1.5 shrink-0 ml-4">
-                <span className="text-[12px] font-medium text-[#64748B]">{time}</span>
-                <div className="flex items-center gap-1 text-[#64748B]">
-                     <Icon icon="lucide:message-square" width="14" />
-                     <span className="text-[12px] font-bold">5</span>
+                <span className="text-[12px] font-medium text-[#475569]">{time}</span>
+                <div 
+                    className="flex items-center gap-0.5 text-[#475569] hover:text-[#EA3D2A] transition-colors cursor-pointer"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onChatClick();
+                    }}
+                >
+                    <Icon icon="fluent:chat-16-regular" width="20" />
+                    <span className="text-xs font-semibold">{messages}</span>
                 </div>
-                <span className="text-[11px] font-bold text-[#94A3B8] tracking-wider uppercase">{id}</span>
+                <span className="text-xs text-[#475569] tracking-wider uppercase">{id}</span>
             </div>
         </div>
     );
 };
 
 const TicketsTab = () => {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+
+    const handleChatClick = (ticket) => {
+        setSelectedTicket(ticket);
+        setIsDrawerOpen(true);
+    };
+
     const tickets = [
         {
             initial: "S",
@@ -58,7 +74,8 @@ const TicketsTab = () => {
             priority: "Medium",
             type: "Store",
             time: "1 hr ago",
-            id: "TKT003"
+            id: "TKT003",
+            messages: 5
         },
         {
             initial: "T",
@@ -70,7 +87,8 @@ const TicketsTab = () => {
             priority: "Medium",
             type: "Customer",
             time: "3 hrs ago",
-            id: "TKT004"
+            id: "TKT004",
+            messages: 4
         },
         {
             initial: "A",
@@ -82,7 +100,8 @@ const TicketsTab = () => {
             priority: "Medium",
             type: "Customer",
             time: "1 hr ago",
-            id: "TKT003"
+            id: "TKT003",
+            messages: 5
         }
     ];
 
@@ -95,23 +114,38 @@ const TicketsTab = () => {
                 </p>
 
                 <div className="flex items-center gap-3">
-                    {['In Progress', 'Medium'].map((filter) => (
-                        <div key={filter} className="relative group">
-                            <button className="flex items-center justify-between gap-4 px-4 py-2 bg-white border border-[#E2E8F0] rounded-lg text-[13px] font-semibold text-[#181211] min-w-[130px] hover:bg-gray-50 transition-all">
-                                <span>{filter}</span>
-                                <Icon icon="lucide:chevron-down" width="16" className="text-[#64748B]" />
-                            </button>
-                        </div>
-                    ))}
+                    <ReusableTableSelect
+                        value="In Progress"
+                        options={['In Progress', 'Open', 'Closed']}
+                        className="min-w-[130px]"
+                        borderclass="border border-[#E2E8F0] rounded-lg"
+                    />
+                    <ReusableTableSelect
+                        value="Medium"
+                        options={['Low', 'Medium', 'High']}
+                        className="min-w-[130px]"
+                        borderclass="border border-[#E2E8F0] rounded-lg"
+                    />
                 </div>
             </div>
 
-            {/* Tickets List */}
-            <div className="flex flex-col gap-3">
+            {/* Tickets List Container */}
+            <div className="bg-white border border-[#E2E8F0] rounded-md overflow-hidden divide-y divide-[#E2E8F0]">
                 {tickets.map((ticket, idx) => (
-                    <TicketCard key={idx} {...ticket} />
+                    <TicketCard 
+                        key={idx} 
+                        {...ticket} 
+                        onChatClick={() => handleChatClick(ticket)}
+                    />
                 ))}
             </div>
+
+            {/* Chat Drawer */}
+            <TicketChatDrawer 
+                isOpen={isDrawerOpen} 
+                onClose={() => setIsDrawerOpen(false)} 
+                ticket={selectedTicket} 
+            />
         </div>
     );
 };

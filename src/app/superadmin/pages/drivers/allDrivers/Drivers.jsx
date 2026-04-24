@@ -1,8 +1,8 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import Breadcrumbs from "../../components/common/Breadcrumbs";
+import Breadcrumbs from "../../../components/common/Breadcrumbs";
 import { Link } from "react-router-dom";
-import DriverTable from "../../components/drivers/DriverTable";
+import DriverTable from "../../../components/drivers/DriverTable";
 
 const Drivers = () => {
     const breadcrumbItems = [

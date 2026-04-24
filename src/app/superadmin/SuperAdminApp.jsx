@@ -21,16 +21,23 @@ import Customers from "./pages/customers/Customers";
 import AddCustomer from "./pages/customers/add";
 import CustomerDetails from "./pages/customers/details";
 import Finances from "./pages/finances/Finances";
-import Drivers from "./pages/drivers/Drivers";
-import DriverDetails from "./pages/drivers/details";
+import Drivers from "./pages/drivers/allDrivers/Drivers";
+import DriverDetails from "./pages/drivers/allDrivers/details";
+import StoreDrivers from "./pages/drivers/storeDriver/StoreDrivers";
+import ShroomDrivers from "./pages/drivers/shroomDriver/ShroomDrivers";
+import InHouseDrivers from "./pages/drivers/inHouseDriver/InHouseDrivers";
+import RegisteredDrivers from "./pages/drivers/registeredDrivers/RegisteredDrivers";
+import AddDriver from "./pages/drivers/allDrivers/adddriver";
 import Marketing from "./pages/marketing/Marketing";
 import Analytics from "./pages/analytics/Analytics";
 import AuditLogs from "./pages/auditlogs/AuditLogs";
 import Support from "./pages/support/Support";
+import Settings from "./pages/settings/Settings";
 
 
 
 import "./index.css";
+
 
 function SuperAdminApp() {
   return (
@@ -60,15 +67,17 @@ function SuperAdminApp() {
           <Route path="customers/details/:id" element={<CustomerDetails />} />
           <Route path="finances" element={<Finances />} />
           <Route path="drivers/all" element={<Drivers />} />
-          <Route path="drivers/store" element={<Drivers />} />
-          <Route path="drivers/shroom" element={<Drivers />} />
-          <Route path="drivers/in-house" element={<Drivers />} />
-          <Route path="drivers/resume" element={<Drivers />} />
+          <Route path="drivers/add" element={<AddDriver />} />
+          <Route path="drivers/store" element={<StoreDrivers />} />
+          <Route path="drivers/shroom" element={<ShroomDrivers />} />
+          <Route path="drivers/in-house" element={<InHouseDrivers />} />
+          <Route path="drivers/resume" element={<RegisteredDrivers />} />
           <Route path="drivers/details/:id" element={<DriverDetails />} />
           <Route path="marketing" element={<Marketing />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="audit-logs" element={<AuditLogs />} />
           <Route path="support" element={<Support />} />
+          <Route path="settings" element={<Settings />} />
 
 
         </Route>

@@ -4,6 +4,8 @@ import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 // Tab Imports
 import TicketsTab from "./tabs/TicketsTab";
+import FaqTab from "./tabs/FaqTab";
+import ContactTab from "./tabs/ContactTab";
 
 const TABS = [
     { key: "Tickets", label: "Tickets" },
@@ -35,8 +37,8 @@ const Support = () => {
     const renderTabContent = () => {
         switch (activeTab) {
             case "Tickets": return <TicketsTab />;
-            case "FAQ": return <div className="text-center py-20 text-gray-500 font-medium">FAQ & Help Center Content</div>;
-            case "Contact": return <div className="text-center py-20 text-gray-500 font-medium">Contact Support Content</div>;
+            case "FAQ": return <FaqTab />;
+            case "Contact": return <ContactTab />;
             default: return <TicketsTab />;
         }
     };

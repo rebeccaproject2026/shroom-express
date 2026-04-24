@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Breadcrumbs from "../../../components/common/Breadcrumbs";
-import { DRIVERS_DATA } from "../../../data/driversData";
+import Breadcrumbs from "../../../../components/common/Breadcrumbs";
+import { DRIVERS_DATA } from "../../../../data/driversData";
 import ProfileTab from "./tabs/ProfileTab";
 import PerformanceTab from "./tabs/PerformanceTab";
 import KYCDocsTab from "./tabs/KYCDocsTab";

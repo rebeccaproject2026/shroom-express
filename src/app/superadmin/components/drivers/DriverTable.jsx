@@ -156,7 +156,7 @@ const DriverTable = () => {
             header: 'ACTIONS',
             cell: ({ row }) => (
                 <div className="flex items-center gap-2">
-                    <button 
+                    <button
                         onClick={(e) => {
                             e.stopPropagation();
                             navigate(`/superadmin/drivers/details/${row.original.id.replace('#', '')}`);
@@ -165,8 +165,8 @@ const DriverTable = () => {
                     >
                         <Icon icon="lucide:eye" width="18" />
                     </button>
-                    <button className="text-[#64748B] p-1.5 hover:bg-gray-100 rounded-lg transition-all">
-                        <Icon icon="lucide:edit-3" width="18" />
+                    <button className="text-[#181211] p-1.5 hover:bg-gray-100 rounded-lg transition-all">
+                        <Icon icon="iconamoon:edit-light" width="18" />
                     </button>
                     <button className="text-[#EA3D2A] p-1.5 hover:bg-red-50 rounded-lg transition-all">
                         <Icon icon="lucide:ban" width="18" />
