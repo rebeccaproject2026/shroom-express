@@ -66,7 +66,7 @@ const CartPage = () => {
     return (
         <div className="w-full min-h-screen bg-[#F5F0EB] px-4 sm:px-10 pt-6 sm:pb-20 pb-5">
             {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
-            <div className="mt-6 mb-0 lg:hidden">
+            <div className="mt-2 sm:mt-12  mb-0 lg:hidden">
                 <button
                     onClick={() => navigate('/store')}
                     className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"

@@ -44,8 +44,8 @@ const ProductDetail = () => {
             priceRange: "$29.00 - $150.00",
             price: 29.00,
             location: "779 Somerset St W • Ottawa",
-            coverImage: storecard1,
-            logo: background,
+            coverImage: storecard2,
+            logo: background2,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [],
@@ -59,23 +59,23 @@ const ProductDetail = () => {
             priceRange: "$26.00 - $146.00",
             price: 26.00,
             location: "5.2 km away • Etobicoke",
-            coverImage: storecard2,
-            logo: background2,
+            coverImage: storecard3,
+            logo: background3,
             deliveryBadge: { text: "Express Delivery", color: "text-[#7F7F7F]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [],
         },
         {
-            id: 4,
-            name: "Shroom Express",
-            rating: "4.1",
-            reviewCount: "210 reviews",
-            estimatedDelivery: "1 - 2 Hours",
-            priceRange: "$26.00 - $146.00",
-            price: 32.00,
-            location: "5.2 km away • Vancouver",
-            coverImage: storecard3,
-            logo: background3,
+            id: 1,
+            name: "micro zoomiez",
+            rating: "4.8",
+            reviewCount: "124",
+            estimatedDelivery: "Under 2 Hours",
+            priceRange: "$27.00 - $147.00",
+            price: 27.00,
+            location: "45 Four Winds Dr • North York",
+            coverImage: storecard1,
+            logo: background,
             deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
             isPrimary: false,
             avatars: [],
@@ -249,7 +249,7 @@ const ProductDetail = () => {
                                 <div className="flex justify-between items-center w-full">
                                     <div className="flex items-center gap-2">
                                         <Icon icon="iconoir:shop" width="18" height="18" className="text-[#0F3540]" />
-                                        <p className="text-[15px] font-bold text-[#181211]">{selectedStore.name}</p>
+                                        <Link to={`/store/storeslists/${selectedStore.id}`} className="text-[15px] font-bold text-[#181211] hover:text-(--store-primary) transition-colors">{selectedStore.name}</Link>
                                     </div>
                                     <button className="px-4 py-1.5 bg-[#D4E6D5] rounded-full text-[13px] font-bold flex items-center gap-1.5 whitespace-nowrap">
                                         <Icon icon="mdi:truck-outline" width={18} height={18} />

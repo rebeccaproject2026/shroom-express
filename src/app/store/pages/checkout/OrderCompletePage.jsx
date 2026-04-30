@@ -55,7 +55,7 @@ const OrderCompletePage = () => {
   return (
     <div className="w-full min-h-screen bg-[#F8F6F6] px-4 sm:px-10 pt-6 sm:pb-20 pb-5">
       {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
-      <div className="mb-6 lg:hidden">
+      <div className="mt-2 sm:mt-12 lg:hidden">
         <button
           onClick={() => navigate('/store')}
           className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"
@@ -67,7 +67,7 @@ const OrderCompletePage = () => {
 
       <Stepper currentStep={3} />
 
-      <div className="max-w-175 mx-auto flex flex-col gap-6">
+      <div className="max-w-175 mx-auto flex flex-col gap-6 mt-10">
         {/* Success Icon + Title */}
         <div className="flex flex-col items-center text-center gap-3">
           <div className="w-18 h-18 rounded-full bg-[#E93E2B1A] flex items-center justify-center">

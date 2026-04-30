@@ -1,15 +1,20 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Breadcrumbs from '../../../components/common/Breadcrumbs';
 import ReusableSearchInput from '../../../components/common/ReusableSearchInput';
+import RejectDriverModal from './RejectDriverModal';
 
 const RegisteredDrivers = () => {
+  const navigate = useNavigate();
   const [searchFilter, setSearchFilter] = React.useState('');
   const breadcrumbItems = [
     { label: "Dashboard", path: "/superadmin/dashboard" },
     { label: "Resume/ New Registered" }
   ];
+
+  const [isRejectModalOpen, setIsRejectModalOpen] = React.useState(false);
+  const [selectedDriver, setSelectedDriver] = React.useState(null);
 
   const stats = [
     {
@@ -183,7 +188,7 @@ const RegisteredDrivers = () => {
                         {app.location} · {app.vehicle} · Applied on {app.appliedDate}
                       </p>
                       <div className="flex items-center gap-2 pt-1">
-                        <span className={`px-2 py-1 rounded-full text-[10px] font-semibold border ${getStatusStyle(app.status)}`}>
+                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold border-2 ${getStatusStyle(app.status)}`}>
                           {app.status}
                         </span>
                         <span className="px-2 py-0.5 rounded-full text-[10px] font-bold border border-[#0066FF] text-[#0066FF] bg-[#EBF5FF]">
@@ -196,21 +201,33 @@ const RegisteredDrivers = () => {
                   <div className="flex items-center gap-3">
                     {app.actions ? (
                       <div className="flex items-center gap-2">
-                        <button className="px-4 py-2 rounded-md border border-[#0066FF] text-[#0066FF] text-sm font-semibold flex items-center gap-1.5 hover:bg-[#EBF5FF] transition-all bg-[#F6FBFF] shadow-[0px_4px_6px_-4px_#0066FF33,0px_10px_15px_-3px_#0066FF33]">
-                          <Icon icon="lucide:eye" width="18" />
+                        <button
+                          onClick={() => navigate(`/superadmin/drivers/resume/details/${app.id}`)}
+                          className="px-4 py-2 rounded-md border border-[#0066FF] text-[#0066FF] text-sm font-semibold flex items-center gap-1.5 hover:bg-[#EBF5FF] transition-all bg-[#F6FBFF] shadow-[0px_4px_6px_-4px_#0066FF33,0px_10px_15px_-3px_#0066FF33]"
+                        >
+                          <Icon icon="majesticons:eye-line" width="18" />
                           View
                         </button>
                         <button className="px-4 py-2 rounded-md border border-[#219653] text-[#219653] text-sm font-semibold flex items-center gap-1.5 hover:bg-[#E0FFED] transition-all bg-[#E0FFED] shadow-[0_4px_6px_-4px_#21965333,0_10px_15px_-3px_#21965333]">
-                          <Icon icon="lucide:check-circle" width="18" />
+                          <Icon icon="gg:check-o" width="18" />
                           Approve
                         </button>
-                        <button className="px-4 py-2 rounded-md border border-[#EB5757] text-[#EB5757] text-sm font-semibold flex items-center gap-1.5 bg-[#FFEDEB] transition-all ">
+                        <button
+                          onClick={() => {
+                            setSelectedDriver(app);
+                            setIsRejectModalOpen(true);
+                          }}
+                          className="px-4 py-2 rounded-md border border-[#EB5757] text-[#EB5757] text-sm font-semibold flex items-center gap-1.5 bg-[#FFEDEB] transition-all "
+                        >
                           <Icon icon="lucide:x" width="18" />
                           Reject
                         </button>
                       </div>
                     ) : (
-                      <button className="px-4 py-2 rounded-md border border-[#0066FF] text-[#0066FF] text-[13px] font-bold flex items-center gap-1.5 hover:bg-[#EBF5FF] transition-all bg-[#F6FBFF] shadow-[0px_4px_6px_-4px_#0066FF33,0px_10px_15px_-3px_#0066FF33]">
+                      <button
+                        onClick={() => navigate(`/superadmin/drivers/resume/details/${app.id}`)}
+                        className="px-4 py-2 rounded-md border border-[#0066FF] text-[#0066FF] text-[13px] font-bold flex items-center gap-1.5 hover:bg-[#EBF5FF] transition-all bg-[#F6FBFF] shadow-[0px_4px_6px_-4px_#0066FF33,0px_10px_15px_-3px_#0066FF33]"
+                      >
                         <Icon icon="lucide:eye" width="18" />
                         View
                       </button>
@@ -236,6 +253,16 @@ const RegisteredDrivers = () => {
           </div>
         </div>
       </div>
+
+      <RejectDriverModal
+        isOpen={isRejectModalOpen}
+        onClose={() => setIsRejectModalOpen(false)}
+        driver={selectedDriver}
+        onConfirm={(reason) => {
+          console.log('Rejected driver:', selectedDriver?.id, 'with reason:', reason);
+          // Add your rejection API call here
+        }}
+      />
     </div>
   );
 };

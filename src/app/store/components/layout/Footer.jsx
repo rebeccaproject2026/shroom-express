@@ -42,13 +42,13 @@ const Footer = () => {
 
                     {/* Column 2: Quick Links (Accordion on mobile) */}
                     <div className="lg:col-span-2 border-b border-[#F4F1F0] md:border-none pb-4 md:pb-0">
-                        <div 
+                        <div
                             className="flex items-center justify-between cursor-pointer md:cursor-default group"
                             onClick={() => toggleSection('links')}
                         >
                             <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider md:mb-6">Quick Links</h3>
-                            <Icon 
-                                icon="solar:alt-arrow-down-bold-duotone" 
+                            <Icon
+                                icon="solar:alt-arrow-down-bold-duotone"
                                 className={`md:hidden transition-transform duration-300 ${openSection === 'links' ? 'rotate-180' : ''}`}
                                 width="20"
                             />
@@ -57,7 +57,7 @@ const Footer = () => {
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">About Us</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Contact Us</Link></li>
                             <li><Link to="/store/myaccount" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">My Account</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Cannabis FAQ</Link></li>
+                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Support</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom FAQ</Link></li>
                             <li><Link to="/store/track-order" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Track Your Order</Link></li>
                         </ul>
@@ -65,13 +65,13 @@ const Footer = () => {
 
                     {/* Column 3: Knowledge Center (Accordion on mobile) */}
                     <div className="lg:col-span-2 border-b border-[#F4F1F0] md:border-none pb-4 md:pb-0">
-                        <div 
+                        <div
                             className="flex items-center justify-between cursor-pointer md:cursor-default group"
                             onClick={() => toggleSection('knowledge')}
                         >
                             <h3 className="text-sm font-bold text-[#181211] uppercase tracking-wider md:mb-6">Knowledge Center</h3>
-                            <Icon 
-                                icon="solar:alt-arrow-down-bold-duotone" 
+                            <Icon
+                                icon="solar:alt-arrow-down-bold-duotone"
                                 className={`md:hidden transition-transform duration-300 ${openSection === 'knowledge' ? 'rotate-180' : ''}`}
                                 width="20"
                             />
@@ -80,7 +80,6 @@ const Footer = () => {
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Cannabis vs. Psilocybin</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>
                         </ul>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 import { useCategory } from '../../context/CategoryContext';
+import { useStores } from '../../context/StoresContext';
 
 // Import Hero Images
 import home1 from '../../assets/images/home1.png';
@@ -52,6 +53,7 @@ const Home = () => {
     const sliderRef = useRef(null);
     const navigate = useNavigate();
     const { selectedEffect, deliveryMethod } = useCategory();
+    const { stores } = useStores();
 
     const slideLeft = () => {
         if (sliderRef.current) {
@@ -265,76 +267,9 @@ const Home = () => {
                             View All <Icon icon="streamline:next" width={20} height={20} />
                         </button>
                     </div>
-
                     {/* Store Cards Row */}
                     <div className="flex gap-7 overflow-x-auto pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                        {[
-                            {
-                                id: 1,
-                                name: "micro zoomiez",
-                                rating: "4.8",
-                                reviewCount: "124",
-                                estimatedDelivery: "Under 2 Hours",
-                                avgPrice: "$27.43",
-                                location: "45 Four Winds Dr, North York, ON M3J 2T6, Canada",
-                                coverImage: storecard1,
-                                logo: background,
-                                deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-                                isPrimary: false,
-                                avatars: [beginnerFriendlyImg,
-                                    highPotencyImg,
-                                    microDosingImg,
-                                    visualExperienceImg, creativeBoostImg, relaxChillImg,]
-                            },
-                            {
-                                id: 2,
-                                name: "The Mushroom",
-                                rating: "5.0",
-                                reviewCount: "89 reviews",
-                                estimatedDelivery: "2 - 5 Hours",
-                                avgPrice: "$27.43",
-                                location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-                                coverImage: storecard2,
-                                logo: background2,
-                                deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-                                isPrimary: false,
-                                avatars: [beginnerFriendlyImg,
-                                    highPotencyImg,
-                                    microDosingImg,
-                                    visualExperienceImg, creativeBoostImg, relaxChillImg,]
-                            },
-                            {
-                                id: 3,
-                                name: "Psilovibin",
-                                rating: "4.1",
-                                reviewCount: "210 reviews",
-                                estimatedDelivery: "1 - 2 Hours",
-                                avgPrice: "$27.43",
-                                location: "5.2 km away • Etobicoke",
-                                coverImage: storecard3,
-                                logo: background3,
-                                deliveryBadge: null, /* No badge for 3rd and 4th card based on screenshot crop */
-                                isPrimary: false,
-                                avatars: []
-                            },
-                            {
-                                id: 4,
-                                name: "Shroom Express",
-                                rating: "4.7",
-                                reviewCount: "340 reviews",
-                                estimatedDelivery: "1 - 3 hours",
-                                avgPrice: "$27.43",
-                                location: "5.2 km away • Medicinal - Vancouver",
-                                coverImage: storecard4,
-                                logo: background4,
-                                deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-                                isPrimary: false,
-                                avatars: [beginnerFriendlyImg,
-                                    highPotencyImg,
-                                    microDosingImg,
-                                    visualExperienceImg, creativeBoostImg, relaxChillImg,]
-                            }
-                        ].map(store => (
+                        {stores.slice(0, 8).map(store => (
                             <div key={store.id} className="sm:min-w-77.5  w-full sm:max-w-85.25 min-w-77 w-full max-w-78 shrink-0">
                                 <StoreCard store={store} />
                             </div>

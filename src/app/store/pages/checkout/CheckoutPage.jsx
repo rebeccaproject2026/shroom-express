@@ -45,7 +45,7 @@ const CheckoutPage = () => {
     return (
         <div className="w-full min-h-screen bg-[#FAF8F5] px-4 sm:px-10 pt-6 sm:pb-10">
             {/* Top Navigation - Continue Shopping (Mobile/Tablet only) */}
-            <div className="mb-6 lg:hidden">
+            <div className="mt-2 sm:mt-12 lg:hidden">
                 <button
                     onClick={() => navigate('/store')}
                     className="flex items-center gap-2 text-[#E93E2B] font-bold cursor-pointer text-base hover:opacity-80 transition-[opacity,transform] active:scale-95 group"
@@ -135,7 +135,7 @@ const CheckoutPage = () => {
 
                 {/* Order Summary (Handles both Desktop Sidebar and Mobile Drawer) */}
                 <div className="lg:col-span-1">
-                    <div className="sticky top-67.5">
+                    <div className="sticky top-78.5">
                         <OrderSummary
                             items={cartItems}
                             delivery={delivery}

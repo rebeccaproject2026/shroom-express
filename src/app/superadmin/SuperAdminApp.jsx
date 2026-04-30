@@ -27,6 +27,7 @@ import StoreDrivers from "./pages/drivers/storeDriver/StoreDrivers";
 import ShroomDrivers from "./pages/drivers/shroomDriver/ShroomDrivers";
 import InHouseDrivers from "./pages/drivers/inHouseDriver/InHouseDrivers";
 import RegisteredDrivers from "./pages/drivers/registeredDrivers/RegisteredDrivers";
+import RegisteredDriverDetails from "./pages/drivers/registeredDrivers/RegisteredDriverDetails";
 import AddDriver from "./pages/drivers/allDrivers/adddriver";
 import Marketing from "./pages/marketing/Marketing";
 import Analytics from "./pages/analytics/Analytics";
@@ -72,6 +73,7 @@ function SuperAdminApp() {
           <Route path="drivers/shroom" element={<ShroomDrivers />} />
           <Route path="drivers/in-house" element={<InHouseDrivers />} />
           <Route path="drivers/resume" element={<RegisteredDrivers />} />
+          <Route path="drivers/resume/details/:id" element={<RegisteredDriverDetails />} />
           <Route path="drivers/details/:id" element={<DriverDetails />} />
           <Route path="marketing" element={<Marketing />} />
           <Route path="analytics" element={<Analytics />} />

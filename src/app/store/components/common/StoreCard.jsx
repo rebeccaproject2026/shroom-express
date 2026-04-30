@@ -30,7 +30,7 @@ const StoreCard = ({ store }) => {
 
             {/* Cover Image Area */}
             <div className="relative w-full h-40 mb-8 shrink-0">
-                <img src={coverImage} className="w-full h-full rounded-t-sm object-cover" alt={`${name} cover`} />
+                <img src={coverImage} className="w-full h-full rounded-t-sm object-fill" alt={`${name} cover`} />
                 {/* Delivery Badge */}
                 {deliveryBadge && (
                     <div className="absolute top-3 right-3 bg-[#F8F8F8] backdrop-blur-[15px] rounded-full px-2.5 py-1 flex items-center gap-1 shadow-[0px_0px_6px_0px_#181211] border border-[#E8E8E8]">

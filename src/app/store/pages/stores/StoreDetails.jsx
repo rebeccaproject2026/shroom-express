@@ -2,22 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
-import microDosingImg from "../../assets/images/microdosing.png";
-import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
-import highPotencyImg from "../../assets/images/highpotency.png";
-import relaxChillImg from "../../assets/images/relaxchill.png";
-import visualExperienceImg from "../../assets/images/visualexperience.png";;
-import creativeBoostImg from "../../assets/images/creativeboost.png";
 import { allProducts } from '../../data/productsData';
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
 import StoreCard from '../../components/common/StoreCard';
-import storecard1 from "../../assets/images/storecard1.png";
-import background from "../../assets/images/background1.png";
-import storecard2 from "../../assets/images/storecard2.png";
-import storecard3 from "../../assets/images/storecard3.png";
-import storecard4 from "../../assets/images/storecard4.png";
-import background4 from "../../assets/images/Logo.png";
 import Select from '../../components/common/Select';
 import Bg3 from '../../assets/images/bg3.svg';
 import Bg2 from '../../assets/images/bg2.svg';
@@ -37,6 +25,7 @@ import Str9 from '../../assets/images/str9.png';
 import Str10 from '../../assets/images/str10.png';
 import FilterDrawer from '../../components/products/FilterDrawer';
 import { useCategory } from '../../context/CategoryContext';
+import { useStores } from '../../context/StoresContext';
 import StoreAboutDrawer from '../../components/stores/StoreAboutDrawer';
 
 
@@ -46,10 +35,10 @@ const StoreDetails = () => {
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
     const [isAboutDrawerOpen, setIsAboutDrawerOpen] = useState(false);
-    const [activeCategory, setActiveCategory] = useState(null); // 'mushrooms' | 'edibles' | null
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const { selectedEffect } = useCategory();
+    const { stores: contextStores } = useStores();
     const [drawerFilters, setDrawerFilters] = useState({ onSale: false, inStock: false, priceRange: [0, 200], selectedCategory: 'All' });
     // All stores data
     const allStoresData = {
@@ -88,18 +77,6 @@ const StoreDetails = () => {
             website: "www.psilovibin.com",
             rating: "4.1",
             reviewCount: "210"
-        },
-        4: {
-            name: "Shroom Express",
-            nameColor: "black",
-            logo: background4,
-            coverImage: storecard4,
-            description: "Shroom Express is dedicated to fast, reliable delivery of premium psilocybin products. With our express delivery service and competitive pricing, we make quality mushrooms accessible to everyone. Your satisfaction is our priority.",
-            deliveryTime: "1 - 3 Hours",
-            phone: "(604)555-0789",
-            website: "www.shroomexpress.com",
-            rating: "4.7",
-            reviewCount: "340"
         },
         5: {
             name: "Shroom For Sale",
@@ -209,11 +186,11 @@ const StoreDetails = () => {
         }
 
         // Category = High Potency products
-        if (activeCategory === 'mushrooms') {
-            list = list.filter(p => p.categories?.some(c =>
-                c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'
-            ));
-        }
+        // if (activeCategory === 'mushrooms') {
+        //     list = list.filter(p => p.categories?.some(c =>
+        //         c === 'High Potency' || c === 'Visual Experience' || c === 'Focus & Clarity'
+        //     ));
+        // }
 
         // Delivery = fast/beginner-friendly products (Beginner Friendly or Microdosing)
         if (activeDelivery) {
@@ -232,69 +209,17 @@ const StoreDetails = () => {
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
 
         return list;
-    }, [activeCategory, activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters]);
-    const stores = [
-        {
-            id: 1,
-            name: "micro zoomiez",
-            rating: "4.8",
-            reviewCount: "124",
-            estimatedDelivery: "Under 2 Hours",
-            avgPrice: "$27.43",
-            location: "45 Four Winds Dr, North York, ON M3J 2T6, Canada",
-            coverImage: storecard1,
-            logo: background,
-            deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" },
-            isPrimary: true,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        {
-            id: 2,
-            name: "The Mushroom",
-            rating: "5.0",
-            reviewCount: "89 reviews",
-            estimatedDelivery: "2 - 5 Hours",
-            avgPrice: "$27.43",
-            location: "779 Somerset St W. Centertown, Ottawa, Ontario",
-            coverImage: storecard2,
-            logo: Bg2,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-        {
-            id: 3,
-            name: "Psilovibin",
-            rating: "4.1",
-            reviewCount: "210 reviews",
-            estimatedDelivery: "1 - 2 Hours",
-            avgPrice: "$27.43",
-            location: "5.2 km away • Etobicoke",
-            coverImage: storecard3,
-            logo: Bg3,
-            deliveryBadge: null,
-            isPrimary: false,
-            avatars: []
-        },
-        {
-            id: 4,
-            name: "Shroom Express",
-            rating: "4.7",
-            reviewCount: "340 reviews",
-            estimatedDelivery: "1 - 3 hours",
-            avgPrice: "$27.43",
-            location: "5.2 km away • Medicinal - Vancouver",
-            coverImage: storecard4,
-            logo: background4,
-            deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" },
-            isPrimary: false,
-            avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg]
-        },
-    ];
+    }, [activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters]);
+    // Get 4 similar stores from context (excluding the current store)
+    const similarStores = useMemo(() => {
+        return contextStores
+            .filter(s => s.id.toString() !== storeId)
+            .slice(0, 4);
+    }, [contextStores, storeId]);
     return (
         <div className="w-full bg-[#FAF8F5] overflow-x-hidden">
             {/* Desktop Header Section (Visible on lg and up) */}
-            <div className="hidden lg:block px-6 lg:px-10 pt-10 sm:pt-16 md:pt-18">
+            <div className="hidden lg:block px-6 lg:px-10 pt-10 sm:pt-16 md:pt-12">
                 {/* Banner with rounded corners */}
                 <div className="relative rounded-[20px] overflow-visible h-70 bg-cover bg-center" style={{ backgroundImage: `url(${storeData.coverImage})` }}>
                     {/* Content Container */}
@@ -434,7 +359,7 @@ const StoreDetails = () => {
             </div>
 
             {/* Products Section */}
-            <div className="px-4 lg:px-10 mt-10 lg:mt-30 pb-10">
+            <div className="px-4 lg:px-10 mt-10 lg:mt-10 pb-10">
                 {/* Desktop Filter Bar (UNTOUCHED) */}
                 <div className="hidden lg:flex items-center gap-3 mb-4.5" >
                     {/* Filter Icon */}
@@ -444,16 +369,16 @@ const StoreDetails = () => {
                         <Icon icon="mage:filter" width={22} height={22} />
                         {/* Badge */}
                         <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                            {[activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length || 1}
+                            {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
                         </span>
                     </div>
                     {/* Pills */}
-                    <button
+                    {/* <button
                         onClick={() => setActiveCategory(p => p === 'mushrooms' ? null : 'mushrooms')}
                         className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory === 'mushrooms' ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
                     >
                         Category
-                    </button>
+                    </button> */}
 
                     <button
                         onClick={() => setActiveDelivery(p => !p)}
@@ -487,7 +412,7 @@ const StoreDetails = () => {
                     >
                         <Icon icon="mage:filter" width={20} />
                         <span className="bg-white text-[#E93E2B] text-[13px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                            {[activeCategory, activeDelivery, activeBestSeller].filter(Boolean).length || 1}
+                            {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
                         </span>
                     </button>
 
@@ -520,7 +445,7 @@ const StoreDetails = () => {
                 </div>
                 {/* Similar Stores: Desktop Grid (lg and up) */}
                 <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-7">
-                    {stores.map(store => (
+                    {similarStores.map(store => (
                         <div key={store.id} className="w-full">
                             <StoreCard store={store} />
                         </div>
@@ -529,7 +454,7 @@ const StoreDetails = () => {
 
                 {/* Similar Stores: Mobile Scroller (under lg) */}
                 <div className="lg:hidden flex gap-4 md:gap-5 overflow-x-auto pb-6 no-scrollbar -mx-4 px-4 scroll-smooth">
-                    {stores.map(store => (
+                    {similarStores.map(store => (
                         <div key={store.id} className="min-w-[285px] sm:min-w-77.5 w-[80vw] sm:w-full max-w-[320px] sm:max-w-85.25 shrink-0">
                             <StoreCard store={store} />
                         </div>

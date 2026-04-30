@@ -10,7 +10,7 @@ const steps = [
 const Stepper = ({ currentStep }) => {
     return (
         <>
-            <div className="flex items-center justify-center mb-4 pt-2 pb-8 sm:py-12">
+            <div className="flex items-center justify-center pt-2 pb-2  sm:pt-12">
 
                 {steps.map((step, idx) => (
                     <React.Fragment key={step.id}>
