@@ -5,11 +5,9 @@ import ProductCard from '../../components/common/ProductCard';
 import StoreCard from '../../components/common/StoreCard';
 import { useCategory } from '../../context/CategoryContext';
 import { useStores } from '../../context/StoresContext';
+import HeroSpiralGallery from '../../components/home/HeroSpiralGallery';
 
 // Import Hero Images
-import home1 from '../../assets/images/home1.png';
-import home2 from '../../assets/images/home2.png';
-import home3 from '../../assets/images/home3.png';
 import product1 from "../../assets/images/product1.png";
 import product2 from "../../assets/images/product2.png";
 import product3 from "../../assets/images/product3.png";
@@ -28,14 +26,6 @@ import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
 import topRateStoreBg from "../../assets/images/topratestorebg.png";
-import storecard1 from "../../assets/images/storecard1.png";
-import background from "../../assets/images/background1.png";
-import storecard2 from "../../assets/images/storecard2.png";
-import background2 from "../../assets/images/background2.png";
-import storecard3 from "../../assets/images/storecard3.png";
-import background3 from "../../assets/images/background3.png";
-import storecard4 from "../../assets/images/storecard4.png";
-import background4 from "../../assets/images/Logo.png";
 
 // Import Promotional Banners
 import price1 from "../../assets/images/price1.png";
@@ -106,8 +96,8 @@ const Home = () => {
                         </div>
 
                         {/* Right Side Container */}
-                        <div className="w-[40%] md:w-[45%] flex justify-center items-center relative z-10  sm:pr-0">
-                            <div className="relative w-full max-w-[140px] sm:max-w-110 aspect-square flex items-center justify-center">
+                        <div className="w-[40%] md:w-[45%] flex justify-center items-center relative z-10">
+                            {/* <div className="relative w-full max-w-[140px] sm:max-w-110 aspect-square flex items-center justify-center">
                                 <img
                                     src={home3}
                                     alt="Hero background right"
@@ -126,7 +116,8 @@ const Home = () => {
                                     id="hero-coffee-image"
                                     style={{ filter: "drop-shadow(0px 10px 40px rgba(0,0,0,0.15))" }}
                                 />
-                            </div>
+                            </div> */}
+                            <HeroSpiralGallery />
                         </div>
                     </div>
                 </div>

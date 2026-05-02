@@ -15,6 +15,7 @@ import ProdSideCard from "../../components/common/ProdSideCard";
 import SimilarProducts from "../../components/products/SimilarProducts";
 import FAQ from "../../components/products/FAQ";
 import { getProductById, allProducts } from "../../data/productsData";
+import { mushroomOttawaProducts } from "../../data/mushroomOttawaProducts";
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -83,7 +84,7 @@ const ProductDetail = () => {
     ];
 
     const [selectedStore, setSelectedStore] = useState(stores[0]);
-    const productData = getProductById(productId) || allProducts[0];
+    const productData = getProductById(productId) || mushroomOttawaProducts.find(p => p.id === Number(productId)) || allProducts[0];
     const product = {
         ...productData,
         weights: productData.weights || ["3.5g", "7g", "14g", "28g"],
@@ -171,7 +172,8 @@ const ProductDetail = () => {
                                 <img
                                     src={product.images[selectedImage]}
                                     alt={product.name}
-                                    className="w-full h-auto object-cover"
+                                    onClick={() => setSelectedImage((prev) => (prev + 1) % product.images.length)}
+                                    className="w-full h-auto object-cover cursor-pointer hover:scale-[1.02] transition-transform duration-300"
                                 />
                             </div>
                         </div>
@@ -223,7 +225,7 @@ const ProductDetail = () => {
                             {/* Price and Social Actions Row */}
                             <div className="flex justify-between items-center mb-4">
                                 <div className="text-3xl font-bold text-(--store-primary)">
-                                    ${selectedStore.price.toFixed(2)}
+                                    {typeof product.price === 'string' ? `$${product.price.replace(' – ', ' – $')}` : `$${selectedStore.price.toFixed(2)}`}
                                 </div>
                                 <div className="flex gap-2.5 lg:hidden">
                                     <button onClick={handleWishlist} className="w-10 h-10 flex items-center justify-center border border-[#E5DCDC] rounded-full bg-white shadow-sm">
@@ -498,64 +500,43 @@ const ProductDetail = () => {
                 <div className="px-8 py-6 border border-[#E5DCDC] rounded-bl-lg rounded-br-lg ">
                     {activeTab === "description" && (
                         <div className="text-[#777777]">
-                            <p className="mb-4 leading-relaxed  font-semibold">
-                                Introducing our Blue Meanies Magic Mushrooms, renowned for their
-                                distinctive deep blue "stain" upon handling. These mushrooms are
-                                characterized by their tendency to bruise easily, resulting in
-                                the oxidation of high concentrations of psilocybin and a change
-                                in color. With an average potency level, Blue Meanies offer a
-                                balanced psychedelic experience.
-                            </p>
+                            {product.description && product.description.length > 0 ? (
+                                product.description.map((item, idx) => (
+                                    <div key={idx} className="mb-6">
+                                        <h3 className="text-lg font-bold text-[#181211] mb-2">
+                                            {item.title}
+                                        </h3>
+                                        <p className="leading-relaxed font-semibold">
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="mb-4 leading-relaxed font-semibold">
+                                    No description available for this product.
+                                </p>
+                            )}
 
-                            <h3 className="text-lg font-bold text-[#181211] mb-2">
-                                Expected Experiences:
-                            </h3>
-
-                            <ul className="space-y-2">
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Enhanced Perception:
-                                    </span>{" "}
-                                    Blue Meanies may intensify sensory experiences, heightening
-                                    visual, auditory, and tactile sensations.
-                                </li>
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Deep Introspection:
-                                    </span>{" "}
-                                    Users often report profound introspective journeys, leading to
-                                    insights and self-discovery.
-                                </li>
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Mood Enhancement:
-                                    </span>{" "}
-                                    These mushrooms have been known to induce feelings of
-                                    euphoria, joy, and emotional openness.
-                                </li>
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Creativity Boost:
-                                    </span>{" "}
-                                    Many users experience enhanced creativity and artistic
-                                    inspiration while under the influence of Blue Meanies.
-                                </li>
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Spiritual Connection:
-                                    </span>{" "}
-                                    Blue Meanies may foster a sense of connection with nature, the
-                                    universe, or a higher power.
-                                </li>
-                                <li className="leading-relaxed">
-                                    <span className="font-semibold text-[#181211]">
-                                        • Therapeutic Potential:
-                                    </span>{" "}
-                                    Some users utilize Blue Meanies in therapeutic settings to
-                                    address issues such as anxiety, depression, and PTSD, under
-                                    the guidance of a trained professional.
-                                </li>
-                            </ul>
+                            {product.effects && product.effects.length > 0 && (
+                                <>
+                                    <h3 className="text-lg font-bold text-[#181211] mb-3">
+                                        Expected Experiences:
+                                    </h3>
+                                    <ul className="space-y-3">
+                                        {product.effects.map((effect, idx) => (
+                                            <li key={idx} className="leading-relaxed flex items-center gap-2">
+                                                <div className="w-6 h-6 rounded-full overflow-hidden shrink-0">
+                                                    <img src={effect.image} alt="" className="w-full h-full object-cover" />
+                                                </div>
+                                                <span className="font-semibold text-[#181211]">
+                                                    • {effect.name}:
+                                                </span>{" "}
+                                                Experience enhanced {effect.name.toLowerCase()} and well-being.
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
                         </div>
                     )}
 

@@ -16,6 +16,7 @@
     "@tanstack/react-table": "^8.21.3",
     "apexcharts": "^5.3.6",
     "axios": "^1.13.3",
+    "gsap": "^3.15.0",
     "lodash": "^4.17.23",
     "lucide-react": "^0.563.0",
     "mapbox-gl": "^3.18.1",

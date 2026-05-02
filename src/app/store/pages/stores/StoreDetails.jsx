@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import { allProducts } from '../../data/productsData';
+import { mushroomOttawaProducts } from '../../data/mushroomOttawaProducts';
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
 import StoreCard from '../../components/common/StoreCard';
@@ -168,6 +169,10 @@ const StoreDetails = () => {
     const products = useMemo(() => {
         let list = [...allProducts];
 
+        // Custom products for The Mushroom / Mushroom Ottawa
+        if (storeId === '2' || storeId === '9') {
+            list = [...mushroomOttawaProducts];
+        }
         // Filter by header icon selectedEffect from context
         if (selectedEffect) {
             const effectAlias = selectedEffect === 'Micro dosing' ? 'Microdosing' : selectedEffect;
@@ -182,7 +187,10 @@ const StoreDetails = () => {
             list = list.filter(p => p.categories?.includes(catAlias));
         }
         if (drawerFilters.priceRange) {
-            list = list.filter(p => p.price >= drawerFilters.priceRange[0] && p.price <= drawerFilters.priceRange[1]);
+            list = list.filter(p => {
+                const price = typeof p.price === 'string' ? parseFloat(p.price.split('–')[0]) : p.price;
+                return price >= drawerFilters.priceRange[0] && price <= drawerFilters.priceRange[1];
+            });
         }
 
         // Category = High Potency products
@@ -203,10 +211,23 @@ const StoreDetails = () => {
             list = list.filter(p => p.badge?.text === 'BEST SELLER');
         }
 
-        if (sortBy === 'price-low') list.sort((a, b) => a.price - b.price);
-        else if (sortBy === 'price-high') list.sort((a, b) => b.price - a.price);
+        if (sortBy === 'price-low') {
+            list.sort((a, b) => {
+                const priceA = typeof a.price === 'string' ? parseFloat(a.price.split('–')[0]) : a.price;
+                const priceB = typeof b.price === 'string' ? parseFloat(b.price.split('–')[0]) : b.price;
+                return priceA - priceB;
+            });
+        }
+        else if (sortBy === 'price-high') {
+            list.sort((a, b) => {
+                const priceA = typeof a.price === 'string' ? parseFloat(a.price.split('–')[0]) : a.price;
+                const priceB = typeof b.price === 'string' ? parseFloat(b.price.split('–')[0]) : b.price;
+                return priceB - priceA;
+            });
+        }
         else if (sortBy === 'rating') list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
         else if (sortBy === 'latest') list.sort((a, b) => b.id - a.id);
+        else list.sort((a, b) => a.id - b.id); // Default sequence: 201, 202, 203...
 
         return list;
     }, [activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters]);
