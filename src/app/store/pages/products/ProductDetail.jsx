@@ -20,6 +20,7 @@ import { planet51Products } from "../../data/planet51Products";
 import { psilovibinProducts } from "../../data/psilovibinProducts";
 import { magicMushroomDeliveryProducts } from "../../data/magicMushroomDeliveryProducts";
 import { magicMushroomDanforthProducts } from "../../data/magicMushroomDanforthProducts";
+import { shroomForSaleProducts } from "../../data/shroomForSaleProducts";
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -94,6 +95,7 @@ const ProductDetail = () => {
         psilovibinProducts.find(p => p.id === Number(productId)) || 
         magicMushroomDeliveryProducts.find(p => p.id === Number(productId)) || 
         magicMushroomDanforthProducts.find(p => p.id === Number(productId)) || 
+        shroomForSaleProducts.find(p => p.id === Number(productId)) || 
         allProducts[0];
     const product = {
         ...productData,

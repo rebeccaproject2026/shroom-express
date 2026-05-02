@@ -8,6 +8,11 @@ import { planet51Products } from '../../data/planet51Products';
 import { psilovibinProducts } from '../../data/psilovibinProducts';
 import { magicMushroomDeliveryProducts } from '../../data/magicMushroomDeliveryProducts';
 import { magicMushroomDanforthProducts } from '../../data/magicMushroomDanforthProducts';
+import { shroomForSaleProducts } from '../../data/shroomForSaleProducts';
+import Shroomforsalebanner from "../../assets/images/Shroomforsalebanner.png";
+import Shroomforsalelogo from "../../assets/images/Shroomforsalebannerlogo.png";
+import Planetbanner from "../../assets/images/Planetbanner.png";
+import Planetlogo from "../../assets/images/Planetlogo.png";
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
 import StoreCard from '../../components/common/StoreCard';
@@ -86,8 +91,8 @@ const StoreDetails = () => {
         5: {
             name: "Shroom For Sale",
             nameColor: "#ffffff",
-            logo: Bg5,
-            coverImage: Str5,
+            logo: Shroomforsalelogo,
+            coverImage: Shroomforsalebanner,
             description: "Shroom For Sale offers a wide selection of premium dried and fresh mushroom products at competitive prices. Located in the heart of Toronto, we are committed to providing safe, high-quality products with fast same-day delivery.",
             deliveryTime: "Under 2 Hours",
             phone: "(416)555-0111",
@@ -110,8 +115,8 @@ const StoreDetails = () => {
         7: {
             name: "Planet 51",
             nameColor: "white",
-            logo: Bg7,
-            coverImage: Str7,
+            logo: Planetlogo,
+            coverImage: Planetbanner,
             description: "Planet 51 brings you an out-of-this-world selection of magic mushroom products. Our knowledgeable staff curates only the finest strains to ensure every customer has a safe, informed, and transformative experience.",
             deliveryTime: "1 - 2 Hours",
             phone: "(416)555-0333",
@@ -189,6 +194,10 @@ const StoreDetails = () => {
         if (storeId === '6') {
             list = [...magicMushroomDeliveryProducts];
         }
+        // Custom products for Shroom For Sale
+        if (storeId === '5') {
+            list = [...shroomForSaleProducts];
+        }
         // Custom products for Magic Mushroom Danforth
         if (storeId === '9') {
             list = [...magicMushroomDanforthProducts];
@@ -250,7 +259,7 @@ const StoreDetails = () => {
         else list.sort((a, b) => a.id - b.id); // Default sequence: 201, 202, 203...
 
         return list;
-    }, [activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters]);
+    }, [activeDelivery, activeBestSeller, sortBy, selectedEffect, drawerFilters, storeId]);
     // Get 4 similar stores from context (excluding the current store)
     const similarStores = useMemo(() => {
         return contextStores
