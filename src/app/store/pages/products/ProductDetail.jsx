@@ -16,6 +16,10 @@ import SimilarProducts from "../../components/products/SimilarProducts";
 import FAQ from "../../components/products/FAQ";
 import { getProductById, allProducts } from "../../data/productsData";
 import { mushroomOttawaProducts } from "../../data/mushroomOttawaProducts";
+import { planet51Products } from "../../data/planet51Products";
+import { psilovibinProducts } from "../../data/psilovibinProducts";
+import { magicMushroomDeliveryProducts } from "../../data/magicMushroomDeliveryProducts";
+import { magicMushroomDanforthProducts } from "../../data/magicMushroomDanforthProducts";
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -84,7 +88,13 @@ const ProductDetail = () => {
     ];
 
     const [selectedStore, setSelectedStore] = useState(stores[0]);
-    const productData = getProductById(productId) || mushroomOttawaProducts.find(p => p.id === Number(productId)) || allProducts[0];
+    const productData = getProductById(productId) || 
+        mushroomOttawaProducts.find(p => p.id === Number(productId)) || 
+        planet51Products.find(p => p.id === Number(productId)) || 
+        psilovibinProducts.find(p => p.id === Number(productId)) || 
+        magicMushroomDeliveryProducts.find(p => p.id === Number(productId)) || 
+        magicMushroomDanforthProducts.find(p => p.id === Number(productId)) || 
+        allProducts[0];
     const product = {
         ...productData,
         weights: productData.weights || ["3.5g", "7g", "14g", "28g"],

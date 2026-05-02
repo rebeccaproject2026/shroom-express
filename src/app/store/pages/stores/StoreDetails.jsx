@@ -4,6 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ProductCard from '../../components/common/ProductCard';
 import { allProducts } from '../../data/productsData';
 import { mushroomOttawaProducts } from '../../data/mushroomOttawaProducts';
+import { planet51Products } from '../../data/planet51Products';
+import { psilovibinProducts } from '../../data/psilovibinProducts';
+import { magicMushroomDeliveryProducts } from '../../data/magicMushroomDeliveryProducts';
+import { magicMushroomDanforthProducts } from '../../data/magicMushroomDanforthProducts';
 import storedetailbg from "../../assets/images/storedetailbg.jpg";
 import storedetaillogo from "../../assets/images/storedetaillogo.png";
 import StoreCard from '../../components/common/StoreCard';
@@ -172,6 +176,22 @@ const StoreDetails = () => {
         // Custom products for The Mushroom / Mushroom Ottawa
         if (storeId === '2' || storeId === '9') {
             list = [...mushroomOttawaProducts];
+        }
+        // Custom products for Planet 51
+        if (storeId === '7') {
+            list = [...planet51Products];
+        }
+        // Custom products for Psilovibin
+        if (storeId === '3') {
+            list = [...psilovibinProducts];
+        }
+        // Custom products for Magic Mushroom Delivery
+        if (storeId === '6') {
+            list = [...magicMushroomDeliveryProducts];
+        }
+        // Custom products for Magic Mushroom Danforth
+        if (storeId === '9') {
+            list = [...magicMushroomDanforthProducts];
         }
         // Filter by header icon selectedEffect from context
         if (selectedEffect) {
