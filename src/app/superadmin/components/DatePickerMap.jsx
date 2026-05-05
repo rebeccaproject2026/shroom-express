@@ -45,59 +45,22 @@ const endOfMonth = (d) => {
  */
 const getDateRangeOptions = () => {
   const now = new Date();
-  const todayStart = startOfDay(now);
   const todayEnd = endOfDay(now);
-
-  const yesterday = new Date(now);
-  yesterday.setDate(yesterday.getDate() - 1);
-
-  const thisMonthStart = startOfMonth(now);
-  const thisMonthEnd = endOfMonth(now);
 
   const lastWeekStart = new Date(now);
   lastWeekStart.setDate(lastWeekStart.getDate() - 7);
 
-  const last30Start = new Date(now);
-  last30Start.setDate(last30Start.getDate() - 30);
-
-  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1);
-  const lastMonthStart = startOfMonth(lastMonth);
-  const lastMonthEnd = endOfMonth(lastMonth);
+  const lastMonthStart = startOfMonth(new Date(now.getFullYear(), now.getMonth() - 1));
+  const lastMonthEnd = endOfMonth(new Date(now.getFullYear(), now.getMonth() - 1));
 
   const last3MonthsStart = new Date(now.getFullYear(), now.getMonth() - 3, 1);
-  const last3MonthsEnd = new Date(now.getFullYear(), now.getMonth() - 1, 0);
-  last3MonthsEnd.setHours(23, 59, 59, 999);
+  const last6MonthsStart = new Date(now.getFullYear(), now.getMonth() - 6, 1);
+  const lastYearStart = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
 
   return [
     {
-      title: "Today",
-      showDriver: true,
-      value: { start: todayStart, end: todayEnd },
-    },
-    {
-      title: "Yesterday",
-      value: {
-        start: startOfDay(yesterday),
-        end: endOfDay(yesterday),
-      },
-    },
-    {
-      title: "This Month",
-      value: { start: thisMonthStart, end: thisMonthEnd },
-    },
-    {
       title: "Last Week",
-      value: {
-        start: startOfDay(lastWeekStart),
-        end: todayEnd,
-      },
-    },
-    {
-      title: "Last 30 Days",
-      value: {
-        start: startOfDay(last30Start),
-        end: todayEnd,
-      },
+      value: { start: startOfDay(lastWeekStart), end: todayEnd },
     },
     {
       title: "Last Month",
@@ -105,59 +68,45 @@ const getDateRangeOptions = () => {
     },
     {
       title: "Last 3 Months",
-      value: {
-        start: last3MonthsStart.toISOString(),
-        end: last3MonthsEnd.toISOString(),
-      },
+      value: { start: startOfDay(last3MonthsStart), end: todayEnd },
+    },
+    {
+      title: "Last 6 Months",
+      value: { start: startOfDay(last6MonthsStart), end: todayEnd },
+    },
+    {
+      title: "Last Year",
+      value: { start: startOfDay(lastYearStart), end: todayEnd },
     },
   ];
 };
 
-// Options are built fresh when needed so "Today", "This Month" etc. are current
-
-/**
- * DatePickerMap - Reusable time period selector (matches Vue DatePickerMap)
- * Use anywhere: Dashboard, Finances, Orders, etc.
- *
- * @param {number} defaultItem - Index of default option (0=Today, 1=Yesterday, 2=This Month, ...)
- * @param {function} onUpdate - Callback when selection changes: ({ start, end, showDriver }) => void
- * @param {string} className - Optional extra classes for the trigger button
- */
 const DatePickerMap = ({
-  defaultItem = 2,
+  defaultItem = 1,
   onUpdate,
   className = "",
 }) => {
-  const initialOption = useMemo(
-    () => getDateRangeOptions()[defaultItem] ?? getDateRangeOptions()[2],
-    [defaultItem]
-  );
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(initialOption);
+  const [selected, setSelected] = useState(null);
   const containerRef = useRef(null);
   const hasNotifiedMount = useRef(false);
 
-  // Sync selected when defaultItem changes (e.g. prop reset)
-  useEffect(() => {
-    const opts = getDateRangeOptions();
-    const option = opts[defaultItem] ?? opts[2];
-    setSelected(option);
-  }, [defaultItem]);
+  const options = useMemo(() => getDateRangeOptions(), []);
 
-  // Notify parent of initial selection once on mount (stable deps to avoid infinite loop)
   useEffect(() => {
-    if (hasNotifiedMount.current) return;
+    const initial = options[defaultItem] ?? options[1];
+    setSelected(initial);
+  }, [defaultItem, options]);
+
+  useEffect(() => {
+    if (hasNotifiedMount.current || !selected) return;
     hasNotifiedMount.current = true;
-    const opts = getDateRangeOptions();
-    const option = opts[defaultItem] ?? opts[2];
     onUpdate?.({
-      start: option.value.start,
-      end: option.value.end,
-      showDriver: option.showDriver,
+      start: selected.value.start,
+      end: selected.value.end,
+      showDriver: selected.showDriver,
     });
-    // Intentionally omit onUpdate from deps: we only want to run once on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultItem]);
+  }, [selected, onUpdate]);
 
   const handleSelect = (option) => {
     setSelected(option);
@@ -181,35 +130,43 @@ const DatePickerMap = ({
 
   return (
     <div ref={containerRef} className={`relative inline-block ${className}`}>
-      {/* Trigger - matches image: white bg, light grey border, rounded, chevron */}
+      {/* Trigger */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-3 bg-white border border-[#E8E8E8] px-2 py-2.5 rounded-[8px] shadow-sm text-[14px] font-semibold text-[#181211] hover:bg-gray-50 transition-colors  justify-between ${className}`}
+        className={`flex items-center gap-3 bg-white border border-[#E8E8E8] px-4 py-2.5 rounded-[12px] shadow-sm text-[16px] font-semibold text-[#181211] hover:bg-gray-50 transition-all justify-between min-w-[160px] ${className}`}
       >
         <div className="flex items-center gap-2">
-          <Icon icon="stash:data-date-light" width="20" className="text-[#181211]" />
-          <span>{selected.title}</span>
+          <Icon icon="solar:calendar-linear" width="22" className="text-[#181211]" />
+          <span className="text-[#181211] font-medium">{selected?.title || "Sort By..."}</span>
         </div>
-        <Icon icon="lucide:chevron-down" width="18" className={`text-[#181211] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <Icon icon="lucide:chevron-down" width="20" className={`text-[#181211] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute right-0 mt-1 w-full min-w-[180px] bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-[999]">
-          {getDateRangeOptions().map((option, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleSelect(option)}
-              className={`w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 transition-colors first:rounded-t-lg last:rounded-b-lg ${selected.title === option.title
-                ? "bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-medium"
-                : "text-gray-700"
-                }`}
-            >
-              {option.title}
-            </button>
-          ))}
+        <div className="absolute right-0 mt-2 w-full min-w-[200px] bg-white rounded-[16px] shadow-[0px_10px_40px_rgba(0,0,0,0.12)] border border-[#F1F5F9] overflow-hidden z-[9999] animate-in fade-in zoom-in duration-200">
+          <div className="py-2">
+            {options.map((option, index) => {
+              const isSelected = selected?.title === option.title;
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleSelect(option)}
+                  className={`w-full flex items-center justify-between px-5 py-3.5 text-[15px] font-medium transition-all ${isSelected
+                    ? "bg-[#FFEDEB] text-[#181211]"
+                    : "text-[#181211] hover:bg-gray-50"
+                    }`}
+                >
+                  <span>{option.title}</span>
+                  {isSelected && (
+                    <Icon icon="lucide:check" width="18" className="text-[#475569]" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

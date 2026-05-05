@@ -3,9 +3,10 @@ import { Icon } from '@iconify/react';
 
 const StoreCompletionStatus = ({ currentStep, formData }) => {
   const checklist = [
-    { label: 'Store name & contact', completed: !!(formData.storeName && formData.ownerName) },
-    { label: 'Category selected', completed: !!formData.category },
-    { label: 'Address added', completed: currentStep > 1 },
+    { label: 'Owner details & contact', completed: !!(formData.firstName && formData.lastName && formData.contactNumber) },
+    { label: 'Store Information', completed: !!(formData.locations[0]?.storeName && formData.locations[0]?.website && formData.locations[0]?.description) },
+    { label: 'Category selected', completed: Array.isArray(formData.locations[0]?.category) && formData.locations[0]?.category.length > 0 },
+    { label: 'Address added', completed: !!(formData.locations[0]?.streetAddress && formData.locations[0]?.city && formData.locations[0]?.postalCode) },
     { label: 'Delivery method set', completed: false },
     { label: 'Operating days set', completed: false },
     { label: 'Product types added', completed: false },

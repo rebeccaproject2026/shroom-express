@@ -12,16 +12,43 @@ import {
 import ReusableTableSelect from '../common/ReusableTableSelect';
 import ReusableSearchInput from '../common/ReusableSearchInput';
 import { STORES_DATA } from '../../data/storesData';
+import StoreLocationDrawer from './StoreLocationDrawer';
 
 
-const TABS = [
-  { label: 'All Stores', count: '1,284' },
-  { label: 'Active', count: '952' },
-  { label: 'Pending', count: '48' },
-  { label: 'Suspended', count: '7' },
+const DELIVERY_OPTIONS = [
+  { value: 'All Delivery option', label: 'All Delivery option' },
+  { value: 'Express', label: 'Express' },
+  { value: 'Shipping', label: 'Shipping' },
+  { value: 'Same-Day', label: 'Same-Day' },
+];
+
+const LOCATION_OPTIONS = [
+  { value: 'All Canada', label: 'All Canada' },
+  { value: 'Alberta', label: 'Alberta' },
+  { value: 'British Columbia', label: 'British Columbia' },
+  { value: 'Manitoba', label: 'Manitoba' },
+  { value: 'New Brunswick', label: 'New Brunswick' },
+  { value: 'Newfoundland and Labrador', label: 'Newfoundland and Labrador' },
+  { value: 'Nova Scotia', label: 'Nova Scotia' },
+  { value: 'Northwest Territories', label: 'Northwest Territories' },
+  { value: 'Nunavut', label: 'Nunavut' },
+  { value: 'Ontario', label: 'Ontario' },
+  { value: 'Prince Edward Island', label: 'Prince Edward Island' },
+  { value: 'Quebec', label: 'Quebec' },
+  { value: 'Saskatchewan', label: 'Saskatchewan' },
+  { value: 'Yukon', label: 'Yukon' },
+];
+
+const STATUS_OPTIONS = [
+  { value: 'All Status', label: 'All Status' },
+  { value: 'Active', label: 'Active' },
+  { value: 'Pending', label: 'Pending' },
+  { value: 'Suspended', label: 'Suspended' },
+  { value: 'Draft', label: 'Draft' },
 ];
 
 const CATEGORY_OPTIONS = [
+  { value: 'All Category', label: 'All Category' },
   { value: 'Micro Dosing', label: 'Micro Dosing' },
   { value: 'Full Spectrum', label: 'Full Spectrum' },
   { value: 'Wellness', label: 'Wellness' },
@@ -33,7 +60,8 @@ const CATEGORY_OPTIONS = [
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest First' },
   { value: 'oldest', label: 'Oldest First' },
-  { value: 'rating-high', label: 'Top Rated' },
+  { value: 'ascending', label: 'Ascending' },
+  { value: 'descending', label: 'Descending' },
 ];
 
 
@@ -42,10 +70,11 @@ const DEFAULT_DATA = STORES_DATA;
 
 const getStatusBadgeStyle = (status) => {
   switch (status) {
-    case 'Active': return 'text-[#10B981] border-[#10B981] bg-[#ECFDF5]';
-    case 'Pending': return 'text-[#F59E0B] border-[#F59E0B] bg-[#FFFBEB]';
-    case 'Suspended': return 'text-[#EF4444] border-[#EF4444] bg-[#FEF2F2]';
-    default: return 'text-gray-500 border-gray-500 bg-gray-50';
+    case 'Active': return 'text-[#219653] border-[#219653] bg-white';
+    case 'Pending': return 'text-[#FF9F40] border-[#FF9F40] bg-white';
+    case 'Suspended': return 'text-[#EA3D2A] border-[#EA3D2A] bg-white';
+    case 'Draft': return 'text-[#94A3B8] border-[#94A3B8] bg-white';
+    default: return 'text-[#181211] border-[#E2E8F0] bg-white';
   }
 };
 
@@ -60,9 +89,13 @@ const getDeliveryVariantStyle = (variant) => {
 
 const StoreTable = ({ data = null }) => {
   const [sorting, setSorting] = useState([]);
+  const [selectedStore, setSelectedStore] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [activeTab, setActiveTab] = useState('All Stores');
-  const [categoryFilter, setCategoryFilter] = useState("");
+  const [deliveryFilter, setDeliveryFilter] = useState("All Delivery option");
+  const [locationFilter, setLocationFilter] = useState("All Canada");
+  const [statusFilter, setStatusFilter] = useState("All Status");
+  const [categoryFilter, setCategoryFilter] = useState("All Category");
   const [sortOrder, setSortOrder] = useState("newest");
 
   const [pagination, setPagination] = useState({
@@ -75,13 +108,23 @@ const StoreTable = ({ data = null }) => {
   const filteredData = useMemo(() => {
     let result = [...stores];
 
-    // Filter by tab
-    if (activeTab !== 'All Stores') {
-      result = result.filter(item => item.status === activeTab);
+    // Filter by Delivery
+    if (deliveryFilter && deliveryFilter !== 'All Delivery option') {
+      result = result.filter(item => item.delivery.some(d => d.type === deliveryFilter));
+    }
+
+    // Filter by Location
+    if (locationFilter && locationFilter !== 'All Canada') {
+      result = result.filter(item => item.location.toLowerCase().includes(locationFilter.toLowerCase()));
+    }
+
+    // Filter by Status
+    if (statusFilter && statusFilter !== 'All Status') {
+      result = result.filter(item => item.status === statusFilter);
     }
 
     // Filter by Category
-    if (categoryFilter) {
+    if (categoryFilter && categoryFilter !== 'All Category') {
       result = result.filter(item => item.category === categoryFilter);
     }
 
@@ -101,12 +144,14 @@ const StoreTable = ({ data = null }) => {
       result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else if (sortOrder === 'oldest') {
       result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    } else if (sortOrder === 'rating-high') {
-      result.sort((a, b) => b.rating - a.rating);
+    } else if (sortOrder === 'ascending') {
+      result.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOrder === 'descending') {
+      result.sort((a, b) => b.name.localeCompare(a.name));
     }
 
     return result;
-  }, [stores, activeTab, globalFilter, categoryFilter, sortOrder]);
+  }, [stores, globalFilter, deliveryFilter, locationFilter, statusFilter, categoryFilter, sortOrder]);
 
   const columns = useMemo(() => [
     {
@@ -144,9 +189,18 @@ const StoreTable = ({ data = null }) => {
       header: 'LOCATION',
       accessorKey: 'location',
       cell: ({ row }) => (
-        <div className="flex items-center gap-1.5 text-[#181211]">
+        <div
+          className="flex items-center gap-1.5 text-[#181211] cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => {
+            setSelectedStore(row.original);
+            setIsDrawerOpen(true);
+          }}
+        >
           <Icon icon="lucide:map-pin" width="14" className="text-[#181211] shrink-0" />
           <span className="text-[12px] font-medium">{row.original.location}</span>
+          <span className="bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">
+            +5
+          </span>
         </div>
       ),
     },
@@ -189,14 +243,37 @@ const StoreTable = ({ data = null }) => {
     {
       header: 'STATUS',
       accessorKey: 'status',
-      cell: ({ row }) => (
-        <div className="flex flex-col gap-1">
-          <div className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border w-fit ${getStatusBadgeStyle(row.original.status)}`}>
-            {row.original.status}
+      cell: ({ row }) => {
+        // Mocking multi-status data for demonstration as per image
+        const statuses = row.original.statusList || [
+          { status: row.original.status, count: Math.floor(Math.random() * 5) + 1 },
+          ...(row.original.status === 'Active' ? [{ status: 'Pending', count: 1 }] : [])
+        ];
+
+        return (
+          <div
+            className="flex flex-col gap-1 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => {
+              setSelectedStore(row.original);
+              setIsDrawerOpen(true);
+            }}
+          >
+            <div className="flex flex-wrap items-center gap-1">
+              {statuses.slice(0, 2).map((s, i) => (
+                <div key={i} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${getStatusBadgeStyle(s.status)}`}>
+                  {s.status} ({s.count})
+                </div>
+              ))}
+              {statuses.length > 2 && (
+                <div className="w-5 h-5 rounded-full bg-[#EA3D2A] text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                  +{statuses.length - 2}
+                </div>
+              )}
+            </div>
+            {/* <span className="text-[11px] text-[#94A3B8] font-medium ml-0.5">{row.original.statusTime}</span> */}
           </div>
-          <span className="text-[11px] text-[#94A3B8] font-medium ml-0.5">{row.original.statusTime}</span>
-        </div>
-      ),
+        );
+      },
     },
     {
       header: 'RATING',
@@ -247,33 +324,10 @@ const StoreTable = ({ data = null }) => {
   });
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] overflow-hidden font-manrope mt-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-[#E2E8F0] overflow-visible font-manrope mt-6">
       {/* Top Filters & Tabs */}
-      <div className="flex items-center justify-between p-4.5 gap-6 border-b border-[#F1F5F9] overflow-x-auto hide-scrollbar">
-        <div className="flex items-center gap-6 shrink-0">
-          {TABS.map((tab, idx) => (
-            <button
-              key={idx}
-              onClick={() => {
-                setActiveTab(tab.label);
-                table.setPageIndex(0); // Reset to first page on tab change
-              }}
-              className={`flex items-center gap-2 pb-2 transition-all relative whitespace-nowrap ${activeTab === tab.label ? 'text-[#EA3D2A] font-semibold' : 'text-[#181211] font-medium'
-                }`}
-            >
-              <span>{tab.label}</span>
-              <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${activeTab === tab.label ? 'bg-[#FFEDEB] text-[#EA3D2A] ' : 'bg-[#E8E8E8] text-[#181211]'
-                }`}>
-                {tab.count}
-              </span>
-              {activeTab === tab.label && (
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#EA3D2A] rounded-t-full" />
-              )}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-1 shrink-0">
+      <div className="flex items-center justify-between p-4.5 gap-2 border-b border-[#F1F5F9] relative z-20 overflow-visible hide-scrollbar">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <ReusableSearchInput
             value={globalFilter}
             onChange={(e) => {
@@ -281,7 +335,48 @@ const StoreTable = ({ data = null }) => {
               table.setPageIndex(0);
             }}
             placeholder="Search Store"
-            className="w-60"
+            className="w-full max-w-[30%]"
+          />
+
+          <ReusableTableSelect
+            value={deliveryFilter}
+            onChange={(e) => {
+              setDeliveryFilter(e.target.value);
+              table.setPageIndex(0);
+            }}
+            options={DELIVERY_OPTIONS}
+            placeholder="All Delivery option"
+            className="w-48 shrink-0"
+          />
+
+          <ReusableTableSelect
+            value={locationFilter}
+            onChange={(e) => {
+              setLocationFilter(e.target.value);
+              table.setPageIndex(0);
+            }}
+            options={LOCATION_OPTIONS}
+            placeholder="All Location"
+            className="w-35 shrink-0"
+          />
+
+          <ReusableTableSelect
+            value={statusFilter}
+            onChange={(e) => {
+              setStatusFilter(e.target.value);
+              table.setPageIndex(0);
+            }}
+            options={STATUS_OPTIONS}
+            placeholder="All Status"
+            className="w-32 shrink-0"
+          />
+
+          <ReusableTableSelect
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            options={SORT_OPTIONS}
+            placeholder="Sort By"
+            className="w-38 shrink-0"
           />
 
           <ReusableTableSelect
@@ -292,30 +387,22 @@ const StoreTable = ({ data = null }) => {
             }}
             options={CATEGORY_OPTIONS}
             placeholder="All Category"
-            className="w-37"
+            className="w-37 shrink-0"
           />
+        </div>
 
-          <ReusableTableSelect
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            options={SORT_OPTIONS}
-            placeholder="Sort By"
-            className="w-37"
-          />
-
-          <div className="flex items-center border-2 border-[#E8E8E8] rounded-md overflow-hidden shrink-0">
-            <button className="p-2 bg-[#EA3D2A] text-white">
-              <Icon icon="lucide:list" width="20" />
-            </button>
-            <button className="p-2 text-[#181211] hover:bg-gray-50">
-              <Icon icon="lucide:layout-grid" width="20" />
-            </button>
-          </div>
+        <div className="flex items-center border-2 border-[#E8E8E8] rounded-md overflow-hidden shrink-0">
+          <button className="p-2 bg-[#EA3D2A] text-white">
+            <Icon icon="lucide:list" width="20" />
+          </button>
+          <button className="p-2 text-[#181211] hover:bg-gray-50">
+            <Icon icon="lucide:layout-grid" width="20" />
+          </button>
         </div>
       </div>
 
       {/* Table Section */}
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-visible min-h-[450px]">
         <table className="w-full text-left border-collapse table-fixed lg:table-auto">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
@@ -426,6 +513,11 @@ const StoreTable = ({ data = null }) => {
           </button> */}
         </div>
       </div>
+      <StoreLocationDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        store={selectedStore}
+      />
     </div>
   );
 };

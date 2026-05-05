@@ -23,30 +23,65 @@ const AddStore = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     // Step 1: Basic Info
-    storeName: '',
-    ownerName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    website: '',
-    category: '',
-    description: '',
-    // Step 2: Location
-    streetAddress: '123 Main Street, Unit 4',
-    city: 'Toronto',
-    province: '',
-    postalCode: 'M5V 2T6',
-    country: 'Canada',
-    latitude: '43.6532',
-    longitude: '-79.3832',
+    role: '',
+    contactNumber: '',
+    // Step 2: Locations
+    locations: [
+      {
+        isExpanded: true,
+        website: 'https://yourstore.com',
+        socialPlatform: [],
+        socialLinks: {},
+        storeName: 'Forest Oasis',
+        category: [],
+        description: '',
+        streetAddress: '123 Main Street',
+        unitNumber: '4',
+        city: 'Toronto',
+        province: '',
+        postalCode: 'M5V 2T6',
+        country: 'Canada',
+        latitude: '43.6532',
+        longitude: '-79.3832',
+        storeEmail: 'store@example.com',
+        storePhone: '+1 (461) 000-0000',
+      }
+    ],
     // Step 3: Operations
     sameDayDelivery: true,
-    minOrderAmount: '25.00',
-    maxDeliveryRadius: '15',
+    sameDayMinAmount: '50.00',
+    sameDayFee: '15.00',
+    sameDayFreeOver: '120.00',
+    sameDayEta: 'Under 1 hour',
+    sameDayDeliveredBy: 'Self Drivers',
+    sameDayCoverage: { cities: [], radius: 60 },
+    sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    sameDayOpeningTime: '09:00 AM',
+    sameDayClosingTime: '09:00 PM',
+
     expressDelivery: false,
+    expressMinAmount: '120.00',
+    expressFee: '15.00',
+    expressEta: '1-2 hrs',
+    expressDeliveredBy: 'Shroom Express Drivers',
+    expressCoverage: { cities: [], radius: 60 },
+    expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    expressOpeningTime: '09:00 AM',
+    expressClosingTime: '09:00 PM',
+
     shippingMailOrder: false,
-    operatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    openingTime: '09:00 PM',
-    closingTime: '09:00 AM',
+    shippingFee: '15.00',
+    shippingFreeOver: '120.00',
+    shippingEta: '2-5 business days',
+    shippingCouriers: [],
+    shippingAreas: [],
+    processingDays: [],
+    shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
     autoAcceptOrders: true,
     featuredStore: false,
     setStoreAsActive: true,
@@ -64,11 +99,11 @@ const AddStore = () => {
   });
 
   const steps = [
-    { id: 1, label: 'Basic Info' },
-    { id: 2, label: 'Location' },
+    { id: 1, label: 'Owner Details' },
+    { id: 2, label: 'Store Information & Location' },
     { id: 3, label: 'Operations' },
     { id: 4, label: 'Products & Tags' },
-    { id: 5, label: 'Media & Docs' },
+    { id: 5, label: 'Media' },
   ];
 
   const handlePublish = () => {
@@ -114,7 +149,7 @@ const AddStore = () => {
             <p className="text-[#475569] font-medium text-sm">Fill in the details below to register a new vendor store on the platform.</p>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <button className="px-7 py-2.5 bg-white border border-[#E8E8E8] rounded-md text-[14px] font-bold text-[#475569] shadow-sm hover:bg-gray-50 transition-all active:scale-95">
               Save as Draft
             </button>
@@ -125,7 +160,7 @@ const AddStore = () => {
               <Icon icon="mdi:store-plus" width="20" />
               Publish Store
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Stepper Header Box */}

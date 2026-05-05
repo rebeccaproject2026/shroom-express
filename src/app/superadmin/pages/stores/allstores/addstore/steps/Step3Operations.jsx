@@ -1,35 +1,158 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Input from '../../../../../components/common/Input';
+import ReusableTableSelect from '../../../../../components/common/ReusableTableSelect';
+import DeliveryCoverageModal from '../../../../../components/stores/DeliveryCoverageModal';
 
 const Toggle = ({ enabled, onChange }) => (
   <button
     type="button"
     onClick={onChange}
-    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? 'bg-[#EA3D2A]' : 'bg-[#E2E8F0]'
-      }`}
+    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? 'bg-[#EA3D2A]' : 'bg-[#E2E8F0]'}`}
   >
     <span
-      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'
-        }`}
+      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${enabled ? 'translate-x-5' : 'translate-x-0'}`}
     />
   </button>
 );
 
 const Step3Operations = ({ formData, setFormData }) => {
+  const [coverageModal, setCoverageModal] = useState({ isOpen: false, type: '' });
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  const toggleDay = (day) => {
-    const currentDays = [...formData.operatingDays];
+  const etaOptions = [
+    { value: 'Under 1 hour', label: 'Under 1 hour' },
+    { value: 'Between 1 - 2 hours', label: 'Between 1 - 2 hours' },
+    { value: 'Between 2 - 4 hours', label: 'Between 2 - 4 hours' },
+    { value: 'Between 4 - 6 hours', label: 'Between 4 - 6 hours' },
+    { value: 'Between 8 - 12 hours', label: 'Between 8 - 12 hours' },
+  ];
+
+  const deliveredByOptions = [
+    { value: 'Shroom Express Driver', label: 'Shroom Express Driver' },
+    { value: 'In House Driver', label: 'In House Driver' },
+  ];
+
+  const courierOptions = [
+    { value: 'Shroom Express', label: 'Shroom Express' },
+    { value: 'Canada Post', label: 'Canada Post' },
+    { value: 'Purolator', label: 'Purolator' },
+    { value: 'UPS', label: 'UPS' },
+    { value: 'FedEx', label: 'FedEx' },
+    { value: 'DHL', label: 'DHL' },
+    { value: 'Canpar', label: 'Canpar' },
+    { value: 'GLS', label: 'GLS' },
+    { value: 'Chit Chats', label: 'Chit Chats' },
+    { value: 'Stallion', label: 'Stallion' },
+    { value: 'Nationex', label: 'Nationex' },
+    { value: 'Dragonfly', label: 'Dragonfly' },
+    { value: 'Western Canada Express', label: 'Western Canada Express' },
+  ];
+
+  const processingDaysOptions = [
+    { value: 'Monday', label: 'Monday' },
+    { value: 'Tuesday', label: 'Tuesday' },
+    { value: 'Wednesday', label: 'Wednesday' },
+    { value: 'Thursday', label: 'Thursday' },
+    { value: 'Friday', label: 'Friday' },
+    { value: 'Saturday', label: 'Saturday' },
+    { value: 'Sunday', label: 'Sunday' },
+  ];
+
+  const provinceOptions = [
+    { value: 'Alberta', label: 'Alberta' },
+    { value: 'British Columbia', label: 'British Columbia' },
+    { value: 'Manitoba', label: 'Manitoba' },
+    { value: 'New Brunswick', label: 'New Brunswick' },
+    { value: 'Newfoundland and Labrador', label: 'Newfoundland and Labrador' },
+    { value: 'Nova Scotia', label: 'Nova Scotia' },
+    { value: 'Northwest Territories', label: 'Northwest Territories' },
+    { value: 'Nunavut', label: 'Nunavut' },
+    { value: 'Ontario', label: 'Ontario' },
+    { value: 'Prince Edward Island', label: 'Prince Edward Island' },
+    { value: 'Quebec', label: 'Quebec' },
+    { value: 'Saskatchewan', label: 'Saskatchewan' },
+    { value: 'Yukon', label: 'Yukon' },
+  ];
+
+  const toggleDay = (prefix, day) => {
+    const currentDays = [...formData[`${prefix}OperatingDays`]];
+    let newDays;
     if (currentDays.includes(day)) {
-      setFormData({ ...formData, operatingDays: currentDays.filter(d => d !== day) });
+      newDays = currentDays.filter(d => d !== day);
     } else {
-      setFormData({ ...formData, operatingDays: [...currentDays, day] });
+      newDays = [...currentDays, day];
     }
+    setFormData({ ...formData, [`${prefix}OperatingDays`]: newDays });
   };
 
+  const handleApplyCoverage = (data) => {
+    setFormData({ ...formData, [`${coverageModal.type}Coverage`]: data });
+  };
+
+  const removeCityFromCoverage = (type, cityName) => {
+    const currentCoverage = formData[`${type}Coverage`];
+    const newCities = currentCoverage.cities.filter(c => c.name !== cityName);
+    setFormData({ ...formData, [`${type}Coverage`]: { ...currentCoverage, cities: newCities } });
+  };
+
+  const renderSchedule = (prefix) => (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label className="text-sm font-semibold text-[#181211] block">
+          Operating Days <span className="text-[#EA3D2A] ml-0.5">*</span>
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {days.map((day) => (
+            <button
+              key={day}
+              type="button"
+              onClick={() => toggleDay(prefix, day)}
+              className={`w-12 h-12 flex items-center justify-center rounded-md border text-sm font-semibold transition-all ${formData[`${prefix}OperatingDays`].includes(day)
+                ? 'border-[#EA3D2A] text-[#EA3D2A] bg-[#FFEDEB]'
+                : 'border-[#BDBDD2] text-[#181211] hover:border-gray-300 bg-white'
+                }`}
+            >
+              {day}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+        <div className="relative">
+          <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Opening Time <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="09:00 am"
+              value={formData[`${prefix}OpeningTime`]}
+              onChange={(e) => setFormData({ ...formData, [`${prefix}OpeningTime`]: e.target.value })}
+              className="w-full px-4 py-2.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none focus:border-[#EA3D2A] transition-all"
+            />
+            <Icon icon="lucide:clock" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181211]" width="18" />
+          </div>
+        </div>
+        <div className="relative">
+          <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Closing Time <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="09:00 pm"
+              value={formData[`${prefix}ClosingTime`]}
+              onChange={(e) => setFormData({ ...formData, [`${prefix}ClosingTime`]: e.target.value })}
+              className="w-full px-4 py-2.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none focus:border-[#EA3D2A] transition-all"
+            />
+            <Icon icon="lucide:clock" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181211]" width="18" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm">
+    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm min-h-[750px]">
+      {/* Step Header */}
       <div className="p-4 border-b border-[#BDBDD2] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-[#FFEDEB] rounded-sm flex items-center justify-center shrink-0">
@@ -43,141 +166,303 @@ const Step3Operations = ({ formData, setFormData }) => {
         <span className="text-xs font-bold text-[#181211]">Step 3 of 5</span>
       </div>
 
-      <div className="p-5 space-y-6">
-        {/* Delivery Options */}
-        <div className="space-y-4">
-          <label className="text-sm font-semibold text-[#181211] block mb-2.5">
-            Delivery Options <span className="text-[#EA3D2A] ml-0.5">*</span>
-          </label>
+      <div className="p-5 space-y-4">
+        <label className="text-sm font-semibold text-[#181211] block mb-2">Delivery Options <span className="text-[#EA3D2A] ml-0.5">*</span></label>
 
-          <div className="space-y-3">
-            {/* Same-Day Delivery */}
-            <div className="p-4 border border-[#BDBDD2] rounded-md">
-              <div className="flex items-center justify-between mb-4">
-                <div className="space-y-0.5">
-                  <h4 className="text-sm font-semibold text-[#181211]">Same-Day Delivery</h4>
-                  <p className="text-xs font-medium text-[#475569]">Orders delivered the same day they are placed</p>
-                </div>
-                <Toggle
-                  enabled={formData.sameDayDelivery}
-                  onChange={() => setFormData({ ...formData, sameDayDelivery: !formData.sameDayDelivery })}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+        {/* Same-Day Delivery */}
+        <div className={`border border-[#BDBDD2] rounded-md transition-all duration-300 ${formData.sameDayDelivery ? 'bg-white' : 'bg-white'}`}>
+          <div className="p-4 flex items-center justify-between">
+            <div className="space-y-0.5">
+              <h4 className="text-sm font-semibold text-[#181211]">Same-Day Delivery</h4>
+              <p className="text-[13px] font-medium text-[#475569]">Orders delivered the same day they are placed</p>
+            </div>
+            <Toggle
+              enabled={formData.sameDayDelivery}
+              onChange={() => setFormData({ ...formData, sameDayDelivery: !formData.sameDayDelivery })}
+            />
+          </div>
+          {formData.sameDayDelivery && (
+            <div className="p-4 pt-0 space-y-4 border-t border-[#BDBDD2] mt-0 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                 <Input
                   label="Minimum Order Amount"
-                  required
-                  placeholder="25.00"
-                  leftIcon={<span className="text-gray-400 font-bold">$</span>}
-                  value={formData.minOrderAmount}
-                  onChange={(e) => setFormData({ ...formData, minOrderAmount: e.target.value })}
+                  placeholder="50.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.sameDayMinAmount}
+                  onChange={(e) => setFormData({ ...formData, sameDayMinAmount: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
                   labelClassName="text-sm font-semibold text-[#181211]"
-                  className="border-[#BDBDD2] !py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-                  borderClass="border border-[#BDBDD2]"
                 />
                 <Input
-                  label="Max Delivery Radius (ml)"
-                  required
-                  placeholder="15"
-                  value={formData.maxDeliveryRadius}
-                  onChange={(e) => setFormData({ ...formData, maxDeliveryRadius: e.target.value })}
+                  label="Fee ($50-$120)"
+                  placeholder="15.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.sameDayFee}
+                  onChange={(e) => setFormData({ ...formData, sameDayFee: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
                   labelClassName="text-sm font-semibold text-[#181211]"
-                  className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-                  borderClass="border border-[#BDBDD2]"
+                />
+                <Input
+                  label="Free over"
+                  placeholder="120.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.sameDayFreeOver}
+                  onChange={(e) => setFormData({ ...formData, sameDayFreeOver: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
+                  labelClassName="text-sm font-semibold text-[#181211]"
                 />
               </div>
-            </div>
-
-            {/* Express Delivery */}
-            <div className="p-4 border border-[#BDBDD2] rounded-lg flex items-center justify-between">
-              <div className="space-y-0.5">
-                <h4 className="text-sm font-semibold text-[#181211]">Express Delivery</h4>
-                <p className="text-xs font-medium text-[#475569]">Priority delivery within 2-3 hours</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">ETA / Delivery window</label>
+                  <ReusableTableSelect
+                    value={formData.sameDayEta}
+                    onChange={(e) => setFormData({ ...formData, sameDayEta: e.target.value })}
+                    options={etaOptions}
+                    placeholder="Select ETA / Delivery window..."
+                    borderclass="border !border-[#BDBDD2]"
+                    showCheckbox={false}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Delivered by</label>
+                  <ReusableTableSelect
+                    value={formData.sameDayDeliveredBy}
+                    onChange={(e) => setFormData({ ...formData, sameDayDeliveredBy: e.target.value })}
+                    options={deliveredByOptions}
+                    placeholder="Select a Delivered by..."
+                    borderclass="border border-[#BDBDD2]"
+                    showCheckbox={false}
+                  />
+                </div>
               </div>
-              <Toggle
-                enabled={formData.expressDelivery}
-                onChange={() => setFormData({ ...formData, expressDelivery: !formData.expressDelivery })}
-              />
-            </div>
-
-            {/* Shipping */}
-            <div className="p-4 border border-[#BDBDD2] rounded-lg flex items-center justify-between">
-              <div className="space-y-0.5">
-                <h4 className="text-sm font-semibold text-[#181211]">Shipping (Mail Order)</h4>
-                <p className="text-xs font-medium text-[#475569]">Nationwide shipping via Canada Post / courier</p>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Delivery Coverage <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+                <div
+                  onClick={() => setCoverageModal({ isOpen: true, type: 'sameDay' })}
+                  className="w-full px-4 py-2.5 bg-white border !border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none cursor-pointer hover:bg-gray-50 transition-all flex items-center justify-between min-h-[44px]"
+                >
+                  <div className="flex flex-wrap gap-2">
+                    {formData.sameDayCoverage.cities.length > 0 ? (
+                      formData.sameDayCoverage.cities.map((city, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#FFEDEB] text-[#EA3D2A] rounded-md text-[13px] font-bold border border-[#EA3D2A]/10">
+                          {city.name}, {city.province} + {formData.sameDayCoverage.radius} mi
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeCityFromCoverage('sameDay', city.name);
+                            }}
+                            className="hover:opacity-70"
+                          >
+                            <Icon icon="lucide:x" width="14" />
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-[#475569]">Click to set cities & radius...</span>
+                    )}
+                  </div>
+                  <Icon icon="mage:location-fill" className="text-[#181211] shrink-0" width="20" />
+                </div>
               </div>
-              <Toggle
-                enabled={formData.shippingMailOrder}
-                onChange={() => setFormData({ ...formData, shippingMailOrder: !formData.shippingMailOrder })}
-              />
+              {renderSchedule('sameDay')}
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Operating Days */}
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#181211] block">
-            Operating Days <span className="text-[#EA3D2A] ml-0.5">*</span>
-          </label>
-          <div className="flex flex-wrap gap-2.5">
-            {days.map((day) => (
-              <button
-                key={day}
-                onClick={() => toggleDay(day)}
-                className={`w-13 h-13 flex items-center justify-center rounded-md border text-sm font-semibold transition-all ${formData.operatingDays.includes(day)
-                  ? 'border-[#EA3D2A] text-[#EA3D2A] bg-[#FFEDEB]'
-                  : 'border-[#BDBDD2] text-[#181211] hover:border-gray-300'
-                  }`}
-              >
-                {day}
-              </button>
-            ))}
+        {/* Express Delivery */}
+        <div className={`border border-[#BDBDD2] rounded-md transition-all duration-300 ${formData.expressDelivery ? 'bg-white' : 'bg-white'}`}>
+          <div className="p-4 flex items-center justify-between">
+            <div className="space-y-0.5">
+              <h4 className="text-sm font-semibold text-[#181211]">Express Delivery</h4>
+              <p className="text-[13px] font-medium text-[#475569]">Priority delivery within 1-2 hours · $15 flat · min $120</p>
+            </div>
+            <Toggle
+              enabled={formData.expressDelivery}
+              onChange={() => setFormData({ ...formData, expressDelivery: !formData.expressDelivery })}
+            />
           </div>
+          {formData.expressDelivery && (
+            <div className="p-4 pt-0 space-y-4 border-t border-[#BDBDD2] animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <Input
+                  label="Minimum Order Amount"
+                  placeholder="120.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.expressMinAmount}
+                  onChange={(e) => setFormData({ ...formData, expressMinAmount: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
+                  labelClassName="text-sm font-semibold text-[#181211]"
+                />
+                <Input
+                  label="Flat delivery fee"
+                  placeholder="15.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.expressFee}
+                  onChange={(e) => setFormData({ ...formData, expressFee: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
+                  labelClassName="text-sm font-semibold text-[#181211]"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">ETA / Delivery window</label>
+                  <ReusableTableSelect
+                    value={formData.expressEta}
+                    onChange={(e) => setFormData({ ...formData, expressEta: e.target.value })}
+                    options={etaOptions}
+                    placeholder="Select ETA / Delivery window..."
+                    borderclass="border !border-[#BDBDD2]"
+                    showCheckbox={false}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Delivered by</label>
+                  <ReusableTableSelect
+                    value={formData.expressDeliveredBy}
+                    onChange={(e) => setFormData({ ...formData, expressDeliveredBy: e.target.value })}
+                    options={deliveredByOptions}
+                    placeholder="Select a Delivered by..."
+                    borderclass="border border-[#BDBDD2]"
+                    showCheckbox={false}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Delivery Coverage <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+                <div
+                  onClick={() => setCoverageModal({ isOpen: true, type: 'express' })}
+                  className="w-full px-4 py-2.5 bg-white border !border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none cursor-pointer hover:bg-gray-50 transition-all flex items-center justify-between min-h-[44px]"
+                >
+                  <div className="flex flex-wrap gap-2">
+                    {formData.expressCoverage.cities.length > 0 ? (
+                      formData.expressCoverage.cities.map((city, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#FFEDEB] text-[#EA3D2A] rounded-md text-[13px] font-bold border border-[#EA3D2A]/10">
+                          {city.name}, {city.province} + {formData.expressCoverage.radius} mi
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeCityFromCoverage('express', city.name);
+                            }}
+                            className="hover:opacity-70"
+                          >
+                            <Icon icon="lucide:x" width="14" />
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <span className="text-[#475569]">Click to set cities & radius...</span>
+                    )}
+                  </div>
+                  <Icon icon="mage:location-fill" className="text-[#181211] shrink-0" width="20" />
+                </div>
+              </div>
+              {renderSchedule('express')}
+            </div>
+          )}
         </div>
 
-        {/* Time Settings */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 ">
-          <Input
-            label="Opening Time"
-            required
-            type="time"
-            placeholder="09:00 PM"
-            value={formData.openingTime}
-            onChange={(e) => setFormData({ ...formData, openingTime: e.target.value })}
-            labelClassName="text-sm font-semibold text-[#181211]"
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-            borderClass="border border-[#BDBDD2]"
-          />
-          <Input
-            label="Closing Time"
-            required
-            type="time"
-            placeholder="09:00 AM"
-            value={formData.closingTime}
-            onChange={(e) => setFormData({ ...formData, closingTime: e.target.value })}
-            labelClassName="text-sm font-semibold text-[#181211]"
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-            borderClass="border border-[#BDBDD2]"
-          />
+        {/* Shipping */}
+        <div className={`border border-[#BDBDD2] rounded-md transition-all duration-300 ${formData.shippingMailOrder ? 'bg-white' : 'bg-white'}`}>
+          <div className="p-4 flex items-center justify-between">
+            <div className="space-y-0.5">
+              <h4 className="text-sm font-semibold text-[#181211]">Shipping</h4>
+              <p className="text-[13px] font-medium text-[#475569]">Via Canada Post / courier · free over $120 · 2-5 business days</p>
+            </div>
+            <Toggle
+              enabled={formData.shippingMailOrder}
+              onChange={() => setFormData({ ...formData, shippingMailOrder: !formData.shippingMailOrder })}
+            />
+          </div>
+          {formData.shippingMailOrder && (
+            <div className="p-4 pt-0 space-y-4 border-t border-[#BDBDD2] animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <Input
+                  label="Flat shipping fee"
+                  placeholder="15.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.shippingFee}
+                  onChange={(e) => setFormData({ ...formData, shippingFee: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
+                  labelClassName="text-sm font-semibold text-[#181211]"
+                />
+                <Input
+                  label="Free over"
+                  placeholder="120.00"
+                  leftIcon={<span className="text-[#BDBDD2] font-semibold">$</span>}
+                  value={formData.shippingFreeOver}
+                  onChange={(e) => setFormData({ ...formData, shippingFreeOver: e.target.value })}
+                  className="!py-2 !border-[#BDBDD2]"
+                  labelClassName="text-sm font-semibold text-[#181211]"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">ETA / Delivery window</label>
+                  <ReusableTableSelect
+                    value={formData.shippingEta}
+                    onChange={(e) => setFormData({ ...formData, shippingEta: e.target.value })}
+                    options={etaOptions}
+                    placeholder="Select ETA / Delivery window..."
+                    borderclass="border border-[#BDBDD2]"
+                    showCheckbox={false}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Shipping couriers</label>
+                  <ReusableTableSelect
+                    isMulti={true}
+                    value={formData.shippingCouriers}
+                    onChange={(e) => setFormData({ ...formData, shippingCouriers: e.target.value })}
+                    options={courierOptions}
+                    placeholder="Select Shipped Couriers..."
+                    borderclass="border border-[#BDBDD2]"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Shipping areas <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+                  <ReusableTableSelect
+                    isMulti={true}
+                    value={formData.shippingAreas}
+                    onChange={(e) => setFormData({ ...formData, shippingAreas: e.target.value })}
+                    options={provinceOptions}
+                    placeholder="Select Shipping Areas..."
+                    borderclass="border border-[#BDBDD2]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Processing days <span className="text-[#EA3D2A] ml-0.5">*</span></label>
+                  <ReusableTableSelect
+                    isMulti={true}
+                    value={formData.processingDays}
+                    onChange={(e) => setFormData({ ...formData, processingDays: e.target.value })}
+                    options={processingDaysOptions}
+                    placeholder="Select Processing Days..."
+                    borderclass="border border-[#BDBDD2]"
+                  />
+                </div>
+              </div>
+              {renderSchedule('shipping')}
+            </div>
+          )}
         </div>
 
         {/* Store Settings */}
         <div className="space-y-3 pt-4 border-t border-[#BDBDD2]">
-          <label className="text-sm font-semibold text-[#181211] block mb-1">
-            Store Settings <span className="text-[#EA3D2A] ml-0.5">*</span>
-          </label>
-
+          <label className="text-sm font-semibold text-[#181211] block mb-1">Store Settings <span className="text-[#EA3D2A] ml-0.5">*</span></label>
           <div className="space-y-3">
             {[
               { id: 'autoAcceptOrders', label: 'Auto-Accept Orders', sub: 'Automatically accept incoming orders without manual approval' },
               { id: 'featuredStore', label: 'Featured Store', sub: 'Highlight this store at the top of search results' },
               { id: 'setStoreAsActive', label: 'Set Store as Active', sub: 'Store will be live and visible to customers immediately' }
             ].map((setting) => (
-              <div key={setting.id} className="p-4 border border-[#BDBDD2] rounded-lg flex items-center justify-between">
+
+              <div key={setting.id} className="border border-[#BDBDD2] rounded-md p-4 transition-all flex items-center justify-between bg-white">
                 <div className="space-y-0.5">
                   <h4 className="text-sm font-semibold text-[#181211]">{setting.label}</h4>
-                  <p className="text-xs font-medium text-[#475569]">{setting.sub}</p>
+                  <p className="text-[13px] font-medium text-[#475569]">{setting.sub}</p>
                 </div>
                 <Toggle
                   enabled={formData[setting.id]}
@@ -188,6 +473,15 @@ const Step3Operations = ({ formData, setFormData }) => {
           </div>
         </div>
       </div>
+
+      {/* Delivery Coverage Modal */}
+      <DeliveryCoverageModal
+        isOpen={coverageModal.isOpen}
+        onClose={() => setCoverageModal({ isOpen: false, type: '' })}
+        onApply={handleApplyCoverage}
+        initialCities={coverageModal.type ? formData[`${coverageModal.type}Coverage`].cities : []}
+        initialRadius={coverageModal.type ? formData[`${coverageModal.type}Coverage`].radius : 60}
+      />
     </div>
   );
 };

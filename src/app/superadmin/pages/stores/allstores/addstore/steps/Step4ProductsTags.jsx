@@ -39,8 +39,8 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
   };
 
   return (
-    <div className="bg-white border border-[#E2E8F0] rounded-md overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-[#E2E8F0] flex items-center justify-between">
+    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm min-h-[750px]">
+      <div className="p-4 border-b border-[#BDBDD2] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-[#FFEDEB] rounded-sm flex items-center justify-center shrink-0">
             <Icon icon="la:industry" className="text-[#EA3D2A]" width="24" />
