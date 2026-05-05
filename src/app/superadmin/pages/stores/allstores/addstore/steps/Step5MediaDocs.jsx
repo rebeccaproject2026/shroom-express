@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Icon } from '@iconify/react';
 
-const UploadBox = ({ label, sub, icon, isLogo }) => (
-  <div className={`w-full aspect-[6/1.2] border-2 border-dashed rounded-md flex flex-col items-center justify-center gap-2 bg-[#F8F8F8] cursor-pointer transition-all group ${isLogo ? 'border-[#EA3D2A]' : 'border-[#BDBDD2]'
-    }`}>
-    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isLogo ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#64748B]'
-      }`}>
+const UploadBox = ({ label, sub, icon, isLogo, onClick }) => (
+  <div
+    onClick={onClick}
+    className={`w-full aspect-[6/1.2] border-2 border-dashed rounded-md flex flex-col items-center justify-center gap-2 bg-[#F8F8F8] cursor-pointer transition-all group overflow-hidden relative ${isLogo ? 'border-[#EA3D2A]' : 'border-[#BDBDD2]'}`}
+  >
+    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isLogo ? 'bg-[#FFEDEB] text-[#EA3D2A]' : 'bg-[#F1F5F9] text-[#64748B]'}`}>
       <Icon icon={icon || "lucide:upload-cloud"} width="24" />
     </div>
     <div className="text-center">
@@ -15,36 +16,22 @@ const UploadBox = ({ label, sub, icon, isLogo }) => (
   </div>
 );
 
-const DocumentItem = ({ name, size, type, onRemove }) => (
-  <div className="flex items-center justify-between p-3 border border-[#BDBDD2] rounded-md bg-white">
-    <div className="flex items-center gap-3">
-      <div className={`w-10 h-10 rounded-md flex items-center justify-center shrink-0 ${type === 'pdf' ? 'bg-[#FFEDEB]' : 'bg-[#E2E8F0]'
-        }`}>
-        <Icon
-          icon={type === 'pdf' ? "mdi:file-pdf-box" : "icon-park:file-doc"}
-          className={type === 'pdf' ? "text-[#EA3D2A]" : "text-[#2F80ED]"}
-          width="24"
-        />
-      </div>
-      <div className="min-w-0">
-        <p className="text-sm font-semibold text-[#181211] truncate">{name}</p>
-        <p className="text-xs font-medium text-[#64748B]">{size}</p>
-      </div>
-    </div>
-    <button
-      onClick={onRemove}
-      className="w-8 h-8 flex items-center justify-center border border-[#EA3D2A] rounded-md text-[#EA3D2A] hover:bg-[#FFEDEB] transition-all"
-    >
-      <Icon icon="lucide:x" width="18" />
-    </button>
-  </div>
-);
-
 const Step5MediaDocs = ({ formData, setFormData }) => {
-  const removeDoc = (index) => {
-    const newDocs = formData.documents.filter((_, i) => i !== index);
-    setFormData({ ...formData, documents: newDocs });
+  const logoInputRef = useRef(null);
+  const bannerInputRef = useRef(null);
+
+  const handleFileUpload = (e, field) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, [field]: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
+
+  const storeName = formData.locations[0]?.storeName || "Store Name";
 
   return (
     <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm min-h-[750px]">
@@ -62,6 +49,22 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
       </div>
 
       <div className="p-5 space-y-6">
+        {/* Hidden File Inputs */}
+        <input
+          type="file"
+          ref={logoInputRef}
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => handleFileUpload(e, 'logo')}
+        />
+        <input
+          type="file"
+          ref={bannerInputRef}
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => handleFileUpload(e, 'banner')}
+        />
+
         {/* Logo Upload */}
         <div className="space-y-4">
           <label className="text-sm font-semibold text-[#181211] block">
@@ -69,9 +72,10 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
           </label>
           <UploadBox
             label="Click to upload logo"
-            sub="PNG, JPG up to 5MB"
+            sub="Upload PNG or JPG (square, 520 × 520 px recommended, max 2MB)"
             isLogo={true}
             icon="lucide:upload"
+            onClick={() => logoInputRef.current.click()}
           />
         </div>
 
@@ -82,54 +86,61 @@ const Step5MediaDocs = ({ formData, setFormData }) => {
           </label>
           <UploadBox
             label="Click to upload banner"
-            sub="PNG, JPG up to 10MB, Wide format preferred"
+            sub="Upload PNG or JPG (wide format, 1920 × 450 px recommended, max 10MB)"
             isLogo={false}
             icon="lucide:upload"
+            onClick={() => bannerInputRef.current.click()}
           />
         </div>
 
-        {/* Compliance Documents */}
-        <div className="space-y-3">
-          <label className="text-sm font-semibold text-[#181211] block">
-            Business License Document <span className="text-[#EA3D2A] ml-0.5">*</span>
-          </label>
+        {/* Preview Section - Styled like StoreDetails header */}
+        {(formData.logo || formData.banner) && (
+          <div className="relative rounded-md overflow-visible h-[140px] bg-cover bg-center border border-[#BDBDD2] mb-2 animate-in fade-in slide-in-from-top-2 duration-300"
+            style={{
+              backgroundImage: formData.banner ? `url(${formData.banner})` : 'none',
+              backgroundColor: formData.banner ? 'transparent' : '#F1F5F9'
+            }}>
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 border border-[#BDBDD2] border-dashed rounded-md bg-white">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#CDFFE2] rounded-md flex items-center justify-center shrink-0">
-                  <Icon icon="mi:document" className="text-[#219653]" width="24" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-[#181211]">Upload license document</p>
-                  <p className="text-xs font-medium text-[#64748B]">PDF, DOC up to 10MB</p>
+            {/* Content Container */}
+            <div className="relative h-full flex items-end justify-between px-6 pb-3">
+              {/* Logo Overlay */}
+              <div className="absolute -bottom-8 left-6 w-24 h-24 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 ring-[#FFFF]">
+                {formData.logo ? (
+                  <img src={formData.logo} alt="Logo" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-[#F8FAFC] flex items-center justify-center">
+                    <Icon icon="lucide:store" className="text-[#EA3D2A]" width="32" />
+                  </div>
+                )}
+              </div>
+
+              {/* Store Info */}
+              <div className="ml-28 flex-1 min-w-0 pb-1">
+                <h1 className={`text-xl font-bold leading-tight truncate mb-0.5 ${formData.banner ? 'text-white drop-shadow-md' : 'text-[#181211]'}`}>
+                  {storeName}
+                </h1>
+                <div className="flex items-center gap-1 text-[11px] font-medium leading-none">
+                  <span className="text-[#EA3D2A] hover:underline cursor-pointer font-bold">
+                    Home
+                  </span>
+                  <span className={formData.banner ? 'text-white' : 'text-[#181211]'}>/</span>
+                  <span className="text-[#EA3D2A] hover:underline cursor-pointer font-bold">
+                    Stores
+                  </span>
+                  <span className={formData.banner ? 'text-white' : 'text-[#181211]'}>/</span>
+                  <span className={`truncate font-bold ${formData.banner ? 'text-white' : 'text-[#181211]'}`}>
+                    {storeName}
+                  </span>
                 </div>
               </div>
-              <button className="px-4 py-1.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-bold text-[#475569]  hover:bg-gray-50">
-                Browse
-              </button>
-            </div>
-
-            <div className="space-y-2.5">
-              {formData.documents.map((doc, index) => (
-                <DocumentItem
-                  key={index}
-                  {...doc}
-                  onRemove={() => removeDoc(index)}
-                />
-              ))}
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Compliance Alert */}
-        <div className="bg-[#FFF7E8] border border-[#FF9F40] rounded-lg p-4 flex gap-3">
-          <Icon icon="lucide:info" className="text-[#FF9F40] shrink-0" width="20" />
-          <p className="text-sm font-medium text-[#FF9F40] leading-relaxed">
-            Important:
-            All uploaded documents are reviewed by our compliance team within 24-48 hours. The store will remain in Pending status until verification is complete.
-          </p>
-        </div>
+        {/* Compliance Documents - Commented out as per user's current file state */}
+        {/* <div className="space-y-3">
+          ...
+        </div> */}
       </div>
     </div>
   );

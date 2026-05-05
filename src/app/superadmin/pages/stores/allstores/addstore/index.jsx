@@ -110,6 +110,48 @@ const AddStore = () => {
     setIsSuccess(true);
   };
 
+  const handleSaveDraft = () => {
+    const primaryLocation = formData.locations[0] || {};
+    
+    const newStore = {
+      id: `#SE-${Math.floor(1000 + Math.random() * 9000)}`,
+      name: primaryLocation.storeName || '-',
+      image: formData.logo || "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=150&h=150",
+      logo: formData.logo || "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=150&h=150",
+      category: primaryLocation.category?.[0] || '-',
+      tags: formData.storeTags || [],
+      location: primaryLocation.city 
+        ? `${primaryLocation.city}${primaryLocation.province ? ', ' + primaryLocation.province : ''}`
+        : '-',
+      locationCount: formData.locations.length,
+      email: primaryLocation.storeEmail || formData.email || '-',
+      phone: primaryLocation.storePhone || formData.phone || '-',
+      website: primaryLocation.website || '-',
+      delivery: [
+        formData.sameDayDelivery && { type: 'SAME-DAY', variant: 'teal' },
+        formData.expressDelivery && { type: 'EXPRESS', variant: 'blue' },
+        formData.shippingMailOrder && { type: 'SHIPPING', variant: 'grey' },
+      ].filter(Boolean),
+      revenue: '-',
+      revenueSub: '',
+      orders: '-',
+      ordersSub: '',
+      status: 'Draft',
+      statusTime: '-',
+      rating: '0.0',
+      createdAt: new Date().toISOString().split('T')[0],
+      submittedDate: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
+      approvedDate: null,
+      featured: false,
+      waitingDays: 0,
+    };
+
+    const existingDrafts = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
+    localStorage.setItem('shroom_express_stores', JSON.stringify([...existingDrafts, newStore]));
+    
+    setIsSuccess(true);
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -216,7 +258,10 @@ const AddStore = () => {
               </button>
 
               <div className="flex items-center gap-4">
-                <button className="px-7 py-2.5 bg-white  rounded-md  shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] hover:bg-gray-50 transition-all">
+                <button 
+                  onClick={handleSaveDraft}
+                  className="px-7 py-2.5 bg-white  rounded-md  shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] hover:bg-gray-50 transition-all"
+                >
                   Save Draft
                 </button>
                 <button

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 import {
@@ -88,6 +88,7 @@ const getDeliveryVariantStyle = (variant) => {
 };
 
 const StoreTable = ({ data = null }) => {
+  const [stores, setStores] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [selectedStore, setSelectedStore] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -103,7 +104,20 @@ const StoreTable = ({ data = null }) => {
     pageSize: 8,
   });
 
-  const stores = useMemo(() => data || DEFAULT_DATA, [data]);
+  useEffect(() => {
+    const localStores = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
+    setStores(data || [...DEFAULT_DATA, ...localStores]);
+  }, [data]);
+
+  const handleDelete = (id) => {
+    const updatedStores = stores.filter(s => s.id !== id);
+    setStores(updatedStores);
+    
+    // Update localStorage
+    const localStores = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
+    const updatedLocal = localStores.filter(s => s.id !== id);
+    localStorage.setItem('shroom_express_stores', JSON.stringify(updatedLocal));
+  };
 
   const filteredData = useMemo(() => {
     let result = [...stores];
@@ -198,9 +212,17 @@ const StoreTable = ({ data = null }) => {
         >
           <Icon icon="lucide:map-pin" width="14" className="text-[#181211] shrink-0" />
           <span className="text-[12px] font-medium">{row.original.location}</span>
-          <span className="bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">
-            +5
-          </span>
+          {row.original.status === 'Draft' ? (
+            row.original.locationCount > 1 && (
+              <span className="bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">
+                +{row.original.locationCount - 1}
+              </span>
+            )
+          ) : (
+            <span className="bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1">
+              +5
+            </span>
+          )}
         </div>
       ),
     },
@@ -245,10 +267,12 @@ const StoreTable = ({ data = null }) => {
       accessorKey: 'status',
       cell: ({ row }) => {
         // Mocking multi-status data for demonstration as per image
-        const statuses = row.original.statusList || [
-          { status: row.original.status, count: Math.floor(Math.random() * 5) + 1 },
-          ...(row.original.status === 'Active' ? [{ status: 'Pending', count: 1 }] : [])
-        ];
+        const statuses = row.original.statusList || (row.original.status === 'Draft' 
+          ? [{ status: row.original.status, count: null }]
+          : [
+            { status: row.original.status, count: Math.floor(Math.random() * 5) + 1 },
+            ...(row.original.status === 'Active' ? [{ status: 'Pending', count: 1 }] : [])
+          ]);
 
         return (
           <div
@@ -261,7 +285,7 @@ const StoreTable = ({ data = null }) => {
             <div className="flex flex-wrap items-center gap-1">
               {statuses.slice(0, 2).map((s, i) => (
                 <div key={i} className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${getStatusBadgeStyle(s.status)}`}>
-                  {s.status} ({s.count})
+                  {s.status} {s.count !== null && `(${s.count})`}
                 </div>
               ))}
               {statuses.length > 2 && (
@@ -280,8 +304,14 @@ const StoreTable = ({ data = null }) => {
       accessorKey: 'rating',
       cell: ({ row }) => (
         <div className="flex items-center gap-1">
-          <Icon icon="material-symbols:star" className="text-[#F59E0B]" width="14" />
-          <span className="text-[13px] font-bold text-[#181211]">{row.original.rating}</span>
+          {row.original.status === 'Draft' ? (
+            <span className="text-[13px] font-bold text-[#181211]">-</span>
+          ) : (
+            <>
+              <Icon icon="material-symbols:star" className="text-[#F59E0B]" width="14" />
+              <span className="text-[13px] font-bold text-[#181211]">{row.original.rating}</span>
+            </>
+          )}
         </div>
       ),
     },
@@ -299,8 +329,11 @@ const StoreTable = ({ data = null }) => {
           <button className="text-[#64748B] hover:bg-[#64748B]/10 p-1 rounded-md transition-all">
             <Icon icon="lucide:pencil" width="16" />
           </button>
-          <button className="text-[#EF4444] hover:bg-[#EF4444]/10 p-1 rounded-md transition-all">
-            <Icon icon="lucide:ban" width="16" />
+          <button 
+            onClick={() => handleDelete(row.original.id)}
+            className="text-[#EF4444] hover:bg-[#EF4444]/10 p-1 rounded-md transition-all"
+          >
+            <Icon icon="lucide:trash-2" width="16" />
           </button>
         </div>
       ),

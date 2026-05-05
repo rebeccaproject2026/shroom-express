@@ -6,8 +6,7 @@ import Input from '../../../../../components/common/Input';
 const Step1BasicInfo = ({ formData, setFormData }) => {
   const roleOptions = [
     { value: 'Store Manager', label: 'Store Manager' },
-    { value: 'Admin', label: 'Admin' },
-    { value: 'Staff', label: 'Staff' },
+    { value: 'Store Executive', label: 'Store Executive' },
   ];
 
   return (

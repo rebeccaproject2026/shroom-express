@@ -17,10 +17,16 @@ const Step2Location = ({ formData, setFormData }) => {
   ];
 
   const socialPlatformOptions = [
-    { value: 'Instagram', label: 'Instagram' },
     { value: 'Facebook', label: 'Facebook' },
-    { value: 'Twitter', label: 'Twitter' },
     { value: 'LinkedIn', label: 'LinkedIn' },
+    { value: 'Instagram', label: 'Instagram' },
+    { value: 'Whatsapp', label: 'Whatsapp' },
+    { value: 'Telegram', label: 'Telegram' },
+    { value: 'Signal', label: 'Signal' },
+    { value: 'WeChat', label: 'WeChat' },
+    { value: 'TikTok', label: 'TikTok' },
+    { value: 'X (Twitter)', label: 'X (Twitter)' },
+    { value: 'Discord', label: 'Discord' },
   ];
 
   const countryOptions = [
@@ -61,6 +67,13 @@ const Step2Location = ({ formData, setFormData }) => {
     setFormData({ ...formData, locations: newLocations });
   };
 
+  const handleSocialLinkChange = (index, platform, value) => {
+    const newLocations = [...formData.locations];
+    const newLinks = { ...newLocations[index].socialLinks, [platform]: value };
+    newLocations[index] = { ...newLocations[index], socialLinks: newLinks };
+    setFormData({ ...formData, locations: newLocations });
+  };
+
   const toggleLocationExpansion = (index) => {
     const newLocations = [...formData.locations];
     newLocations[index] = { ...newLocations[index], isExpanded: !newLocations[index].isExpanded };
@@ -77,7 +90,8 @@ const Step2Location = ({ formData, setFormData }) => {
     const newLocation = {
       isExpanded: true,
       website: '',
-      socialPlatform: '',
+      socialPlatform: [],
+      socialLinks: {},
       storeName: '',
       category: [],
       description: '',
@@ -172,28 +186,6 @@ const Step2Location = ({ formData, setFormData }) => {
               <div className="p-5 space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                   <Input
-                    label="Website"
-                    required
-                    placeholder="https://yourstore.com"
-                    value={location.website}
-                    onChange={(e) => handleLocationChange(index, 'website', e.target.value)}
-                    className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-                    labelClassName="text-sm font-semibold text-[#181211]"
-                    borderClass="border border-[#BDBDD2]"
-                  />
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Social Platform</label>
-                    <ReusableTableSelect
-                      value={location.socialPlatform}
-                      onChange={(e) => handleLocationChange(index, 'socialPlatform', e.target.value)}
-                      options={socialPlatformOptions}
-                      placeholder="Select a category..."
-                      borderclass="border border-[#BDBDD2]"
-                      className="w-full text-[#475569] font-medium"
-                      showCheckbox={false}
-                    />
-                  </div>
-                  <Input
                     label="Store Name"
                     required
                     placeholder="e.g. Forest Oasis"
@@ -216,6 +208,43 @@ const Step2Location = ({ formData, setFormData }) => {
                       showCheckbox={true}
                     />
                   </div>
+                  <Input
+                    label="Website"
+                    required
+                    placeholder="https://yourstore.com"
+                    value={location.website}
+                    onChange={(e) => handleLocationChange(index, 'website', e.target.value)}
+                    className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                    labelClassName="text-sm font-semibold text-[#181211]"
+                    borderClass="border border-[#BDBDD2]"
+                  />
+                  <div className="space-y-1">
+                    <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Social Platform</label>
+                    <ReusableTableSelect
+                      isMulti={true}
+                      useTags={true}
+                      columns={2}
+                      value={location.socialPlatform}
+                      onChange={(e) => handleLocationChange(index, 'socialPlatform', e.target.value)}
+                      options={socialPlatformOptions}
+                      placeholder="Select a category..."
+                      borderclass="border border-[#BDBDD2]"
+                      className="w-full text-[#475569] font-medium"
+                    />
+                  </div>
+
+                  {location.socialPlatform && Array.isArray(location.socialPlatform) && location.socialPlatform.map((platform) => (
+                    <Input
+                      key={platform}
+                      label={platform}
+                      placeholder={`https://${platform.toLowerCase().includes('twitter') ? 'x' : platform.toLowerCase()}.com`}
+                      value={location.socialLinks?.[platform] || ''}
+                      onChange={(e) => handleSocialLinkChange(index, platform, e.target.value)}
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium animate-in slide-in-from-top-2 duration-300"
+                      labelClassName="text-sm font-semibold text-[#181211]"
+                      borderClass="border border-[#BDBDD2]"
+                    />
+                  ))}
                 </div>
 
                 <div className="space-y-1.5">
