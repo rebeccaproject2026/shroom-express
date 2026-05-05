@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../../components/common/ProductCard";
@@ -8,14 +8,14 @@ import product1 from "../../assets/images/product1.png";
 import product2 from "../../assets/images/product2.png";
 import product3 from "../../assets/images/product3.png";
 import product4 from "../../assets/images/product4.png";
-import product5 from "../../assets/images/product5.png";
-import product6 from "../../assets/images/product6.png";
-import product7 from "../../assets/images/product7.png";
-import product8 from "../../assets/images/product8.png";
+// import product5 from "../../assets/images/product5.png";
+// import product6 from "../../assets/images/product6.png";
+// import product7 from "../../assets/images/product7.png";
+// import product8 from "../../assets/images/product8.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../../assets/images/highpotency.png";
-import deepJourneyImg from "../../assets/images/deepjourney.png";
+// import deepJourneyImg from "../../assets/images/deepjourney.png";
 import creativeBoostImg from "../../assets/images/creativeboost.png";
 import relaxChillImg from "../../assets/images/relaxchill.png";
 import visualExperienceImg from "../../assets/images/visualexperience.png";
@@ -24,7 +24,10 @@ import dealsImg from "../../assets/images/deals.png";
 // Store Banner Assets for Bundles
 import storecard1 from "../../assets/images/storecard1.png";
 import storecard2 from "../../assets/images/storecard2.png";
-
+// Import Promotional Banners
+import price1 from "../../assets/images/price1.png";
+import price3 from "../../assets/images/price2.png";
+import price2 from "../../assets/images/price3.png";
 
 
 
@@ -116,6 +119,7 @@ const DealsPage = () => {
     const [selectedCoupon, setSelectedCoupon] = useState(null);
 
     // Mock Timer Data for Mobile
+    // eslint-disable-next-line no-unused-vars
     const [timeLeft, setTimeLeft] = useState({ hrs: "04", min: "22", sec: "59" });
 
     // Flash Sales Data (Hot Deals from Home)
@@ -235,12 +239,12 @@ const DealsPage = () => {
     ];
 
     return (
-        <div className="w-full bg-[#FAF8F5] overflow-x-hidden pt-10 sm:pt-16 md:pt-18">
+        <div className="w-full bg-[#FAF8F5] overflow-x-hidden  pt-10 sm:pt-16 md:pt-9">
             <div className="max-w-[1700px] mx-auto">
                 {/* Header section - Unified for all screens */}
                 <div className="px-5 lg:px-10 mb-8">
-                    <h1 className="text-[32px] lg:text-[36px] font-bold text-[#181211] leading-tight mb-2">Hot Deals</h1>
-                    <nav className="flex items-center gap-1.5 text-base mb-6">
+                    {/* <h1 className="text-[32px] lg:text-[36px] font-bold text-[#181211] leading-tight mb-2">Hot Deals</h1> */}
+                    <nav className="flex items-center gap-1.5 text-base mb-2">
                         <span className="text-[#E93E2B] font-bold cursor-pointer" onClick={() => navigate('/store')}>Home</span>
                         <span className="text-[#777777] font-semibold">/</span>
                         <span className="text-[#777777] font-semibold">Deals</span>
@@ -255,14 +259,14 @@ const DealsPage = () => {
                 {/* Deal of the Day Hero card - Proportions matched to StoreDetails banner */}
                 <div className="px-5 lg:px-10 mb-10">
                     <div
-                        className="relative w-full rounded-[24px] overflow-hidden bg-[#181211] h-70 lg:h-80 shadow-xl p-6 lg:px-12 lg:py-8 flex flex-col justify-between bg-cover bg-center"
+                        className="relative w-full rounded-md overflow-hidden bg-[#181211] h-70 lg:h-90 shadow-xl p-6 lg:px-12 lg:py-8 flex flex-col justify-between bg-cover bg-center"
                         style={{
                             backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.4) 100%), url(${dealsImg})`
                         }}
                     >
                         {/* Top Badges */}
-                        <div className="relative z-10 flex justify-between items-center">
-                            <span className="bg-[#E93E2B] text-white text-[11px] lg:text-[13px] font-bold tracking-wider px-3.5 py-1.5 lg:px-5 lg:py-2 rounded-full uppercase shadow-lg shadow-[#E93E2B4D]">
+                        <div className="relative z-10 flex justify-between items-center mb-2">
+                            <span className="bg-[#E93E2B] text-white text-[11px] lg:text-xs font-semibold tracking-wider px-3.5 py-1.5 lg:px-5 lg:py-2 rounded-full uppercase shadow-lg shadow-[#E93E2B4D]">
                                 Deal of the day
                             </span>
                             <span className="bg-[#FFFFFF1A] backdrop-blur-md text-white text-[13px] lg:text-[15px] font-bold px-4 py-1.5 lg:px-6 lg:py-2 rounded-xl border border-[#FFFFFF26]">
@@ -273,41 +277,43 @@ const DealsPage = () => {
                         {/* Middle Content - Adjusted for compact h-70 */}
                         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mt-2">
                             <div>
-                                <h2 className="text-2xl lg:text-4xl font-bold text-white mb-1 lg:mb-2 max-w-[280px] lg:max-w-[450px] leading-tight">
+                                <h2 className="text-3xl font-semibold text-white  max-w-[280px] lg:max-w-[450px] leading-tight">
                                     Golden Teacher Bundle
                                 </h2>
                                 <p className="text-[#FFFFFFCC] text-xs lg:text-base font-medium">
                                     Premium dried caps + infusion kit
                                 </p>
                             </div>
-
-                            {/* Timer Component - More compact */}
-                            <div className="flex gap-3">
-                                {[
-                                    { val: timeLeft.hrs, label: "HRS" },
-                                    { val: timeLeft.min, label: "MIN" },
-                                    { val: timeLeft.sec, label: "SEC" }
-                                ].map((t, i) => (
-                                    <div key={i} className="flex flex-col items-center">
-                                        <div className="w-[48px] h-[48px] lg:w-[56px] lg:h-[56px] bg-[#FFFFFF12] backdrop-blur-xl border border-[#FFFFFF1A] rounded-xl flex items-center justify-center text-lg lg:text-xl font-bold text-white">
-                                            {t.val}
-                                        </div>
-                                        <span className="text-[8px] lg:text-[9px] font-bold text-[#FFFFFF80] tracking-widest uppercase mt-1">
-                                            {t.label}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
                         </div>
-
+                        {/* Timer Component - More compact */}
+                        <div className="flex gap-3 mt-8">
+                            {[
+                                { val: timeLeft.hrs, label: "HRS" },
+                                { val: timeLeft.min, label: "MIN" },
+                                { val: timeLeft.sec, label: "SEC" }
+                            ].map((t, i) => (
+                                <div key={i} className="flex flex-col items-center">
+                                    <div className="w-[48px] h-[48px] lg:w-[56px] lg:h-[56px] bg-[#FFFFFF12] backdrop-blur-xl border border-[#FFFFFF1A] rounded-xl flex items-center justify-center text-lg lg:text-xl font-bold text-white">
+                                        {t.val}
+                                    </div>
+                                    <span className="text-[8px] lg:text-[9px] font-bold text-[#FFFFFF80] tracking-widest uppercase mt-1">
+                                        {t.label}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                         {/* Bottom Actions */}
-                        <div className="relative z-10 flex items-center justify-between gap-4">
-                            <div className="flex flex-row items-center gap-3">
-                                <span className="text-[#E93E2B] text-3xl lg:text-4xl font-bold">$80.00</span>
-                                <span className="text-white opacity-50 text-sm lg:text-lg line-through font-medium">$120.00</span>
+                        <div className="relative z-10 flex items-center justify-between gap-4 mt-5">
+                            <div className="flex flex-col items-start gap-1">
+                                <p className="text-white opacity-50 text-sm  line-through font-medium">
+                                    $120.00
+                                </p>
+                                <p className="text-[#E93E2B] text-3xl  font-semibold">
+                                    $80.00
+                                </p>
                             </div>
                             <button
-                                className="bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-3 lg:py-4 px-8 lg:px-10 rounded-[16px] text-base lg:text-lg shadow-lg active:scale-95 transition-all text-center"
+                                className="bg-[#E93E2B] hover:bg-red-600 text-white font-bold py-2.5  px-8 lg:px-5 rounded-[16px] text-base lg:text-lg shadow-lg active:scale-95 transition-all text-center"
                                 onClick={() => navigate('/store/product/golden-teacher-bundle')}
                             >
                                 Claim Deal
@@ -315,6 +321,70 @@ const DealsPage = () => {
                         </div>
                     </div>
                 </div>
+                {/* Bundle & Save Section - 1 Column Mobile, 2 Columns Desktop */}
+                <div className="mb-5 px-5 lg:px-10">
+                    <div className="flex items-center gap-2.5 text-[#181211] mb-5">
+                        <Icon icon="mdi:stars-outline" className="text-[#E93E2B]" width={30} />
+                        <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Bundle & Save</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                        {bundles.map(bundle => (
+                            <div key={bundle.id} className="bg-white rounded-[20px] p-3.5 lg:p-3 shadow-[0px_4px_25px_rgba(0,0,0,0.06)] border border-[#F1F5F9] flex gap-4 lg:gap-6 group hover:shadow-xl transition-all cursor-pointer items-center">
+                                <div className="w-24 h-24 lg:w-29 lg:h-29 shrink-0 bg-[#FAF8F5] rounded-2xl overflow-hidden relative">
+                                    {bundle.badge && (
+                                        <span className="absolute top-1.5 right-1.5 bg-[#22C55E] text-white text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-md z-10 shadow-md uppercase">
+                                            {bundle.badge}
+                                        </span>
+                                    )}
+                                    <img src={bundle.image} alt={bundle.name} className="w-full h-full object-cover transition-transform duration-500" />
+                                </div>
+                                <div className="flex-1 flex flex-col justify-between pt-1">
+                                    <div>
+                                        <h3 className="text-base lg:text-lg font-bold text-[#181211] mb-1">{bundle.name}</h3>
+                                        <p className="text-xs lg:text-sm text-[#777777] font-medium leading-relaxed">{bundle.desc}</p>
+                                    </div>
+                                    <div className="flex items-end justify-between mt-3 lg:mt-4">
+                                        <div className="flex flex-col">
+                                            <span className="text-[#181211] text-xs font-medium mb-0.5 line-through opacity-60">${bundle.oldPrice.toFixed(2)}</span>
+                                            <span className="text-xl lg:text-2xl font-bold text-[#E93E2B]">${bundle.price.toFixed(2)}</span>
+                                        </div>
+                                        <button className="bg-[#E93E2B] text-white px-5 py-2.5 lg:px-6 rounded-lg text-sm font-bold shadow-md shadow-[#E93E2B33] active:scale-95 hover:bg-red-600 transition-all">
+                                            Claim Bundle
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
+                {/* High Vibes, Low Prices Section */}
+                <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10 mb-10">
+                    <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
+                        <div className="text-center mb-10">
+                            <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">High Vibes, Low Prices</h2>
+                            <p className="text-[#64748B] text-[17px] font-medium">Use these limited-time codes to stock up on your favorite strains and blends.</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-10">
+                            <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer ">
+                                <img src={price1} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Magic Mushroom 20% OFF" />
+                            </div>
+                            <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer ">
+                                <img src={price2} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="25% OFF Premium Cannabis" />
+                            </div>
+                            <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer ">
+                                <img src={price3} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="20% OFF Shroom20" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+
 
                 {/* Flash Sales Section - Hybrid Layout */}
                 <div className="mb-10 px-5 lg:px-10">
@@ -340,7 +410,7 @@ const DealsPage = () => {
                     </div>
 
                     {/* Mobile/Tablet View (below lg) - Scrolling Row */}
-                    <div 
+                    <div
                         className="lg:hidden flex gap-4 overflow-x-auto py-2 -mx-2 px-2 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                     >
                         {flashSales.map(item => (
@@ -356,42 +426,7 @@ const DealsPage = () => {
                     </div>
                 </div>
 
-                {/* Bundle & Save Section - 1 Column Mobile, 2 Columns Desktop */}
-                <div className="mb-10 px-5 lg:px-10">
-                    <div className="flex items-center gap-2.5 text-[#181211] mb-5">
-                        <Icon icon="mdi:stars-outline" className="text-[#E93E2B]" width={30} />
-                        <h2 className="text-[18px] sm:text-2xl font-extrabold text-[#181211]">Bundle & Save</h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                        {bundles.map(bundle => (
-                            <div key={bundle.id} className="bg-white rounded-[20px] p-3.5 lg:p-5 shadow-[0px_4px_25px_rgba(0,0,0,0.06)] border border-[#F1F5F9] flex gap-4 lg:gap-6 group hover:shadow-xl transition-all cursor-pointer items-center">
-                                <div className="w-24 h-24 lg:w-32 lg:h-32 shrink-0 bg-[#FAF8F5] rounded-2xl overflow-hidden relative">
-                                    {bundle.badge && (
-                                        <span className="absolute top-1.5 right-1.5 bg-[#22C55E] text-white text-[9px] lg:text-[10px] font-bold px-2 py-0.5 rounded-md z-10 shadow-md uppercase">
-                                            {bundle.badge}
-                                        </span>
-                                    )}
-                                    <img src={bundle.image} alt={bundle.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                </div>
-                                <div className="flex-1 flex flex-col justify-between pt-1">
-                                    <div>
-                                        <h3 className="text-base lg:text-lg font-bold text-[#181211] mb-1">{bundle.name}</h3>
-                                        <p className="text-xs lg:text-sm text-[#777777] font-medium leading-relaxed">{bundle.desc}</p>
-                                    </div>
-                                    <div className="flex items-end justify-between mt-3 lg:mt-4">
-                                        <div className="flex flex-col">
-                                            <span className="text-[#181211] text-xs font-medium mb-0.5 line-through opacity-60">${bundle.oldPrice.toFixed(2)}</span>
-                                            <span className="text-xl lg:text-2xl font-bold text-[#E93E2B]">${bundle.price.toFixed(2)}</span>
-                                        </div>
-                                        <button className="bg-[#E93E2B] text-white px-5 py-2.5 lg:px-6 lg:py-2.5 rounded-xl text-sm font-bold shadow-md shadow-[#E93E2B33] active:scale-95 hover:bg-red-600 transition-all">
-                                            Claim Bundle
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+
 
                 {/* Weekly Specials - Hybrid Layout */}
                 <div className="pb-10 px-5 lg:px-10">
@@ -417,7 +452,7 @@ const DealsPage = () => {
                     </div>
 
                     {/* Mobile/Tablet View (below lg) - Scrolling Row */}
-                    <div 
+                    <div
                         className="lg:hidden flex gap-4 overflow-x-auto py-2 -mx-2 px-2 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                     >
                         {bestSellers.map(item => (

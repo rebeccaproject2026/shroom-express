@@ -24,6 +24,8 @@ import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import MyAccountPage from './pages/auth/MyAccountPage';
 import CreateStorePage from './pages/stores/CreateStorePage';
 import DealsPage from './pages/deals/DealsPage';
+import BecomeDriver from './pages/BecomeDriver';
+import AboutUs from './pages/AboutUs';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -58,6 +60,8 @@ function StoreApp() {
                     <Route path="myaccount" element={<MyAccountPage />} />
                     <Route path="create-store" element={<CreateStorePage />} />
                     <Route path="deals" element={<DealsPage />} />
+                    <Route path="become-a-driver" element={<BecomeDriver />} />
+                    <Route path="about-us" element={<AboutUs />} />
                 </Route>
             </Routes>
             </CategoryProvider>

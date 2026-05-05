@@ -22,7 +22,7 @@ import { useAuth } from '../../context/AuthContext';
 const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const isHomePage = location.pathname === '/store' || location.pathname === '/store/';
+    const isHomePage = location.pathname === '/store' || location.pathname === '/store/' || location.pathname === '/store/become-a-driver';
     const { selectedEffect, toggleEffect, deliveryMethod, setDeliveryMethod } = useCategory();
     const { user, logout } = useAuth();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -105,7 +105,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     <span>Open Store</span>
                 </Link>
                 <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
-                <Link to="" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
+                <Link to="/store/become-a-driver" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="fluent-mdl2:car" width={16} height={16} />
                     <span>Become Driver</span>
                 </Link>

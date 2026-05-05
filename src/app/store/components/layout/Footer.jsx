@@ -54,7 +54,7 @@ const Footer = () => {
                             />
                         </div>
                         <ul className={`${openSection === 'links' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">About Us</Link></li>
+                            <li><Link to="/store/about-us" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">About Us</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Contact Us</Link></li>
                             <li><Link to="/store/myaccount" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">My Account</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Support</Link></li>

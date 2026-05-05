@@ -56,16 +56,16 @@ const StoresList = () => {
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeShipping].filter(Boolean).length;
 
     return (
-        <div className="w-full px-4 sm:px-10 pt-10 sm:pt-16 md:pt-18 pb-10 sm:pb-20">
+        <div className="w-full px-4 sm:px-10 pt-10 sm:pt-16 md:pt-9 pb-10 sm:pb-10">
             <StoreFilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Page Header */}
-            <h1 className="text-3xl sm:text-4xl font-bold text-[#0F3540] mb-3">
+            {/* <h1 className="text-3xl sm:text-4xl font-bold text-[#0F3540] mb-3">
                 Stores
-            </h1>
+            </h1> */}
 
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-base sm:text-lg mb-6">
+            <div className="flex items-center gap-2 text-base sm:text-lg mb-2">
                 <a
                     href="/store"
                     className="text-[#E93E2B] font-semibold hover:underline"
@@ -77,7 +77,7 @@ const StoresList = () => {
             </div>
 
             {/* Description */}
-            <p className="text-[#777777] text-[15px] sm:text-[16px] leading-[26px] tracking-normal max-w-[200%] mb-12">
+            <p className="text-[#777777] text-[15px] sm:text-[16px] leading-[26px] tracking-normal max-w-[200%] mb-5">
                 Welcome to our marketplace, where you can explore a wide variety of premium
                 mushroom products from multiple trusted stores. Our platform brings
                 together carefully selected vendors who specialize in fresh, dried, and

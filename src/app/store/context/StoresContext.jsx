@@ -5,8 +5,8 @@ import storecard2 from "../assets/images/storecard2.png";
 import background2 from "../assets/images/background2.png";
 import storecard3 from "../assets/images/storecard3.png";
 import background3 from "../assets/images/background3.png";
-import storecard4 from "../assets/images/storecard4.png";
-import background4 from "../assets/images/Logo.png";
+// import storecard4 from "../assets/images/storecard4.png";
+// import background4 from "../assets/images/Logo.png";
 import beginnerFriendlyImg from "../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../assets/images/highpotency.png";
 import microDosingImg from "../assets/images/microdosing.png";
@@ -25,7 +25,7 @@ import magicmashroombanner2 from "../assets/images/magicmashroombanner2.jpg";
 import magicmashroomlogo2 from "../assets/images/magicmashroomlogo2.png";
 
 const defaultStores = [
-    { id: 1, name: "micro zoomiez", rating: "4.8", reviewCount: "124", estimatedDelivery: "Under 2 Hours", avgPrice: "$27.43", location: "45 Four Winds Dr, North York, ON M3J 2T6, Canada", coverImage: storecard1, logo: background, deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" }, isPrimary: true, avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg] },
+    { id: 1, name: "micro zoomiez", rating: "4.8", reviewCount: "124", estimatedDelivery: "Under 2 Hours", avgPrice: "$27.43", location: "45 Four Winds Dr, North York, ON M3J 2T6, Canada", coverImage: storecard1, logo: background, deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" }, isPrimary: false, avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg] },
     { id: 2, name: "The Mushroom", rating: "5.0", reviewCount: "89 reviews", estimatedDelivery: "2 - 5 Hours", avgPrice: "$27.43", location: "779 Somerset St W. Centertown, Ottawa, Ontario", coverImage: storecard2, logo: background2, deliveryBadge: { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" }, isPrimary: false, avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg, creativeBoostImg, relaxChillImg] },
     { id: 3, name: "Psilovibin", rating: "4.1", reviewCount: "210 reviews", estimatedDelivery: "1 - 2 Hours", avgPrice: "$27.43", location: "5.2 km away • Etobicoke", coverImage: storecard3, logo: background3, deliveryBadge: { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" }, isPrimary: false, avatars: [] },
     { id: 5, name: "Shroom For Sale", rating: "4.8", reviewCount: "124", estimatedDelivery: "Under 2 Hours", avgPrice: "$27.43", location: "85a Bathurst St, Toronto, ON M5B 1C7", coverImage: Shroomforsalebanner, logo: Shroomforsalelogo, deliveryBadge: { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" }, isPrimary: false, avatars: [beginnerFriendlyImg, highPotencyImg, microDosingImg, visualExperienceImg] },

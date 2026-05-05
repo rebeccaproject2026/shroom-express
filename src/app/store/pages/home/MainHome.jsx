@@ -27,10 +27,7 @@ import visualExperienceImg from "../../assets/images/visualexperience.png";
 import focusClarityImg from "../../assets/images/focusclarity.png";
 import topRateStoreBg from "../../assets/images/topratestorebg.png";
 
-// Import Promotional Banners
-import price1 from "../../assets/images/price1.png";
-import price2 from "../../assets/images/price2.png";
-import price3 from "../../assets/images/price3.png";
+
 import profileImg from "../../assets/images/profile.jpg";
 
 
@@ -269,32 +266,10 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* High Vibes, Low Prices Section */}
-            <section className="bg-[#F7ECEB] font-sans py-10 md:py-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
-                <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
-                    {/* Headers */}
-                    <div className="text-center mb-10">
-                        <h2 className="text-2xl md:text-[32px] font-extrabold text-[#181211] mb-1.5 tracking-tight">High Vibes, Low Prices</h2>
-                        <p className="text-[#64748B] text-[17px] font-medium">Use these limited-time codes to stock up on your favorite strains and blends.</p>
-                    </div>
-
-                    {/* Banners Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer rounded-lg">
-                            <img src={price1} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Magic Mushroom 20% OFF" />
-                        </div>
-                        <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer rounded-lg">
-                            <img src={price2} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="25% OFF Premium Cannabis" />
-                        </div>
-                        <div className="w-full shrink-0 group overflow-hidden bg-white shadow-sm border border-[#E5DCDC] cursor-pointer rounded-lg">
-                            <img src={price3} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="20% OFF Shroom20" />
-                        </div>
-                    </div>
-                </div>
-            </section>
+            
 
             {/* Best Selling Products Section */}
-            <section className="bg-[#FAF7F7] font-sans pt-16 pb-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
+            <section className="bg-[#FAF7F7] font-sans pt-8 pb-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">
                 <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-0">
                     {/* Headers */}
                     <div className="text-center mb-10">

@@ -320,7 +320,7 @@ const ProductsList = () => {
         } else if (category && !categoryTitles[category]) {
             // General search handle: use category slug as search term if not a known category
             const searchTerm = category.replace(/-/g, ' ').toLowerCase();
-            list = list.filter(p => 
+            list = list.filter(p =>
                 (p.title || p.name || '').toLowerCase().includes(searchTerm) ||
                 (p.vendor || '').toLowerCase().includes(searchTerm)
             );
@@ -369,15 +369,15 @@ const ProductsList = () => {
     const activeFilterCount = [activeExpressDelivery, activeDelivery, activeBestSeller].filter(Boolean).length;
 
     return (
-        <div className="w-full px-4 sm:px-6 lg:px-12 pt-10 sm:pt-16 md:pt-18">
+        <div className="w-full px-4 sm:px-6 lg:px-12 pt-10 sm:pt-16 md:pt-12">
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
             {/* Page Header */}
-            <div className="bg-transparent lg:bg-white lg:rounded-[20px] p-0 lg:p-12 mb-8 border-0 lg:border border-[#E5DCDC]">
+            <div className="bg-transparent lg:bg-white lg:rounded-[20px] p-0 lg:p-7 mb-8 border-0 lg:border border-[#E5DCDC]">
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#0F3540] mb-3">{pageTitle}</h1>
 
                 {/* Breadcrumb */}
-                <div className="flex items-center gap-2 text-base sm:text-lg mb-4">
+                <div className="flex items-center gap-2 text-base sm:text-lg mb-2">
                     <button onClick={() => navigate('/store')} className="text-[var(--store-primary)] hover:underline font-semibold cursor-pointer">
                         Home
                     </button>
@@ -463,7 +463,8 @@ const ProductsList = () => {
                     <div className="mb-6">
                         {/* Trending Store Header */}
                         <div className="flex items-center justify-between mb-4.5">
-                            <h2 className="text-[22px] xl:text-[22px] 2xl:text-[24px] font-bold text-[#181211]">Trending Store</h2>
+                            {/* <h2 className="text-[20px] sm:text-[22px] font-bold text-[#181211] mb-6">Most popular Mushroom</h2> */}
+                            <h2 className="text-[22px] xl:text-[22px] 2xl:text-[22px] font-bold text-[#181211]">Trending Store</h2>
                             <button onClick={() => navigate('/store/storeslists')} className="text-[var(--store-primary)] font-semibold text-base xl:text-base 2xl:text-lg hover:opacity-80 transition-opacity cursor-pointer mr-2">
                                 View All
                             </button>
