@@ -2,45 +2,57 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 
 const StoreLivePreview = ({ formData }) => {
-  return (
-    <div className="bg-white border border-[#BDBDD2] rounded-md p-5 shadow-sm">
-      <h3 className="text-lg font-semibold text-[#181211] mb-1 tracking-tight">Live Preview</h3>
+  const primaryLocation = formData.locations[0] || {};
+  const storeName = primaryLocation.storeName || 'Store Name';
+  const description = primaryLocation.description || 'Store description will appear here...';
 
-      <div className="space-y-0.5">
+  return (
+    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm">
+      <h3 className="text-[15px] font-bold text-[#181211] p-4 border-b border-[#BDBDD2] tracking-tight">Live Preview</h3>
+
+      <div className="p-4 space-y-4">
         {/* Store Header Info - Aligned Middle */}
         <div className="flex items-center gap-3">
-          <div className="w-14 h-14 bg-[#E2E8F0] rounded-md flex items-center justify-center shrink-0">
-            <div className="text-2xl">🌿</div> {/* <Icon icon="fluent:leaf-one-20-filled" className="text-[#219653]" width="34" /> */}
+          <div className="w-16 h-16 rounded-md bg-[#F1F5F9] flex items-center justify-center overflow-hidden shrink-0 border border-[#EDF2F7]">
+            {formData.logo ? (
+              <img src={formData.logo} alt="Logo" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-[#FFEDEB] flex items-center justify-center">
+                <Icon icon="lucide:store" className="text-[#EA3D2A]" width="28" />
+              </div>
+            )}
           </div>
-          <div className="min-w-0 flex flex-col justify-start mb-2.5">
-            <h5 className="text-lg font-bold text-[#45526C] truncate leading-tight">
-              {formData.storeName || 'Store Name'}
+          <div className="min-w-0 flex flex-col justify-start">
+            <h5 className="text-[16px] font-bold text-[#181211] truncate leading-tight">
+              {storeName}
             </h5>
-            <p className="text-[14px] font-bold text-[#64748B] opacity-80 mt-0.5">
+            <span className="text-[11px] font-bold text-[#EA3D2A] mt-0.5">
               #SE-8921 - New
-            </p>
+            </span>
           </div>
         </div>
 
-        <div className="space-y-0.5">
-          <p className="text-[14px] font-medium text-[#64748B] leading-relaxed">
-            {formData.description || 'Store description will appear here...'}
+        <div className="space-y-1.5">
+          <p className="text-[13px] font-medium text-[#64748B] line-clamp-3 leading-relaxed">
+            {description}
           </p>
-          <p className="text-[12px] font-medium text-[#64748B]">
-            9am - 9pm
-          </p>
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#64748B]">
+             <Icon icon="lucide:clock" width="12" />
+             <span>9am - 9pm</span>
+          </div>
         </div>
 
-        <div className="pt-1 flex flex-col gap-1.5">
+        {/* Status and Badges */}
+        <div className="pt-1 flex flex-col gap-3">
           <div className="flex">
-            <span className="px-4 py-1.5 border-2 border-[#219653] text-[#219653] text-[12px] font-semibold rounded-full uppercase tracking-wide">
+            <span className="px-3 py-1 border border-[#219653] text-[#219653] text-[10px] font-bold rounded-full uppercase tracking-wider bg-[#219653]/5">
               SAME-DAY
             </span>
           </div>
 
           <div className="flex items-center gap-2 text-[#219653]">
-            <div className="w-2 h-2 rounded-full bg-[#219653]" />
-            <span className="text-[13px] font-medium">Active</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#219653] animate-pulse" />
+            <span className="text-[12px] font-bold">Active</span>
           </div>
         </div>
       </div>

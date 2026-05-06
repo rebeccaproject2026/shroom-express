@@ -106,7 +106,9 @@ const StoreTable = ({ data = null }) => {
 
   useEffect(() => {
     const localStores = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
-    setStores(data || [...DEFAULT_DATA, ...localStores]);
+    // Filter out static stores that have been "overridden" in local storage
+    const filteredDefaultData = DEFAULT_DATA.filter(ds => !localStores.some(ls => ls.id === ds.id));
+    setStores(data || [...filteredDefaultData, ...localStores]);
   }, [data]);
 
   const handleDelete = (id) => {
@@ -326,9 +328,12 @@ const StoreTable = ({ data = null }) => {
           >
             <Icon icon="lucide:eye" width="16" />
           </Link>
-          <button className="text-[#64748B] hover:bg-[#64748B]/10 p-1 rounded-md transition-all">
+          <Link
+            to={`/superadmin/stores/edit/${row.original.id.replace('#', '')}`}
+            className="text-[#64748B] hover:bg-[#64748B]/10 p-1 rounded-md transition-all flex items-center justify-center underline-none"
+          >
             <Icon icon="lucide:pencil" width="16" />
-          </button>
+          </Link>
           <button 
             onClick={() => handleDelete(row.original.id)}
             className="text-[#EF4444] hover:bg-[#EF4444]/10 p-1 rounded-md transition-all"

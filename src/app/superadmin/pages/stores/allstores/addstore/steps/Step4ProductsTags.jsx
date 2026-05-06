@@ -90,7 +90,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
         </div>
 
         {/* License Section */}
-        <Input
+        {/* <Input
           label="Compliant License Number"
           required
           placeholder="e.g. LIC-2026-ON-00123"
@@ -99,7 +99,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
           labelClassName="text-sm font-semibold text-[#181211]"
           className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
           borderClass="border border-[#BDBDD2]"
-        />
+        /> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
 
 // Separate components for each step to keep the main file clean
 import Step1BasicInfo from './steps/Step1BasicInfo';
@@ -12,13 +12,19 @@ import StoreSuccessState from './steps/StoreSuccessState';
 import StoreLivePreview from './steps/StoreLivePreview';
 import StoreCompletionStatus from './steps/StoreCompletionStatus';
 import Breadcrumbs from '../../../../components/common/Breadcrumbs';
+import { STORES_DATA } from '../../../../data/storesData';
 
 const AddStore = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEditMode = !!id;
+
   const breadcrumbItems = [
     { label: "Dashboard", path: "/superadmin/dashboard" },
     { label: "Stores", path: "/superadmin/stores/all" },
-    { label: "Add Store" }
+    { label: isEditMode ? "Edit Store" : "Add Store" }
   ];
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,6 +104,42 @@ const AddStore = () => {
     ]
   });
 
+  useEffect(() => {
+    if (isEditMode) {
+      const allStores = [...STORES_DATA, ...JSON.parse(localStorage.getItem('shroom_express_stores') || '[]')];
+      const storeToEdit = allStores.find(s => s.id.replace('#', '') === id);
+
+      if (storeToEdit) {
+        // Map store data to formData structure
+        setFormData(prev => ({
+          ...prev,
+          firstName: storeToEdit.name.split(' ')[0] || '',
+          lastName: storeToEdit.name.split(' ').slice(1).join(' ') || '',
+          email: storeToEdit.email || '',
+          phone: storeToEdit.phone || '',
+          locations: [
+            {
+              ...prev.locations[0],
+              storeName: storeToEdit.name,
+              city: storeToEdit.location.split(',')[0].trim(),
+              province: storeToEdit.location.split(',')[1]?.trim() || '',
+              storeEmail: storeToEdit.email,
+              storePhone: storeToEdit.phone,
+              website: storeToEdit.website || 'https://yourstore.com',
+              category: storeToEdit.category ? [storeToEdit.category] : [],
+            }
+          ],
+          storeTags: storeToEdit.tags || [],
+          logo: storeToEdit.logo || storeToEdit.image || null,
+          banner: storeToEdit.banner || null,
+          sameDayDelivery: storeToEdit.delivery?.some(d => d.type === 'SAME-DAY') || false,
+          expressDelivery: storeToEdit.delivery?.some(d => d.type === 'EXPRESS') || false,
+          shippingMailOrder: storeToEdit.delivery?.some(d => d.type === 'SHIPPING') || false,
+        }));
+      }
+    }
+  }, [id, isEditMode]);
+
   const steps = [
     { id: 1, label: 'Owner Details' },
     { id: 2, label: 'Store Information & Location' },
@@ -107,12 +149,82 @@ const AddStore = () => {
   ];
 
   const handlePublish = () => {
-    setIsSuccess(true);
+    if (isEditMode) {
+      updateExistingStore('Active');
+    } else {
+      // Logic for publishing new store if needed, but for now we'll just redirect
+      handleSaveDraft(); // Reuse logic to save to localStorage
+    }
+    navigate('/superadmin/stores/all');
+  };
+
+  const updateExistingStore = (status) => {
+    const primaryLocation = formData.locations[0] || {};
+    const localStores = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
+
+    const storeExists = localStores.some(s => s.id.replace('#', '') === id);
+
+    let updatedStores;
+    if (storeExists) {
+      updatedStores = localStores.map(s => {
+        if (s.id.replace('#', '') === id) {
+          return {
+            ...s,
+            name: primaryLocation.storeName,
+            logo: formData.logo || s.logo,
+            category: primaryLocation.category?.[0] || s.category,
+            tags: formData.storeTags,
+            location: `${primaryLocation.city}, ${primaryLocation.province}`,
+            email: primaryLocation.storeEmail,
+            phone: primaryLocation.storePhone,
+            delivery: [
+              formData.sameDayDelivery && { type: 'SAME-DAY', variant: 'teal' },
+              formData.expressDelivery && { type: 'EXPRESS', variant: 'blue' },
+              formData.shippingMailOrder && { type: 'SHIPPING', variant: 'grey' },
+            ].filter(Boolean),
+            status: status || s.status
+          };
+        }
+        return s;
+      });
+    } else {
+      // If it's a static store being edited for the first time, add it to localStorage
+      const staticStore = STORES_DATA.find(s => s.id.replace('#', '') === id);
+      if (staticStore) {
+        const newStore = {
+          ...staticStore,
+          name: primaryLocation.storeName,
+          logo: formData.logo || staticStore.logo,
+          category: primaryLocation.category?.[0] || staticStore.category,
+          tags: formData.storeTags,
+          location: `${primaryLocation.city}, ${primaryLocation.province}`,
+          email: primaryLocation.storeEmail,
+          phone: primaryLocation.storePhone,
+          delivery: [
+            formData.sameDayDelivery && { type: 'SAME-DAY', variant: 'teal' },
+            formData.expressDelivery && { type: 'EXPRESS', variant: 'blue' },
+            formData.shippingMailOrder && { type: 'SHIPPING', variant: 'grey' },
+          ].filter(Boolean),
+          status: status || staticStore.status
+        };
+        updatedStores = [...localStores, newStore];
+      } else {
+        updatedStores = localStores;
+      }
+    }
+
+    localStorage.setItem('shroom_express_stores', JSON.stringify(updatedStores));
   };
 
   const handleSaveDraft = () => {
+    if (isEditMode) {
+      updateExistingStore('Draft');
+      setIsSuccess(true);
+      return;
+    }
+
     const primaryLocation = formData.locations[0] || {};
-    
+
     const newStore = {
       id: `#SE-${Math.floor(1000 + Math.random() * 9000)}`,
       name: primaryLocation.storeName || '-',
@@ -120,7 +232,7 @@ const AddStore = () => {
       logo: formData.logo || "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=150&h=150",
       category: primaryLocation.category?.[0] || '-',
       tags: formData.storeTags || [],
-      location: primaryLocation.city 
+      location: primaryLocation.city
         ? `${primaryLocation.city}${primaryLocation.province ? ', ' + primaryLocation.province : ''}`
         : '-',
       locationCount: formData.locations.length,
@@ -148,7 +260,7 @@ const AddStore = () => {
 
     const existingDrafts = JSON.parse(localStorage.getItem('shroom_express_stores') || '[]');
     localStorage.setItem('shroom_express_stores', JSON.stringify([...existingDrafts, newStore]));
-    
+
     setIsSuccess(true);
   };
 
@@ -187,22 +299,30 @@ const AddStore = () => {
       <div className="shrink-0 space-y-4 mb-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
           <div className="space-y-1">
-            <h1 className="text-lg font-bold text-[#181211]">Add New Store</h1>
-            <p className="text-[#475569] font-medium text-sm">Fill in the details below to register a new vendor store on the platform.</p>
+            <h1 className="text-lg font-bold text-[#181211]">{isEditMode ? 'Edit Store' : 'Add New Store'}</h1>
+            <p className="text-[#475569] font-medium text-sm">
+              {isEditMode
+                ? 'Update the details below to modify the vendor store on the platform.'
+                : 'Fill in the details below to register a new vendor store on the platform.'
+              }
+            </p>
           </div>
 
-          {/* <div className="flex items-center gap-4">
-            <button className="px-7 py-2.5 bg-white border border-[#E8E8E8] rounded-md text-[14px] font-bold text-[#475569] shadow-sm hover:bg-gray-50 transition-all active:scale-95">
-              Save as Draft
-            </button>
+          <div className="flex items-center gap-4">
+            <Link
+              to="/superadmin/stores/all"
+              className="px-7 py-2.5 bg-white border border-[#E8E8E8] rounded-md text-[14px] font-bold text-[#475569] shadow-sm hover:bg-gray-50 transition-all active:scale-95 flex items-center justify-center underline-none"
+            >
+              Cancel
+            </Link>
             <button
               onClick={handlePublish}
               className="px-7 py-2.5 bg-[#EA3D2A] text-white rounded-md text-[14px] font-bold shadow-[0px_10px_15px_-3px_#EA3D2A55] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
             >
               <Icon icon="mdi:store-plus" width="20" />
-              Publish Store
+              {isEditMode ? 'Update Store' : 'Publish Store'}
             </button>
-          </div> */}
+          </div>
         </div>
 
         {/* Stepper Header Box */}
@@ -258,19 +378,31 @@ const AddStore = () => {
               </button>
 
               <div className="flex items-center gap-4">
-                <button 
-                  onClick={handleSaveDraft}
-                  className="px-7 py-2.5 bg-white  rounded-md  shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] hover:bg-gray-50 transition-all"
-                >
-                  Save Draft
-                </button>
-                <button
-                  onClick={() => currentStep === 5 ? handlePublish() : setCurrentStep(prev => Math.min(5, prev + 1))}
-                  className="px-5 py-2.5 bg-[#EA3D2A] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
-                >
-                  {currentStep === 5 ? 'Publish Store' : 'Continue'}
-                  {currentStep === 5 ? <Icon icon="mdi:store-plus" width="18" /> : <Icon icon="lucide:arrow-right" width="16" />}
-                </button>
+                {currentStep === 5 ? (
+                  <button
+                    onClick={handlePublish}
+                    className="flex-1 px-5 py-2.5 bg-[#219653] text-white justify-center rounded-md text-sm font-semibold shadow-[0px_4px_12px_-2px_#21965380]  transition-all flex items-center gap-2 "
+                  >
+                    <Icon icon="lucide:check" width="18" />
+                    Save Changes
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={handleSaveDraft}
+                      className="px-7 py-2.5 bg-white  rounded-md  shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] hover:bg-gray-50 transition-all"
+                    >
+                      Save Draft
+                    </button>
+                    <button
+                      onClick={() => setCurrentStep(prev => Math.min(5, prev + 1))}
+                      className="px-5 py-2.5 bg-[#EA3D2A] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
+                    >
+                      Continue
+                      <Icon icon="lucide:arrow-right" width="16" />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
