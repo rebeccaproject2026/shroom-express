@@ -8,10 +8,39 @@ import StoreCard from '../components/common/StoreCard';
 import heroVideo from "../assets/images/aboutuspage1.mp4";
 import about1 from "../assets/images/about1.png";
 import about2 from "../assets/images/about2.png";
-import aboutImg3 from "../assets/images/product3.png";
-import aboutImg4 from "../assets/images/product4.png";
-import communityBg from "../assets/images/Magicmushroombanner.jpg";
-import whyChooseBg from "../assets/images/topratestorebg.png";
+import ourstory1 from "../assets/images/ourstoryImage1.png";
+import ourstory2 from "../assets/images/ourstoryImage2.png";
+import ourstory3 from "../assets/images/ourstoryImage3.png";
+import signatureImg from "../assets/images/signatureaboutus.png";
+import feature1 from "../assets/images/reward.png";
+import feature2 from "../assets/images/feeback.png";
+import feature3 from "../assets/images/DeliveryTruck.png";
+import feature4 from "../assets/images/tradeunion.png";
+import chooseUsImg from "../assets/images/chooseusimage.png";
+import joinCommunityImg from "../assets/images/joincommunityimage.png";
+
+const FEATURES = [
+    {
+        image: feature1,
+        title: 'Premium Selection',
+        desc: 'Carefully chosen for the best experience'
+    },
+    {
+        image: feature2,
+        title: 'Top Quality',
+        desc: 'Trusted products with consistent standards'
+    },
+    {
+        image: feature3,
+        title: 'Fast & Discreet Delivery',
+        desc: 'Your privacy is always our priority'
+    },
+    {
+        image: feature4,
+        title: 'Trusted Community',
+        desc: 'Thousands of happy customers'
+    }
+];
 
 const AboutUs = () => {
     const navigate = useNavigate();
@@ -73,41 +102,21 @@ const AboutUs = () => {
             </section>
 
             {/* Features Bar Section */}
-            <section className="px-6 sm:px-10 lg:px-20 max-w-[1700px] mx-auto mb-20">
-                <div className="bg-white rounded-[40px] p-8 md:px-12 md:py-10 shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-[#F3F4F6] grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                    {[
-                        {
-                            icon: 'solar:medal-ribbon-star-linear',
-                            title: 'Premium Selection',
-                            desc: 'Carefully chosen for the best experience'
-                        },
-                        {
-                            icon: 'solar:star-fall-linear',
-                            title: 'Top Quality',
-                            desc: 'Trusted products with consistent standards'
-                        },
-                        {
-                            icon: 'solar:delivery-linear',
-                            title: 'Fast & Discreet Delivery',
-                            desc: 'Your privacy is always our priority'
-                        },
-                        {
-                            icon: 'solar:users-group-two-rounded-linear',
-                            title: 'Trusted Community',
-                            desc: 'Thousands of happy customers'
-                        }
-                    ].map((feature, i) => (
-                        <div key={i} className="relative flex items-center gap-5 group">
-                            {/* Divider Line */}
-                            {i > 0 && <div className="hidden md:block absolute left-[-10px] top-1/2 -translate-y-1/2 w-[1px] h-16 bg-[#E5E7EB]"></div>}
-
-                            <div className="w-16 h-16 rounded-full bg-[#F9FAF9] border border-[#F3F4F6] flex items-center justify-center text-[#3A6A3F] text-3xl shrink-0">
-                                <Icon icon={feature.icon} />
+            <section className="px-6 sm:px-10 lg:px-20 max-w-[1700px] mx-auto">
+                <div className="bg-white rounded-[30px] p-4 md:px-14 md:py-9 shadow-[0px_2px_20px_0px_#2546151A] border border-[#F3F4F6] grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
+                    {FEATURES.map((feature, i, arr) => (
+                        <div
+                            key={i}
+                            className={`flex items-center gap-6 group pr-4 ${i !== arr.length - 1 ? "md:border-r border-[#E5E7EB]" : ""
+                                }`}
+                        >
+                            <div className="w-20 h-20 rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center shrink-0">
+                                <img src={feature.image} alt={feature.title} className="w-12 h-12 object-contain" />
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <h3 className="text-[#111827] font-bold text-[17px] leading-tight">{feature.title}</h3>
-                                <p className="text-[#6B7280] text-xs leading-relaxed font-medium max-w-[150px]">{feature.desc}</p>
+                            <div className="flex flex-col gap-1.5">
+                                <h3 className="text-[#181211] font-bold text-lg lg:text-[19px] leading-tight">{feature.title}</h3>
+                                <p className="text-[#636363] text-sm leading-relaxed font-semibold max-w-[170px]">{feature.desc}</p>
                             </div>
                         </div>
                     ))}
@@ -115,49 +124,50 @@ const AboutUs = () => {
             </section>
 
             {/* Our Story Section */}
-            <section className="py-20 md:py-32 px-6 sm:px-10 lg:px-20 max-w-[1700px] mx-auto">
+            <section className="py-20 md:py-20 px-6 sm:px-10 lg:px-20 max-w-[1700px] mx-auto">
                 <div className="flex flex-col lg:flex-row gap-20 items-center">
                     <div className="w-full lg:w-[45%] flex flex-col items-start">
-                        <span className="text-[#E93E2B] text-xs md:text-sm font-bold uppercase tracking-[3px] mb-4">Our Story</span>
-                        <h2 className="text-[#181211] font-extrabold text-4xl lg:text-[56px] tracking-tight leading-[1.1] mb-8">
-                            Trusted Quality, <br />Driven by <span className="text-[#E93E2B]">Wellness</span>
-                        </h2>
-                        <p className="text-[#886663] text-base lg:text-lg leading-relaxed mb-6 font-medium">
-                            We proudly serve Canadians coast-to-coast with an unmatched selection of psilocybin products, microdosing options, and lab-tested cannabis, all accessible through a clean, easy-to-navigate online experience.
+                        <span className="text-[#E93E2B] text-md font-extrabold uppercase tracking-wider mb-7">Our Story</span>
+                        <h1 className="text-[#181211] font-extrabold text-5xl lg:text-5xl tracking-tight leading-tight mb-7">
+                            <span className="block mb-2">Trusted Quality,</span>
+                            <span className="block">
+                                Driven by <span className="text-[#E93E2B]">Wellness</span>
+                            </span>
+                        </h1>
+                        <p className="text-[#636363] text-[15px] lg:text-[15px] leading-relaxed mb-6 font-semibold max-w-xl">
+                            We proudly serve Canadians coast to coast with an unmatched selection of psilocybin products, microdosing options, and lab-tested cannabis, all accessible through a clean, easy-to-navigate online experience.
                         </p>
-                        <p className="text-[#886663] text-base leading-relaxed mb-10 opacity-80">
-                            Our mission is to unlock the power of plant medicine, whether psilocybin or cannabis, safe, legal, and accessible to every Canadian adult seeking natural wellness, therapy, or creative exploration.
+                        <p className="text-[#636363] text-[15px] leading-relaxed mb-10 font-semibold max-w-xl">
+                            Our mission is to make the power of plant medicine, whether psilocybin or cannabis, safe, legal, and accessible to every Canadian adult seeking natural wellness, therapy, or creative exploration.
                         </p>
-                        <div className="mt-4">
-                            <span className="text-4xl lg:text-6xl font-signature text-[#181211] opacity-90 italic">Signature</span>
+                        <div className="">
+                            <img src={signatureImg} alt="Signature" className="h-16 lg:h-20 object-contain opacity-90" />
                         </div>
                     </div>
-                    <div className="w-full lg:w-[55%] grid grid-cols-2 gap-6">
-                        <div className="grid gap-6">
-                            <div className="rounded-[32px] overflow-hidden shadow-lg h-72">
-                                <img src={about1} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Story 1" />
-                            </div>
-                            <div className="rounded-[32px] overflow-hidden shadow-lg h-56">
-                                <img src={about2} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Story 2" />
-                            </div>
+                    <div className="w-full lg:w-[55%] relative min-h-[450px] md:min-h-[600px] flex items-center justify-center">
+                        {/* Main Image - White Mushrooms */}
+                        <div className="w-[85%] h-[350px] md:h-[480px] rounded-md overflow-hidden  translate-x-[-5%] translate-y-[5%]">
+                            <img src={ourstory1} className="w-full h-full object-cover" alt="Main Story" />
                         </div>
-                        <div className="grid gap-6 pt-12">
-                            <div className="rounded-[32px] overflow-hidden shadow-lg h-56">
-                                <img src={aboutImg3} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Story 3" />
-                            </div>
-                            <div className="rounded-[32px] overflow-hidden shadow-lg h-72">
-                                <img src={aboutImg4} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" alt="Story 4" />
-                            </div>
+
+                        {/* Top Right Image - Jar */}
+                        <div className="absolute top-[0%] right-[0%] w-[45%] aspect-square rounded-md overflow-hidden z-10">
+                            <img src={ourstory2} className="w-full h-full object-cover" alt="Jar" />
+                        </div>
+
+                        {/* Bottom Center Image - Red Mushroom */}
+                        <div className="absolute bottom-[0%] left-[5%] md:left-[10%] w-[40%]  rounded-md overflow-hidden  z-20">
+                            <img src={ourstory3} className="w-full h-full object-cover" alt="Red Mushroom" />
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Top-Rated Stores Section */}
-            <section className="py-24 bg-[#FAF8F5]">
+            <section className="py-10">
                 <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-20">
-                    <div className="flex items-center justify-between mb-12">
-                        <h2 className="text-3xl lg:text-4xl font-extrabold text-[#181211] tracking-tight">Top-Rated Stores</h2>
+                    <div className="flex items-center justify-between mb-5">
+                        <h2 className="text-[18px] sm:text-2xl font-bold text-[#181211]">Top-Rated Stores</h2>
                         <button
                             onClick={() => navigate('/store/storeslists')}
                             className="text-[#E93E2B] font-bold text-sm lg:text-base flex items-center gap-2 hover:translate-x-2 transition-transform"
@@ -176,60 +186,46 @@ const AboutUs = () => {
             </section>
 
             {/* Why Choose Us Section */}
-            <section
-                className="py-24 md:py-32 relative overflow-hidden bg-[#0A1A0F] text-white"
-            >
-                <div className="absolute inset-0 opacity-20 z-0">
-                    <img src={whyChooseBg} className="w-full h-full object-cover" alt="Background" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0A1A0F] via-[#0A1A0F]/90 to-transparent z-0"></div>
-
-                <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-20 relative z-10 flex flex-col lg:flex-row justify-between items-center gap-16">
-                    <div className="max-w-2xl">
-                        <span className="text-[#E93E2B] text-xs md:text-sm font-bold uppercase tracking-[3px] mb-4 inline-block">Why Choose Us</span>
-                        <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-8">
-                            Experience the <br />Shroom Express <span className="text-[#E93E2B]">Difference</span>
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-2 gap-x-12 gap-y-16">
-                        {[
-                            { icon: 'solar:shield-check-bold-duotone', label: 'Top Quality Products' },
-                            { icon: 'solar:box-bold-duotone', label: 'Discreet Packaging' },
-                            { icon: 'solar:chat-round-dots-bold-duotone', label: 'Reliable Support' },
-                            { icon: 'solar:smile-circle-bold-duotone', label: 'Customer Satisfaction' }
-                        ].map((item, i) => (
-                            <div key={i} className="flex flex-col items-center gap-5 text-center group">
-                                <div className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-4xl group-hover:bg-[#E93E2B] group-hover:scale-110 transition-all duration-300">
-                                    <Icon icon={item.icon} className="text-[#E93E2B] group-hover:text-white" />
-                                </div>
-                                <span className="font-bold text-sm lg:text-lg max-w-[140px] leading-tight">{item.label}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <section className="w-full">
+                <img src={chooseUsImg} className="w-full h-auto object-contain" alt="Why Choose Us" />
             </section>
 
             {/* Join Community Section */}
-            <section className="py-24 md:py-32 px-6 sm:px-10 lg:px-20">
-                <div
-                    className="max-w-[1700px] mx-auto rounded-[48px] overflow-hidden relative min-h-[450px] flex items-center p-8 md:p-20 bg-cover bg-center shadow-2xl shadow-[#E93E2B]/5"
-                    style={{ backgroundImage: `linear-gradient(to right, rgba(255,255,255,1) 30%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0) 100%), url(${communityBg})` }}
-                >
-                    <div className="max-w-2xl relative z-10">
-                        <span className="text-[#E93E2B] text-xs md:text-sm font-bold uppercase tracking-[3px] mb-4 inline-block">Join Our Community</span>
-                        <h2 className="text-[#181211] text-4xl lg:text-[64px] font-extrabold mb-6 leading-[1.1] tracking-tight">
-                            Be Part Of Our <br /> Growing <span className="text-[#E93E2B]">Family</span>
-                        </h2>
-                        <p className="text-[#886663] text-base lg:text-xl mb-10 font-medium opacity-90">Get exclusive offers, updates, and wellness tips straight to your inbox.</p>
-                        <div className="flex flex-col sm:flex-row bg-white rounded-2xl md:rounded-full p-2 shadow-2xl shadow-black/5 border border-[#F4F1F0] max-w-lg">
-                            <input
-                                type="email"
-                                placeholder="Personal Email"
-                                className="flex-1 px-6 py-4 rounded-full outline-none text-[#181211] font-medium"
-                            />
-                            <button className="bg-[#E93E2B] text-white px-10 py-4 rounded-xl md:rounded-full font-bold hover:bg-[#181211] transition-all shadow-lg shadow-[#E93E2B]/20">
-                                Join now
-                            </button>
+            <section className="w-full relative">
+                <img src={joinCommunityImg} className="w-full h-auto object-contain" alt="Join Community" />
+
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-20 flex items-center justify-between">
+                        {/* Space for mushrooms on the left */}
+                        <div className="hidden md:block md:w-[28%]"></div>
+
+                        {/* Content Area */}
+                        <div className="w-full md:w-[72%] flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10 h-full">
+                            {/* Text Content */}
+                            <div className="flex flex-col justify-center items-center md:items-start text-center md:text-left max-w-lg">
+                                <span className="text-[#E93E2B] text-[10px] md:text-sm font-extrabold uppercase tracking-wider mb-3 lg:mb-5">JOIN OUR COMMUNITY</span>
+                                <h1 className="text-[#181211] font-extrabold text-5xl lg:text-4xl  leading-tight mb-4">
+                                    <span className="block mb-1">Be Part Of Our</span>
+                                    <span className="block">
+                                        Growing <span className="text-[#E93E2B]">Family</span>
+                                    </span>
+                                </h1>
+                                <p className="text-[#636363] text-sm font-semibold w-[90%]">
+                                    Get Exclusive offers, Updates, and wellness tips Straight to your inbox
+                                </p>
+                            </div>
+
+                            {/* Subscription Form */}
+                            <div className="flex bg-white rounded-full p-2 border border-[#E5DCDC] w-full max-w-[48%] items-center h-[65px] lg:h-[50px] mb-5">
+                                <input
+                                    type="email"
+                                    placeholder="Corporate Email"
+                                    className="flex-1 px-2 outline-none text-[#181211] text-sm  font-medium placeholder:text-[#181211] min-w-0"
+                                />
+                                <button className="bg-[#E93E2B] text-white px-5  h-[90%] rounded-full font-medium hover:bg-[#181211] transition-all uppercase text-[11px]  tracking-wider whitespace-nowrap">
+                                    JOIN NOW
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
