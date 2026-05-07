@@ -22,7 +22,8 @@ import { useAuth } from '../../context/AuthContext';
 const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const isHomePage = location.pathname === '/store' || location.pathname === '/store/' || location.pathname === '/store/become-a-driver';
+    const isMinimalPage = location.pathname === '/store/become-a-driver' || location.pathname === '/store/create-store';
+    const isHomePage = location.pathname === '/store' || location.pathname === '/store/' || isMinimalPage;
     const { selectedEffect, toggleEffect, deliveryMethod, setDeliveryMethod } = useCategory();
     const { user, logout } = useAuth();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -100,6 +101,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} ${searchOpen || mobileMenuOpen ? 'z-[2000]' : 'z-[100]'} bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar (Enhanced with Scroll for Small Screens) */}
             <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex justify-center sm:justify-center items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth">
+
                 <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="clarity:store-line" width={16} height={16} />
                     <span>Open Store</span>
@@ -163,8 +165,10 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                     </Link>
                 )}
             </div>
-
-            {/* SECTION 2: Main Header */}
+            
+            {!isMinimalPage && (
+                <>
+                    {/* SECTION 2: Main Header */}
             <div className="w-full px-3 sm:px-4 md:px-4 lg:px-4 xl:px-4 py-1.5 sm:py-2 flex items-center justify-between gap-2 lg:gap-5 relative h-14 sm:h-20">
                 {/* Mobile: Left side icons (Menu & Search) */}
                 <div className="flex items-center gap-2 sm:gap-4 lg:hidden z-10">
@@ -296,7 +300,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
 
                 {/* Right: Wishlist & Cart */}
-                <div className="flex items-center justify-end gap-3 md:gap-5 lg:gap-8 xl:gap-8 2xl:gap-12 shrink-0 z-10 lg:flex-1">
+                <div className="flex items-center justify-end gap-3 md:gap-5 lg:gap-7 xl:gap-7 2xl:gap-7 shrink-0 z-10 lg:flex-1">
                     <button
                         onClick={() => navigate('/store/myaccount?tab=wishlist')}
                         className="flex items-center cursor-pointer gap-2 text-[#181211] hover:text-[#E93E2B] transition-colors relative"
@@ -450,14 +454,16 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                 </div>
             </div>
 
-            {/* Refined Mobile Menu Drawer */}
-            <MobileMenuDrawer
-                isOpen={mobileMenuOpen}
-                onClose={() => setMobileMenuOpen(false)}
-                user={user}
-                categories={categories}
-                logout={logout}
-            />
+                    {/* Refined Mobile Menu Drawer */}
+                    <MobileMenuDrawer
+                        isOpen={mobileMenuOpen}
+                        onClose={() => setMobileMenuOpen(false)}
+                        user={user}
+                        categories={categories}
+                        logout={logout}
+                    />
+                </>
+            )}
         </header>
     );
 };

@@ -12,7 +12,8 @@ import { useWishlist } from '../../context/WishlistContext';
 const StoreLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const isHomePage = location.pathname === '/store' || location.pathname === '/store/' || location.pathname === '/store/become-a-driver';
+    const isMinimalPage = location.pathname === '/store/become-a-driver' || location.pathname === '/store/create-store';
+    const isHomePage = location.pathname === '/store' || location.pathname === '/store/' || isMinimalPage;
     const { cartItems, cartCount, removeFromCart, updateQuantity } = useCart();
     const { wishlistCount } = useWishlist();
     const [cartOpen, setCartOpen] = useState(false);

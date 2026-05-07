@@ -39,219 +39,200 @@ const BecomeDriver = () => {
     };
 
     return (
-        <div className="w-full overflow-x-hidden font-sans">
-            {/* Hero Section - Reverted to full-width background, but matching left-side content style of MainHome */}
+        <div className="w-full overflow-x-hidden font-sans bg-white">
+            {/* Hero & Registration Section */}
             <section
-                className="h-[500px] md:h-[600px] bg-[#FEF1F0] bg-cover bg-[position:right_center] flex items-center relative w-full"
+                className="py-12 md:py-12 relative overflow-hidden bg-cover bg-center"
                 style={{ backgroundImage: `url(${heroImg})` }}
             >
-                <div className="w-full px-6 sm:px-10 lg:px-20">
-                    {/* Left Side Content - Matching MainHome.jsx styling */}
-                    <div className="w-[60%] md:w-[55%] flex flex-col items-start z-10 pr-2 sm:px-10 lg:pl-20 ">
-                        {/* Badge - Styled like MainHome */}
-                        <div className="bg-[#E93E2B]/10 text-[#E93E2B] text-[8px] sm:text-[11px] font-extrabold px-3 py-1 sm:px-4 sm:py-2 rounded-full uppercase tracking-widest mb-2 sm:mb-3 mt-1">
-                            JOIN OUR TEAM
-                        </div>
 
-                        {/* Heading - Styled like MainHome */}
-                        <h1 className="text-[#181211] font-extrabold text-lg sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight leading-[1]">
-                            Become a <span className="text-[#E93E2B]">Delivery</span><br />
-                            <span className="text-[#E93E2B]">Partner</span>
-                        </h1>
-
-                        {/* Subtitle - Styled like MainHome */}
-                        <p className="text-[#886663] text-[10px] leading-relaxed sm:text-base font-medium max-w-md mt-2 sm:mt-3">
-                            Earn more by delivering happiness. Flexible hours,<br className="hidden sm:block" />
-                            easy onboarding, and exciting growth opportunities.
-                        </p>
-
-                        {/* Apply Button */}
-                        <button className="bg-[#E93E2B] text-white pl-5.5 pr-5.5 py-2  rounded-lg text-[10px] sm:text-base font-bold flex items-center gap-2 cursor-pointer transition-all mt-4 sm:mt-4 ">
-                            Apply Now
-                            <div className="items-center justify-center text-white">
-                                <Icon icon="carbon:next-filled" className="text-xl" />
-                            </div>
-                        </button>
-
-                        {/* Features Row */}
-                        <div className="flex flex-wrap gap-2 sm:gap-5 mt-4 sm:mt-6">
-                            <div className="flex items-center gap-1 text-[10px] sm:text-[15px] font-bold text-[#181811]">
-                                <Icon icon="material-symbols:bolt" className="text-yellow-400 text-sm sm:text-2xl" /> Quick Approval
-                            </div>
-                            <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[15px] font-bold text-[#181811]">
-                                <Icon icon="fluent:rocket-20-filled" className="text-[#E93E2B] text-sm sm:text-2xl" /> Easy Onboarding
-                            </div>
-                            <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[15px] font-bold text-[#181811]">
-                                <Icon icon="mdi:alarm-clock" className="text-[#E93E2B] text-sm sm:text-2xl" /> Flexible Hours
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Registration Section */}
-            <section className="py-14 pb-0 mb-8 bg-[#F8F6F6]">
-                <div className="max-w-[1200px] mx-auto px-5">
-                    <div className="text-center mb-7">
-                        <h2 className="text-[28px] font-bold mb-3 text-[#000000]">Partner Registration</h2>
-                        <p className="text-[#898989] text-sm font-semibold sm:text-base">Fill your details to start your journey with us</p>
-                    </div>
-
-                    <div className="max-w-[60%] mx-auto bg-white border border-[#E93E2B]/40 rounded-3xl p-6 px-10 shadow-sm">
-                        <div className="flex justify-start mb-5">
-                            <div className="relative">
-                                <div className="w-[70px] h-[70px] rounded-full overflow-hidden border border-[#E8E8E8]">
-                                    <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="absolute bottom-0 right-0 bg-[#E93E2B] text-white w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-sm cursor-pointer hover:scale-110 transition-transform">
-                                    <Icon icon="hugeicons:camera-01" width="12" height="12" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <form className="flex flex-col gap-4 sm:gap-6" onSubmit={(e) => e.preventDefault()}>
-                            <Input
-                                label="Full Name"
-                                name="fullName"
-                                value={formData.fullName}
-                                onChange={handleInputChange}
-                                placeholder="Alex Johnson"
-                                className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                labelClassName="!text-[#222222] !font-bold !mb-1"
-                            />
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input
-                                    label="Phone Number"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    onChange={handleInputChange}
-                                    placeholder="+1 (555) 000-1234"
-                                    className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                    labelClassName="!text-[#222222] !font-bold !mb-1"
-                                />
-                                <Input
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    placeholder="alex.j@logitrack.com"
-                                    className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                    labelClassName="!text-[#222222] !font-bold !mb-1"
-                                />
-                            </div>
-
-                            <Input
-                                label="Home Address"
-                                name="homeAddress"
-                                value={formData.homeAddress}
-                                onChange={handleInputChange}
-                                placeholder="742 Evergreen Terrace, Springfield"
-                                className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                labelClassName="!text-[#222222] !font-bold !mb-1"
-                            />
-
-                            <div className="flex flex-col gap-2">
-                                <label className="text-sm font-bold text-[#222222]">Vehicle Type</label>
-                                <div className="relative flex items-center">
-                                    <select
-                                        name="vehicleType"
-                                        className="w-full pl-4 pr-10 py-2.5 text-sm border border-[#E5DCDC] bg-white text-[#333333] font-medium appearance-none focus:outline-none rounded-md transition-all"
-                                        value={formData.vehicleType}
-                                        onChange={handleInputChange}
-                                    >
-                                        <option>Delivery Van</option>
-                                        <option>Motorcycle</option>
-                                        <option>Car</option>
-                                    </select>
-                                    <Icon icon="mdi:chevron-down" className="absolute right-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none text-gray-400" />
+                <div className="max-w-[1350px] mx-auto px-6 relative z-10">
+                    <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 ">
+                        {/* Form Card */}
+                        <div className="w-full max-w-[550px] bg-white rounded-[20px] overflow-hidden shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)] border border-[#E93E2B]/40 flex flex-col h-[750px]">
+                            {/* Card Header - Red (Fixed) */}
+                            <div className="bg-[#E93E2B] text-white p-6 pb-12 relative flex-shrink-0">
+                                <button
+                                    onClick={() => window.history.back()}
+                                    className="absolute left-6 top-6 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-white border border-white/20"
+                                >
+                                    <Icon icon="lucide:arrow-left" width="20" />
+                                </button>
+                                <div className="text-center">
+                                    <h2 className="text-2xl font-semibold tracking-tight mb-1">Become Driver Registration</h2>
+                                    <p className="text-base font-medium opacity-95">Fill your details to start your journey with us</p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input
-                                    label="License Plate"
-                                    name="licensePlate"
-                                    value={formData.licensePlate}
-                                    onChange={handleInputChange}
-                                    placeholder="LOGI-TX-2024"
-                                    className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                    labelClassName="!text-[#222222] !font-bold !mb-1"
-                                />
-                                <Input
-                                    label="Model / Year"
-                                    name="modelYear"
-                                    value={formData.modelYear}
-                                    onChange={handleInputChange}
-                                    placeholder="Mercedes-Benz Sprinter (2022)"
-                                    className=" !border-[#E5DCDC] !py-2.5 font-medium "
-                                    labelClassName="!text-[#222222] !font-bold !mb-1"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-3">
-                                <label className="text-xs font-bold text-[#222222] uppercase tracking-wide">WORKING DAYS</label>
-                                <div className="flex flex-wrap gap-2.5">
-                                    {days.map(day => {
-                                        const isActive = formData.workingDays.includes(day);
-                                        return (
-                                            <div
-                                                key={day}
-                                                className={`flex flex-col items-center justify-center w-[60px] h-[60px] border-[1.5px] rounded-xl cursor-pointer transition-all ${isActive ? 'bg-[#FFF0EE] border-[#E93E2B] text-[#E93E2B]' : 'bg-[#F9F9F9] border-[#E8E8E8] text-[#4B5563]'}`}
-                                                onClick={() => toggleDay(day)}
-                                            >
-                                                <span className="text-[11px] font-bold mb-1">{day}</span>
-                                                {isActive ? (
-                                                    <Icon icon="solar:check-circle-linear" width="18" height="18" />
-                                                ) : (
-                                                    <div className="w-4 h-4 rounded-full border border-[#636363]"></div>
-                                                )}
+                            {/* Form Content Wrapper (Scrollable area inside) */}
+                            <div className="flex-1 flex flex-col -mt-10 bg-white relative overflow-hidden">
+                                {/* Scrollable Fields Area */}
+                                <div className="flex-1 overflow-y-auto px-8 md:px-10 custom-scrollbar pb-6 pt-5">
+                                    <form id="driver-form" className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                                        {/* Form Section Header */}
+                                        <div className="flex justify-center  mb-10 relative z-20">
+                                            <div className="relative">
+                                                <div className="w-28 h-28 rounded-full overflow-hidden border-[6px] border-white shadow-xl bg-white">
+                                                    <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
+                                                </div>
+                                                <div className="absolute bottom-1 right-1 bg-[#2D88FF] text-white p-2 rounded-full border-4 border-white shadow-md cursor-pointer hover:bg-blue-600 transition-colors">
+                                                    <Icon icon="hugeicons:camera-01" width="18" height="18" />
+                                                </div>
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+
+                                        <Input
+                                            label="Full Name"
+                                            name="fullName"
+                                            value={formData.fullName}
+                                            onChange={handleInputChange}
+                                            placeholder="Alex Johnson"
+                                            className=" !border-[#E5DCDC] !py-2.5 font-medium "
+                                            labelClassName="!text-[#222222] !font-bold !mb-1"
+                                        />
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <Input
+                                                label="Phone Number"
+                                                name="phoneNumber"
+                                                value={formData.phoneNumber}
+                                                onChange={handleInputChange}
+                                                placeholder="+1 (555) 000-1234"
+                                                className=" !border-[#E5DCDC] !py-2.5 font-medium "
+                                                labelClassName="!text-[#222222] !font-bold !mb-1"
+                                            />
+                                            <Input
+                                                label="Email Address"
+                                                name="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={handleInputChange}
+                                                placeholder="alex.j@logitrack.com"
+                                                className=" !border-[#E5DCDC] !py-2.5 font-medium "
+                                                labelClassName="!text-[#222222] !font-bold !mb-1"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col gap-1.5">
+                                            <label className="!text-[#222222] text-sm !font-bold ">Home Address</label>
+                                            <textarea
+                                                name="homeAddress"
+                                                value={formData.homeAddress}
+                                                onChange={handleInputChange}
+                                                placeholder="742 Evergreen Terrace, Springfield"
+                                                rows="3"
+                                                className="w-full rounded-md px-4 !py-2.5 border !border-[#E5DCDC] focus:outline-none focus:border-[#E93E2B] transition-colors resize-none font-medium text-sm text-[#181211]"
+                                            ></textarea>
+                                        </div>
+
+                                        <div className="flex flex-col gap-1.5">
+                                            <label className="!text-[#222222] text-sm !font-bold ">Vehicle Type</label>
+                                            <Select
+                                                name="vehicleType"
+                                                value={formData.vehicleType}
+                                                onChange={handleInputChange}
+                                                options={[
+                                                    { value: 'Delivery Van', label: 'Delivery Van' },
+                                                    { value: 'Motorcycle', label: 'Motorcycle' },
+                                                    { value: 'Car', label: 'Car' }
+                                                ]}
+                                                placeholder="Select Vehicle Type"
+                                                className="!rounded-md !border-[#E5DCDC] !py-2.5"
+                                            />
+                                        </div>
+
+                                        <Input
+                                            label="License Plate"
+                                            name="licensePlate"
+                                            value={formData.licensePlate}
+                                            onChange={handleInputChange}
+                                            placeholder="LOGI-TX-2024"
+                                            className=" !border-[#E5DCDC] !py-2.5 font-medium "
+                                            labelClassName="!text-[#222222] !font-bold !mb-1"
+                                        />
+                                        <Input
+                                            label="Model / Year"
+                                            name="modelYear"
+                                            value={formData.modelYear}
+                                            onChange={handleInputChange}
+                                            placeholder="Mercedes-Benz Sprinter (2022)"
+                                            className=" !border-[#E5DCDC] !py-2.5 font-medium "
+                                            labelClassName="!text-[#222222] !font-bold !mb-1"
+                                        />
+
+                                        {/* Restored WORKING DAYS */}
+                                        <div className="flex flex-col gap-3">
+                                            <label className="text-xs font-bold text-[#222222] uppercase tracking-wide">WORKING DAYS</label>
+                                            <div className="flex flex-wrap gap-2.5">
+                                                {days.map(day => {
+                                                    const isActive = formData.workingDays.includes(day);
+                                                    return (
+                                                        <div
+                                                            key={day}
+                                                            className={`flex flex-col items-center justify-center w-[55px] h-[55px] border-[1.5px] rounded-xl cursor-pointer transition-all ${isActive ? 'bg-[#FFF0EE] border-[#E93E2B] text-[#E93E2B]' : 'bg-[#F9F9F9] border-[#E8E8E8] text-[#4B5563]'}`}
+                                                            onClick={() => toggleDay(day)}
+                                                        >
+                                                            <span className="text-[10px] font-bold mb-1">{day}</span>
+                                                            {isActive ? (
+                                                                <Icon icon="solar:check-circle-linear" width="16" height="16" />
+                                                            ) : (
+                                                                <div className="w-3.5 h-3.5 rounded-full border border-[#636363]"></div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+
+                                        {/* Restored SHIFT TIMINGS */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div className="flex flex-col gap-2">
+                                                <label className="text-sm font-bold text-[#222222]">Start Time</label>
+                                                <div className="relative">
+                                                    <Icon icon="iconamoon:clock-light" width="20" height="20" className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-[#222222] pointer-events-none" />
+                                                    <input
+                                                        type="time"
+                                                        name="startTime"
+                                                        className="w-full pl-11 pr-4 text-sm border !border-[#E5DCDC] !py-2.5 font-medium bg-white text-[#333333]  focus:outline-none rounded-md transition-all"
+                                                        value={formData.startTime}
+                                                        onChange={handleInputChange}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col gap-2">
+                                                <label className="text-sm font-bold text-[#222222]">End Time</label>
+                                                <div className="relative">
+                                                    <Icon icon="iconamoon:clock-light" width="20" height="20" className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-[#222222] pointer-events-none" />
+                                                    <input
+                                                        type="time"
+                                                        name="endTime"
+                                                        className="w-full pl-11 pr-4 text-sm border !border-[#E5DCDC] !py-2.5 font-medium bg-white text-[#333333]  focus:outline-none rounded-md transition-all"
+                                                        value={formData.endTime}
+                                                        onChange={handleInputChange}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                {/* Fixed Button Section (Outside scrollable area) */}
+                                <div className="p-8 md:px-10 flex items-center flex-shrink-0 bg-white border-t border-gray-50 font-manrope gap-4">
+                                    <button
+                                        form="driver-form"
+                                        type="submit"
+                                        className="flex-1 py-3.5 bg-[#E93E2B] text-white rounded-xl text-base font-bold shadow-[0px_10px_25px_-5px_#E93E2B66] hover:bg-[#E93E2B]/90 transition-all flex items-center justify-center gap-3 active:scale-95"
+                                    >
+                                        Save & Continue
+                                        <Icon icon="lucide:arrow-right" width="20" />
+                                    </button>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-sm font-bold text-[#1F2937]">Start Time</label>
-                                    <div className="relative">
-                                        <Icon icon="iconamoon:clock-light" width="20" height="20" className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-[#222222] pointer-events-none" />
-                                        <select
-                                            name="startTime"
-                                            className="w-full pl-11 pr-10 py-2.5 text-sm border border-[#E8E8E8] bg-white text-[#333333] font-medium appearance-none focus:outline-none rounded-md transition-all"
-                                            value={formData.startTime}
-                                            onChange={handleInputChange}
-                                        >
-                                            <option>09:00 AM</option>
-                                            <option>10:00 AM</option>
-                                        </select>
-                                        <Icon icon="mdi:chevron-down" className="absolute right-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none text-gray-400" />
-                                    </div>
-                                </div>
+                        {/* Placeholder for spacing to keep form on the left if needed */}
+                        <div className="flex-1 hidden lg:block"></div>
 
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-sm font-bold text-[#1F2937]">End Time</label>
-                                    <div className="relative">
-                                        <Icon icon="iconamoon:clock-light" width="20" height="20" className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-[#222222] pointer-events-none" />
-                                        <select
-                                            name="endTime"
-                                            className="w-full pl-11 pr-10 py-2.5 text-sm border border-[#E8E8E8] bg-white text-[#333333] font-medium appearance-none focus:outline-none rounded-md transition-all"
-                                            value={formData.endTime}
-                                            onChange={handleInputChange}
-                                        >
-                                            <option>09:00 AM</option>
-                                            <option>06:00 PM</option>
-                                        </select>
-                                        <Icon icon="mdi:chevron-down" className="absolute right-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none text-gray-400" />
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" className="w-full bg-[#E93E2B] text-white py-3.5 rounded-xl text-lg font-semibold cursor-pointer  transition-all shadow-lg shadow-red-500/10 ">
-                                Complete & continue
-                            </button>
-                        </form>
                     </div>
                 </div>
             </section>

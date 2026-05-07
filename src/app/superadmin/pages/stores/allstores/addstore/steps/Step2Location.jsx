@@ -252,12 +252,12 @@ const Step2Location = ({ formData, setFormData }) => {
                   <textarea
                     rows="3"
                     placeholder="Write a brief description of the store, products offered, and what makes it stand out..."
-                    className="w-full px-4 py-3 bg-white border border-[#BDBDD2] rounded-sm text-sm font-medium text-[#181211] outline-none transition-all resize-none placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium font-medium"
+                    className="w-full px-4 py-3 bg-white border border-[#BDBDD2] rounded-sm text-sm font-medium text-[#181211] outline-none transition-all resize placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium font-medium"
                     value={location.description}
-                    onChange={(e) => handleLocationChange(index, 'description', e.target.value.slice(0, 300))}
+                    onChange={(e) => handleLocationChange(index, 'description', e.target.value.slice(0, 2500))}
                   ></textarea>
                   <div className="flex justify-end text-xs font-medium text-[#475569] tracking-wider">
-                    {location.description?.length || 0}/300 characters
+                    {location.description?.length || 0}/2500 characters
                   </div>
                 </div>
 

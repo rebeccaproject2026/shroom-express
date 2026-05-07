@@ -1,314 +1,354 @@
-import { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { useStores } from "../../context/StoresContext";
 
-const steps = ["Store Info", "Location & Hours", "Delivery", "Review"];
-
-const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-const defaultHours = DAYS.reduce((acc, d) => {
-    acc[d] = { open: "09:00", close: "18:00", closed: d === "Sunday" };
-    return acc;
-}, {});
+// Import Step Components
+import Step1BasicInfo from "./steps/Step1BasicInfo";
+import Step2Location from "./steps/Step2Location";
+import Step3Operations from "./steps/Step3Operations";
+import Step4ProductsTags from "./steps/Step4ProductsTags";
+import Step5MediaDocs from "./steps/Step5MediaDocs";
+import StoreSuccessState from "./steps/StoreSuccessState";
 
 const CreateStorePage = () => {
     const navigate = useNavigate();
-    const { addStore } = useStores();
-    const [step, setStep] = useState(0);
-    const logoRef = useRef(null);
-    const coverRef = useRef(null);
+    const { addStore, loading } = useStores();
+    const [currentStep, setCurrentStep] = useState(1);
+    const [isSuccess, setIsSuccess] = useState(false);
 
-    const [form, setForm] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        website: "",
-        description: "",
+    const [formData, setFormData] = useState({
+        // Step 1: Owner Details
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        role: '',
+        contactNumber: '',
+        // Step 2: Locations
+        locations: [
+            {
+                isExpanded: true,
+                website: '',
+                socialPlatform: [],
+                socialLinks: {},
+                storeName: '',
+                category: [],
+                description: '',
+                streetAddress: '',
+                unitNumber: '',
+                city: '',
+                province: '',
+                postalCode: '',
+                country: 'Canada',
+                latitude: '43.6532',
+                longitude: '-79.3832',
+                storeEmail: '',
+                storePhone: '',
+            }
+        ],
+        // Step 3: Operations
+        sameDayDelivery: true,
+        sameDayMinAmount: '50.00',
+        sameDayFee: '15.00',
+        sameDayFreeOver: '120.00',
+        sameDayEta: 'Under 1 hour',
+        sameDayDeliveredBy: 'Self Drivers',
+        sameDayCoverage: { cities: [], radius: 60 },
+        sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        sameDayOpeningTime: '09:00 AM',
+        sameDayClosingTime: '09:00 PM',
+
+        expressDelivery: false,
+        expressMinAmount: '120.00',
+        expressFee: '15.00',
+        expressEta: '1-2 hrs',
+        expressDeliveredBy: 'Shroom Express Drivers',
+        expressCoverage: { cities: [], radius: 60 },
+        expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        expressOpeningTime: '09:00 AM',
+        expressClosingTime: '09:00 PM',
+
+        shippingMailOrder: false,
+        shippingFee: '15.00',
+        shippingFreeOver: '120.00',
+        shippingEta: '2-5 business days',
+        shippingCouriers: [],
+        shippingAreas: [],
+        processingDays: [],
+        shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
+        autoAcceptOrders: true,
+        featuredStore: false,
+        setStoreAsActive: true,
+        // Step 4: Products & Tags
+        productTypes: [],
+        storeTags: [],
+        licenseNumber: '',
+        // Step 5: Media
         logo: null,
-        logoPreview: null,
-        cover: null,
-        coverPreview: null,
-        address: "",
-        city: "",
-        province: "",
-        postalCode: "",
-        hours: defaultHours,
-        deliveryTypes: [],
-        deliveryFee: "",
-        minOrder: "",
-        estimatedTime: "",
+        banner: null,
     });
 
-    const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }));
-
-    const handleImage = (key, previewKey, file) => {
-        if (!file) return;
-        set(key, file);
-        set(previewKey, URL.createObjectURL(file));
-    };
-
-    const toggleDelivery = (type) => {
-        set("deliveryTypes", form.deliveryTypes.includes(type)
-            ? form.deliveryTypes.filter(d => d !== type)
-            : [...form.deliveryTypes, type]);
-    };
-
-    const toggleDayClosed = (day) => {
-        set("hours", { ...form.hours, [day]: { ...form.hours[day], closed: !form.hours[day].closed } });
-    };
-
-    const setHour = (day, field, val) => {
-        set("hours", { ...form.hours, [day]: { ...form.hours[day], [field]: val } });
-    };
+    const steps = [
+        { id: 1, label: 'Owner Details', component: Step1BasicInfo },
+        { id: 2, label: 'Store Information & Location', component: Step2Location },
+        { id: 3, label: 'Operations', component: Step3Operations },
+        { id: 4, label: 'Products & Tags', component: Step4ProductsTags },
+        { id: 5, label: 'Media', component: Step5MediaDocs },
+    ];
 
     const canNext = () => {
-        if (step === 0) return form.name && form.email && form.phone;
-        if (step === 1) return form.address && form.city;
-        if (step === 2) return form.deliveryTypes.length > 0 && form.estimatedTime;
+        if (currentStep === 1) {
+            return formData.firstName && formData.email && formData.phone && formData.role && formData.contactNumber;
+        }
+        if (currentStep === 2) {
+            const loc = formData.locations[0];
+            if (!loc) return false;
+            return (
+                loc.storeName &&
+                loc.category?.length > 0 &&
+                loc.streetAddress &&
+                loc.city &&
+                loc.postalCode &&
+                loc.province &&
+                loc.storeEmail &&
+                loc.storePhone &&
+                loc.description
+            );
+        }
+        if (currentStep === 3) {
+            return formData.sameDayDelivery || formData.expressDelivery || formData.shippingMailOrder;
+        }
+        if (currentStep === 4) {
+            return formData.productTypes?.length > 0 && formData.licenseNumber;
+        }
+        if (currentStep === 5) {
+            return formData.logo && formData.banner;
+        }
         return true;
     };
 
+    const handleSubmit = async () => {
+        try {
+            const newStoreId = await addStore(formData);
+            localStorage.setItem('currentStoreId', newStoreId);
+            localStorage.setItem('currentStoreName', formData.locations[0]?.storeName || "Your Store");
+            setIsSuccess(true);
+        } catch (error) {
+            console.error("Failed to create store:", error);
+        }
+    };
+
+    const ActiveStepComponent = steps.find(s => s.id === currentStep)?.component || Step1BasicInfo;
+
+    if (isSuccess) {
+        return (
+            <div className="bg-[#FAF8F5] min-h-screen pt-8 sm:pt-10 px-4 pb-12">
+                <div className="max-w-4xl mx-auto">
+                    <StoreSuccessState onReset={() => {
+                        setIsSuccess(false);
+                        setCurrentStep(1);
+                        setFormData({
+                            // Reset form data to initial state
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            phone: '',
+                            role: '',
+                            contactNumber: '',
+                            locations: [
+                                {
+                                    isExpanded: true,
+                                    website: '',
+                                    socialPlatform: [],
+                                    socialLinks: {},
+                                    storeName: '',
+                                    category: [],
+                                    description: '',
+                                    streetAddress: '',
+                                    unitNumber: '',
+                                    city: '',
+                                    province: '',
+                                    postalCode: '',
+                                    country: 'Canada',
+                                    latitude: '43.6532',
+                                    longitude: '-79.3832',
+                                    storeEmail: '',
+                                    storePhone: '',
+                                }
+                            ],
+                            sameDayDelivery: true,
+                            sameDayMinAmount: '50.00',
+                            sameDayFee: '15.00',
+                            sameDayFreeOver: '120.00',
+                            sameDayEta: 'Under 1 hour',
+                            sameDayDeliveredBy: 'Self Drivers',
+                            sameDayCoverage: { cities: [], radius: 60 },
+                            sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            sameDayOpeningTime: '09:00 AM',
+                            sameDayClosingTime: '09:00 PM',
+                            expressDelivery: false,
+                            expressMinAmount: '120.00',
+                            expressFee: '15.00',
+                            expressEta: '1-2 hrs',
+                            expressDeliveredBy: 'Shroom Express Drivers',
+                            expressCoverage: { cities: [], radius: 60 },
+                            expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            expressOpeningTime: '09:00 AM',
+                            expressClosingTime: '09:00 PM',
+                            shippingMailOrder: false,
+                            shippingFee: '15.00',
+                            shippingFreeOver: '120.00',
+                            shippingEta: '2-5 business days',
+                            shippingCouriers: [],
+                            shippingAreas: [],
+                            processingDays: [],
+                            shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            autoAcceptOrders: true,
+                            featuredStore: false,
+                            setStoreAsActive: true,
+                            productTypes: [],
+                            storeTags: [],
+                            licenseNumber: '',
+                            logo: null,
+                            banner: null,
+                        });
+                    }} />
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="bg-[#FAF8F5] pt-10 sm:pt-16 md:pt-18 px-4 pb-6">
-            <div className="max-w-3xl mx-auto">
-
+        <div className="bg-[#FAF8F5] min-h-screen pt-8 sm:pt-10 px-4 pb-12">
+            <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold text-[#0F3540] mb-1">Open Your Store</h1>
-                    <p className="text-sm text-[#64748B]">Fill in the details below to list your store on our platform.</p>
+                <div className="mb-8 flex items-center text-center gap-4">
+                    <button
+                        onClick={() => currentStep === 1 ? navigate("/store") : setCurrentStep(s => s - 1)}
+                        className="px-6 py-2 bg-white shadow-sm text-sm font-semibold text-[#475569] transition-all flex items-center gap-2 hover:bg-gray-50 rounded-md border border-[#BDBDD2]"
+                    >
+                        <Icon icon="lucide:arrow-left" width="16" />
+                        {currentStep === 1 ? "Cancel" : "Previous"}
+                    </button>
+                    <div className="flex-1">
+                        <h1 className="text-3xl font-bold text-[#0F3540] mb-1">Open Your Store</h1>
+                        <p className="text-sm text-[#64748B]">Complete the steps below to register your business on our platform.</p>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+
+
+                        {currentStep === steps.length ? (
+                            <button
+                                onClick={handleSubmit}
+                                disabled={loading}
+                                className="px-5 py-2 bg-[#219653] text-white rounded-md text-sm font-semibold shadow-sm transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                                {loading ? (
+                                    <>
+                                        <Icon icon="line-md:loading-twotone-loop" width="18" />
+                                        Submitting...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Icon icon="lucide:check" width="18" />
+                                        Submit
+                                    </>
+                                )}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => setCurrentStep(s => s + 1)}
+                                disabled={!canNext()}
+                                className="px-5 py-2 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-sm hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Continue
+                                <Icon icon="lucide:arrow-right" width="16" />
+                            </button>
+                        )}
+                    </div>
                 </div>
 
-                {/* Stepper */}
-                <div className="flex items-center justify-between mb-10 px-2">
-                    {steps.map((label, i) => (
-                        <div key={i} className="flex-1 flex flex-col items-center relative">
-                            {i < steps.length - 1 && (
-                                <div className={`absolute top-4 left-1/2 w-full h-0.5 ${i < step ? 'bg-[#E93E2B]' : 'bg-[#E5DCDC]'}`} />
-                            )}
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 text-sm font-bold transition-all ${i < step ? 'bg-[#E93E2B] text-white' : i === step ? 'bg-[#E93E2B] text-white ring-4 ring-[#E93E2B]/20' : 'bg-white border-2 border-[#E5DCDC] text-[#94A3B8]'}`}>
-                                {i < step ? <Icon icon="mdi:check" width={16} /> : i + 1}
-                            </div>
-                            <span className={`text-xs mt-1.5 font-semibold ${i === step ? 'text-[#E93E2B]' : 'text-[#94A3B8]'}`}>{label}</span>
-                        </div>
-                    ))}
+                {/* Stepper Header Box */}
+                <div className="bg-white border border-[#BDBDD2] rounded-md p-2 px-5 shadow-sm overflow-hidden flex items-center justify-center mb-6">
+                    <div className="flex items-center gap-0 w-full max-w-4xl justify-center pt-2">
+                        {steps.map((step, index) => (
+                            <React.Fragment key={step.id}>
+                                <div
+                                    className="flex flex-col items-center gap-2 px-2 shrink-0 first:pl-0 last:pr-0 cursor-pointer hover:opacity-80 transition-all"
+                                    onClick={() => currentStep > step.id && setCurrentStep(step.id)}
+                                >
+                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[15px] font-bold transition-all border-2 ${currentStep === step.id
+                                        ? 'bg-[#EA3D2A] text-white border-[#EA3D2A]'
+                                        : currentStep > step.id
+                                            ? 'bg-[#219653] text-white border-[#219653]'
+                                            : 'bg-white text-[#BABABA] border-[#BDBDD2]'
+                                        }`}>
+                                        {currentStep > step.id ? <Icon icon="lucide:check" width="18" /> : step.id}
+                                    </div>
+                                    <span className={`text-xs font-semibold whitespace-nowrap transition-colors ${currentStep === step.id ? 'text-[#EA3D2A]' : 'text-[#475569]'}`}>
+                                        {step.label}
+                                    </span>
+                                </div>
+                                {index < steps.length - 1 && (
+                                    <div className={`h-[4px] w-full max-w-[180px] rounded-full -translate-y-2 mx-1 ${currentStep > step.id ? 'bg-[#219653]' : 'bg-[#E2E8F0]'}`} />
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Card */}
-                <div className="bg-white rounded-2xl shadow-[0px_4px_24px_rgba(0,0,0,0.06)] border border-[#F1F5F9] p-5 sm:p-8">
-
-                    {/* STEP 0 — Store Info */}
-                    {step === 0 && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-bold text-[#181211]">Store Information</h2>
-
-                            {/* Cover + Logo upload */}
-                            <div className="relative mb-6">
-                                <div
-                                    onClick={() => coverRef.current.click()}
-                                    className="w-full h-36 rounded-xl bg-[#F1F5F9] border-2 border-dashed border-[#BDBDD2] flex items-center justify-center cursor-pointer overflow-hidden hover:border-[#E93E2B] transition-colors"
-                                >
-                                    {form.coverPreview
-                                        ? <img src={form.coverPreview} className="w-full h-full object-cover" alt="cover" />
-                                        : <div className="flex flex-col items-center gap-1 text-[#94A3B8]">
-                                            <Icon icon="mdi:image-plus" width={32} />
-                                            <span className="text-xs font-medium">Upload Cover Photo</span>
-                                        </div>
-                                    }
-                                </div>
-                                <input ref={coverRef} type="file" accept="image/*" className="hidden" onChange={e => handleImage("cover", "coverPreview", e.target.files[0])} />
-
-                                <div
-                                    onClick={() => logoRef.current.click()}
-                                    className="absolute -bottom-6 left-6 w-16 h-16 rounded-xl bg-white border-2 border-[#E5DCDC] shadow-md flex items-center justify-center cursor-pointer overflow-hidden hover:border-[#E93E2B] transition-colors"
-                                >
-                                    {form.logoPreview
-                                        ? <img src={form.logoPreview} className="w-full h-full object-contain p-1" alt="logo" />
-                                        : <Icon icon="mdi:store-plus-outline" width={24} className="text-[#94A3B8]" />
-                                    }
-                                </div>
-                                <input ref={logoRef} type="file" accept="image/*" className="hidden" onChange={e => handleImage("logo", "logoPreview", e.target.files[0])} />
-                            </div>
-
-                            <div className="pt-4 grid grid-cols-2 gap-4">
-                                <Field label="Store Name *" value={form.name} onChange={v => set("name", v)} placeholder="e.g. The Mushroom" />
-                                <Field label="Email *" value={form.email} onChange={v => set("email", v)} placeholder="store@email.com" type="email" />
-                                <Field label="Phone *" value={form.phone} onChange={v => set("phone", v)} placeholder="(416) 000-0000" />
-                                <Field label="Website" value={form.website} onChange={v => set("website", v)} placeholder="www.yourstore.com" />
-                            </div>
-                            <div>
-                                <label className="text-[15px] font-semibold text-[#181211] mb-1.5 block">About Your Store</label>
-                                <textarea
-                                    rows={3}
-                                    value={form.description}
-                                    onChange={e => set("description", e.target.value)}
-                                    placeholder="Tell customers what makes your store special..."
-                                    className="w-full border border-[#E5DCDC] rounded-lg px-4 py-3 text-sm text-[#181211] placeholder:text-[#BDBDBD] outline-none focus:border-[#E93E2B] resize-none transition-colors"
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* STEP 1 — Location & Hours */}
-                    {step === 1 && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-bold text-[#181211]">Location & Operating Hours</h2>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="col-span-2">
-                                    <Field label="Street Address *" value={form.address} onChange={v => set("address", v)} placeholder="123 Main St" />
-                                </div>
-                                <Field label="City *" value={form.city} onChange={v => set("city", v)} placeholder="Toronto" />
-                                <Field label="Province" value={form.province} onChange={v => set("province", v)} placeholder="Ontario" />
-                                <Field label="Postal Code" value={form.postalCode} onChange={v => set("postalCode", v)} placeholder="M5V 1A1" />
-                            </div>
-
-                            <div>
-                                <label className="text-[15px] font-semibold text-[#181211] mb-3 block">Operating Hours</label>
-                                <div className="space-y-2">
-                                    {DAYS.map(day => (
-                                        <div key={day} className="flex items-center gap-3">
-                                            <span className="w-24 text-sm font-semibold text-[#181211]">{day.slice(0, 3)}</span>
-                                            <button
-                                                onClick={() => toggleDayClosed(day)}
-                                                className={`w-10 h-5 rounded-full transition-colors relative ${form.hours[day].closed ? 'bg-[#E5E7EB]' : 'bg-[#E93E2B]'}`}
-                                            >
-                                                <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${form.hours[day].closed ? 'left-0.5' : 'left-5'}`} />
-                                            </button>
-                                            {form.hours[day].closed
-                                                ? <span className="text-xs text-[#94A3B8] font-medium">Closed</span>
-                                                : <>
-                                                    <input type="time" value={form.hours[day].open} onChange={e => setHour(day, "open", e.target.value)} className="border border-[#E5DCDC] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
-                                                    <span className="text-[#94A3B8] text-sm">to</span>
-                                                    <input type="time" value={form.hours[day].close} onChange={e => setHour(day, "close", e.target.value)} className="border border-[#E5DCDC] rounded-lg px-3 py-1.5 text-sm text-[#181211] outline-none focus:border-[#E93E2B]" />
-                                                </>
-                                            }
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* STEP 2 — Delivery */}
-                    {step === 2 && (
-                        <div className="space-y-6">
-                            <h2 className="text-lg font-bold text-[#181211]">Delivery Settings</h2>
-
-                            <div>
-                                <label className="text-[15px] font-semibold text-[#181211] mb-3 block">Delivery Types <span className="text-[#E93E2B]">*</span></label>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {[
-                                        { key: "same-day", label: "Same-day", icon: "mdi:truck-fast-outline" },
-                                        { key: "express", label: "Express", icon: "mdi:lightning-bolt-outline" },
-                                        { key: "shipping", label: "Nationwide", icon: "mdi:package-variant-closed" },
-                                    ].map(({ key, label, icon }) => (
-                                        <button
-                                            key={key}
-                                            onClick={() => toggleDelivery(key)}
-                                            className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${form.deliveryTypes.includes(key) ? 'border-[#E93E2B] bg-[#FFF0EE] text-[#E93E2B]' : 'border-[#E5DCDC] text-[#64748B] hover:border-[#E93E2B]/40'}`}
-                                        >
-                                            <Icon icon={icon} width={28} />
-                                            <span className="text-sm font-semibold">{label}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                                <Field label="Est. Delivery Time *" value={form.estimatedTime} onChange={v => set("estimatedTime", v)} placeholder="e.g. 1 - 2 Hours" />
-                                <Field label="Delivery Fee ($)" value={form.deliveryFee} onChange={v => set("deliveryFee", v)} placeholder="0.00" type="number" />
-                                <Field label="Min. Order ($)" value={form.minOrder} onChange={v => set("minOrder", v)} placeholder="0.00" type="number" />
-                            </div>
-                        </div>
-                    )}
-
-                    {/* STEP 3 — Review */}
-                    {step === 3 && (
-                        <div className="space-y-5">
-                            <h2 className="text-lg font-bold text-[#181211]">Review & Submit</h2>
-
-                            {/* Cover preview */}
-                            {form.coverPreview && (
-                                <div className="relative w-full h-32 rounded-xl overflow-hidden">
-                                    <img src={form.coverPreview} className="w-full h-full object-cover" alt="cover" />
-                                    {form.logoPreview && (
-                                        <div className="absolute bottom-3 left-4 w-14 h-14 rounded-lg bg-white border border-[#E5DCDC] shadow p-1">
-                                            <img src={form.logoPreview} className="w-full h-full object-contain" alt="logo" />
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-
-                            <div className="grid grid-cols-2 gap-3 text-sm">
-                                <ReviewRow label="Store Name" value={form.name} />
-                                <ReviewRow label="Email" value={form.email} />
-                                <ReviewRow label="Phone" value={form.phone} />
-                                <ReviewRow label="Website" value={form.website || "—"} />
-                                <ReviewRow label="Address" value={`${form.address}, ${form.city}`} />
-                                <ReviewRow label="Delivery" value={form.deliveryTypes.join(", ") || "—"} />
-                                <ReviewRow label="Est. Time" value={form.estimatedTime} />
-                                <ReviewRow label="Delivery Fee" value={form.deliveryFee ? `$${form.deliveryFee}` : "Free"} />
-                            </div>
-
-                            {form.description && (
-                                <div className="bg-[#F8F9FA] rounded-lg p-4">
-                                    <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider mb-1">About</p>
-                                    <p className="text-sm text-[#475569]">{form.description}</p>
-                                </div>
-                            )}
-
-                            <div className="bg-[#FFF0EE] border border-[#E93E2B]/20 rounded-lg p-4 flex gap-3">
-                                <Icon icon="mdi:information-outline" width={18} className="text-[#E93E2B] shrink-0 mt-0.5" />
-                                <p className="text-xs text-[#E93E2B] font-medium">By submitting, you agree to our store listing terms. Your store will be reviewed before going live.</p>
-                            </div>
-                        </div>
-                    )}
+                {/* Step Content */}
+                <div className="min-h-[500px] animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <ActiveStepComponent formData={formData} setFormData={setFormData} />
                 </div>
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-6">
+                <div className="flex items-center justify-between mt-8 pt-2 font-manrope">
                     <button
-                        onClick={() => step === 0 ? navigate("/store/storeslists") : setStep(s => s - 1)}
-                        className="flex items-center gap-2 px-6 py-3 rounded-xl border border-[#E5DCDC] bg-white text-[#181211] text-sm font-semibold hover:bg-[#FAF8F5] transition-colors"
+                        onClick={() => currentStep === 1 ? navigate("/store") : setCurrentStep(s => s - 1)}
+                        className="px-6 py-2.5 bg-white shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] transition-all flex items-center gap-2 hover:bg-gray-50 rounded-md border border-gray-100"
                     >
-                        <Icon icon="mdi:arrow-left" width={18} />
-                        {step === 0 ? "Cancel" : "Back"}
+                        <Icon icon="lucide:arrow-left" width="16" />
+                        {currentStep === 1 ? "Cancel" : "Previous"}
                     </button>
 
-                    <button
-                        onClick={() => step === steps.length - 1 ? (addStore(form), navigate("/store/storeslists")) : setStep(s => s + 1)}
-                        disabled={!canNext()}
-                        className="flex items-center gap-2 px-8 py-3 rounded-xl bg-[#E93E2B] text-white text-sm font-semibold hover:bg-[#D53523] transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-[0px_4px_12px_rgba(233,62,43,0.3)]"
-                    >
-                        {step === steps.length - 1 ? "Submit Store" : "Continue"}
-                        <Icon icon={step === steps.length - 1 ? "mdi:check" : "mdi:arrow-right"} width={18} />
-                    </button>
+                    <div className="flex items-center gap-4">
+                        {currentStep === steps.length ? (
+                            <button
+                                onClick={handleSubmit}
+                                disabled={loading}
+                                className="px-5 py-2.5 bg-[#219653] text-white rounded-md text-sm font-semibold shadow-[0px_4px_12px_-2px_#21965380] transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                            >
+                                {loading ? (
+                                    <>
+                                        <Icon icon="line-md:loading-twotone-loop" width="18" />
+                                        Submitting...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Icon icon="lucide:check" width="18" />
+                                        Submit Registration
+                                    </>
+                                )}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => setCurrentStep(s => s + 1)}
+                                disabled={!canNext()}
+                                className="px-5 py-2.5 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#E93E2B33,0px_10px_15px_-3px_#E93E2B33] hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Continue
+                                <Icon icon="lucide:arrow-right" width="16" />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
-
-const Field = ({ label, value, onChange, placeholder, type = "text", required = false }) => (
-    <div>
-        <label className="text-sm sm:text-[15px] font-semibold text-[#181211] mb-1.5 block leading-tight sm:leading-normal">
-            {label.replace(" *", "")} {required || label.includes("*") ? <span className="text-[#E93E2B]">*</span> : null}
-        </label>
-        <input
-            type={type}
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            placeholder={placeholder}
-            className="w-full border border-[#E5DCDC] rounded-lg px-4 py-3 text-sm text-[#181211] outline-none focus:border-[#E93E2B] placeholder:text-[#BDBDBD] transition-colors bg-white"
-        />
-    </div>
-);
-
-const ReviewRow = ({ label, value }) => (
-    <div className="bg-[#F8F9FA] rounded-lg px-4 py-3">
-        <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wider mb-0.5">{label}</p>
-        <p className="text-sm font-semibold text-[#181211] truncate">{value}</p>
-    </div>
-);
 
 export default CreateStorePage;

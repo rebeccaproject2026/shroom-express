@@ -1,12 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import storecard1 from "../assets/images/storecard1.png";
 import background from "../assets/images/background1.png";
 import storecard2 from "../assets/images/storecard2.png";
 import background2 from "../assets/images/background2.png";
 import storecard3 from "../assets/images/storecard3.png";
 import background3 from "../assets/images/background3.png";
-// import storecard4 from "../assets/images/storecard4.png";
-// import background4 from "../assets/images/Logo.png";
 import beginnerFriendlyImg from "../assets/images/beginnerfriendly.png";
 import highPotencyImg from "../assets/images/highpotency.png";
 import microDosingImg from "../assets/images/microdosing.png";
@@ -39,35 +37,81 @@ const StoresContext = createContext(null);
 
 export const StoresProvider = ({ children }) => {
     const [stores, setStores] = useState(defaultStores);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const addStore = (formData) => {
-        const newStore = {
-            id: Date.now(),
-            name: formData.name,
-            rating: "0.0",
-            reviewCount: "0 reviews",
-            estimatedDelivery: formData.estimatedTime,
-            avgPrice: "$0",
-            location: `${formData.address}, ${formData.city}`,
-            coverImage: formData.coverPreview || null,
-            logo: formData.logoPreview || null,
-            deliveryBadge: formData.deliveryTypes.length > 0
-                ? { text: formData.deliveryTypes[0] === "express" ? "Express Delivery" : formData.deliveryTypes[0] === "shipping" ? "Nationwide Shipping" : "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" }
-                : null,
-            isPrimary: false,
-            avatars: [],
-            isUserCreated: true,
-        };
-        setStores(prev => [...prev, newStore]);
-        return newStore.id;
+    // Future API Integration: Fetch stores from backend
+    const fetchStores = async () => {
+        setLoading(true);
+        try {
+            // const response = await axios.get('/api/stores');
+            // setStores(response.data);
+            
+            // Simulating API delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+            setStores(defaultStores);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchStores();
+    }, []);
+
+    const addStore = async (formData) => {
+        setLoading(true);
+        try {
+            // Future API Integration:
+            // const response = await axios.post('/api/stores', formData);
+            // const createdStore = response.data;
+
+            // Simulating API delay and logic
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            const storeName = formData.locations[0]?.storeName || "New Store";
+            const locationStr = formData.locations[0] 
+                ? `${formData.locations[0].streetAddress}, ${formData.locations[0].city}` 
+                : "Location TBD";
+
+            const newStore = {
+                id: Date.now(),
+                name: storeName,
+                rating: "0.0",
+                reviewCount: "0 reviews",
+                estimatedDelivery: formData.sameDayEta || "TBD",
+                avgPrice: "$0",
+                location: locationStr,
+                coverImage: formData.banner || null,
+                logo: formData.logo || null,
+                deliveryBadge: formData.sameDayDelivery 
+                    ? { text: "Same-day Delivery", color: "text-[#181211]", icon: "carbon:delivery" }
+                    : formData.expressDelivery 
+                        ? { text: "Express Delivery", color: "text-[#22C55E]", icon: "carbon:delivery" }
+                        : { text: "Nationwide Shipping", color: "text-[#3B82F6]", icon: "carbon:delivery" },
+                isPrimary: false,
+                avatars: [],
+                isUserCreated: true,
+                ...formData // Keep raw data for CRM
+            };
+
+            setStores(prev => [...prev, newStore]);
+            return newStore.id;
+        } catch (err) {
+            setError(err.message);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <StoresContext.Provider value={{ stores, addStore }}>
+        <StoresContext.Provider value={{ stores, addStore, loading, error, fetchStores }}>
             {children}
         </StoresContext.Provider>
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useStores = () => useContext(StoresContext);

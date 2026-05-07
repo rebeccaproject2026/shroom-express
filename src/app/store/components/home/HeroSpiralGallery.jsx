@@ -93,7 +93,7 @@ const HeroSpiralGallery = () => {
                             ref={el => bgCardsRef.current[i] = el}
                             className="absolute w-[76%] h-[76%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl"
                         >
-                            <img src={img} alt="" className="w-full h-full object-cover opacity-50 " />
+                            <img src={img} alt="" className="w-full h-full object-cover opacity-70 " />
                         </div>
                     ))}
                 </div>

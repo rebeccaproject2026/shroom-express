@@ -16,6 +16,7 @@ import product5 from "../../assets/images/product5.png";
 import product6 from "../../assets/images/product6.png";
 import product7 from "../../assets/images/product7.png";
 import product8 from "../../assets/images/product8.png";
+import heroBgImg from "../../assets/images/herosection.png";
 // import productEffectImg from "../../assets/images/producteffect1.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
@@ -63,7 +64,10 @@ const Home = () => {
             {/* Hero Section */}
             <section className="font-sans pt-6 pb-4 md:pt-6 md:pb-10">
                 <div className="w-full max-w-[1700px] mx-auto">
-                    <div className="bg-[#E93E2B]/5 rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[40%] relative overflow-hidden">
+                    <div 
+                        className="rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[40%] relative overflow-hidden bg-cover bg-center"
+                        style={{ backgroundImage: `url(${heroBgImg})` }}
+                    >
 
                         {/* Left Side */}
                         <div className="w-[60%] md:w-[55%] flex flex-col items-start z-10 pl-4 pr-2 sm:px-10 lg:pl-16">
