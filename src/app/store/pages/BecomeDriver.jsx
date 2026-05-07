@@ -42,7 +42,7 @@ const BecomeDriver = () => {
         <div className="w-full overflow-x-hidden font-sans bg-white">
             {/* Hero & Registration Section */}
             <section
-                className="py-12 md:py-12 relative overflow-hidden bg-cover bg-center"
+                className="py-12 md:py-20  relative overflow-hidden bg-cover bg-no-repeat bg-center lg:bg-right"
                 style={{ backgroundImage: `url(${heroImg})` }}
             >
 
@@ -238,7 +238,7 @@ const BecomeDriver = () => {
             </section>
 
             {/* Why Join Section */}
-            <section className="py-2 mb-8">
+            <section className="py-2 mb-8 mt-5">
                 <div className="max-w-[1200px] mx-auto px-5">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl  font-bold text-[#111827]">Why Join <span className="text-[#E93E2B]">Shroom Express?</span></h2>
@@ -265,7 +265,7 @@ const BecomeDriver = () => {
 
             {/* Journey Section - Matching Hero Section Pattern */}
             <section
-                className="relative w-full min-h-[342px] w-full mt-5 flex items-center bg-cover bg-center"
+                className="relative w-full min-h-[342px] mt-5 flex items-center bg-cover bg-center"
                 style={{ backgroundImage: `url(${journeyImg})` }}
             >
 
