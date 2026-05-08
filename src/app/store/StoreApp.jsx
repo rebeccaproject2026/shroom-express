@@ -29,7 +29,7 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import MushroomFAQ from './pages/MushroomFAQ';
 import WhatToExpect from './pages/WhatToExpect';
-import MushroomStrains from './pages/MushroomStrains';
+// import MushroomStrains from './pages/MushroomStrains';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -41,42 +41,42 @@ function StoreApp() {
 
     return (
         <AuthProvider>
-        <StoresProvider>
-        <CartProvider>
-            <WishlistProvider>
-            <CategoryProvider>
-            <Routes>
-                <Route path="/" element={<StoreLayout />}>
-                    <Route index element={<Home />} />
-                    <Route path="storeslists" element={<StoresList />} />
-                    <Route path="storeslists/:storeId" element={<StoreDetails />} />
-                    <Route path="category/:category" element={<ProductsList />} />
-                    <Route path="product/:productId" element={<ProductDetail />} />
-                    <Route path="checkout" element={<CheckoutPage />} />
-                    <Route path="order-complete" element={<OrderCompletePage />} />
-                    <Route path="cart" element={<CartPage />} />
-                    <Route path="track-order" element={<TrackOrderPage />} />
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="register" element={<RegisterPage />} />
-                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
-                    <Route path="check-email" element={<CheckEmailPage />} />
-                    <Route path="reset-password" element={<ResetPasswordPage />} />
-                    <Route path="myaccount" element={<MyAccountPage />} />
-                    <Route path="create-store" element={<CreateStorePage />} />
-                    <Route path="deals" element={<DealsPage />} />
-                    <Route path="become-a-driver" element={<BecomeDriver />} />
-                    <Route path="about-us" element={<AboutUs />} />
-                    <Route path="contact-us" element={<ContactUs />} />
-                    <Route path="mushroom-faq" element={<MushroomFAQ />} />
-                    <Route path="what-to-expect" element={<WhatToExpect />} />
-                    <Route path="mushroom-strains" element={<MushroomStrains />} />
-                    <Route path="become-driver" element={<BecomeDriver />} />
-                </Route>
-            </Routes>
-            </CategoryProvider>
-            </WishlistProvider>
-        </CartProvider>
-        </StoresProvider>
+            <StoresProvider>
+                <CartProvider>
+                    <WishlistProvider>
+                        <CategoryProvider>
+                            <Routes>
+                                <Route path="/" element={<StoreLayout />}>
+                                    <Route index element={<Home />} />
+                                    <Route path="storeslists" element={<StoresList />} />
+                                    <Route path="storeslists/:storeId" element={<StoreDetails />} />
+                                    <Route path="category/:category" element={<ProductsList />} />
+                                    <Route path="product/:productId" element={<ProductDetail />} />
+                                    <Route path="checkout" element={<CheckoutPage />} />
+                                    <Route path="order-complete" element={<OrderCompletePage />} />
+                                    <Route path="cart" element={<CartPage />} />
+                                    <Route path="track-order" element={<TrackOrderPage />} />
+                                    <Route path="login" element={<LoginPage />} />
+                                    <Route path="register" element={<RegisterPage />} />
+                                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                                    <Route path="check-email" element={<CheckEmailPage />} />
+                                    <Route path="reset-password" element={<ResetPasswordPage />} />
+                                    <Route path="myaccount" element={<MyAccountPage />} />
+                                    <Route path="create-store" element={<CreateStorePage />} />
+                                    <Route path="deals" element={<DealsPage />} />
+                                    <Route path="become-a-driver" element={<BecomeDriver />} />
+                                    <Route path="about-us" element={<AboutUs />} />
+                                    <Route path="contact-us" element={<ContactUs />} />
+                                    <Route path="mushroom-faq" element={<MushroomFAQ />} />
+                                    <Route path="what-to-expect" element={<WhatToExpect />} />
+                                    <Route path="mushroom-strains" element={<MushroomStrains />} />
+                                    <Route path="become-driver" element={<BecomeDriver />} />
+                                </Route>
+                            </Routes>
+                        </CategoryProvider>
+                    </WishlistProvider>
+                </CartProvider>
+            </StoresProvider>
         </AuthProvider>
     );
 }
