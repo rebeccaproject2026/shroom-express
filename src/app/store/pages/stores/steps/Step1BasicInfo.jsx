@@ -4,6 +4,21 @@ import ReusableTableSelect from '../../../../superadmin/components/common/Reusab
 import Input from '../../../../superadmin/components/common/Input';
 
 const Step1BasicInfo = ({ formData, setFormData }) => {
+  React.useEffect(() => {
+    if (!formData.firstName) {
+      setFormData({
+        ...formData,
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john.doe@example.com',
+        phone: '+1 (461) 555-0123',
+        role: 'Store Manager',
+        contactNumber: '+1 (461) 555-0123'
+      });
+    }
+  }, []);
+
+
   const roleOptions = [
     { value: 'Store Manager', label: 'Store Manager' },
     { value: 'Store Executive', label: 'Store Executive' },
@@ -32,7 +47,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             placeholder="e.g. John"
             value={formData.firstName}
             onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -41,7 +56,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             placeholder="e.g. Doe"
             value={formData.lastName}
             onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -52,7 +67,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             placeholder="store@example.com"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -62,7 +77,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             placeholder="+1 (461) 000-0000"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -83,7 +98,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             placeholder="+1 (461) 000-0000"
             value={formData.contactNumber}
             onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />

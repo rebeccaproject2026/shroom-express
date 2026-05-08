@@ -63,8 +63,11 @@ const DeliveryCoverageModal = ({ isOpen, onClose, onApply, initialCities = [], i
   }, [isOpen]);
 
   useEffect(() => {
-    if (mapRef.current?.loaded()) {
-      updateMapLayers();
+    if (mapRef.current) {
+      mapRef.current.resize();
+      if (mapRef.current.loaded()) {
+        updateMapLayers();
+      }
     }
   }, [selectedCities, radius]);
 
@@ -190,7 +193,7 @@ const DeliveryCoverageModal = ({ isOpen, onClose, onApply, initialCities = [], i
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/60 animate-in fade-in duration-300">
-      <div className="bg-white w-full max-w-[40%] rounded-lg shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/20">
+      <div className="bg-white w-full max-w-[42%] rounded-lg shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-300 border border-white/20">
         {/* Header */}
         <div className="px-6 py-6 border-b border-[#E2E8F0] bg-[#F8F8F8]">
           <h2 className="text-xl font-semibold text-[#181211] tracking-tight">Set delivery coverage</h2>
@@ -246,7 +249,7 @@ const DeliveryCoverageModal = ({ isOpen, onClose, onApply, initialCities = [], i
           {/* Map Section */}
           <div className="space-y-2">
             <label className="text-sm font-semibold text-[#181211] ">Radius around selected cities</label>
-            <div className="w-full h-[180px] rounded-md overflow-hidden border border-[#BDBDD2] relative bg-[#F8FAFC] mt-1">
+            <div className="w-full h-[300px] rounded-md overflow-hidden border border-[#BDBDD2] relative bg-[#F8FAFC] mt-1">
               <div ref={mapContainerRef} className="w-full h-full" />
               {selectedCities.length > 0 && (
                 <div className="absolute top-3 right-3 bg-[#EA3D2A] text-white px-2 py-0.5 rounded-md text-[10px] font-bold shadow-md">

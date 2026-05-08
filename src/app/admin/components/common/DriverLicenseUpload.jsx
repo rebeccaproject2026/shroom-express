@@ -88,7 +88,7 @@ const DriverLicenseUpload = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             {/* FRONT */}
-            <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-sm px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
+            <div className="flex flex-col items-center justify-center border border-[#D9D9D9] rounded-md px-8 py-12 bg-white hover:border-gray-400 transition-colors cursor-pointer">
 
                 <input
                     type="file"

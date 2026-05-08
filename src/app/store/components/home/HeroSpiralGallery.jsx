@@ -26,19 +26,29 @@ const HeroSpiralGallery = () => {
 
     // Initialize Animations
     useEffect(() => {
+        // Floating animation for the whole container
+        gsap.to(containerRef.current, {
+            y: -15,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "power1.inOut"
+        });
+
         // Setup background cards animations
-        bgCardsRef.current.forEach((card) => {
+        bgCardsRef.current.forEach((card, i) => {
             if (!card) return;
-            const initialAngle = Math.random() * 360;
-            const initialScale = 0.75 + Math.random() * 0.25;
+            const initialAngle = (i * 40) + (Math.random() * 20);
+            const initialScale = 0.7 + (i * 0.03);
 
             gsap.set(card, {
                 rotate: initialAngle,
-                scale: initialScale
+                scale: initialScale,
+                opacity: 0.15 + (i * 0.05)
             });
 
-            const rotationSpeed = 5 + Math.random() * 10;
-            const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+            const rotationSpeed = 15 + Math.random() * 20;
+            const rotationDirection = i % 2 === 0 ? 1 : -1;
 
             const tl = gsap.timeline({ repeat: -1 });
             tl.to(card, {
@@ -46,6 +56,16 @@ const HeroSpiralGallery = () => {
                 duration: rotationSpeed,
                 ease: "none"
             });
+            
+            // Subtle scale pulsing for background
+            gsap.to(card, {
+                scale: "+=0.05",
+                duration: 2 + Math.random() * 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+            
             rotationTimelines.current.push(tl);
         });
 
@@ -53,7 +73,7 @@ const HeroSpiralGallery = () => {
         const startSequence = () => {
             sequenceInterval.current = setInterval(() => {
                 setActiveIndex(prev => (prev + 1) % images.length);
-            }, 2000);
+            }, 3000);
         };
 
         startSequence();
@@ -61,19 +81,34 @@ const HeroSpiralGallery = () => {
         return () => {
             clearInterval(sequenceInterval.current);
             rotationTimelines.current.forEach(tl => tl.kill());
+            gsap.killTweensOf(containerRef.current);
         };
     }, []);
 
+    // Animate active foreground card whenever activeIndex changes
+    useEffect(() => {
+        const activeCard = fgCardsRef.current[activeIndex];
+        if (activeCard) {
+            gsap.fromTo(activeCard, 
+                { scale: 0.8, opacity: 0, rotate: -5 },
+                { scale: 1, opacity: 1, rotate: 0, duration: 1.2, ease: "expo.out" }
+            );
+        }
+        
+        // Fade out other cards
+        fgCardsRef.current.forEach((card, i) => {
+            if (i !== activeIndex && card) {
+                gsap.to(card, { opacity: 0, scale: 1.1, duration: 0.8, ease: "power2.inOut" });
+            }
+        });
+    }, [activeIndex]);
+
     const handleMouseEnter = () => {
-        rotationTimelines.current.forEach(tl => tl.pause());
-        clearInterval(sequenceInterval.current);
+        rotationTimelines.current.forEach(tl => tl.timeScale(0.2));
     };
 
     const handleMouseLeave = () => {
-        rotationTimelines.current.forEach(tl => tl.play());
-        sequenceInterval.current = setInterval(() => {
-            setActiveIndex(prev => (prev + 1) % images.length);
-        }, 2000);
+        rotationTimelines.current.forEach(tl => tl.timeScale(1));
     };
 
     return (
@@ -104,9 +139,9 @@ const HeroSpiralGallery = () => {
                         <div
                             key={`fg-${i}`}
                             ref={el => fgCardsRef.current[i] = el}
-                            className={`absolute w-[78%] h-[78%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl transition-opacity duration-100 ${i === activeIndex ? 'opacity-100' : 'opacity-0'}`}
+                            className="absolute w-[78%] h-[78%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl opacity-0"
                         >
-                            <img src={img} alt="" className="w-full h-full object-cover" style={{ filter: "drop-shadow(0px 10px 40px rgba(0,0,0,0.15))" }} />
+                            <img src={img} alt="" className="w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.2)]" />
                         </div>
                     ))}
                 </div>

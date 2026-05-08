@@ -164,8 +164,28 @@ const StoreDetails = () => {
 
     // Get current store data based on storeId
     const storeData = useMemo(() => {
-        return allStoresData[storeId] || allStoresData[1];
-    }, [storeId]);
+        // 1. Try hardcoded data first
+        if (allStoresData[storeId]) return allStoresData[storeId];
+
+        // 2. Try context stores (user created)
+        const dynamicStore = contextStores.find(s => s.id.toString() === storeId);
+        if (dynamicStore) {
+            return {
+                name: dynamicStore.name,
+                nameColor: "#181211",
+                logo: dynamicStore.logo,
+                coverImage: dynamicStore.coverImage,
+                description: dynamicStore.locations?.[0]?.description || dynamicStore.description || "Premium magic mushroom wellness store.",
+                deliveryTime: dynamicStore.estimatedDelivery,
+                phone: dynamicStore.locations?.[0]?.storePhone || dynamicStore.phone || "(416) 555-0123",
+                website: dynamicStore.locations?.[0]?.website || dynamicStore.website || "www.shroom-express.com",
+                rating: dynamicStore.rating,
+                reviewCount: dynamicStore.reviewCount?.toString().replace(' reviews', '') || "0"
+            };
+        }
+
+        return allStoresData[1];
+    }, [storeId, contextStores]);
 
     // Sort options
     const sortOptions = [

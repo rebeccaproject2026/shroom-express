@@ -5,6 +5,30 @@ import StoreLocationMap from '../../../../superadmin/components/stores/StoreLoca
 import Input from '../../../../superadmin/components/common/Input';
 
 const Step2Location = ({ formData, setFormData }) => {
+  React.useEffect(() => {
+    if (formData.locations && formData.locations[0] && !formData.locations[0].storeName) {
+      const newLocations = [...formData.locations];
+      newLocations[0] = {
+        ...newLocations[0],
+        storeName: 'Forest Oasis',
+        category: ['Micro Dosing', 'Beginner Friendly'],
+        website: 'https://forestoasis.com',
+        description: 'A premium store offering the best mushroom strains for a balanced lifestyle.',
+        streetAddress: '123 Main Street',
+        unitNumber: '4',
+        city: 'Toronto',
+        postalCode: 'M5V 2T6',
+        country: 'Canada',
+        province: 'Ontario',
+        storeEmail: 'contact@forestoasis.com',
+        storePhone: '+1 (461) 555-9999',
+        latitude: 43.6532,
+        longitude: -79.3832,
+      };
+      setFormData({ ...formData, locations: newLocations });
+    }
+  }, []);
+
   const location = formData.locations[0] || {};
 
   const categoryOptions = [
@@ -88,7 +112,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="e.g. Forest Oasis"
             value={location.storeName}
             onChange={(e) => handleLocationUpdate('storeName', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -111,7 +135,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="https://yourstore.com"
             value={location.website}
             onChange={(e) => handleLocationUpdate('website', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -137,7 +161,7 @@ const Step2Location = ({ formData, setFormData }) => {
               placeholder={`https://${platform.toLowerCase().includes('twitter') ? 'x' : platform.toLowerCase()}.com`}
               value={location.socialLinks?.[platform] || ''}
               onChange={(e) => handleSocialLinkChange(platform, e.target.value)}
-              className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium animate-in slide-in-from-top-2 duration-300"
+              className="!py-2 animate-in slide-in-from-top-2 duration-300"
               labelClassName="text-sm font-semibold text-[#181211]"
               borderClass="border border-[#BDBDD2]"
             />
@@ -149,7 +173,7 @@ const Step2Location = ({ formData, setFormData }) => {
           <textarea
             rows="3"
             placeholder="Write a brief description..."
-            className="w-full px-4 py-3 bg-white border border-[#BDBDD2] rounded-sm text-sm font-medium text-[#181211] outline-none transition-all resize placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium font-medium"
+            className="w-full px-4 py-3 bg-white border border-[#BDBDD2] rounded-sm text-sm font-medium text-[#181211] outline-none transition-all resize"
             value={location.description}
             onChange={(e) => handleLocationUpdate('description', e.target.value.slice(0, 2500))}
           ></textarea>
@@ -165,7 +189,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="123 Main Street"
             value={location.streetAddress}
             onChange={(e) => handleLocationUpdate('streetAddress', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -175,7 +199,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="4"
             value={location.unitNumber}
             onChange={(e) => handleLocationUpdate('unitNumber', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -185,7 +209,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="Toronto"
             value={location.city}
             onChange={(e) => handleLocationUpdate('city', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -198,7 +222,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="M5V 2T6"
             value={location.postalCode}
             onChange={(e) => handleLocationUpdate('postalCode', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -235,7 +259,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="store@example.com"
             value={location.storeEmail}
             onChange={(e) => handleLocationUpdate('storeEmail', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -245,7 +269,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="+1 (461) 000-0000"
             value={location.storePhone}
             onChange={(e) => handleLocationUpdate('storePhone', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />

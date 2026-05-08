@@ -18,6 +18,17 @@ const CheckBadge = ({ label, isSelected, onClick }) => (
 );
 
 const Step4ProductsTags = ({ formData, setFormData }) => {
+  React.useEffect(() => {
+    if (!formData.licenseNumber) {
+      setFormData({
+        ...formData,
+        productTypes: ['Micro dosing', 'Full Spectrum', 'Wellness'],
+        storeTags: ['Premium', 'Lab Tested', 'Organic', 'Fast Delivery'],
+        licenseNumber: 'LIC-2026-ON-00123'
+      });
+    }
+  }, []);
+
   const productTypesList = [
     'Micro dosing', 'Full Spectrum', 'Gummies', 'Tinctures',
     'Capsules', 'Wellness', 'Edibles', 'Topicals'
@@ -87,18 +98,6 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
             ))}
           </div>
         </div>
-
-        {/* License Section */}
-        <Input
-          label="Compliant License Number"
-          required
-          placeholder="e.g. LIC-2026-ON-00123"
-          value={formData.licenseNumber}
-          onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
-          labelClassName="text-sm font-semibold text-[#181211]"
-          className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
-          borderClass="border border-[#BDBDD2]"
-        />
       </div>
     </div>
   );

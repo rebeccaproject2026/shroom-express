@@ -373,13 +373,24 @@ const Inventory = () => {
           onUpdate={onDateUpdate}
           className="*:sm:min-w-60! *:esm:min-w-48! *:min-w-full! w-full esm:w-fit"
         />
-        <Link
-          to="/inventory/add"
-          className="inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
-        >
-          <span className="text-lg leading-none">+</span>
-          Add Inventory
-        </Link>
+        <div className="flex items-center gap-2">
+          <a
+            href="/store/storeslists/1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-sm hover:bg-gray-50 font-semibold text-sm shadow-sm transition-all"
+          >
+            <Eye className="w-4 h-4" />
+            View Store
+          </a>
+          <Link
+            to="/inventory/add"
+            className="inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
+          >
+            <span className="text-lg leading-none">+</span>
+            Add Inventory
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">

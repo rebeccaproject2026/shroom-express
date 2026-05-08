@@ -17,6 +17,67 @@ const Toggle = ({ enabled, onChange }) => (
 );
 
 const Step3Operations = ({ formData, setFormData }) => {
+  React.useEffect(() => {
+    if (!formData.sameDayMinAmount) {
+      setFormData({
+        ...formData,
+        sameDayDelivery: true,
+        sameDayMinAmount: '50.00',
+        sameDayFee: '15.00',
+        sameDayFreeOver: '120.00',
+        sameDayEta: 'Between 1 - 2 hours',
+        sameDayDeliveredBy: 'Shroom Express Driver',
+        sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        sameDayDayHours: {
+          'Mon': { open: '09:00', close: '21:00' },
+          'Tue': { open: '09:00', close: '21:00' },
+          'Wed': { open: '09:00', close: '21:00' },
+          'Thu': { open: '09:00', close: '21:00' },
+          'Fri': { open: '09:00', close: '21:00' },
+        },
+        sameDayCoverage: {
+          radius: 60,
+          cities: [{ name: 'Toronto', province: 'Ontario' }]
+        },
+        expressDelivery: true,
+        expressMinAmount: '120.00',
+        expressFee: '15.00',
+        expressEta: 'Under 1 hour',
+        expressDeliveredBy: 'Shroom Express Driver',
+        expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        expressDayHours: {
+          'Mon': { open: '10:00', close: '20:00' },
+          'Tue': { open: '10:00', close: '20:00' },
+          'Wed': { open: '10:00', close: '20:00' },
+          'Thu': { open: '10:00', close: '20:00' },
+          'Fri': { open: '10:00', close: '20:00' },
+        },
+        expressCoverage: {
+          radius: 30,
+          cities: [{ name: 'Toronto', province: 'Ontario' }]
+        },
+        shippingMailOrder: true,
+        shippingFee: '15.00',
+        shippingFreeOver: '120.00',
+        shippingEta: 'Between 1 - 3 days',
+        shippingCouriers: ['Canada Post', 'Purolator'],
+        shippingAreas: ['Ontario', 'Quebec', 'British Columbia'],
+        processingDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        shippingDayHours: {
+          'Mon': { open: '09:00', close: '17:00' },
+          'Tue': { open: '09:00', close: '17:00' },
+          'Wed': { open: '09:00', close: '17:00' },
+          'Thu': { open: '09:00', close: '17:00' },
+          'Fri': { open: '09:00', close: '17:00' },
+        },
+        autoAcceptOrders: true,
+        featuredStore: true,
+        setStoreAsActive: true
+      });
+    }
+  }, []);
+
   const [coverageModal, setCoverageModal] = useState({ isOpen: false, type: '' });
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -84,12 +145,23 @@ const Step3Operations = ({ formData, setFormData }) => {
   const toggleDay = (prefix, day) => {
     const currentDays = [...formData[`${prefix}OperatingDays`]];
     let newDays;
+    const newDayHours = { ...(formData[`${prefix}DayHours`] || {}) };
+
     if (currentDays.includes(day)) {
       newDays = currentDays.filter(d => d !== day);
+      // We don't necessarily need to delete from newDayHours, 
+      // but we could if we wanted to keep the object clean.
     } else {
       newDays = [...currentDays, day];
+      if (!newDayHours[day]) {
+        newDayHours[day] = { open: '09:00 am', close: '09:00 pm' };
+      }
     }
-    setFormData({ ...formData, [`${prefix}OperatingDays`]: newDays });
+    setFormData({
+      ...formData,
+      [`${prefix}OperatingDays`]: newDays,
+      [`${prefix}DayHours`]: newDayHours
+    });
   };
 
   const handleApplyCoverage = (data) => {
@@ -125,33 +197,45 @@ const Step3Operations = ({ formData, setFormData }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-        <div className="relative">
-          <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Opening Time <span className="text-[#E93E2B] ml-0.5">*</span></label>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="09:00 am"
-              value={formData[`${prefix}OpeningTime`]}
-              onChange={(e) => setFormData({ ...formData, [`${prefix}OpeningTime`]: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none focus:border-[#E93E2B] transition-all"
-            />
-            <Icon icon="lucide:clock" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181211]" width="18" />
-          </div>
-        </div>
-        <div className="relative">
-          <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Closing Time <span className="text-[#E93E2B] ml-0.5">*</span></label>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="09:00 pm"
-              value={formData[`${prefix}ClosingTime`]}
-              onChange={(e) => setFormData({ ...formData, [`${prefix}ClosingTime`]: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none focus:border-[#E93E2B] transition-all"
-            />
-            <Icon icon="lucide:clock" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#181211]" width="18" />
-          </div>
-        </div>
+      <div className="space-y-4 pt-2">
+        {formData[`${prefix}OperatingDays`].sort((a, b) => days.indexOf(a) - days.indexOf(b)).map((day) => {
+          const dayFullNames = {
+            Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday',
+            Fri: 'Friday', Sat: 'Saturday', Sun: 'Sunday'
+          };
+          return (
+            <div key={day} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+              <Input
+                label={`Opening Time (${dayFullNames[day]})`}
+                required
+                type="time"
+                value={formData[`${prefix}DayHours`]?.[day]?.open || ''}
+                onChange={(e) => {
+                  const newDayHours = { ...(formData[`${prefix}DayHours`] || {}) };
+                  newDayHours[day] = { ...(newDayHours[day] || {}), open: e.target.value };
+                  setFormData({ ...formData, [`${prefix}DayHours`]: newDayHours });
+                }}
+                className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                labelClassName="text-sm font-semibold text-[#181211]"
+                borderClass="border border-[#BDBDD2]"
+              />
+              <Input
+                label={`Closing Time (${dayFullNames[day]})`}
+                required
+                type="time"
+                value={formData[`${prefix}DayHours`]?.[day]?.close || ''}
+                onChange={(e) => {
+                  const newDayHours = { ...(formData[`${prefix}DayHours`] || {}) };
+                  newDayHours[day] = { ...(newDayHours[day] || {}), close: e.target.value };
+                  setFormData({ ...formData, [`${prefix}DayHours`]: newDayHours });
+                }}
+                className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                labelClassName="text-sm font-semibold text-[#181211]"
+                borderClass="border border-[#BDBDD2]"
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
