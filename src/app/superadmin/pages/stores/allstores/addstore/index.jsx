@@ -381,11 +381,11 @@ const AddStore = () => {
               <div className="flex items-center gap-4">
                 {currentStep === 5 ? (
                   <button
-                    onClick={handlePublish}
-                    className="flex-1 px-5 py-2.5 bg-[#219653] text-white justify-center rounded-md text-sm font-semibold shadow-[0px_4px_12px_-2px_#21965380]  transition-all flex items-center gap-2 "
+                    onClick={() => currentStep === 5 ? handlePublish() : setCurrentStep(prev => Math.min(5, prev + 1))}
+                    className="px-5 py-2.5 bg-[#EA3D2A] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] hover:bg-[#EA3D2A]/90 transition-all flex items-center gap-2 active:scale-95"
                   >
-                    <Icon icon="lucide:check" width="18" />
-                    Save Changes
+                    {currentStep === 5 ? 'Publish Store' : 'Continue'}
+                    {currentStep === 5 ? <Icon icon="mdi:store-plus" width="18" /> : <Icon icon="lucide:arrow-right" width="16" />}
                   </button>
                 ) : (
                   <>

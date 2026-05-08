@@ -55,10 +55,10 @@ const Footer = () => {
                         </div>
                         <ul className={`${openSection === 'links' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
                             <li><Link to="/store/about-us" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">About Us</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Contact Us</Link></li>
+                            <li><Link to="/store/contact-us" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Contact Us</Link></li>
                             <li><Link to="/store/myaccount" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">My Account</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Support</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom FAQ</Link></li>
+                            <li><Link to="/store/mushroom-faq" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom FAQ</Link></li>
                             <li><Link to="/store/track-order" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Track Your Order</Link></li>
                         </ul>
                     </div>
@@ -77,8 +77,8 @@ const Footer = () => {
                             />
                         </div>
                         <ul className={`${openSection === 'knowledge' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
+                            <li><Link to="/store/what-to-expect" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
+                            <li><Link to="/store/mushroom-strains" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>

@@ -26,6 +26,10 @@ import CreateStorePage from './pages/stores/CreateStorePage';
 import DealsPage from './pages/deals/DealsPage';
 import BecomeDriver from './pages/BecomeDriver';
 import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import MushroomFAQ from './pages/MushroomFAQ';
+import WhatToExpect from './pages/WhatToExpect';
+import MushroomStrains from './pages/MushroomStrains';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -62,6 +66,11 @@ function StoreApp() {
                     <Route path="deals" element={<DealsPage />} />
                     <Route path="become-a-driver" element={<BecomeDriver />} />
                     <Route path="about-us" element={<AboutUs />} />
+                    <Route path="contact-us" element={<ContactUs />} />
+                    <Route path="mushroom-faq" element={<MushroomFAQ />} />
+                    <Route path="what-to-expect" element={<WhatToExpect />} />
+                    <Route path="mushroom-strains" element={<MushroomStrains />} />
+                    <Route path="become-driver" element={<BecomeDriver />} />
                 </Route>
             </Routes>
             </CategoryProvider>

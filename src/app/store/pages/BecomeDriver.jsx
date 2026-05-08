@@ -5,6 +5,7 @@ import journeyImg from '../assets/images/becamdriverfooter.png';
 import profileImg from '../assets/images/profile.jpg';
 import Input from '../components/common/Input';
 import Select from '../components/common/Select';
+import { useNavigate } from 'react-router-dom';
 
 const BecomeDriver = () => {
     const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const BecomeDriver = () => {
         emergencyRelationship: '',
         emergencyPhoneNumber: ''
     });
-
+    const navigate = useNavigate();
     const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
     const toggleDay = (day) => {
@@ -42,37 +43,37 @@ const BecomeDriver = () => {
         <div className="w-full overflow-x-hidden font-sans bg-white">
             {/* Hero & Registration Section */}
             <section
-                className="py-12 md:py-20  relative overflow-hidden bg-cover bg-no-repeat bg-center lg:bg-right"
+                className="py-12 md:py-10  relative overflow-hidden bg-cover bg-no-repeat bg-center lg:bg-right"
                 style={{ backgroundImage: `url(${heroImg})` }}
             >
 
                 <div className="max-w-[1350px] mx-auto px-6 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 ">
                         {/* Form Card */}
-                        <div className="w-full max-w-[550px] bg-white rounded-[20px] overflow-hidden shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)] border border-[#E93E2B]/40 flex flex-col h-[750px]">
+                        <div className="w-full max-w-[540px] bg-white rounded-[20px] overflow-hidden shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)] border border-[#E93E2B]/40 flex flex-col h-[530px]">
                             {/* Card Header - Red (Fixed) */}
-                            <div className="bg-[#E93E2B] text-white p-6 pb-12 relative flex-shrink-0">
+                            <div className="bg-[#E93E2B] text-white p-3 pb-12 relative flex-shrink-0">
                                 <button
-                                    onClick={() => window.history.back()}
+                                    onClick={() => navigate("/store")}
                                     className="absolute left-6 top-6 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all text-white border border-white/20"
                                 >
                                     <Icon icon="lucide:arrow-left" width="20" />
                                 </button>
-                                <div className="text-center">
-                                    <h2 className="text-2xl font-semibold tracking-tight mb-1">Become Driver Registration</h2>
-                                    <p className="text-base font-medium opacity-95">Fill your details to start your journey with us</p>
+                                <div className="text-center mb-2">
+                                    <h2 className="text-xl font-semibold tracking-tight mb-0.5">Become Driver Registration</h2>
+                                    <p className="text-sm font-medium opacity-95">Fill your details to start your journey with us</p>
                                 </div>
                             </div>
 
                             {/* Form Content Wrapper (Scrollable area inside) */}
-                            <div className="flex-1 flex flex-col -mt-10 bg-white relative overflow-hidden">
+                            <div className="flex-1 flex flex-col -mt-10 bg-white relative overflow-hidden ">
                                 {/* Scrollable Fields Area */}
-                                <div className="flex-1 overflow-y-auto px-8 md:px-10 custom-scrollbar pb-6 pt-5">
+                                <div className="flex-1 overflow-y-auto px-8 md:px-8 custom-scrollbar pt-5 ">
                                     <form id="driver-form" className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                                         {/* Form Section Header */}
-                                        <div className="flex justify-center  mb-10 relative z-20">
+                                        <div className="flex justify-center  mb-4 relative z-20">
                                             <div className="relative">
-                                                <div className="w-28 h-28 rounded-full overflow-hidden border-[6px] border-white shadow-xl bg-white">
+                                                <div className="w-24 h-24 rounded-full overflow-hidden border-[6px] border-white shadow-xl bg-white">
                                                     <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
                                                 </div>
                                                 <div className="absolute bottom-1 right-1 bg-[#2D88FF] text-white p-2 rounded-full border-4 border-white shadow-md cursor-pointer hover:bg-blue-600 transition-colors">
@@ -217,11 +218,11 @@ const BecomeDriver = () => {
                                 </div>
 
                                 {/* Fixed Button Section (Outside scrollable area) */}
-                                <div className="p-8 md:px-10 flex items-center flex-shrink-0 bg-white border-t border-gray-50 font-manrope gap-4">
+                                <div className="p-4 md:px-8 flex items-center flex-shrink-0 bg-white border-t border-gray-50 font-manrope gap-4">
                                     <button
                                         form="driver-form"
                                         type="submit"
-                                        className="flex-1 py-3.5 bg-[#E93E2B] text-white rounded-xl text-base font-bold shadow-[0px_10px_25px_-5px_#E93E2B66] hover:bg-[#E93E2B]/90 transition-all flex items-center justify-center gap-3 active:scale-95"
+                                        className="flex-1 py-2.5 bg-[#E93E2B] text-white rounded-lg text-base font-semibold transition-all flex items-center justify-center gap-3 active:scale-95"
                                     >
                                         Save & Continue
                                         <Icon icon="lucide:arrow-right" width="20" />

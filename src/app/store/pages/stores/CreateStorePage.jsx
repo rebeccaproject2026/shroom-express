@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import { useStores } from "../../context/StoresContext";
@@ -16,6 +16,11 @@ const CreateStorePage = () => {
     const { addStore, loading } = useStores();
     const [currentStep, setCurrentStep] = useState(1);
     const [isSuccess, setIsSuccess] = useState(false);
+
+    // Scroll to top when step changes or success state reached
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [currentStep, isSuccess]);
 
     const [formData, setFormData] = useState({
         // Step 1: Owner Details
@@ -240,34 +245,23 @@ const CreateStorePage = () => {
                     <div className="flex items-center gap-4">
 
 
-                        {currentStep === steps.length ? (
-                            <button
-                                onClick={handleSubmit}
-                                disabled={loading}
-                                className="px-5 py-2 bg-[#219653] text-white rounded-md text-sm font-semibold shadow-sm transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
-                            >
-                                {loading ? (
-                                    <>
-                                        <Icon icon="line-md:loading-twotone-loop" width="18" />
-                                        Submitting...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Icon icon="lucide:check" width="18" />
-                                        Submit
-                                    </>
-                                )}
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() => setCurrentStep(s => s + 1)}
-                                disabled={!canNext()}
-                                className="px-5 py-2 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-sm hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Continue
-                                <Icon icon="lucide:arrow-right" width="16" />
-                            </button>
-                        )}
+                        <button
+                            onClick={() => currentStep === steps.length ? handleSubmit() : setCurrentStep(s => s + 1)}
+                            disabled={currentStep === steps.length ? loading : !canNext()}
+                            className="px-5 py-2 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-sm hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {loading ? (
+                                <>
+                                    <Icon icon="line-md:loading-twotone-loop" width="18" />
+                                    Submitting...
+                                </>
+                            ) : (
+                                <>
+                                    {currentStep === steps.length ? 'Publish Store' : 'Continue'}
+                                    {currentStep === steps.length ? <Icon icon="mdi:store-plus" width="18" /> : <Icon icon="lucide:arrow-right" width="16" />}
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
 
@@ -316,34 +310,23 @@ const CreateStorePage = () => {
                     </button>
 
                     <div className="flex items-center gap-4">
-                        {currentStep === steps.length ? (
-                            <button
-                                onClick={handleSubmit}
-                                disabled={loading}
-                                className="px-5 py-2.5 bg-[#219653] text-white rounded-md text-sm font-semibold shadow-[0px_4px_12px_-2px_#21965380] transition-all flex items-center gap-2 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
-                            >
-                                {loading ? (
-                                    <>
-                                        <Icon icon="line-md:loading-twotone-loop" width="18" />
-                                        Submitting...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Icon icon="lucide:check" width="18" />
-                                        Submit Registration
-                                    </>
-                                )}
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() => setCurrentStep(s => s + 1)}
-                                disabled={!canNext()}
-                                className="px-5 py-2.5 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#E93E2B33,0px_10px_15px_-3px_#E93E2B33] hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Continue
-                                <Icon icon="lucide:arrow-right" width="16" />
-                            </button>
-                        )}
+                        <button
+                            onClick={() => currentStep === steps.length ? handleSubmit() : setCurrentStep(s => s + 1)}
+                            disabled={currentStep === steps.length ? loading : !canNext()}
+                            className="px-5 py-2.5 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#E93E2B33,0px_10px_15px_-3px_#E93E2B33] hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {loading ? (
+                                <>
+                                    <Icon icon="line-md:loading-twotone-loop" width="18" />
+                                    Submitting...
+                                </>
+                            ) : (
+                                <>
+                                    {currentStep === steps.length ? 'Publish Store' : 'Continue'}
+                                    {currentStep === steps.length ? <Icon icon="mdi:store-plus" width="18" /> : <Icon icon="lucide:arrow-right" width="16" />}
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
             </div>
