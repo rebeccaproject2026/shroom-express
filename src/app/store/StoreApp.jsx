@@ -69,7 +69,7 @@ function StoreApp() {
                                     <Route path="contact-us" element={<ContactUs />} />
                                     <Route path="mushroom-faq" element={<MushroomFAQ />} />
                                     <Route path="what-to-expect" element={<WhatToExpect />} />
-                                    <Route path="mushroom-strains" element={<MushroomStrains />} />
+                                    {/* <Route path="mushroom-strains" element={<MushroomStrains />} /> */}
                                     <Route path="become-driver" element={<BecomeDriver />} />
                                 </Route>
                             </Routes>
