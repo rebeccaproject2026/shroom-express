@@ -128,11 +128,18 @@ const ReusableTableSelect = ({
                     className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#F8FAFC] cursor-pointer transition-colors group"
                   >
                     {showCheckbox && (
-                      <div className={`w-5 h-5 rounded-[4px] border flex items-center justify-center transition-all duration-200 ${isSelected
-                        ? "bg-[#EA3D2A] border-[#EA3D2A]"
-                        : "border-2 border-[#D1D1D6] bg-white group-hover:border-[#EA3D2A]"
+                      <div className={`w-5 h-5 flex items-center justify-center transition-all duration-200 ${isMulti ? "rounded-[4px] border" : "rounded-full border-2"
+                        } ${isSelected
+                          ? (isMulti ? "bg-[#EA3D2A] border-[#EA3D2A]" : "border-[#EA3D2A] bg-white")
+                          : "border-[#D1D1D6] bg-white group-hover:border-[#EA3D2A]"
                         }`}>
-                        {isSelected && <Icon icon="lucide:check" className="text-white" width="14" strokeWidth={3} />}
+                        {isSelected && (
+                          isMulti ? (
+                            <Icon icon="lucide:check" className="text-white" width="14" strokeWidth={3} />
+                          ) : (
+                            <div className="w-2.5 h-2.5 rounded-full bg-[#EA3D2A]" />
+                          )
+                        )}
                       </div>
                     )}
                     <span className={`text-[14px] font-medium text-[#181211] ${!showCheckbox && isSelected ? "text-[#EA3D2A]" : ""}`}>

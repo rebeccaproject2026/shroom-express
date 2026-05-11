@@ -314,11 +314,11 @@ const StoreDetails = () => {
 
                             {/* Store Info - Responsive Margin-Left to clear absolute logo */}
                             <div className="ml-56 lg:ml-65 flex-1 min-w-0 pb-1">
-                                <h1 className="text-xl md:text-2xl xl:text-[40px] font-bold leading-tight truncate" style={{ color: storeData.nameColor }}>
+                                <h1 className="text-xl md:text-2xl xl:text-[40px] font-bold leading-tight" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
 
-                                <div className="flex items-center gap-1 text-[12px] md:text-sm xl:text-lg">
+                                <div className="flex flex-wrap items-center gap-1 text-[12px] md:text-sm xl:text-lg">
                                     <button onClick={() => navigate('/store')} className="text-(--store-primary) hover:underline font-semibold cursor-pointer">
                                         Home
                                     </button>
@@ -327,7 +327,7 @@ const StoreDetails = () => {
                                         Stores
                                     </button>
                                     <span style={{ color: storeData.nameColor }}>/</span>
-                                    <span className="font-medium truncate" style={{ color: storeData.nameColor }}>{storeData.name}</span>
+                                    <span className="font-medium" style={{ color: storeData.nameColor }}>{storeData.name}</span>
                                 </div>
                             </div>
                         </div>
@@ -403,7 +403,7 @@ const StoreDetails = () => {
                         {storeData.name}
                     </h1>
 
-                    <div className="flex items-center gap-2 text-sm mb-2">
+                    <div className="flex flex-wrap items-center gap-2 text-sm mb-2">
                         <button onClick={() => navigate('/store')} className="text-[#E93E2B] font-semibold hover:underline">Home</button>
                         <span className="text-[#777777]">/</span>
                         <button onClick={() => navigate('/store/storeslists')} className="text-[#777777] font-semibold hover:underline">Stores</button>

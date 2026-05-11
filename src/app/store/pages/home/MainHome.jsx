@@ -17,6 +17,7 @@ import product6 from "../../assets/images/product6.png";
 import product7 from "../../assets/images/product7.png";
 import product8 from "../../assets/images/product8.png";
 import heroBgImg from "../../assets/images/herosection.png";
+import herosectionshipping from "../../assets/images/herosectionshipping.png";
 // import productEffectImg from "../../assets/images/producteffect1.png";
 import microDosingImg from "../../assets/images/microdosing.png";
 import beginnerFriendlyImg from "../../assets/images/beginnerfriendly.png";
@@ -64,9 +65,9 @@ const Home = () => {
             {/* Hero Section */}
             <section className="font-sans pt-6 pb-4 md:pt-6 md:pb-10">
                 <div className="w-full max-w-[1700px] mx-auto">
-                    <div 
+                    <div
                         className="rounded-3xl flex flex-row items-center justify-between min-h-[220px] sm:min-h-[400px] lg:h-[40%] relative overflow-hidden bg-cover bg-center"
-                        style={{ backgroundImage: `url(${heroBgImg})` }}
+                        style={{ backgroundImage: `url(${deliveryMethod === 'shipping' ? herosectionshipping : heroBgImg})` }}
                     >
 
                         {/* Left Side */}
@@ -77,18 +78,18 @@ const Home = () => {
                             </div>
 
                             {/* Heading */}
-                            <h1 className="text-[#181211] font-extrabold text-lg sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight transition-opacity duration-300 leading-tight">
+                            <h1 className="text-[#181211] font-extrabold text-lg sm:text-4xl lg:text-5xl xl:text-[52px] tracking-tight transition-opacity duration-300 leading-tight">
                                 {deliveryMethod === 'shipping' ? (
-                                    <>Mail Order <br />
-                                        <span className="text-(--store-primary) inline-block mt-1">Canada-Wide Shipping</span></>
+                                    <>Nature's Finest <br />
+                                        <span className="text-(--store-primary) inline-block mt-1">Straight To Your Door</span></>
                                 ) : (
                                     <>Elevate Your <br />
-                                        <span className="text-(--store-primary) inline-block mt-1">Wellness Journey</span></>
+                                        <span className="text-(--store-primary) inline-block">Wellness Journey</span></>
                                 )}
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-[#886663] text-[10px] leading-tight sm:text-lg font-medium max-w-md mt-2 sm:mt-6 transition-opacity duration-300">
+                            <p className="text-[#886663] text-[10px] leading-tight sm:text-lg font-medium max-w-md mt-2 sm:mt-5 transition-opacity duration-300">
                                 {deliveryMethod === 'shipping'
                                     ? "Discreet, express mail order shipping across Canada. Securely packaged and delivered straight to your mailbox."
                                     : "Curated selections of premium cannabis and functional mushrooms. Lab tested, legally compliant,and discreetly shipped to your door."
@@ -97,27 +98,7 @@ const Home = () => {
                         </div>
 
                         {/* Right Side Container */}
-                        <div className="w-[40%] md:w-[45%] flex justify-center items-center relative z-10">
-                            {/* <div className="relative w-full max-w-[140px] sm:max-w-110 aspect-square flex items-center justify-center">
-                                <img
-                                    src={home3}
-                                    alt="Hero background right"
-                                    className="absolute w-full md:w-[85%] sm:w-[85%] lg:w-[85%] xl:w-[85%] h-auto rounded-4xl sm:rounded-4xl  rotate-3  sm:right-5 sm:bottom-5 z-0 object-cover md:right-9 md:bottom-8"
-
-                                />
-                                <img
-                                    src={home2}
-                                    alt="Hero background left"
-                                    className="absolute w-full md:w-[85%] sm:w-[85%] h-auto rounded-xl sm:rounded-4xl -rotate-3  md:left-9 md:top-8 sm:left-7 sm:top-6 z-10"
-                                />
-                                <img
-                                    src={home1}
-                                    alt="Premium Mushroom Coffee"
-                                    className="w-full md:w-[85%] sm:w-[85%] h-auto rounded-lg sm:rounded-3xl relative z-20 object-cover"
-                                    id="hero-coffee-image"
-                                    style={{ filter: "drop-shadow(0px 10px 40px rgba(0,0,0,0.15))" }}
-                                />
-                            </div> */}
+                        <div className="w-[40%] md:w-[45%] flex justify-end items-center relative z-10">
                             <HeroSpiralGallery />
                         </div>
                     </div>
@@ -270,7 +251,7 @@ const Home = () => {
                 </div>
             </section>
 
-            
+
 
             {/* Best Selling Products Section */}
             <section className="bg-[#FAF7F7] font-sans pt-8 pb-10 -mx-0 sm:-mx-6 lg:-mx-10 px-0 sm:px-6 lg:px-10">

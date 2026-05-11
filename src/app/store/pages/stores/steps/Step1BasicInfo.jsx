@@ -12,7 +12,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
         lastName: 'Doe',
         email: 'john.doe@example.com',
         phone: '+1 (461) 555-0123',
-        role: 'Store Manager',
+        role: 'Store Owner',
         contactNumber: '+1 (461) 555-0123'
       });
     }
@@ -20,12 +20,15 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
 
 
   const roleOptions = [
+    { value: 'Store Owner', label: 'Store Owner' },
+    { value: 'Marketing Agency', label: 'Marketing Agency' },
     { value: 'Store Manager', label: 'Store Manager' },
-    { value: 'Store Executive', label: 'Store Executive' },
+    { value: 'Inventory Manager', label: 'Inventory Manager' },
+    { value: 'Store Staff', label: 'Store Staff' },
   ];
 
   return (
-    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm min-h-[500px]">
+    <div className="bg-white border border-[#BDBDD2] rounded-md overflow-hidden shadow-sm min-h-[550px]">
       <div className="p-4 border-b border-[#BDBDD2] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-[#FFEDEB] rounded-sm flex items-center justify-center shrink-0">
@@ -87,7 +90,7 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               options={roleOptions}
-              placeholder="Store Manager"
+              placeholder="Select Role..."
               borderclass="border border-[#BDBDD2]"
               className="w-full text-[#475569] font-medium"
             />

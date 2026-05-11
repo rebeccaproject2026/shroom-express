@@ -56,7 +56,7 @@ const HeroSpiralGallery = () => {
                 duration: rotationSpeed,
                 ease: "none"
             });
-            
+
             // Subtle scale pulsing for background
             gsap.to(card, {
                 scale: "+=0.05",
@@ -65,7 +65,7 @@ const HeroSpiralGallery = () => {
                 yoyo: true,
                 ease: "sine.inOut"
             });
-            
+
             rotationTimelines.current.push(tl);
         });
 
@@ -89,12 +89,12 @@ const HeroSpiralGallery = () => {
     useEffect(() => {
         const activeCard = fgCardsRef.current[activeIndex];
         if (activeCard) {
-            gsap.fromTo(activeCard, 
+            gsap.fromTo(activeCard,
                 { scale: 0.8, opacity: 0, rotate: -5 },
                 { scale: 1, opacity: 1, rotate: 0, duration: 1.2, ease: "expo.out" }
             );
         }
-        
+
         // Fade out other cards
         fgCardsRef.current.forEach((card, i) => {
             if (i !== activeIndex && card) {
@@ -126,7 +126,7 @@ const HeroSpiralGallery = () => {
                         <div
                             key={`bg-${i}`}
                             ref={el => bgCardsRef.current[i] = el}
-                            className="absolute w-[76%] h-[76%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl"
+                            className="absolute w-[66%] h-[66%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl"
                         >
                             <img src={img} alt="" className="w-full h-full object-cover opacity-70 " />
                         </div>
@@ -139,7 +139,7 @@ const HeroSpiralGallery = () => {
                         <div
                             key={`fg-${i}`}
                             ref={el => fgCardsRef.current[i] = el}
-                            className="absolute w-[78%] h-[78%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl opacity-0"
+                            className="absolute w-[68%] h-[68%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl opacity-0"
                         >
                             <img src={img} alt="" className="w-full h-full object-cover shadow-[0_20px_50px_rgba(0,0,0,0.2)]" />
                         </div>
