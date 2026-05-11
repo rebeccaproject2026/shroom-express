@@ -29,7 +29,8 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import MushroomFAQ from './pages/MushroomFAQ';
 import WhatToExpect from './pages/WhatToExpect';
-// import MushroomStrains from './pages/MushroomStrains';
+import MushroomStrains from './pages/stores/MushroomStrains';
+import ChoosingYourProduct from './pages/ChoosingYourProduct';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -69,7 +70,8 @@ function StoreApp() {
                                     <Route path="contact-us" element={<ContactUs />} />
                                     <Route path="mushroom-faq" element={<MushroomFAQ />} />
                                     <Route path="what-to-expect" element={<WhatToExpect />} />
-                                    {/* <Route path="mushroom-strains" element={<MushroomStrains />} /> */}
+                                    <Route path="mushroom-strains" element={<MushroomStrains />} />
+                                    <Route path="choosing-your-product" element={<ChoosingYourProduct />} />
                                     <Route path="become-driver" element={<BecomeDriver />} />
                                 </Route>
                             </Routes>

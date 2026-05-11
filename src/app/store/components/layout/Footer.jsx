@@ -79,7 +79,7 @@ const Footer = () => {
                         <ul className={`${openSection === 'knowledge' ? 'flex animate-in fade-in slide-in-from-top-2 duration-300' : 'hidden md:flex'} flex-col space-y-4 text-[#886663] text-sm font-normal mt-4 md:mt-0`}>
                             <li><Link to="/store/what-to-expect" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
                             <li><Link to="/store/mushroom-strains" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
+                            <li><Link to="/store/choosing-your-product" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
                             <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>
                         </ul>
