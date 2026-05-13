@@ -72,6 +72,13 @@ const getInventoryColumns = (onView, onDelete) => [
     accessorKey: "subcategory",
     header: "Subcategory",
     cell: (info) => (
+      <span className="text-[12px] text-[#3F4753]">{info.getValue() || "-"}</span>
+    ),
+  },
+  {
+    accessorKey: "unit",
+    header: "Unit",
+    cell: (info) => (
       <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
     ),
   },
@@ -84,7 +91,7 @@ const getInventoryColumns = (onView, onDelete) => [
   },
   {
     accessorKey: "cost",
-    header: "Cost",
+    header: "Cost Price",
     cell: (info) => (
       <span className="text-[12px] text-[#3F4753] text-right block">
         {info.getValue()}
@@ -93,7 +100,7 @@ const getInventoryColumns = (onView, onDelete) => [
   },
   {
     accessorKey: "salePrice",
-    header: "Sale Price",
+    header: "Sales Price",
     cell: (info) => (
       <span className="text-[12px] text-[#3F4753] text-right block">
         {info.getValue()}
@@ -101,39 +108,35 @@ const getInventoryColumns = (onView, onDelete) => [
     ),
   },
   {
-    accessorKey: "updated",
-    header: "Updated",
+    accessorKey: "profitDollar",
+    header: "Profit $",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
+      <span className="text-[12px] text-[#3F4753] text-right block">
+        {info.getValue()}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "profitPercent",
+    header: "Profit %",
+    cell: (info) => (
+      <span className="text-[12px] text-[#3F4753] text-right block">
+        {info.getValue()}
+      </span>
     ),
   },
   {
     accessorKey: "totalStock",
-    header: "Total Stock",
+    header: "Stock",
     cell: (info) => (
       <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
     ),
   },
   {
-    accessorKey: "sold",
-    header: "Sold",
-    cell: (info) => {
-      const row = info.row.original;
-      return (
-        <div className="text-[12px] text-[#3F4753] text-right">
-          <span className="block">{row.soldAmount}</span>
-          <span className="block text-gray-500">{row.soldQty}</span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "reorder",
-    header: "Reorder",
+    accessorKey: "updated",
+    header: "Last Updated",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753] text-right block">
-        {info.getValue()}
-      </span>
+      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
     ),
   },
   {
@@ -169,9 +172,12 @@ const INVENTORY_DATA = [
     product: "Melmac (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "200 Grams In-Stock",
     soldAmount: "$1925.52",
@@ -183,9 +189,12 @@ const INVENTORY_DATA = [
     product: "Blue Pulaski (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "200 Grams In-Stock",
     soldAmount: "$1925.52",
@@ -197,9 +206,12 @@ const INVENTORY_DATA = [
     product: "Blue Meanies (Dried)",
     category: "Accessory",
     subcategory: "Rolling Paper",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "200 Grams In-Stock",
     soldAmount: "$1925.52",
@@ -211,9 +223,12 @@ const INVENTORY_DATA = [
     product: "Albino Penis Envy (Dried)",
     category: "Accessory",
     subcategory: "Blunt Wrap",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "50 Grams Low-Stock",
     soldAmount: "$850.00",
@@ -225,9 +240,12 @@ const INVENTORY_DATA = [
     product: "Mango Peach",
     category: "Accessory",
     subcategory: "Rolling Paper",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -239,9 +257,12 @@ const INVENTORY_DATA = [
     product: "Aztec God",
     category: "Accessory",
     subcategory: "Blunt Wrap",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -253,9 +274,12 @@ const INVENTORY_DATA = [
     product: "EBlue Meanies (Dried)",
     category: "Concentrate",
     subcategory: "Distillate",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -267,9 +291,12 @@ const INVENTORY_DATA = [
     product: "Jesus Christ Super Strain (JCSS)",
     category: "Concentrate",
     subcategory: "Shatter",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -281,9 +308,12 @@ const INVENTORY_DATA = [
     product: "Hillbilly",
     category: "Edible",
     subcategory: "Gummies",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -295,9 +325,12 @@ const INVENTORY_DATA = [
     product: "Golden Teacher",
     category: "Edible",
     subcategory: "Gummies",
+    unit: "Item",
     status: "Active",
     cost: "$9.25",
     salePrice: "$16.99",
+    profitDollar: "$7.74",
+    profitPercent: "83.68%",
     updated: "2025-07-08 06:55:03",
     totalStock: "0 Grams Out of Stock",
     soldAmount: "$0.00",
@@ -481,12 +514,12 @@ const Inventory = () => {
                 <tr key={hg.id}>
                   {hg.headers.map((header) => {
                     const colId = header.column.id ?? header.column.accessorKey;
-                    const isRight =
-                      colId === "action" ||
-                      colId === "cost" ||
-                      colId === "salePrice" ||
-                      colId === "sold" ||
-                      colId === "reorder";
+                      const isRight =
+                        colId === "action" ||
+                        colId === "cost" ||
+                        colId === "salePrice" ||
+                        colId === "profitDollar" ||
+                        colId === "profitPercent";
                     return (
                       <th
                         key={header.id}
@@ -514,8 +547,8 @@ const Inventory = () => {
                         colId === "action" ||
                         colId === "cost" ||
                         colId === "salePrice" ||
-                        colId === "sold" ||
-                        colId === "reorder";
+                        colId === "profitDollar" ||
+                        colId === "profitPercent";
                       return (
                         <td
                           key={cell.id}

@@ -80,8 +80,8 @@ const Footer = () => {
                             <li><Link to="/store/what-to-expect" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">What to Expect</Link></li>
                             <li><Link to="/store/mushroom-strains" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Mushroom Strains</Link></li>
                             <li><Link to="/store/choosing-your-product" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Choosing Your Product</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
-                            <li><Link to="#" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>
+                            <li><Link to="/store/dosage-guide" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Psilocybin Dosage Guide</Link></li>
+                            <li><Link to="/store/safe-microdosing-practices" className="hover:text-[var(--store-primary)] transition-colors inline-block w-full">Safe Microdosing Practices</Link></li>
                         </ul>
                     </div>
 

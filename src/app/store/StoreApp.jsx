@@ -31,6 +31,8 @@ import MushroomFAQ from './pages/MushroomFAQ';
 import WhatToExpect from './pages/WhatToExpect';
 import MushroomStrains from './pages/stores/MushroomStrains';
 import ChoosingYourProduct from './pages/ChoosingYourProduct';
+import PsilocybinDosageGuide from './pages/PsilocybinDosageGuide';
+import SafeMicrodosingPractices from './pages/SafeMicrodosingPractices';
 
 function StoreApp() {
     const { pathname } = useLocation();
@@ -72,6 +74,8 @@ function StoreApp() {
                                     <Route path="what-to-expect" element={<WhatToExpect />} />
                                     <Route path="mushroom-strains" element={<MushroomStrains />} />
                                     <Route path="choosing-your-product" element={<ChoosingYourProduct />} />
+                                    <Route path="dosage-guide" element={<PsilocybinDosageGuide />} />
+                                    <Route path="safe-microdosing-practices" element={<SafeMicrodosingPractices />} />
                                     <Route path="become-driver" element={<BecomeDriver />} />
                                 </Route>
                             </Routes>

@@ -108,9 +108,9 @@ const MushroomStrains = () => {
                         <span className="bg-[#E93E2B]/10 text-[#E93E2B] text-[10px] md:text-xs font-extrabold uppercase tracking-widest px-4 py-2 rounded-full mb-8">
                             MUSHROOM STRAINS
                         </span>
-                        <h1 className="text-[#181211] font-extrabold text-5xl lg:text-5xl tracking-tight leading-none mb-3">
+                        <h1 className="text-[#181211] font-extrabold text-5xl lg:text-5xl tracking-tight leading-tight mb-3">
                             Understanding Magic <br />
-                            <span className="text-[#E93E2B]">Mushroom Strains</span>
+                            <span className="text-[#E93E2B] mt-0.5 inline-block">Mushroom Strains</span>
                         </h1>
                         <h2 className="text-[22px] md:text-xl font-bold text-[#344B24] mb-4">Nature's Goodness, Delivered with Care</h2>
 
@@ -123,7 +123,7 @@ const MushroomStrains = () => {
 
                         <button
                             onClick={() => navigate('/store')}
-                            className="bg-[#0D0D0D] text-white pl-6 pr-6 py-1.5 rounded-full font-semibold flex items-center gap-2 cursor-pointer transition-all group shadow-xl text-base hover:bg-[#E93E2B]"
+                            className="bg-[#0D0D0D] text-white pl-6 pr-6 py-1 rounded-full font-semibold flex items-center gap-2 cursor-pointer transition-all group shadow-xl text-base hover:bg-[#E93E2B]"
                         >
                             Shop Now
                             <div className="w-9 h-9 flex items-center justify-center text-white">
