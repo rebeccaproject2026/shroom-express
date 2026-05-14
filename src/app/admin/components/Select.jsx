@@ -281,13 +281,13 @@ const Select = ({
         disabled={disabled}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
-        className={`head-dr-dropdown form-select w-full px-2.5 text-[13px] border border-[#DDDDDD] rounded-sm font-medium focus:outline-none shadow-none flex items-center justify-between pr-8 transition-colors placeholder-gray-600 ${compact ? "min-h-[32px] py-2" : "min-h-[38px] py-3"
+        className={`head-dr-dropdown form-select w-full px-2.5 text-[13px] border border-[#DDDDDD] rounded-sm font-medium focus:outline-none shadow-none flex items-center justify-between pr-8 transition-colors placeholder-gray-400 ${compact ? "min-h-[32px] py-2" : "min-h-[38px] py-3"
           } ${disabled
             ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
             : "bg-white text-gray-900 cursor-pointer"
           } ${className}`}
       >
-        <span className="overflow-hidden whitespace-nowrap text-sm flex-1 text-left text-gray-600">
+        <span className={`overflow-hidden whitespace-nowrap text-sm flex-1 text-left ${displayOption ? "text-gray-900" : "text-gray-400"}`}>
           {displayOption || displayTitle}
         </span>
         <span className={`absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 flex items-center justify-center ${disabled ? "text-gray-300" : "text-gray-500"}`}>
@@ -318,7 +318,7 @@ const Select = ({
                 }}
                 onKeyDown={handleKeyDown}
                 placeholder={searchPlaceholder}
-                className="w-full px-2.5 py-1.5 text-[13px] border border-[#000] rounded-sm bg-white text-gray-700 placeholder-gray-600 focus:outline-none "
+                className="w-full px-2.5 py-1.5 text-[13px] border border-[#000] rounded-sm bg-white text-gray-700 placeholder-gray-400 focus:outline-none "
               />
             </div>
           )}

@@ -130,6 +130,15 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
         <header className={`${isHomePage ? 'relative' : 'fixed top-0 left-0 right-0'} ${searchOpen || mobileMenuOpen ? 'z-[2000]' : 'z-[100]'} bg-white  flex flex-col w-full font-sans`}>
             {/* SECTION 1: Top Red Bar (Enhanced with Scroll for Small Screens) */}
             <div className="bg-[var(--store-primary)] text-white text-xs sm:text-sm py-2 px-4 flex justify-center sm:justify-center items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap scroll-smooth">
+                {isMinimalPage && (
+                    <>
+                        <Link to="/store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
+                            <Icon icon="hugeicons:home-03" width={16} height={16} />
+                            <span>Home</span>
+                        </Link>
+                        <div className="w-px h-3.5 sm:h-5 bg-[#FFFFFFCC] shrink-0"></div>
+                    </>
+                )}
 
                 <Link to="/store/create-store" className="flex items-center gap-1.5 sm:gap-2 hover:opacity-80 transition-opacity font-medium shrink-0">
                     <Icon icon="clarity:store-line" width={16} height={16} />

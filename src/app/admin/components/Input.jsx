@@ -35,7 +35,7 @@ const Input = ({
   const hasCustomBg = className && /bg-/.test(className);
   const bgClass = hasCustomBg ? "" : "bg-white";
 
-  const baseInputClass = `${widthClass} px-3 ${paddingY} text-sm border ${bgClass} text-[0000] font-medium placeholder-gray-600 focus:outline-none  `;
+  const baseInputClass = `${widthClass} px-3 ${paddingY} text-sm border ${bgClass} text-[#212121] font-medium placeholder-gray-400 focus:outline-none  `;
   const borderClass = error ? "border-red-500" : "border-[#DDDDDD]";
 
   // Determine border radius based on prefix/suffix

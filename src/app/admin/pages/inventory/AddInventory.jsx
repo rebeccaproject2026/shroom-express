@@ -15,6 +15,22 @@ const PRICE_UNIT_OPTIONS = [
   { value: "OZ", label: "OZ" },
 ];
 
+const UNIT_OPTIONS = [
+  { value: "Item", label: "Item" },
+  { value: "Grams", label: "Grams" },
+  { value: "Units", label: "Units" },
+  { value: "OZ", label: "OZ" },
+  { value: "Capsule", label: "Capsule" },
+  { value: "Pack", label: "Pack" },
+  { value: "Box", label: "Box" },
+  { value: "Bottle", label: "Bottle" },
+  { value: "Bag", label: "Bag" },
+  { value: "oz", label: "oz" },
+  { value: "lb", label: "lb" },
+  { value: "kg", label: "kg" },
+  { value: "g", label: "g" },
+];
+
 const PRODUCT_OPTIONS = [
   { value: "blueMeanies", label: "Blue Meanies (Dried)" },
   { value: "melmac", label: "Melmac (Dried)" },
@@ -58,16 +74,52 @@ const BEST_SELLING_OPTIONS = [
   { value: "no", label: "No" },
 ];
 
+const POTENCY_OPTIONS = [
+  { value: "None", label: "None" },
+  { value: "Low", label: "Low" },
+  { value: "Medium", label: "Medium" },
+  { value: "High", label: "High" },
+];
+
+const EFFECT_OPTIONS = [
+  { value: "None", label: "None" },
+  { value: "Body / Energetic", label: "Body / Energetic" },
+  { value: "Body / Euphoric", label: "Body / Euphoric" },
+  { value: "Body / Mental", label: "Body / Mental" },
+  { value: "Body / Spiritual", label: "Body / Spiritual" },
+  { value: "Highly Visual / Spiritual", label: "Highly Visual / Spiritual" },
+  { value: "Intense Body", label: "Intense Body" },
+  { value: "Intense / Energetic", label: "Intense / Energetic" },
+  { value: "Intense / Visual", label: "Intense / Visual" },
+  { value: "Mental / Spiritual", label: "Mental / Spiritual" },
+  { value: "Mild / Spiritual", label: "Mild / Spiritual" },
+  { value: "Natural Body", label: "Natural Body" },
+  { value: "Natural Mind", label: "Natural Mind" },
+  { value: "Natural Mood", label: "Natural Mood" },
+  { value: "Spiritual / Visual", label: "Spiritual / Visual" },
+  { value: "Very Intense", label: "Very Intense" },
+  { value: "Visual / Body", label: "Visual / Body" },
+  { value: "Visual / Euphoric", label: "Visual / Euphoric" },
+  { value: "Visual / Spiritual", label: "Visual / Spiritual" },
+];
+
+const VEGAN_SOY_OPTIONS = [
+  { value: "No", label: "No" },
+  { value: "Yes", label: "Yes" },
+];
+
 const AddInventory = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditMode = Boolean(id);
   const [searchProduct, setSearchProduct] = useState("");
   const [productName, setProductName] = useState("Blue Meanies (Dried)");
+  const [unit, setUnit] = useState("Item");
   const [productOrder, setProductOrder] = useState("298");
   const [thcCbdUnit, setThcCbdUnit] = useState("MG");
   const [thcMg, setThcMg] = useState("");
   const [cbdMg, setCbdMg] = useState("");
+  const [potency, setPotency] = useState("None");
   const [description, setDescription] = useState("");
   const [purchaseQty, setPurchaseQty] = useState("");
   const [purchaseCost, setPurchaseCost] = useState("");
@@ -76,8 +128,51 @@ const AddInventory = () => {
   const [lowStockAlert, setLowStockAlert] = useState("");
   const [selectProduct, setSelectProduct] = useState("blueMeanies");
   const [category, setCategory] = useState("Mushrooms");
-  const [subCategory, setSubCategory] = useState("ClassicStrains");
+  const [subCategory, setSubCategory] = useState("None");
+  const [effect, setEffect] = useState("None");
+  const [veganSoyFree, setVeganSoyFree] = useState("No");
   const [stock, setStock] = useState("In-Stock");
+
+  const [variations, setVariations] = useState([
+    { id: 1, unit: '3.5g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+    { id: 2, unit: '7g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+    { id: 3, unit: '14g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+    { id: 4, unit: '28g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+  ]);
+
+  useEffect(() => {
+    if (category === "Edibles") {
+      setVariations([
+        { id: 1, unit: '4 G', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+      ]);
+    } else if (category === "Microdose") {
+      setVariations([
+        { id: 1, unit: '100 MG / 30 Cap', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 2, unit: '150 MG / 30 Cap', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 3, unit: '200 MG / 30 Cap', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 4, unit: '500 MG / 15 Cap', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+      ]);
+    } else {
+      setVariations([
+        { id: 1, unit: '3.5g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 2, unit: '7g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 3, unit: '14g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+        { id: 4, unit: '28g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
+      ]);
+    }
+  }, [category]);
+
+  const addVariation = () => {
+    setVariations([...variations, { id: Date.now(), unit: '', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' }]);
+  };
+
+  const removeVariation = (id) => {
+    setVariations(variations.filter(v => v.id !== id));
+  };
+
+  const updateVariation = (id, field, value) => {
+    setVariations(variations.map(v => v.id === id ? { ...v, [field]: value } : v));
+  };
 
   useEffect(() => {
     if (isEditMode) {
@@ -171,8 +266,8 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
               <h2 className="text-base font-bold text-gray-900 mb-2">
                 General Information
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="sm:col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-3">
+                <div>
                   <Input
                     label="Product Name"
                     value={productName}
@@ -181,6 +276,60 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                     compact
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Unit
+                  </label>
+                  <Select
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
+                    options={UNIT_OPTIONS}
+                    placeholder="Select Unit"
+                    compact
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Category
+                  </label>
+                  <Select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    options={CATEGORY_OPTIONS}
+                    placeholder="Category"
+                    compact
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Subcategory
+                  </label>
+                  <Select
+                    value={subCategory}
+                    onChange={(e) => setSubCategory(e.target.value)}
+                    options={SUB_CATEGORY_OPTIONS}
+                    placeholder="Subcategory"
+                    compact
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Potency
+                  </label>
+                  <Select
+                    value={potency}
+                    onChange={(e) => setPotency(e.target.value)}
+                    options={POTENCY_OPTIONS}
+                    placeholder="Select Potency"
+                    compact
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3">
                 <div>
                   <Input
                     label="Product Order"
@@ -195,7 +344,6 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                     label="Psilocybin"
                     value={thcCbdUnit}
                     onChange={(e) => setThcCbdUnit(e.target.value)}
-                    options={THC_CBD_UNIT_OPTIONS}
                     placeholder="Psilocybin"
                     compact
                     type="number"
@@ -222,6 +370,7 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                   />
                 </div>
               </div>
+
               <div className="mt-3">
                 <label className="block text-sm font-semibold text-[#212121] mb-0.5">
                   Description
@@ -230,96 +379,117 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Description"
-                  rows={2}
-                  className="w-full px-3 py-2 text-sm border border-[#DDDDDD] rounded-sm bg-white font-medium placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent resize-y min-h-[56px]"
+                  rows={4}
+                  className="w-full px-3 py-2 text-sm border border-[#DDDDDD] rounded-sm bg-white font-medium placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent resize-y min-h-[120px]"
                 />
               </div>
             </div>
 
-            {/* Inventory Evaluation - combined input with gray prefix */}
+            {/* Pricing & Stock - Dynamic Variations Table */}
             <div>
               <h2 className="text-base font-bold text-gray-900 pb-2 border-b border-[#000000]">
-                Inventory Evaluation
+                Pricing & Stock
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3">
-                {/* Purchase Qty: [Unit | Enter Qty] */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Purchase Qty
-                  </label>
-                  <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
-                    <div className="flex items-center justify-center px-3 py-2 bg-gray-100 border-r border-[#DDDDDD] font-semibold text-gray-700 text-sm shrink-0">
-                      Unit
-                    </div>
-                    <input
-                      type="text"
-                      value={purchaseQty}
-                      onChange={(e) => setPurchaseQty(e.target.value)}
-                      placeholder="Enter Qty"
-                      className="flex-1 min-w-0 px-3 py-2 text-sm border-0 font-medium placeholder-gray-500 focus:outline-none focus:ring-0 bg-white"
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-0.5 italic">
-                    Available: 100 Units
-                  </p>
+
+              <div className="space-y-3 mt-3">
+                {/* Table Headers */}
+                <div className="grid grid-cols-[1.2fr_1.2fr_1.2fr_1.5fr_1.2fr_40px] gap-3 mb-1">
+                  <span className="text-sm font-semibold text-gray-700">Variation (Unit)</span>
+                  <span className="text-sm font-semibold text-gray-700">Cost Price (CAD)</span>
+                  <span className="text-sm font-semibold text-gray-700">Sale Price (CAD)</span>
+                  <span className="text-sm font-semibold text-gray-700">Low Stock Alert</span>
+                  <span className="text-sm font-semibold text-gray-700">Stock Quantity</span>
+                  <span></span>
                 </div>
-                {/* Purchase Cost: [$ | Enter Price] */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Purchase Cost
-                  </label>
-                  <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
-                    <div className="flex items-center justify-center px-3 py-2 bg-gray-100 border-r border-[#DDDDDD] font-semibold text-gray-700 text-sm shrink-0">
-                      $
-                    </div>
-                    <input
-                      type="text"
-                      value={purchaseCost}
-                      onChange={(e) => setPurchaseCost(e.target.value)}
-                      placeholder="Enter Price"
-                      className="flex-1 min-w-0 px-3 py-2 text-sm border-0 font-medium placeholder-gray-500 focus:outline-none focus:ring-0 bg-white"
+
+                {/* Variation Rows */}
+                {variations.map((v) => (
+                  <div key={v.id} className="grid grid-cols-[1.2fr_1.2fr_1.2fr_1.5fr_1.2fr_40px] gap-2 items-center">
+                    <Input
+                      value={v.unit}
+                      onChange={(e) => updateVariation(v.id, 'unit', e.target.value)}
+                      placeholder="Variation"
+                      className="text-xs!"
+                      compact
                     />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    Avg. Cost: $19.56
-                  </p>
-                </div>
-                {/* Sale Price: [$ | Enter Price] */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Sale Price
-                  </label>
-                  <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
-                    <div className="flex items-center justify-center px-3 py-2 bg-gray-100 border-r border-[#DDDDDD] font-semibold text-gray-700 text-sm shrink-0">
-                      $
+
+                    <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
+                      <div className="flex items-center justify-center px-2 py-2 bg-gray-50 border-r border-[#DDDDDD] font-bold text-gray-700 text-xs shrink-0">
+                        $
+                      </div>
+                      <input
+                        type="text"
+                        value={v.costPrice}
+                        onChange={(e) => updateVariation(v.id, 'costPrice', e.target.value)}
+                        placeholder="Enter Cost Price"
+                        className="flex-1 min-w-0 px-2 py-2 text-xs border-0 font-medium placeholder-gray-300 focus:outline-none bg-white"
+                      />
                     </div>
-                    <input
-                      type="text"
-                      value={salePrice}
-                      onChange={(e) => setSalePrice(e.target.value)}
-                      placeholder="Enter Price"
-                      className="flex-1 min-w-0 px-3 py-2 text-sm border-0 font-medium placeholder-gray-500 focus:outline-none focus:ring-0 bg-white"
-                    />
-                  </div>
-                </div>
-                {/* Discounted Price: [$ | Enter Price] */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Discounted Price
-                  </label>
-                  <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
-                    <div className="flex items-center justify-center px-3 py-2 bg-gray-100 border-r border-[#DDDDDD] font-semibold text-gray-700 text-sm shrink-0">
-                      $
+
+                    <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
+                      <div className="flex items-center justify-center px-2 py-2 bg-gray-50 border-r border-[#DDDDDD] font-bold text-gray-700 text-xs shrink-0">
+                        $
+                      </div>
+                      <input
+                        type="text"
+                        value={v.salePrice}
+                        onChange={(e) => updateVariation(v.id, 'salePrice', e.target.value)}
+                        placeholder="Enter Sale Price"
+                        className="flex-1 min-w-0 px-2 py-2 text-xs border-0 font-medium placeholder-gray-300 focus:outline-none bg-white"
+                      />
                     </div>
-                    <input
-                      type="text"
-                      value={discountedPrice}
-                      onChange={(e) => setDiscountedPrice(e.target.value)}
-                      placeholder="Enter Price"
-                      className="flex-1 min-w-0 px-3 py-2 text-sm border-0 font-medium placeholder-gray-500 focus:outline-none focus:ring-0 bg-white"
+
+                    <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white h-[36px]">
+                      <input
+                        type="text"
+                        value={v.lowStock}
+                        onChange={(e) => updateVariation(v.id, 'lowStock', e.target.value)}
+                        className="w-10 px-2 text-xs border-0 font-medium focus:outline-none bg-white border-r border-[#DDDDDD]"
+                      />
+                      <div className="flex-1 min-w-0 bg-white relative">
+                        <select
+                          value={v.lowStockUnit}
+                          onChange={(e) => updateVariation(v.id, 'lowStockUnit', e.target.value)}
+                          className="w-full h-full text-[11px] border-0 bg-transparent focus:outline-none pl-2 pr-6 font-medium text-gray-900 cursor-pointer appearance-none"
+                        >
+                          {UNIT_OPTIONS.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600">
+                          <Icon icon="lucide:chevron-down" className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <Input
+                      value={v.quantity}
+                      onChange={(e) => updateVariation(v.id, 'quantity', e.target.value)}
+                      placeholder="Enter Quantity"
+                      className="text-xs!"
+                      compact
                     />
+
+                    <button
+                      type="button"
+                      onClick={() => removeVariation(v.id)}
+                      className="w-9 h-9 flex items-center justify-center rounded-md border border-red-200 text-red-500 hover:bg-red-50 transition-colors shrink-0"
+                    >
+                      <Icon icon="mdi:trash-can-outline" className="w-5 h-5" />
+                    </button>
                   </div>
-                </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={addVariation}
+                  className="mt-3 inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-[#0061FF] text-white rounded-sm hover:opacity-90 font-semibold text-sm shadow-sm transition-all active:scale-95"
+                >
+                  <span className="text-lg leading-none">+</span>
+                  Add Variation
+                </button>
               </div>
             </div>
 
@@ -374,69 +544,57 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
           {/* Right column - Others: all dropdowns use reusable Select */}
           <div className="border border-[#D8D8D8] rounded-md self-start mt-2 py-3.5">
             <h2 className="text-base font-bold px-4 text-gray-900 mb-2">
-              Others
+              Category
             </h2>
-            {/* {!isEditMode && (
-              <a
-                href="#add-product"
-                className="text-(--color-secondary) font-medium text-sm hover:underline mb-3 inline-block px-4"
-              >
-                + Add Product
-              </a>
-            )} */}
             <div className="space-y-3 px-4">
-              {/* <div>
+              <div>
                 <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Select Product
+                  Effect
                 </label>
                 <Select
-                  value={selectProduct}
-                  onChange={(e) => setSelectProduct(e.target.value)}
-                  options={PRODUCT_OPTIONS}
-                  placeholder="Select Product"
+                  value={effect}
+                  onChange={(e) => setEffect(e.target.value)}
+                  options={EFFECT_OPTIONS}
+                  placeholder="Effect"
                   compact
-                  disabled={isEditMode}
                 />
-              </div> */}
+              </div>
+              {category === "Mushrooms" && (
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Vegan & Soy Free
+                  </label>
+                  <Select
+                    value={veganSoyFree}
+                    onChange={(e) => setVeganSoyFree(e.target.value)}
+                    options={VEGAN_SOY_OPTIONS}
+                    placeholder="Vegan & Soy Free"
+                    compact
+                  />
+                </div>
+              )}
 
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Category
-                </label>
-                <Select
-                  value={category}
-                  onChange={(e) => setSubCategory(e.target.value)}
-                  options={CATEGORY_OPTIONS}
-                  placeholder="Category"
-                  compact
-                  disabled={isEditMode}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Subcategory
-                </label>
-                <Select
-                  value={subCategory}
-                  onChange={(e) => setCategory(e.target.value)}
-                  options={SUB_CATEGORY_OPTIONS}
-                  placeholder="Subcategory"
-                  compact
-                  disabled={isEditMode}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                  Stock
-                </label>
-                <Select
-                  value={stock}
-                  onChange={(e) => setStock(e.target.value)}
-                  options={STOCK_OPTIONS}
-                  placeholder="Stock"
-                  compact
-                  disabled={isEditMode}
-                />
+              <div className="pt-2">
+                <h3 className="text-sm font-bold text-gray-900 mb-3">Product Status</h3>
+                <div className="space-y-2">
+                  {[
+                    { id: 'In-Stock', label: 'In Stock', desc: 'Product is available for sale', color: 'bg-blue-500' },
+                    { id: 'Low-Stock', label: 'Low Stock', desc: 'Stock is running low', color: 'bg-yellow-500' },
+                    { id: 'Out of Stock', label: 'Out of Stock', desc: 'Product is currently unavailable', color: 'bg-red-500' },
+                  ].map((s) => (
+                    <div
+                      key={s.id}
+                      onClick={() => setStock(s.id)}
+                      className={`p-2.5 border rounded-lg cursor-pointer transition-all ${stock === s.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}
+                    >
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <div className={`w-3 h-3 rounded-full ${s.color}`} />
+                        <span className="text-sm font-bold text-gray-900">{s.label}</span>
+                      </div>
+                      <p className="text-[11px] text-gray-500 leading-tight">{s.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
