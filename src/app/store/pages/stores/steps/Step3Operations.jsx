@@ -547,15 +547,48 @@ const Step3Operations = ({ formData, setFormData }) => {
               { id: 'featuredStore', label: 'Featured Store', sub: 'Highlight this store at the top of search results' },
               { id: 'setStoreAsActive', label: 'Set Store as Active', sub: 'Store will be live and visible to customers immediately' }
             ].map((setting) => (
-              <div key={setting.id} className="border border-[#BDBDD2] rounded-md p-4 transition-all flex items-center justify-between bg-white">
-                <div className="space-y-0.5">
-                  <h4 className="text-sm font-semibold text-[#181211]">{setting.label}</h4>
-                  <p className="text-[13px] font-medium text-[#475569]">{setting.sub}</p>
+              <div key={setting.id} className="space-y-3">
+                <div className="border border-[#BDBDD2] rounded-md p-4 transition-all flex items-center justify-between bg-white">
+                  <div className="space-y-0.5">
+                    <h4 className="text-sm font-semibold text-[#181211]">{setting.label}</h4>
+                    <p className="text-[13px] font-medium text-[#475569]">{setting.sub}</p>
+                  </div>
+                  <Toggle
+                    enabled={formData[setting.id]}
+                    onChange={() => setFormData({ ...formData, [setting.id]: !formData[setting.id] })}
+                  />
                 </div>
-                <Toggle
-                  enabled={formData[setting.id]}
-                  onChange={() => setFormData({ ...formData, [setting.id]: !formData[setting.id] })}
-                />
+
+                {setting.id === 'featuredStore' && formData.featuredStore && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {[
+                      { id: 'trending', label: 'Trending Store' },
+                      { id: 'topRated', label: 'Top-Rated Store' },
+                      { id: 'hot', label: 'Hot Store' },
+                      { id: 'popular', label: 'Most popular' }
+                    ].map((feature) => (
+                      <div 
+                        key={feature.id}
+                        className="p-3 border border-[#BDBDD2] rounded-md bg-white flex items-start gap-3 cursor-pointer hover:border-[#E93E2B] transition-all"
+                        onClick={() => {
+                          const currentTypes = formData.featuredTypes || [];
+                          const newTypes = currentTypes.includes(feature.id)
+                            ? currentTypes.filter(t => t !== feature.id)
+                            : [...currentTypes, feature.id];
+                          setFormData({ ...formData, featuredTypes: newTypes });
+                        }}
+                      >
+                        <div className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all ${(formData.featuredTypes || []).includes(feature.id) ? 'bg-[#E93E2B] border-[#E93E2B]' : 'bg-white border-[#BDBDD2]'}`}>
+                          {(formData.featuredTypes || []).includes(feature.id) && <Icon icon="lucide:check" className="text-white" width="14" />}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-[#181211]">{feature.label}</p>
+                          <p className="text-xs font-medium text-[#475569] mt-1">Price :- <span className="font-bold text-[#181211]">$ 20</span></p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

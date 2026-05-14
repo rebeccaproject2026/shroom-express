@@ -99,7 +99,7 @@ const CreateStorePage = () => {
         { id: 1, label: 'Owner Details', component: Step1BasicInfo },
         { id: 2, label: 'Store Information & Location', component: Step2Location },
         { id: 3, label: 'Operations', component: Step3Operations },
-        { id: 4, label: 'Products & Tags', component: Step4ProductsTags },
+        { id: 4, label: 'Products', component: Step4ProductsTags },
         { id: 5, label: 'Media', component: Step5MediaDocs },
     ];
 

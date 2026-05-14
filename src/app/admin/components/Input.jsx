@@ -81,13 +81,13 @@ const Input = ({
       {prefix || suffix ? (
         <div className="flex">
           {prefix && (
-            <span className={`inline-flex items-center px-3 py-3 text-sm font-medium text-gray-700 bg-gray-100 border border-r-0 border-[#DDDDDD] ${error ? "border-red-500" : ""} rounded-l-sm`}>
+            <span className={`inline-flex items-center px-3 ${paddingY} text-sm font-medium text-gray-700 bg-white border border-r-0 border-[#DDDDDD] ${error ? "border-red-500" : ""} rounded-l-sm`}>
               {prefix}
             </span>
           )}
           {inputEl}
           {suffix && (
-            <span className={`inline-flex items-center px-3 py-3 text-sm font-medium text-gray-700 bg-gray-100 border border-l-0 border-[#DDDDDD] ${error ? "border-red-500" : ""} rounded-r-sm`}>
+            <span className={`inline-flex items-center px-3 ${paddingY} text-sm font-medium text-gray-700 bg-white border border-l-0 border-[#DDDDDD] ${error ? "border-red-500" : ""} rounded-r-sm`}>
               {suffix}
             </span>
           )}
