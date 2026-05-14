@@ -79,9 +79,38 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
     }, []);
 
     const categories = [
-        { name: 'Magic Mushrooms', icon: "hugeicons:mushroom" },
-        { name: 'Microdose', icon: "streamline-plump:tablet-capsule" },
-        { name: 'Edibles', icon: "hugeicons:mushroom-01" },
+        { 
+            name: 'Magic Mushrooms', 
+            icon: "hugeicons:mushroom",
+            subCategories: [
+                'Beginner Friendly', 'Creative Boost', 'Relax & Chill', 'Focus & Clarity', 
+                'Happy & Euphoric', 'Visual Experience', 'Deep Journey', 'Elevated Experience'
+            ]
+        },
+        { 
+            name: 'Microdose', 
+            icon: "streamline-plump:tablet-capsule",
+            subCategories: [
+                'Focus & Clarity', 'Daily Wellness', 'Creative Boost', 'Mood Support', 
+                'Energy Boost', 'Stress Relief', 'Beginner Friendly', 'Balanced Mind'
+            ]
+        },
+        { 
+            name: 'Edibles', 
+            icon: "hugeicons:mushroom-01",
+            subCategories: [
+                'Happy & Euphoric', 'Relax & Chill', 'Creative Boost', 'Visual Experience', 
+                'Smooth Journey', 'Social Vibes', 'Beginner Friendly', 'Elevated Experience'
+            ]
+        },
+        {
+            name: 'Capsules',
+            icon: "streamline-plump:tablet-capsule",
+            subCategories: [
+                'Focus & Clarity', 'Daily Wellness', 'Relax & Chill', 'Energy Boost', 
+                'Balanced Mind', 'Mood Support', 'Beginner Friendly', 'Creative Boost'
+            ]
+        },
         { name: 'Deals', icon: "streamline-plump:leaf-protect" },
         { name: 'Stores', icon: "streamline:shopping-store-2-store-shop-shops-stores" },
     ];
@@ -358,7 +387,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                             const isActive = location.pathname === categoryPath ||
                                 (cat.name === 'Magic Mushrooms' && isEffectSlug);
 
-                            const isDropdownCategory = !isHomePage && ['Magic Mushrooms', 'Microdose', 'Edibles'].includes(cat.name);
+                            const isDropdownCategory = !isHomePage && ['Magic Mushrooms', 'Microdose', 'Edibles', 'Capsules'].includes(cat.name);
 
                             if (isDropdownCategory) {
                                 return (
@@ -381,9 +410,9 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                                 >
                                                     All ({cat.name})
                                                 </Link>
-                                                {categoryIcons.map((subItem, sIdx) => {
-                                                    const slug = subItem.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
-                                                    const effectSlug = subItem.name === 'Relax & Chill' ? 'relax-and-chill' : slug;
+                                                {(cat.subCategories || []).map((subItem, sIdx) => {
+                                                    const slug = subItem.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                                                    const effectSlug = subItem === 'Relax & Chill' ? 'relax-and-chill' : slug;
                                                     const iconPath = `${categoryPath}?effect=${effectSlug}`;
                                                     return (
                                                         <Link
@@ -391,7 +420,7 @@ const StickyHeader = ({ cartCount = 0, onCartClick, wishlistCount = 0 }) => {
                                                             to={iconPath}
                                                             className="px-5 py-3 text-[14px] text-[#444444] hover:bg-[#FFF5F4] border-[#F1F5F9] border-b last:border-0 hover:text-[#E93E2B] font-medium transition-colors relative z-10"
                                                         >
-                                                            {subItem.name}
+                                                            {subItem}
                                                         </Link>
                                                     );
                                                 })}

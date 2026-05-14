@@ -61,22 +61,55 @@ const MobileMenuDrawer = ({ isOpen, onClose, user, categories, logout }) => {
                                         : `/store/category/${cat.name.toLowerCase().replace(' ', '-')}`;
 
                                 const isActive = location.pathname === categoryPath || (cat.name === 'Magic Mushrooms' && (location.pathname === '/' || location.pathname === '/store'));
+                                const hasSubCategories = cat.subCategories && cat.subCategories.length > 0;
+                                const [isExpanded, setIsExpanded] = React.useState(false);
 
                                 return (
-                                    <Link
-                                        key={idx}
-                                        to={categoryPath}
-                                        onClick={onClose}
-                                        className={`flex items-center gap-4 px-5 py-3 rounded-lg font-bold transition-all duration-200 group ${isActive
+                                    <div key={idx} className="flex flex-col">
+                                        <div className={`flex items-center gap-4 px-5 py-3 rounded-lg font-bold transition-all duration-200 group ${isActive
                                             ? 'bg-[#E93E2B] text-white shadow-[0_8px_20px_rgba(233,62,43,0.3)]'
                                             : 'text-[#181211] hover:bg-gray-50'
-                                            }`}
-                                    >
-                                        <div className={`flex items-center justify-center shrink-0 ${isActive ? 'text-white' : 'text-[#181211]'}`}>
-                                            <Icon icon={cat.icon} width={24} height={24} />
+                                            }`}>
+                                            <Link
+                                                to={categoryPath}
+                                                onClick={onClose}
+                                                className="flex items-center gap-4 flex-1"
+                                            >
+                                                <div className={`flex items-center justify-center shrink-0 ${isActive ? 'text-white' : 'text-[#181211]'}`}>
+                                                    <Icon icon={cat.icon} width={24} height={24} />
+                                                </div>
+                                                <span className="text-base">{cat.name}</span>
+                                            </Link>
+                                            {hasSubCategories && (
+                                                <button 
+                                                    onClick={(e) => { e.preventDefault(); setIsExpanded(!isExpanded); }}
+                                                    className="p-1 hover:bg-black/5 rounded-md transition-colors"
+                                                >
+                                                    <Icon icon={isExpanded ? "mdi:chevron-up" : "mdi:chevron-down"} width={24} height={24} />
+                                                </button>
+                                            )}
                                         </div>
-                                        <span className="text-base">{cat.name}</span>
-                                    </Link>
+                                        
+                                        {hasSubCategories && isExpanded && (
+                                            <div className="flex flex-col ml-12 mt-1 border-l-2 border-[#F1F5F9] pl-4">
+                                                {cat.subCategories.map((sub, sIdx) => {
+                                                    const slug = sub.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+                                                    const effectSlug = sub === 'Relax & Chill' ? 'relax-and-chill' : slug;
+                                                    const subPath = `${categoryPath}?effect=${effectSlug}`;
+                                                    return (
+                                                        <Link
+                                                            key={sIdx}
+                                                            to={subPath}
+                                                            onClick={onClose}
+                                                            className="text-[14px] font-semibold text-[#64748B] py-2.5 hover:text-[#E93E2B] transition-colors border-b border-[#F8FAFC] last:border-0"
+                                                        >
+                                                            {sub}
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
                                 );
                             })}
                         </div>

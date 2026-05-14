@@ -7,6 +7,7 @@ import StoreCard from '../../components/common/StoreCard';
 import Select from '../../components/common/Select';
 import FilterDrawer from '../../components/products/FilterDrawer';
 import { useCategory } from '../../context/CategoryContext';
+import { allProducts } from '../../data/productsData';
 import albinoChodaImg from "../../assets/images/Albinochoda.png";
 import Aztecgod from "../../assets/images/Aztecgod.png";
 import albinohillbilyImg from "../../assets/images/Albinohillbilly.png";
@@ -37,7 +38,7 @@ import deepjourneyImg from "../../assets/images/deepjourney.png";
 const ProductsList = () => {
     const { category } = useParams();
     const navigate = useNavigate();
-    const { selectedEffect } = useCategory();
+    const { selectedEffect, clearEffect } = useCategory();
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
     const [activeExpressDelivery, setActiveExpressDelivery] = useState(false);
@@ -50,11 +51,20 @@ const ProductsList = () => {
     const queryParams = new URLSearchParams(location.search);
     const effectQuery = queryParams.get('effect');
 
+    // Clear the context-based selectedEffect when navigating to a category page
+    // so it doesn't conflict with the URL-based category/effect
+    React.useEffect(() => {
+        if (category || effectQuery) {
+            clearEffect();
+        }
+    }, [category, effectQuery, clearEffect]);
+
     // Category title mapping - only for main nav categories, effect slugs keep parent title
     const categoryTitles = {
         'magic-mushrooms': 'The Magic Mushrooms',
         'microdose': 'Microdose',
         'edibles': 'Edibles',
+        'capsules': 'Capsules',
         'deals': 'Deals',
     };
 
@@ -69,187 +79,8 @@ const ProductsList = () => {
         { value: 'price-high', label: 'Sort by Price: high to low' },
     ];
 
-    // Mock products
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const products = [
-        {
-            id: 1,
-            badge: { text: "BEST SELLER", colorClass: "bg-[#E93E2B]" },
-            isWishlisted: false, inStock: true, onSale: true,
-            image: albinoChodaImg,
-            title: "Albino Choda",
-            vendor: "Green Valley Organics",
-            rating: '4.9',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["Microdosing", "Creative Boost"],
-            effects: [
-                { image: creativeBoostImg, name: "Creative Boost" },
-                { image: microDosingImg, name: "Microdosing" }
-            ]
-        },
-        {
-            id: 2,
-            badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true, inStock: true, onSale: false,
-            image: albinohillbilyImg,
-            title: "Albino Hillbilly",
-            vendor: "Aether Mushroom Labs",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["High Potency", "Visual Experience"],
-            effects: [
-                { image: highPotencyImg, name: "High Potency" },
-                { image: visualExperienceImg, name: "Visual Experience" }
-            ]
-        },
-        {
-            id: 3,
-            badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true, inStock: false, onSale: false,
-            image: albinopenisenvyImg,
-            title: "Albino Penis Envy",
-            vendor: "Elevated Solstice",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 55.00,
-            categories: ["High Potency", "Visual Experience"],
-            effects: [
-                { image: highPotencyImg, name: "High Potency" },
-                { image: visualExperienceImg, name: "Visual Experience" }
-            ]
-        },
-        {
-            id: 4,
-            badge: null,
-            isWishlisted: false, inStock: true, onSale: true,
-            image: Aztecgod,
-            title: "Aztec God",
-            vendor: "Green Valley Organics",
-            rating: '4.7',
-            weights: ['3g', '10g'],
-            price: 45.00,
-            categories: ["Focus & Clarity", "Relax & Chill"],
-            effects: [
-                { image: focusClarityImg, name: "Focus & Clarity" },
-                { image: relaxChillImg, name: "Relax & Chill" }
-            ]
-        },
-        {
-            id: 5,
-            badge: null,
-            isWishlisted: false, inStock: true, onSale: false,
-            image: Bluemeanies,
-            title: "Blue Meanies",
-            vendor: "Green Valley Organics",
-            rating: '4.9',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["Creative Boost", "Visual Experience"],
-            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: visualExperienceImg, name: "Visual Experience" }]
-        },
-        {
-            id: 6,
-            badge: null,
-            isWishlisted: false, inStock: false, onSale: false,
-            image: Penisenvy,
-            title: "Penis Envy",
-            vendor: "Aether Mushroom Labs",
-            rating: '4.8',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["Beginner Friendly", "Microdosing"],
-            effects: [
-                { image: beginnerFriendlyImg, name: "Beginner Friendly" },
-                { image: microDosingImg, name: "Microdosing" }
-            ]
-        },
-        {
-            id: 7,
-            badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true, inStock: true, onSale: true,
-            image: Shakti,
-            title: "Shakti",
-            vendor: "Elevated Solstice",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 55.00,
-            categories: ["High Potency", "Deep Journey"],
-            effects: [{ image: highPotencyImg, name: "High Potency" }, { image: deepjourneyImg, name: "Deep Journey" }]
-        },
-        {
-            id: 8,
-            badge: null,
-            isWishlisted: false, inStock: true, onSale: false,
-            image: Tidalwave,
-            title: "Tidal Wave",
-            vendor: "Green Valley Organics",
-            rating: '4.8',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["Beginner Friendly", "Microdosing"],
-            effects: [
-                { image: beginnerFriendlyImg, name: "Beginner Friendly" },
-                { image: microDosingImg, name: "Microdosing" }
-            ]
-        },
-        {
-            id: 9,
-            badge: null,
-            isWishlisted: false, inStock: true, onSale: true,
-            image: Trinity,
-            title: "Trinity",
-            vendor: "Green Valley Organics",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["Creative Boost", "Microdosing"],
-            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: microDosingImg, name: "Microdosing" }]
-        },
-        {
-            id: 10,
-            badge: null,
-            isWishlisted: false, inStock: false, onSale: false,
-            image: Truealbinoteacher,
-            title: "True Albino Teacher",
-            vendor: "Aether Mushroom Labs",
-            rating: '4.7',
-            weights: ['3g', '10g'],
-            price: 45.00,
-            categories: ["Focus & Clarity", "Relax & Chill"],
-            effects: [
-                { image: focusClarityImg, name: "Focus & Clarity" },
-                { image: relaxChillImg, name: "Relax & Chill" }
-            ]
-        },
-        {
-            id: 11,
-            badge: { text: "NEW", colorClass: "bg-[#059669]" },
-            isWishlisted: true, inStock: true, onSale: false,
-            image: AmazonianImg,
-            title: "Amazonian",
-            vendor: "Elevated Solstice",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 50.00,
-            categories: ["High Potency"],
-            effects: [{ image: highPotencyImg, name: "High Potency" }]
-        },
-        {
-            id: 12,
-            badge: null,
-            isWishlisted: false, inStock: true, onSale: true,
-            image: Jackfrost,
-            title: "Jack Frost",
-            vendor: "Green Valley Organics",
-            rating: '5.0',
-            weights: ['3g', '10g'],
-            price: 45.00,
-            categories: ["Creative Boost", "Microdosing"],
-            effects: [{ image: creativeBoostImg, name: "Creative Boost" }, { image: microDosingImg, name: "Microdosing" }]
-        },
-    ];
+    // Data source from productsData.js
+    const products = allProducts;
 
     // Mock stores
     const stores = [
@@ -301,7 +132,12 @@ const ProductsList = () => {
         let list = [...products];
 
         // Filter by URL category param (effect-based icon categories)
-        const effectCategories = ['micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey'];
+        const effectCategories = [
+            'micro-dosing', 'beginner-friendly', 'high-potency', 'creative-boost', 
+            'relax-and-chill', 'visual-experience', 'focus-and-clarity', 'deep-journey',
+            'happy-and-euphoric', 'elevated-experience', 'daily-wellness', 'mood-support',
+            'energy-boost', 'stress-relief', 'balanced-mind', 'smooth-journey', 'social-vibes'
+        ];
         const slugToName = {
             'micro-dosing': 'Microdosing',
             'beginner-friendly': 'Beginner Friendly',
@@ -311,13 +147,30 @@ const ProductsList = () => {
             'visual-experience': 'Visual Experience',
             'focus-and-clarity': 'Focus & Clarity',
             'deep-journey': 'Deep Journey',
+            'happy-and-euphoric': 'Happy & Euphoric',
+            'elevated-experience': 'Elevated Experience',
+            'daily-wellness': 'Daily Wellness',
+            'mood-support': 'Mood Support',
+            'energy-boost': 'Energy Boost',
+            'stress-relief': 'Stress Relief',
+            'balanced-mind': 'Balanced Mind',
+            'smooth-journey': 'Smooth Journey',
+            'social-vibes': 'Social Vibes'
         };
 
         if (effectCategories.includes(category)) {
             // Convert slug back to display name for matching
             const targetCategory = slugToName[category];
             if (targetCategory) list = list.filter(p => p.categories?.includes(targetCategory));
-        } else if (category && !categoryTitles[category]) {
+        } else if (categoryTitles[category]) {
+            // Filter by main category if it's not Magic Mushrooms (which usually shows all)
+            if (category !== 'magic-mushrooms') {
+                const targetCategory = category === 'microdose' ? 'Microdosing' : 
+                                     category === 'edibles' ? 'Edibles' : 
+                                     category === 'capsules' ? 'Capsules' : categoryTitles[category];
+                list = list.filter(p => p.categories?.includes(targetCategory));
+            }
+        } else if (category) {
             // General search handle: use category slug as search term if not a known category
             const searchTerm = category.replace(/-/g, ' ').toLowerCase();
             list = list.filter(p =>
