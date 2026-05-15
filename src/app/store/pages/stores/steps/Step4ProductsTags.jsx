@@ -307,8 +307,8 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-1">Products Tags</label>
-                  <Select 
-                    options={PRODUCT_TAG_OPTIONS} 
+                  <Select
+                    options={PRODUCT_TAG_OPTIONS}
                     value={currentProduct.tags[0] || ''}
                     onChange={(e) => updateProductField('tags', [e.target.value])}
                     placeholder="Select Tags"
@@ -323,7 +323,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                   <div key={v.id} className="relative group">
                     <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 pr-10">
                       <div>
-                        <Input 
+                        <Input
                           label="Variation (Unit)"
                           value={v.unit}
                           onChange={(e) => updateVariation(v.id, 'unit', e.target.value)}
@@ -332,7 +332,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                         />
                       </div>
                       <div>
-                        <Input 
+                        <Input
                           label="Cost Price *"
                           value={v.cost}
                           onChange={(e) => updateVariation(v.id, 'cost', e.target.value)}
@@ -342,7 +342,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                         />
                       </div>
                       <div>
-                        <Input 
+                        <Input
                           label="Sale Price *"
                           value={v.sale}
                           onChange={(e) => updateVariation(v.id, 'sale', e.target.value)}
@@ -352,7 +352,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                         />
                       </div>
                       <div>
-                        <Input 
+                        <Input
                           label="Discount Price *"
                           value={v.discount}
                           onChange={(e) => updateVariation(v.id, 'discount', e.target.value)}
@@ -362,7 +362,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                         />
                       </div>
                       <div>
-                        <Input 
+                        <Input
                           label="Stock Quantity *"
                           value={v.stock}
                           onChange={(e) => updateVariation(v.id, 'stock', e.target.value)}
@@ -373,7 +373,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                     </div>
 
                     {idx > 0 && (
-                      <button 
+                      <button
                         onClick={() => removeVariation(v.id)}
                         className="absolute right-0 bottom-1.5 w-8 h-8 flex items-center justify-center text-red-500 hover:text-red-700 transition-colors"
                       >
@@ -383,7 +383,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                   </div>
                 ))}
 
-                <button 
+                <button
                   onClick={addVariation}
                   className="flex items-center gap-1 text-[#E93E2B] text-sm font-bold hover:opacity-80 transition-opacity"
                 >
@@ -394,7 +394,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
 
               {/* Upload Section */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                <div 
+                <div
                   onClick={() => document.getElementById('product-image-upload').click()}
                   className="relative border-2 border-dashed border-[#BDBDD2] rounded-lg h-[200px] flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-[#E93E2B] transition-colors bg-gray-50/30 overflow-hidden"
                 >
@@ -402,10 +402,10 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                     <img src={previewImage} alt="Preview" className="w-full h-full object-contain" />
                   ) : (
                     <>
-                      <input 
-                        type="file" 
-                        id="product-image-upload" 
-                        className="hidden" 
+                      <input
+                        type="file"
+                        id="product-image-upload"
+                        className="hidden"
                         onChange={handleImageChange}
                         accept="image/*"
                       />
@@ -414,7 +414,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-bold text-[#181211]">Click to upload Product Image</p>
-                        <p className="text-[10px] text-gray-400 mt-1">Upload a PNG or JPG<br/>(520×520px recommended - max 2MB)</p>
+                        <p className="text-xs text-gray-400 mt-1">Upload a PNG or JPG<br />(520×520px recommended - max 2MB)</p>
                       </div>
                     </>
                   )}
@@ -425,12 +425,12 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                   <div className="grid grid-cols-2 gap-3 max-w-[240px]">
                     {currentProduct.images.map((img, idx) => (
                       <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border border-gray-100 group">
-                        <img 
-                          src={img} 
+                        <img
+                          src={img}
                           alt={`Gallery ${idx}`}
                           className="w-full h-full object-cover"
                         />
-                        <button 
+                        <button
                           onClick={(e) => { e.stopPropagation(); removeGalleryImage(img); }}
                           className="absolute top-1.5 right-1.5 w-6 h-6 bg-white rounded-full flex items-center justify-center text-red-500 shadow-sm border border-red-500"
                         >
@@ -438,13 +438,13 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                         </button>
                       </div>
                     ))}
-                    <div 
+                    <div
                       onClick={() => document.getElementById('product-image-upload').click()}
                       className="aspect-square bg-gray-50 border border-dashed border-[#BDBDD2] rounded-lg flex items-center justify-center cursor-pointer hover:bg-white hover:border-[#E93E2B] transition-all"
                     >
-                       <div className="w-8 h-8 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-sm">
-                          <Icon icon="lucide:plus" className="text-[#E93E2B]" width="20" />
-                       </div>
+                      <div className="w-8 h-8 bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-sm">
+                        <Icon icon="lucide:plus" className="text-[#E93E2B]" width="20" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ const Step4ProductsTags = ({ formData, setFormData }) => {
                 <button className="px-6 py-2.5 bg-white shadow-[0px_4px_6px_-4px_#64748B33,0px_10px_15px_-3px_#64748B33] text-sm font-semibold text-[#475569] transition-all flex items-center gap-2 hover:bg-gray-50 rounded-md border border-gray-100">
                   Save & Add New
                 </button>
-                <button 
+                <button
                   onClick={handleSaveProduct}
                   className="px-10 py-2.5 bg-[#E93E2B] text-white rounded-md text-sm font-semibold shadow-[0px_4px_6px_-4px_#E93E2B33,0px_10px_15px_-3px_#E93E2B33] hover:bg-[#E93E2B]/90 transition-all flex items-center gap-2 active:scale-95 transition-opacity"
                 >

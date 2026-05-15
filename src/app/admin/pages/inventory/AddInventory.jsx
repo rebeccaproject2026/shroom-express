@@ -75,10 +75,8 @@ const BEST_SELLING_OPTIONS = [
 ];
 
 const POTENCY_OPTIONS = [
-  { value: "None", label: "None" },
-  { value: "Low", label: "Low" },
-  { value: "Medium", label: "Medium" },
-  { value: "High", label: "High" },
+  { value: "Potency1", label: "Potency 1" },
+  { value: "Potency2", label: "Potency 2" },
 ];
 
 const EFFECT_OPTIONS = [
@@ -305,13 +303,13 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Subcategory
+                    Subcategory (Experience Tag)
                   </label>
                   <Select
                     value={subCategory}
                     onChange={(e) => setSubCategory(e.target.value)}
                     options={SUB_CATEGORY_OPTIONS}
-                    placeholder="Subcategory"
+                    placeholder="Select Experience Tag"
                     compact
                   />
                 </div>
