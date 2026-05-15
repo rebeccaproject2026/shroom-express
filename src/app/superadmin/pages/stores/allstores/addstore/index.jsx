@@ -143,7 +143,7 @@ const AddStore = () => {
 
   const steps = [
     { id: 1, label: 'Owner Details' },
-    { id: 2, label: 'Store Information & Location' },
+    { id: 2, label: 'Store Info' },
     { id: 3, label: 'Operations' },
     { id: 4, label: 'Products & Tags' },
     { id: 5, label: 'Media' },

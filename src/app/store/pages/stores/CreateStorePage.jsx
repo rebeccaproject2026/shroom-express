@@ -50,54 +50,51 @@ const CreateStorePage = () => {
                 longitude: '-79.3832',
                 storeEmail: '',
                 storePhone: '',
+                // Operational Settings (Per Location)
+                sameDayDelivery: true,
+                sameDayMinAmount: '50.00',
+                sameDayFee: '15.00',
+                sameDayFreeOver: '120.00',
+                sameDayEta: 'Under 1 hour',
+                sameDayDeliveredBy: 'Self Drivers',
+                sameDayCoverage: { cities: [], radius: 60 },
+                sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                sameDayOpeningTime: '09:00 AM',
+                sameDayClosingTime: '09:00 PM',
+
+                expressDelivery: false,
+                expressMinAmount: '120.00',
+                expressFee: '15.00',
+                expressEta: '1-2 hrs',
+                expressDeliveredBy: 'Shroom Express Drivers',
+                expressCoverage: { cities: [], radius: 60 },
+                expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                expressOpeningTime: '09:00 AM',
+                expressClosingTime: '09:00 PM',
+
+                shippingMailOrder: false,
+                shippingFee: '15.00',
+                shippingFreeOver: '120.00',
+                shippingEta: '2-5 business days',
+                shippingCouriers: [],
+                shippingAreas: [],
+                processingDays: [],
+                shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
+                autoAcceptOrders: true,
             }
         ],
-        // Step 3: Operations
-        sameDayDelivery: true,
-        sameDayMinAmount: '50.00',
-        sameDayFee: '15.00',
-        sameDayFreeOver: '120.00',
-        sameDayEta: 'Under 1 hour',
-        sameDayDeliveredBy: 'Self Drivers',
-        sameDayCoverage: { cities: [], radius: 60 },
-        sameDayOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        sameDayOpeningTime: '09:00 AM',
-        sameDayClosingTime: '09:00 PM',
-
-        expressDelivery: false,
-        expressMinAmount: '120.00',
-        expressFee: '15.00',
-        expressEta: '1-2 hrs',
-        expressDeliveredBy: 'Shroom Express Drivers',
-        expressCoverage: { cities: [], radius: 60 },
-        expressOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        expressOpeningTime: '09:00 AM',
-        expressClosingTime: '09:00 PM',
-
-        shippingMailOrder: false,
-        shippingFee: '15.00',
-        shippingFreeOver: '120.00',
-        shippingEta: '2-5 business days',
-        shippingCouriers: [],
-        shippingAreas: [],
-        processingDays: [],
-        shippingOperatingDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-
-        autoAcceptOrders: true,
-        featuredStore: false,
-        setStoreAsActive: true,
-        // Step 4: Products & Tags
+        // Global Step 4/5 logic
         productTypes: [],
         storeTags: [],
         licenseNumber: '',
-        // Step 5: Media
         logo: null,
         banner: null,
     });
 
     const steps = [
         { id: 1, label: 'Owner Details', component: Step1BasicInfo },
-        { id: 2, label: 'Store Information & Location', component: Step2Location },
+        { id: 2, label: 'Store Info', component: Step2Location },
         { id: 3, label: 'Operations', component: Step3Operations },
         { id: 4, label: 'Products', component: Step4ProductsTags },
         { id: 5, label: 'Media', component: Step5MediaDocs },
@@ -112,7 +109,6 @@ const CreateStorePage = () => {
             if (!loc) return false;
             return (
                 loc.storeName &&
-                loc.category?.length > 0 &&
                 loc.streetAddress &&
                 loc.city &&
                 loc.postalCode &&
@@ -123,7 +119,9 @@ const CreateStorePage = () => {
             );
         }
         if (currentStep === 3) {
-            return formData.sameDayDelivery || formData.expressDelivery || formData.shippingMailOrder;
+            // Check if at least the first location has a delivery method enabled
+            const loc = formData.locations[0];
+            return loc && (loc.sameDayDelivery || loc.expressDelivery || loc.shippingMailOrder);
         }
         if (currentStep === 4) {
             return formData.productTypes?.length > 0 && formData.licenseNumber;
@@ -230,19 +228,19 @@ const CreateStorePage = () => {
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <div className="mb-8 flex items-center text-center gap-4">
-                    <button
+                    {/* <button
                         onClick={() => currentStep === 1 ? navigate("/store") : setCurrentStep(s => s - 1)}
                         className="px-6 py-2 bg-white shadow-sm text-sm font-semibold text-[#475569] transition-all flex items-center gap-2 hover:bg-gray-50 rounded-md border border-[#BDBDD2]"
                     >
                         <Icon icon="lucide:arrow-left" width="16" />
                         {currentStep === 1 ? "Cancel" : "Previous"}
-                    </button>
+                    </button> */}
                     <div className="flex-1">
                         <h1 className="text-3xl font-bold text-[#0F3540] mb-1">Open Your Store</h1>
                         <p className="text-sm text-[#64748B]">Complete the steps below to register your business on our platform.</p>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    {/* <div className="flex items-center gap-4">
 
 
                         <button
@@ -262,7 +260,7 @@ const CreateStorePage = () => {
                                 </>
                             )}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Stepper Header Box */}

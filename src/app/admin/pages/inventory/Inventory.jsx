@@ -15,7 +15,10 @@ import {
   Trash2,
   Filter,
   Download,
+  RotateCcw,
+  Pencil,
 } from "lucide-react";
+import { Icon } from "@iconify/react";
 import DatePickerMap from "../../components/DatePickerMap";
 import InventorySummaryCard from "../../components/inventory/InventorySummaryCard";
 import inventoryImg1 from "../../assets/images/inventory-icon-1.webp";
@@ -53,12 +56,23 @@ const STATUS_TABS = [
   { key: "out_of_stock", label: "Out of Stock", count: 25 },
 ];
 
-const getInventoryColumns = (onView, onDelete) => [
+const getInventoryColumns = (onView, onDelete, onEdit) => [
   {
     accessorKey: "product",
     header: "Product",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
+      <div className="flex items-center gap-2.5">
+        <div className={`w-8 h-8 rounded border border-gray-100 overflow-hidden shrink-0 ${!info.row.original.image ? 'bg-gray-100' : ''}`}>
+          {info.row.original.image ? (
+            <img
+              src={info.row.original.image}
+              alt={info.getValue()}
+              className="w-full h-full object-cover"
+            />
+          ) : null}
+        </div>
+        <span className="text-[12px] font-bold text-[#3F4753] uppercase">{info.getValue()}</span>
+      </div>
     ),
   },
   {
@@ -76,90 +90,129 @@ const getInventoryColumns = (onView, onDelete) => [
     ),
   },
   {
-    accessorKey: "unit",
-    header: "Unit",
-    cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
-    ),
-  },
-  {
     accessorKey: "status",
     header: "Status",
-    cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
-    ),
+    cell: (info) => {
+      const status = info.getValue();
+      const styles = {
+        "Active": "bg-[#D4FFDA] text-[#109F22]",
+        "In Stock": "bg-[#D4FFDA] text-[#109F22]",
+        "Low Stock": "bg-[#FFF5E5] text-[#FF9800]",
+        "Out of Stock": "bg-[#FEECEB] text-[#F44336]",
+      };
+      return (
+        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap ${styles[status] || "bg-gray-100 text-gray-600"}`}>
+          {status}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "cost",
     header: "Cost Price",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753] text-right block">
-        {info.getValue()}
-      </span>
+      <span className="text-[12px] text-[#3F4753] font-medium">{info.getValue()}</span>
     ),
   },
   {
     accessorKey: "salePrice",
     header: "Sales Price",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753] text-right block">
-        {info.getValue()}
-      </span>
+      <span className="text-[12px] text-[#3F4753] font-medium">{info.getValue()}</span>
     ),
   },
   {
     accessorKey: "profitDollar",
     header: "Profit $",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753] text-right block">
-        {info.getValue()}
-      </span>
+      <span className="text-[12px] text-[#3F4753] font-medium">{info.getValue()}</span>
     ),
   },
   {
     accessorKey: "profitPercent",
     header: "Profit %",
     cell: (info) => (
-      <span className="text-[12px] text-[#3F4753] text-right block">
-        {info.getValue()}
-      </span>
+      <span className="text-[12px] text-[#3F4753] font-medium">{info.getValue()}</span>
     ),
   },
   {
     accessorKey: "totalStock",
     header: "Stock",
-    cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
-    ),
+    cell: (info) => {
+      const row = info.row.original;
+      const percentage = (row.currentStock / row.maxStock) * 100;
+      const barColor = percentage > 50 ? "bg-[#109F22]" : percentage > 20 ? "bg-[#FF9800]" : "bg-[#F44336]";
+
+      return (
+        <div className="flex flex-col gap-1 min-w-[120px]">
+          <div className="flex items-center gap-2">
+            <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden shrink-0">
+              <div
+                className={`h-full ${barColor} transition-all duration-500`}
+                style={{ width: `${Math.min(percentage, 100)}%` }}
+              />
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-[11px] font-bold text-gray-900">
+                {row.currentStock} {row.unitType || "Item"}
+              </span>
+              <span className="text-[9px] text-red-500 font-medium">
+                alert: {row.lowStockAlert} {row.unitType || "Item"}
+              </span>
+            </div>
+          </div>
+          <button className="w-fit px-3 py-0.5 border border-[#0061FF] text-[#0061FF] rounded-full text-[9px] font-bold hover:bg-blue-50 transition-colors">
+            Item/PACK
+          </button>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "updated",
     header: "Last Updated",
-    cell: (info) => (
-      <span className="text-[12px] text-[#3F4753]">{info.getValue()}</span>
-    ),
+    cell: (info) => {
+      const val = info.getValue();
+      // Format to match screenshot: May 08, 2026 01:17 AM
+      return (
+        <span className="text-[11px] text-[#3F4753] leading-tight block max-w-[80px]">
+          {val}
+        </span>
+      );
+    },
   },
   {
     id: "action",
     accessorKey: "id",
     header: "Action",
     cell: (info) => (
-      <div className="flex items-center gap-1 justify-end">
+      <div className="flex items-center gap-1.5">
         <button
-          type="button"
           onClick={() => onView?.(info.row.original)}
-          className="p-1.5 text-(--color-secondary) hover:bg-blue-50 rounded"
+          className="p-1 hover:bg-gray-100 rounded transition-colors"
           title="View"
         >
-          <Eye className="w-4 h-4" />
+          <Icon icon="lucide:eye" className="w-4 h-4 text-(--color-secondary)" />
         </button>
         <button
-          type="button"
+          className="p-1 hover:bg-gray-100 rounded transition-colors"
+          title="Sync"
+        >
+          <Icon icon="lucide:refresh-cw" className="w-4 h-4 text-gray-900" />
+        </button>
+        <button
+          onClick={() => onEdit?.(info.row.original)}
+          className="p-1 hover:bg-gray-100 rounded transition-colors"
+          title="Edit"
+        >
+          <Icon icon="lucide:pencil" className="w-4 h-4 text-gray-900" />
+        </button>
+        <button
           onClick={() => onDelete?.(info.row.original)}
-          className="p-1.5 text-red-500 hover:bg-red-50 rounded"
+          className="p-1 hover:bg-red-50 rounded transition-colors"
           title="Delete"
         >
-          <Trash2 className="w-4 h-4" />
+          <Icon icon="lucide:trash-2" className="w-4 h-4 text-red-500" />
         </button>
       </div>
     ),
@@ -169,173 +222,111 @@ const getInventoryColumns = (onView, onDelete) => [
 const INVENTORY_DATA = [
   {
     id: "1",
-    product: "Melmac (Dried)",
-    category: "Accessory",
-    subcategory: "Blunt Wrap",
+    product: "Aztec God 7",
+    category: "Mushrooms",
+    subcategory: "",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "200 Grams In-Stock",
-    soldAmount: "$1925.52",
-    soldQty: "150 Grams",
-    reorder: "2",
+    status: "In Stock",
+    cost: "$10.00",
+    salePrice: "$10.00",
+    profitDollar: "$0.00",
+    profitPercent: "0.00%",
+    updated: "May 08, 2026 01:17 AM",
+    currentStock: 10,
+    maxStock: 100,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=1",
   },
   {
     id: "2",
-    product: "Blue Pulaski (Dried)",
-    category: "Accessory",
-    subcategory: "Blunt Wrap",
+    product: "Aztec God 6",
+    category: "Mushrooms",
+    subcategory: "",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "200 Grams In-Stock",
-    soldAmount: "$1925.52",
-    soldQty: "150 Grams",
-    reorder: "2",
+    status: "In Stock",
+    cost: "$10.00",
+    salePrice: "$10.00",
+    profitDollar: "$0.00",
+    profitPercent: "0.00%",
+    updated: "May 08, 2026 12:47 AM",
+    currentStock: 10,
+    maxStock: 100,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=2",
   },
   {
     id: "3",
-    product: "Blue Meanies (Dried)",
-    category: "Accessory",
-    subcategory: "Rolling Paper",
+    product: "Aztec God 5",
+    category: "Mushrooms",
+    subcategory: "",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "200 Grams In-Stock",
-    soldAmount: "$1925.52",
-    soldQty: "150 Grams",
-    reorder: "2",
+    status: "In Stock",
+    cost: "$25.00",
+    salePrice: "$25.00",
+    profitDollar: "$0.00",
+    profitPercent: "0.00%",
+    updated: "May 07, 2026 07:06 AM",
+    currentStock: 500,
+    maxStock: 500,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=3",
   },
   {
     id: "4",
-    product: "Albino Penis Envy (Dried)",
-    category: "Accessory",
-    subcategory: "Blunt Wrap",
+    product: "Aztec God 5",
+    category: "Mushrooms",
+    subcategory: "",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "50 Grams Low-Stock",
-    soldAmount: "$850.00",
-    soldQty: "50 Grams",
-    reorder: "20",
+    status: "In Stock",
+    cost: "$10.00",
+    salePrice: "$12.00",
+    profitDollar: "$2.00",
+    profitPercent: "20.00%",
+    updated: "May 05, 2026 07:08 AM",
+    currentStock: 10,
+    maxStock: 50,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=4",
   },
   {
     id: "5",
-    product: "Mango Peach",
-    category: "Accessory",
-    subcategory: "Rolling Paper",
+    product: "Aztec God 4",
+    category: "Mushrooms",
+    subcategory: "",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "20",
+    status: "In Stock",
+    cost: "$10.00",
+    salePrice: "$12.00",
+    profitDollar: "$2.00",
+    profitPercent: "20.00%",
+    updated: "May 05, 2026 07:06 AM",
+    currentStock: 10,
+    maxStock: 50,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=5",
   },
   {
     id: "6",
-    product: "Aztec God",
-    category: "Accessory",
-    subcategory: "Blunt Wrap",
+    product: "Aztec God 3",
+    category: "Mushrooms",
+    subcategory: "Classic Strains",
     unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "20",
-  },
-  {
-    id: "7",
-    product: "EBlue Meanies (Dried)",
-    category: "Concentrate",
-    subcategory: "Distillate",
-    unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "20",
-  },
-  {
-    id: "8",
-    product: "Jesus Christ Super Strain (JCSS)",
-    category: "Concentrate",
-    subcategory: "Shatter",
-    unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "2",
-  },
-  {
-    id: "9",
-    product: "Hillbilly",
-    category: "Edible",
-    subcategory: "Gummies",
-    unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "2",
-  },
-  {
-    id: "10",
-    product: "Golden Teacher",
-    category: "Edible",
-    subcategory: "Gummies",
-    unit: "Item",
-    status: "Active",
-    cost: "$9.25",
-    salePrice: "$16.99",
-    profitDollar: "$7.74",
-    profitPercent: "83.68%",
-    updated: "2025-07-08 06:55:03",
-    totalStock: "0 Grams Out of Stock",
-    soldAmount: "$0.00",
-    soldQty: "0 Grams",
-    reorder: "2",
+    status: "In Stock",
+    cost: "$10.00",
+    salePrice: "$12.00",
+    profitDollar: "$2.00",
+    profitPercent: "20.00%",
+    updated: "May 05, 2026 06:58 AM",
+    currentStock: 10,
+    maxStock: 50,
+    lowStockAlert: 10,
+    unitType: "Item",
+    image: "https://api.dicebear.com/7.x/shapes/svg?seed=6",
   },
 ];
 
@@ -384,6 +375,7 @@ const Inventory = () => {
       getInventoryColumns(
         (row) => navigate(`/inventories/view-inventory/${row.id}`),
         (row) => console.log("Delete", row),
+        (row) => navigate(`/inventory/edit/${row.id}`),
       ),
     [navigate],
   );
@@ -523,9 +515,7 @@ const Inventory = () => {
                     return (
                       <th
                         key={header.id}
-                        className={`px-3 py-2.5 text-[11px] font-semibold text-[#3F4753] whitespace-nowrap ${
-                          isRight ? "text-right" : "text-left"
-                        }`}
+                        className={`px-3 py-2.5 text-[11px] font-semibold text-[#3F4753] whitespace-nowrap text-left`}
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -552,9 +542,7 @@ const Inventory = () => {
                       return (
                         <td
                           key={cell.id}
-                          className={`px-3 py-2 text-[12px] text-[#3F4753] align-middle ${
-                            isRight ? "text-right" : "text-left"
-                          }`}
+                          className={`px-3 py-2 text-[12px] text-[#3F4753] align-middle text-left`}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,

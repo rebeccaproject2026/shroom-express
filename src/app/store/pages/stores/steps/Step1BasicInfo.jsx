@@ -13,7 +13,10 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
         email: 'john.doe@example.com',
         phone: '+1 (461) 555-0123',
         role: 'Store Owner',
-        contactNumber: '+1 (461) 555-0123'
+        contactNumber: '+1 (461) 555-0123',
+        metaTitle: '',
+        metaDescription: '',
+        metaKeywords: ''
       });
     }
   }, []);
@@ -105,6 +108,46 @@ const Step1BasicInfo = ({ formData, setFormData }) => {
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
+        </div>
+
+        {/* SEO Settings */}
+        <div className="pt-4 border-t border-[#BDBDD2] mt-4 space-y-4">
+          <div className="space-y-0.5">
+            <h4 className="text-base font-bold text-[#181211]">SEO Settings</h4>
+            <p className="text-xs font-medium text-[#475569]">Optimize this page for search engines by adding meta information and keywords.</p>
+          </div>
+
+          <div className="space-y-4">
+            <Input
+              label="Meta Title"
+              placeholder="Enter title tag"
+              value={formData.metaTitle}
+              onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
+              className="!py-2"
+              labelClassName="text-sm font-semibold text-[#181211]"
+              borderClass="border border-[#BDBDD2]"
+            />
+
+            <div className="space-y-1">
+              <label className="text-sm font-semibold text-[#181211] mb-1.5 block">Meta Description</label>
+              <textarea
+                className="w-full px-4 py-3 bg-white border border-[#BDBDD2] rounded-md text-sm font-medium text-[#181211] outline-none min-h-[120px] focus:ring-1 focus:ring-[#E93E2B]/20 transition-all placeholder:text-[#BDBDD2]"
+                placeholder="Enter meta description"
+                value={formData.metaDescription}
+                onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
+              />
+            </div>
+
+            <Input
+              label="Meta Keywords"
+              placeholder="Enter keywords"
+              value={formData.metaKeywords}
+              onChange={(e) => setFormData({ ...formData, metaKeywords: e.target.value })}
+              className="!py-2"
+              labelClassName="text-sm font-semibold text-[#181211]"
+              borderClass="border border-[#BDBDD2]"
+            />
+          </div>
         </div>
       </div>
     </div>

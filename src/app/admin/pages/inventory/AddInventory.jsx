@@ -112,7 +112,6 @@ const AddInventory = () => {
   const isEditMode = Boolean(id);
   const [searchProduct, setSearchProduct] = useState("");
   const [productName, setProductName] = useState("Blue Meanies (Dried)");
-  const [unit, setUnit] = useState("Item");
   const [productOrder, setProductOrder] = useState("298");
   const [thcCbdUnit, setThcCbdUnit] = useState("MG");
   const [thcMg, setThcMg] = useState("");
@@ -130,6 +129,10 @@ const AddInventory = () => {
   const [effect, setEffect] = useState("None");
   const [veganSoyFree, setVeganSoyFree] = useState("No");
   const [stock, setStock] = useState("In-Stock");
+  const [productImages, setProductImages] = useState([]);
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeywords, setMetaKeywords] = useState("");
 
   const [variations, setVariations] = useState([
     { id: 1, unit: '3.5g', costPrice: '', salePrice: '', lowStock: '10', lowStockUnit: 'Item', quantity: '' },
@@ -191,8 +194,26 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
       setSelectProduct("blueMeanies");
       setCategory("Mushrooms");
       setStock("In-Stock");
+      setMetaTitle("Blue Meanies (Dried) - Premium Mushrooms");
+      setMetaDescription("Buy Blue Meanies (Dried) premium mushrooms. High potency and visual effects.");
+      setMetaKeywords("mushrooms, blue meanies, dried mushrooms, psychedelic");
     }
   }, [isEditMode]);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImages(prev => [...prev, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (imgUrl) => {
+    setProductImages(prev => prev.filter(img => img !== imgUrl));
+  };
 
   const handleClose = () => {
     if (isEditMode) {
@@ -248,7 +269,7 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
               onChange={(e) => setSearchProduct(e.target.value)}
               placeholder="Search Product..."
               compact
-              className="max-w-full border-gray-300 bg-[#DDDDDD]!"
+              className="max-w-full border-gray-300 bg-white"
             />
           </div>
         )
@@ -264,28 +285,14 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
               <h2 className="text-base font-bold text-gray-900 mb-2">
                 General Information
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-3">
-                <div>
-                  <Input
-                    label="Product Name"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                    placeholder="Product Name"
-                    compact
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
-                    Unit
-                  </label>
-                  <Select
-                    value={unit}
-                    onChange={(e) => setUnit(e.target.value)}
-                    options={UNIT_OPTIONS}
-                    placeholder="Select Unit"
-                    compact
-                  />
-                </div>
+              <div>
+                <Input
+                  label="Product Name"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  placeholder="Product Name"
+                  compact
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
@@ -483,7 +490,7 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
                 <button
                   type="button"
                   onClick={addVariation}
-                  className="mt-3 inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-[#0061FF] text-white rounded-sm hover:opacity-90 font-semibold text-sm shadow-sm transition-all active:scale-95"
+                  className="inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-(--color-primary) text-white rounded-sm hover:opacity-90 font-semibold text-sm"
                 >
                   <span className="text-lg leading-none">+</span>
                   Add Variation
@@ -491,53 +498,113 @@ Kush Kraft's Blue Gelato pre-rolls offer a refined twist on a fruity powerhouse.
               </div>
             </div>
 
-            {/* Set Low Stock Alert - title with underline, combined [Unit | Enter Qty] input */}
+            {/* Images Section */}
             <div>
               <h2 className="text-base font-bold text-gray-900 pb-2 border-b border-[#000000]">
-                Set Low Stock Alert
+                Images
               </h2>
-              <div className="mt-3 max-w-xs">
-                <label className="block text-sm font-medium text-[#212121] mb-0.5">
-                  Low Stock Alert
-                </label>
-                <div className="flex rounded-sm border border-[#DDDDDD] overflow-hidden bg-white">
-                  <div className="flex items-center justify-center px-3 py-2 bg-[#F3F3F3] border-r border-[#DDDDDD] font-semibold text-gray-700 text-sm shrink-0">
-                    Unit
+              <div className="mt-3 space-y-4">
+                <input
+                  type="file"
+                  id="inventory-image-upload"
+                  className="hidden"
+                  multiple
+                  onChange={handleImageChange}
+                  accept="image/*"
+                />
+                <div
+                  onClick={() => document.getElementById('inventory-image-upload').click()}
+                  className="w-full aspect-[6/1.2] border-2 border-dashed border-[#BDBDD2] rounded-lg flex flex-col items-center justify-center bg-white cursor-pointer hover:bg-gray-50 transition-all group"
+                >
+                  <div className="w-10 h-10 bg-[#FFEDEB] rounded-sm flex items-center justify-center mb-1 group-hover:scale-110 transition-transform">
+                    <Icon icon="lucide:plus" className="text-[#E93E2B]" width="20" />
                   </div>
-                  <input
-                    type="text"
-                    value={lowStockAlert}
-                    onChange={(e) => setLowStockAlert(e.target.value)}
-                    placeholder="Enter Qty"
-                    className="flex-1 min-w-0 px-3 py-2 text-sm border-0 font-medium placeholder-gray-500 focus:outline-none focus:ring-0 bg-white"
-                  />
+                  <p className="text-sm font-bold text-[#181211]">Click to upload Product Images</p>
+                  <p className="text-[11px] text-gray-400 mt-0.5 text-center">Upload PNG or JPG (520×520px recommended - max 2MB)</p>
                 </div>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Available: 100 Units
-                </p>
+
+                {/* Gallery Preview */}
+                {productImages.length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 pt-2">
+                    {productImages.map((img, idx) => (
+                      <div key={idx} className="relative aspect-square rounded-lg overflow-hidden border border-gray-100 group">
+                        <img
+                          src={img}
+                          alt={`Product ${idx}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); removeImage(img); }}
+                            className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-red-500 shadow-sm hover:scale-110 transition-transform"
+                          >
+                            <Icon icon="lucide:trash-2" width="16" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Available Stock - title with underline, two side-by-side display cards */}
-            <div>
-              <h2 className="text-base font-bold text-[#212121]  pb-2 border-b border-[#000000]">
-                Available Stock
+            {/* SEO Information Section */}
+            <div className="mt-4">
+              <h2 className="text-base font-bold text-gray-900 pb-2 border-b border-[#000000]">
+                SEO Information
               </h2>
-              <div className="grid grid-cols-2 gap-3 mt-3">
-                <div className="bg-[#F3F3F3] rounded-sm p-2 border border-[#DDDDDD]">
-                  <p className="text-sm font-medium text-[#212121] mb-1">
-                    Available Quantity
-                  </p>
-                  <p className="text-xl font-bold text-[#212121] ">568 Units</p>
+              <div className="mt-3 space-y-3">
+                <Input
+                  label="Meta Title"
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                  placeholder="Enter Meta Title"
+                  compact
+                />
+                <div>
+                  <label className="block text-sm font-semibold text-[#212121] mb-0.5">
+                    Meta Description
+                  </label>
+                  <textarea
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    placeholder="Enter Meta Description"
+                    rows={3}
+                    className="w-full px-3 py-2 text-sm border border-[#DDDDDD] rounded-sm bg-white font-medium placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent resize-y min-h-[80px]"
+                  />
                 </div>
-                <div className="bg-[#F3F3F3] rounded-sm p-2 border border-[#DDDDDD]">
-                  <p className="text-sm font-medium text-[#212121] mb-1">
-                    Available Stock Valuation
-                  </p>
-                  <p className="text-xl font-bold text-[#212121] ">$1952.36</p>
-                </div>
+                <Input
+                  label="Meta Keywords"
+                  value={metaKeywords}
+                  onChange={(e) => setMetaKeywords(e.target.value)}
+                  placeholder="Enter Meta Keywords (comma separated)"
+                  compact
+                />
               </div>
             </div>
+
+            {/* Available Stock - Only show in Edit mode */}
+            {isEditMode && (
+              <div>
+                <h2 className="text-base font-bold text-[#212121]  pb-2 border-b border-[#000000]">
+                  Available Stock
+                </h2>
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div className="bg-[#F3F3F3] rounded-sm p-2 border border-[#DDDDDD]">
+                    <p className="text-sm font-medium text-[#212121] mb-1">
+                      Available Quantity
+                    </p>
+                    <p className="text-xl font-bold text-[#212121] ">568 Units</p>
+                  </div>
+                  <div className="bg-[#F3F3F3] rounded-sm p-2 border border-[#DDDDDD]">
+                    <p className="text-sm font-medium text-[#212121] mb-1">
+                      Available Stock Valuation
+                    </p>
+                    <p className="text-xl font-bold text-[#212121] ">$1952.36</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           {/* Right column - Others: all dropdowns use reusable Select */}
           <div className="border border-[#D8D8D8] rounded-md self-start mt-2 py-3.5">
