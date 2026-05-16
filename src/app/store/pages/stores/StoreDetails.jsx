@@ -33,10 +33,12 @@ import Str7 from '../../assets/images/str7.png';
 import Str8 from '../../assets/images/str8.png';
 import Str9 from '../../assets/images/str9.png';
 import Str10 from '../../assets/images/str10.png';
+import storeComingSoonImg from '../../assets/images/inventorycomming.png';
 import FilterDrawer from '../../components/products/FilterDrawer';
 import { useCategory } from '../../context/CategoryContext';
 import { useStores } from '../../context/StoresContext';
 import StoreAboutDrawer from '../../components/stores/StoreAboutDrawer';
+import StoreLocationDrawer from '../../components/stores/StoreLocationDrawer';
 
 
 const StoreDetails = () => {
@@ -45,6 +47,8 @@ const StoreDetails = () => {
     const [sortBy, setSortBy] = useState('popularity');
     const [filterOpen, setFilterOpen] = useState(false);
     const [isAboutDrawerOpen, setIsAboutDrawerOpen] = useState(false);
+    const [isLocationDrawerOpen, setIsLocationDrawerOpen] = useState(false);
+    const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
     const [activeDelivery, setActiveDelivery] = useState(false);
     const [activeBestSeller, setActiveBestSeller] = useState(false);
     const { selectedEffect } = useCategory();
@@ -170,22 +174,28 @@ const StoreDetails = () => {
         // 2. Try context stores (user created)
         const dynamicStore = contextStores.find(s => s.id.toString() === storeId);
         if (dynamicStore) {
+            const loc = dynamicStore.locations?.[selectedLocationIndex] || dynamicStore.locations?.[0];
             return {
                 name: dynamicStore.name,
                 nameColor: "#181211",
                 logo: dynamicStore.logo,
                 coverImage: dynamicStore.coverImage,
-                description: dynamicStore.locations?.[0]?.description || dynamicStore.description || "Premium magic mushroom wellness store.",
+                description: loc?.description || dynamicStore.description || "Premium magic mushroom wellness store.",
                 deliveryTime: dynamicStore.estimatedDelivery,
-                phone: dynamicStore.locations?.[0]?.storePhone || dynamicStore.phone || "(416) 555-0123",
-                website: dynamicStore.locations?.[0]?.website || dynamicStore.website || "www.shroom-express.com",
+                phone: loc?.storePhone || dynamicStore.phone || "(416) 555-0123",
+                website: loc?.website || dynamicStore.website || "www.shroom-express.com",
                 rating: dynamicStore.rating,
-                reviewCount: dynamicStore.reviewCount?.toString().replace(' reviews', '') || "0"
+                reviewCount: dynamicStore.reviewCount?.toString().replace(' reviews', '') || "0",
+                address: loc?.storeAddress || loc?.address || "123 Organic Lane"
             };
         }
 
         return allStoresData[1];
-    }, [storeId, contextStores]);
+    }, [storeId, contextStores, selectedLocationIndex]);
+
+    const handleAboutClick = () => {
+        setIsAboutDrawerOpen(true);
+    };
 
     // Sort options
     const sortOptions = [
@@ -196,31 +206,25 @@ const StoreDetails = () => {
         { value: 'price-high', label: 'Sort by Price: high to low' }
     ];
     const products = useMemo(() => {
-        let list = [...allProducts];
+        let list = [];
 
-        // Custom products for The Mushroom / Mushroom Ottawa
-        if (storeId === '2' || storeId === '9') {
+        // Map hardcoded stores to their products
+        if (storeId === '1') {
+            list = [...allProducts];
+        } else if (storeId === '2' || storeId === '9') {
             list = [...mushroomOttawaProducts];
-        }
-        // Custom products for Planet 51
-        if (storeId === '7') {
+        } else if (storeId === '7') {
             list = [...planet51Products];
-        }
-        // Custom products for Psilovibin
-        if (storeId === '3') {
+        } else if (storeId === '3') {
             list = [...psilovibinProducts];
-        }
-        // Custom products for Magic Mushroom Delivery
-        if (storeId === '6') {
+        } else if (storeId === '6') {
             list = [...magicMushroomDeliveryProducts];
-        }
-        // Custom products for Shroom For Sale
-        if (storeId === '5') {
+        } else if (storeId === '5') {
             list = [...shroomForSaleProducts];
-        }
-        // Custom products for Magic Mushroom Danforth
-        if (storeId === '9') {
-            list = [...magicMushroomDanforthProducts];
+        } else if (storeId === '8') {
+            list = [...allProducts]; // Toronto Magic Store uses all products
+        } else if (storeId === '10') {
+            list = [...allProducts]; // Danforth Weed uses all products
         }
         // Filter by header icon selectedEffect from context
         if (selectedEffect) {
@@ -298,22 +302,18 @@ const StoreDetails = () => {
                         <div className="flex-1 flex items-center min-w-0">
                             {/* Logo */}
                             <div
-                                className="absolute -bottom-22 left-4 lg:left-7 w-48 lg:w-60 h-48 lg:h-60 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 lg:ring-6 ring-[#FAF8F5]"
+                                className="absolute -bottom-16 lg:-bottom-20 left-4 lg:left-7 w-40 lg:w-56 h-40 lg:h-56 rounded-full flex items-center justify-center overflow-hidden z-20 ring-4 lg:ring-6 ring-[#FAF8F5]"
                                 style={{ backgroundColor: storeData.logo === Bg2 ? '#96D6ED' : '#FAF8F5' }}
                             >
                                 <img
                                     src={storeData.logo}
                                     alt={storeData.name}
-                                    className={`w-full h-full object-contain ${storeData.logo === Bg5 || storeData.logo === Bg6
-                                        || storeData.logo === Bg7 || storeData.logo === Bg8 || storeData.logo === Bg9
-                                        ? "p-0"
-                                        : "p-4 lg:p-5"
-                                        }`}
+                                    className="w-full h-full object-cover"
                                 />
                             </div>
 
                             {/* Store Info - Responsive Margin-Left to clear absolute logo */}
-                            <div className="ml-56 lg:ml-65 flex-1 min-w-0 pb-1">
+                            <div className="ml-48 lg:ml-60 flex-1 min-w-0 pb-1">
                                 <h1 className="text-xl md:text-2xl xl:text-[40px] font-bold leading-tight" style={{ color: storeData.nameColor }}>
                                     {storeData.name}
                                 </h1>
@@ -346,7 +346,7 @@ const StoreDetails = () => {
                                 <Icon icon="bitcoin-icons:globe-outline" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
+                            <button onClick={handleAboutClick} className="flex items-center gap-1 lg:gap-2 bg-white text-[#181211] px-2.5 lg:px-4 xl:px-5 py-1.5 lg:py-2 xl:py-2.5 rounded-full text-[11px] lg:text-[13px] xl:text-[14px] font-semibold hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
                                 <Icon icon="ix:about" width={16} height={16} className="xl:w-[18px] xl:h-[18px]" />
                                 <span>About</span>
                             </button>
@@ -354,8 +354,8 @@ const StoreDetails = () => {
                     </div>
                 </div>
                 {/* Store Description - Refined Layout without hacks */}
-                <div className="flex px-6 lg:px-10 mt-4">
-                    <div className="w-56 lg:w-65 shrink-0"></div>
+                <div className="flex px-6 lg:px-10 mt-6 lg:mt-8">
+                    <div className="w-48 lg:w-60 shrink-0"></div>
                     <p className="text-[#777777] font-normal text-sm lg:text-base leading-relaxed max-w-6xl">
                         {storeData.description}
                     </p>
@@ -375,11 +375,7 @@ const StoreDetails = () => {
                             <img
                                 src={storeData.logo}
                                 alt={storeData.name}
-                                className={`w-full h-full object-contain ${storeData.logo === Bg5 || storeData.logo === Bg6
-                                    || storeData.logo === Bg7 || storeData.logo === Bg8 || storeData.logo === Bg9
-                                    ? "p-0"
-                                    : "p-4"
-                                    }`}
+                                className="w-full h-full object-cover"
                             />
                         </div>
 
@@ -389,7 +385,7 @@ const StoreDetails = () => {
                                 <Icon icon="bitcoin-icons:globe-outline" width={16} height={16} className="sm:w-[18px] sm:h-[18px]" />
                                 <span>Website</span>
                             </button>
-                            <button onClick={() => setIsAboutDrawerOpen(true)} className="flex items-center gap-1 sm:gap-2 bg-white text-[#181211] px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-semibold shadow-md active:scale-95 transition-transform">
+                            <button onClick={handleAboutClick} className="flex items-center gap-1 sm:gap-2 bg-white text-[#181211] px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-semibold shadow-md active:scale-95 transition-transform">
                                 <Icon icon="ix:about" width={16} height={16} className="sm:w-[18px] sm:h-[18px]" />
                                 <span>About</span>
                             </button>
@@ -429,82 +425,108 @@ const StoreDetails = () => {
             </div>
 
             {/* Products Section */}
-            <div className="px-4 lg:px-10 mt-10 lg:mt-10 pb-10">
+            <div className="px-4 lg:px-10 mt-16 lg:mt-24 pb-10">
                 {/* Desktop Filter Bar (UNTOUCHED) */}
-                <div className="hidden lg:flex items-center gap-3 mb-4.5" >
-                    {/* Filter Icon */}
-                    <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white cursor-pointer"
-                        onClick={() => setFilterOpen(true)}
-                    >
-                        <Icon icon="mage:filter" width={22} height={22} />
-                        {/* Badge */}
-                        <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
-                            {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
-                        </span>
-                    </div>
-                    {/* Pills */}
-                    {/* <button
-                        onClick={() => setActiveCategory(p => p === 'mushrooms' ? null : 'mushrooms')}
-                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeCategory === 'mushrooms' ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
-                    >
-                        Category
-                    </button> */}
+                {products.length > 0 && (
+                    <div className="hidden lg:flex items-center gap-3 mb-4.5" >
+                        {/* Filter Icon */}
+                        <div className="flex items-center gap-2 px-3 h-10 rounded-full bg-(--store-primary) text-white cursor-pointer"
+                            onClick={() => setFilterOpen(true)}
+                        >
+                            <Icon icon="mage:filter" width={22} height={22} />
+                            {/* Badge */}
+                            <span className="bg-white text-[#222222] text-sm font-semibold w-6 h-6 flex items-center justify-center rounded-full">
+                                {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
+                            </span>
+                        </div>
 
-                    <button
-                        onClick={() => setActiveDelivery(p => !p)}
-                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
-                    >
-                        Delivery
-                    </button>
+                        <button
+                            onClick={() => setActiveDelivery(p => !p)}
+                            className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeDelivery ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        >
+                            Delivery
+                        </button>
 
-                    <button
-                        onClick={() => setActiveBestSeller(p => !p)}
-                        className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeBestSeller ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
-                    >
-                        Best Seller
-                    </button>
-                    <div className=" w-[22%] ml-auto">
-                        <Select
-                            options={sortOptions}
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                            placeholder="Select your country"
-                        />
+                        <button
+                            onClick={() => setActiveBestSeller(p => !p)}
+                            className={`px-5 h-10 rounded-full border text-[15px] font-semibold transition-colors cursor-pointer ${activeBestSeller ? 'bg-[var(--store-primary)] text-white border-[var(--store-primary)]' : 'bg-[#FFFFFF] border-[#E8E8E8] text-[#222222]'}`}
+                        >
+                            Best Seller
+                        </button>
+                        <div className=" w-[22%] ml-auto">
+                            <Select
+                                options={sortOptions}
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                                placeholder="Select your country"
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Mobile Filter Bar (Visible below lg) */}
-                <div className="lg:hidden flex items-center justify-between gap-3 mb-8">
-                    {/* Filter Button - Circular Red (Standardized with ProductsList) */}
-                    <button
-                        onClick={() => setFilterOpen(true)}
-                        className="flex items-center justify-center gap-2 px-4 h-11 rounded-full bg-[#E93E2B] text-white font-bold cursor-pointer transition-transform active:scale-95 shrink-0 shadow-sm"
-                    >
-                        <Icon icon="mage:filter" width={20} />
-                        <span className="bg-white text-[#E93E2B] text-[13px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                            {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
-                        </span>
-                    </button>
+                {products.length > 0 && (
+                    <div className="lg:hidden flex items-center justify-between gap-3 mb-8">
+                        {/* Filter Button - Circular Red (Standardized with ProductsList) */}
+                        <button
+                            onClick={() => setFilterOpen(true)}
+                            className="flex items-center justify-center gap-2 px-4 h-11 rounded-full bg-[#E93E2B] text-white font-bold cursor-pointer transition-transform active:scale-95 shrink-0 shadow-sm"
+                        >
+                            <Icon icon="mage:filter" width={20} />
+                            <span className="bg-white text-[#E93E2B] text-[13px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                                {[activeDelivery, activeBestSeller].filter(Boolean).length || 1}
+                            </span>
+                        </button>
 
-                    {/* Sort Dropdown - Large Rounded */}
-                    <div className="flex-1 min-w-0">
-                        <Select
-                            options={sortOptions}
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                            className="w-full h-11 rounded-full bg-white border border-[#E8E8E8] text-sm font-semibold px-5 shadow-sm"
-                        />
-                    </div>
-                </div>
-
-                {/* Products Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-7">
-                    {products.map((product) => (
-                        <div key={product.id} className="w-full">
-                            <ProductCard product={product} />
+                        {/* Sort Dropdown - Large Rounded */}
+                        <div className="flex-1 min-w-0">
+                            <Select
+                                options={sortOptions}
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value)}
+                                className="w-full h-11 rounded-full bg-white border border-[#E8E8E8] text-sm font-semibold px-5 shadow-sm"
+                            />
                         </div>
-                    ))}
-                </div>
+                    </div>
+                )}
+
+                {/* Products Grid or Coming Soon State */}
+                {products.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-7">
+                        {products.map((product) => (
+                            <div key={product.id} className="w-full">
+                                <ProductCard product={product} />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="w-full bg-white rounded-md px-4 lg:px-6 flex flex-col md:flex-row items-center border border-[#E93E2B]/5 shadow-[0px_25px_50px_-12px_rgba(24,18,17,0.05)]">
+                        <div className="w-full md:w-[40%] flex justify-center">
+                            <img src={storeComingSoonImg} alt="Coming Soon" className="max-w-[220px] lg:max-w-[100%] w-full h-auto" />
+                        </div>
+                        <div className="w-full md:w-[60%] text-center md:text-left">
+                            <h2 className="text-xl md:text-2xl font-bold text-[#181211] mb-1.5 tracking-tight">Inventory Coming Soon!</h2>
+                            <p className="text-[#000000] text-sm md:text-base mb-4 leading-relaxed font-regular">
+                                We are preparing the best quality products for you. Our inventory will be available shortly.
+                            </p>
+
+                            <div className="bg-[#FEF3F2] rounded-md border border-[#FEE4E2] p-3.5 mb-4 flex items-start gap-3 text-left">
+                                <div className="bg-[#FECDCA] p-2 rounded-sm shrink-0">
+                                    <Icon icon="tabler:box" className="text-[#E93E2B]" width="18" />
+                                </div>
+                                <div className="text-left">
+                                    <h4 className="font-semibold text-[#000000] text-[13px] md:text-sm mb-2 leading-tight">Be the first to know when we go live!</h4>
+                                    <p className="text-[#000000] text-xs md:text-sm font-regular leading-tight">Follow this store to get notified about new arrivals and offers.</p>
+                                </div>
+                            </div>
+
+                            <button className="flex items-center justify-center gap-2 bg-[#E93E2B] text-white px-6 py-2.5 rounded-md font-bold text-[13px] md:text-sm hover:bg-[#D43424] transition-all shadow-lg active:scale-95 w-full md:w-auto">
+                                <Icon icon="lucide:heart" width={16} />
+                                Follow Store
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="px-4 md:px-10 mt-3 mb-7">
                 <div className="flex items-center justify-between mb-7">
@@ -533,11 +555,13 @@ const StoreDetails = () => {
             </div>
             <FilterDrawer open={filterOpen} onClose={() => setFilterOpen(false)} onApply={setDrawerFilters} />
 
-            {/* Store About Drawer */}
+            {/* Store About Drawer (Handles internal location selection if multiple) */}
             <StoreAboutDrawer
                 open={isAboutDrawerOpen}
                 onClose={() => setIsAboutDrawerOpen(false)}
                 storeData={storeData}
+                locations={contextStores.find(s => s.id.toString() === storeId)?.locations}
+                onLocationSelect={setSelectedLocationIndex}
             />
         </div>
     );

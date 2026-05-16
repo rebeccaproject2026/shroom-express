@@ -7,7 +7,9 @@ import { useStores } from "../../context/StoresContext";
 import Step1BasicInfo from "./steps/Step1BasicInfo";
 import Step2Location from "./steps/Step2Location";
 import Step3Operations from "./steps/Step3Operations";
-import Step4ProductsTags from "./steps/Step4ProductsTags";
+import Step4FeaturedStore from "./steps/Step4FeaturedStore";
+// import Step4ProductsTags from "./steps/Step4ProductsTags";
+
 import Step5MediaDocs from "./steps/Step5MediaDocs";
 import StoreSuccessState from "./steps/StoreSuccessState";
 
@@ -96,7 +98,9 @@ const CreateStorePage = () => {
         { id: 1, label: 'Owner Details', component: Step1BasicInfo },
         { id: 2, label: 'Store Info', component: Step2Location },
         { id: 3, label: 'Operations', component: Step3Operations },
-        { id: 4, label: 'Products', component: Step4ProductsTags },
+        { id: 4, label: 'Featured Store', component: Step4FeaturedStore },
+        // { id: 4, label: 'Products', component: Step4ProductsTags },
+
         { id: 5, label: 'Media', component: Step5MediaDocs },
     ];
 

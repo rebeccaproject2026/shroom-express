@@ -148,7 +148,7 @@ const Step2Location = ({ formData, setFormData }) => {
             placeholder="e.g. Forest Oasis"
             value={formData.locations[0]?.storeName || ''}
             onChange={(e) => handleGlobalUpdate('storeName', e.target.value)}
-            className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+            className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
             labelClassName="text-sm font-semibold text-[#181211]"
             borderClass="border border-[#BDBDD2]"
           />
@@ -230,7 +230,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="store@example.com"
                       value={loc.storeEmail}
                       onChange={(e) => handleLocationUpdate(index, 'storeEmail', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -240,7 +240,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="+1 (461) 000-0000"
                       value={loc.storePhone}
                       onChange={(e) => handleLocationUpdate(index, 'storePhone', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -250,7 +250,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="https://yourstore.com"
                       value={loc.website}
                       onChange={(e) => handleLocationUpdate(index, 'website', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -289,7 +289,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="123 Main Street"
                       value={loc.streetAddress}
                       onChange={(e) => handleLocationUpdate(index, 'streetAddress', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -299,7 +299,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="4"
                       value={loc.unitNumber}
                       onChange={(e) => handleLocationUpdate(index, 'unitNumber', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -309,7 +309,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="Toronto"
                       value={loc.city}
                       onChange={(e) => handleLocationUpdate(index, 'city', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />
@@ -322,7 +322,7 @@ const Step2Location = ({ formData, setFormData }) => {
                       placeholder="M5V 2T6"
                       value={loc.postalCode}
                       onChange={(e) => handleLocationUpdate(index, 'postalCode', e.target.value)}
-                      className="!py-2 placeholder:text-[14px] placeholder:text-[#475569] placeholder:font-medium"
+                      className="!py-2 placeholder:text-[14px] placeholder:text-[#BDBDD2] placeholder:font-medium"
                       labelClassName="text-sm font-semibold text-[#181211]"
                       borderClass="border border-[#BDBDD2]"
                     />

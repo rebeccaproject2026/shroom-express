@@ -7,7 +7,9 @@ import { Icon } from '@iconify/react';
 import Step1BasicInfo from './steps/Step1BasicInfo';
 import Step2Location from './steps/Step2Location';
 import Step3Operations from './steps/Step3Operations';
-import Step4ProductsTags from './steps/Step4ProductsTags';
+import Step4FeaturedStore from './steps/Step4FeaturedStore';
+// import Step4ProductsTags from './steps/Step4ProductsTags';
+
 import Step5MediaDocs from './steps/Step5MediaDocs';
 import StoreSuccessState from './steps/StoreSuccessState';
 import StoreLivePreview from './steps/StoreLivePreview';
@@ -274,7 +276,9 @@ const AddStore = () => {
       case 3:
         return <Step3Operations formData={formData} setFormData={setFormData} />;
       case 4:
-        return <Step4ProductsTags formData={formData} setFormData={setFormData} />;
+        return <Step4FeaturedStore formData={formData} setFormData={setFormData} />;
+        // return <Step4ProductsTags formData={formData} setFormData={setFormData} />;
+
       case 5:
         return <Step5MediaDocs formData={formData} setFormData={setFormData} />;
       default:

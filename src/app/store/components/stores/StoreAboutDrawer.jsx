@@ -8,10 +8,32 @@ if (typeof import.meta.env.VITE_MAPBOX_ACCESS_TOKEN !== 'undefined') {
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 }
 
-const StoreAboutDrawer = ({ open, onClose, storeData }) => {
+const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocationSelect }) => {
     const navigate = useNavigate();
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
+
+    // Track internal view state: 'list' or 'details'
+    const [view, setView] = React.useState('details');
+    const [selectedLocation, setSelectedLocation] = React.useState(null);
+
+    // Reset view when drawer opens
+    useEffect(() => {
+        if (open) {
+            if (locations && locations.length > 1 && !selectedLocation) {
+                setView('list');
+            } else {
+                setView('details');
+            }
+        }
+    }, [open, locations, selectedLocation]);
+
+    // Handle location selection from list
+    const handleSelectLocationFromList = (loc, index) => {
+        setSelectedLocation(loc);
+        setView('details');
+        if (onLocationSelect) onLocationSelect(index);
+    };
 
     // Prevent background scrolling when drawer is open
     useEffect(() => {
@@ -28,16 +50,21 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
         };
     }, [open]);
 
-    // Init Mapbox map when drawer opens
+    // Init Mapbox map when drawer opens and in details view
     useEffect(() => {
-        if (!open || !mapContainerRef.current) return;
-        if (mapRef.current) return; // already initialized
+        if (!open || view !== 'details' || !mapContainerRef.current) return;
+        
+        // Use coordinates from selected location if available, otherwise fallback
+        const currentLoc = selectedLocation || (locations?.[0]);
+        const center = currentLoc?.coords || [parseFloat(currentLoc?.longitude) || -79.3832, parseFloat(currentLoc?.latitude) || 43.6532];
+
+        if (mapRef.current) {
+            mapRef.current.setCenter(center);
+            return;
+        }
 
         const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
         if (!token) return;
-
-        // Default to Toronto; use storeData.coords if available
-        const center = storeData?.coords || [-79.3832, 43.6532];
 
         mapRef.current = new mapboxgl.Map({
             container: mapContainerRef.current,
@@ -49,7 +76,6 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
         mapRef.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
 
         mapRef.current.on('load', () => {
-            // Pin marker
             const pinEl = document.createElement('div');
             pinEl.innerHTML = `
                 <svg width="28" height="36" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,9 +93,17 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
             mapRef.current?.remove();
             mapRef.current = null;
         };
-    }, [open]);
+    }, [open, view, selectedLocation, locations]);
 
-    // Prevent rendering strictly if no data/close but we use translate for smooth animation
+    // Get current data to display
+    const currentData = selectedLocation ? {
+        ...storeData,
+        description: selectedLocation.description || storeData?.description,
+        address: selectedLocation.storeAddress || selectedLocation.streetAddress || storeData?.address,
+        phone: selectedLocation.storePhone || storeData?.phone,
+        website: selectedLocation.website || storeData?.website,
+    } : storeData;
+
     return (
         <>
             {/* Backdrop */}
@@ -87,7 +121,19 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
             >
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E8E8] shrink-0">
-                    <h2 className="text-lg font-bold text-[#181211]">Store Details</h2>
+                    <div className="flex items-center gap-3">
+                        {view === 'details' && locations && locations.length > 1 && (
+                            <button 
+                                onClick={() => setView('list')}
+                                className="w-8 h-8 flex items-center justify-center bg-[#F1F5F9] hover:bg-[#E5E7EB] rounded-full transition-colors"
+                            >
+                                <Icon icon="heroicons:chevron-left-20-solid" width={20} className="text-[#181211]" />
+                            </button>
+                        )}
+                        <h2 className="text-lg font-bold text-[#181211]">
+                            {view === 'list' ? 'Store Details' : (selectedLocation?.city || 'Store Details')}
+                        </h2>
+                    </div>
                     <button
                         onClick={onClose}
                         className="w-8 h-8 flex items-center justify-center bg-[#F1F5F9] hover:bg-[#E5E7EB] rounded-full transition-colors"
@@ -98,6 +144,41 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
 
                 {/* Scrollable Content */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden p-6 pb-28 custom-scrollbar">
+                    {view === 'list' ? (
+                        <div className="flex flex-col gap-4">
+                            {locations.map((loc, idx) => {
+                                const isSelected = selectedLocation ? (selectedLocation === loc) : (idx === 0);
+                                return (
+                                    <div 
+                                        key={idx} 
+                                        className={`p-5 rounded-xl border transition-all ${isSelected ? 'border-[#E93E2B] bg-white' : 'border-[#E8E8E8] bg-white'}`}
+                                    >
+                                        <div className="flex justify-between items-start mb-0.5">
+                                            <h3 className="text-[17px] font-bold text-[#181211]">{loc.city || loc.storeName || 'Store Location'}</h3>
+                                            <span className="bg-[#E93E2B] text-white text-[11px] font-bold px-2.5 py-1 rounded-md shrink-0">1.2 miles</span>
+                                        </div>
+                                        <p className="text-[14px] text-[#64748B] mb-1.5">{loc.streetAddress || loc.storeAddress || '123 Irving St. San Francisco, CA'}</p>
+                                        <div className="flex items-center gap-1.5 text-[#219653] text-[14px] font-medium mb-5">
+                                            <Icon icon="ph:clock" width={16} />
+                                            <span>Open Until 9PM</span>
+                                        </div>
+                                        
+                                        <button 
+                                            onClick={() => handleSelectLocationFromList(loc, idx)}
+                                            className={`w-full py-2.5 rounded-xl border text-[15px] font-bold transition-all ${
+                                                isSelected 
+                                                ? 'bg-[#FEF3F2] border-[#E93E2B] text-[#E93E2B]' 
+                                                : 'bg-white border-[#E93E2B] text-[#E93E2B]'
+                                            }`}
+                                        >
+                                            {isSelected ? 'Selected Store' : 'Select Store'}
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <>
 
                     {/* Cover & Logo block */}
                     <div className="relative mb-10">
@@ -235,32 +316,35 @@ const StoreAboutDrawer = ({ open, onClose, storeData }) => {
                                     <Icon icon="mi:location" width={18} />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-[13px] font-bold text-[#111827]">{storeData?.address || "123 Organic Lane"}</span>
+                                    <span className="text-[13px] font-bold text-[#111827]">{currentData?.address || "123 Organic Lane"}</span>
                                     <span className="text-[12px] text-[#6B7280]">2.4 km away • Toronto Central</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </>
+            )}
+        </div>
 
-                </div>
-
-                {/* Fixed Footer Buttons */}
-                <div className="absolute bottom-0 left-0 w-full bg-white border-t border-[#E8E8E8] p-5 shadow-[0px_-4px_24px_rgba(0,0,0,0.04)]">
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => storeData?.phone && window.open(`tel:${storeData.phone}`)}
-                            className="flex-1 bg-[#E93E2B] hover:bg-[#D53523] text-white py-3.5 rounded-xl text-[14px] font-bold transition-colors flex items-center justify-center gap-2 shadow-[0px_4px_12px_rgba(233,62,43,0.3)]"
-                        >
-                            <Icon icon="fluent:call-16-filled" width={18} /> Call Now
-                        </button>
-                        <button
-                            onClick={() => { onClose(); navigate(`/store/storeslists/${storeData?.id}`); }}
-                            className="flex-1 bg-[#E93E2B] hover:bg-[#D53523] text-white py-3.5 rounded-xl text-[14px] font-bold transition-colors flex items-center justify-center gap-2 shadow-[0px_4px_12px_rgba(233,62,43,0.3)]"
-                        >
-                            Open Website <Icon icon="iconamoon:link-external" width={18} />
-                        </button>
+                {/* Fixed Footer Buttons (Only in details view) */}
+                {view === 'details' && (
+                    <div className="absolute bottom-0 left-0 w-full bg-white border-t border-[#E8E8E8] p-5 shadow-[0px_-4px_24px_rgba(0,0,0,0.04)]">
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => storeData?.phone && window.open(`tel:${storeData.phone}`)}
+                                className="flex-1 bg-[#E93E2B] hover:bg-[#D53523] text-white py-3.5 rounded-xl text-[14px] font-bold transition-colors flex items-center justify-center gap-2 shadow-[0px_4px_12px_rgba(233,62,43,0.3)]"
+                            >
+                                <Icon icon="fluent:call-16-filled" width={18} /> Call Now
+                            </button>
+                            <button
+                                onClick={() => { onClose(); navigate(`/store/storeslists/${storeData?.id}`); }}
+                                className="flex-1 bg-[#E93E2B] hover:bg-[#D53523] text-white py-3.5 rounded-xl text-[14px] font-bold transition-colors flex items-center justify-center gap-2 shadow-[0px_4px_12px_rgba(233,62,43,0.3)]"
+                            >
+                                Open Website <Icon icon="iconamoon:link-external" width={18} />
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
 
             </div>
 
