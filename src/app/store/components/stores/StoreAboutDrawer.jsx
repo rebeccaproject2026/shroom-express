@@ -21,6 +21,7 @@ const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocation
     useEffect(() => {
         if (open) {
             if (locations && locations.length > 1 && !selectedLocation) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setView('list');
             } else {
                 setView('details');
@@ -53,7 +54,7 @@ const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocation
     // Init Mapbox map when drawer opens and in details view
     useEffect(() => {
         if (!open || view !== 'details' || !mapContainerRef.current) return;
-        
+
         // Use coordinates from selected location if available, otherwise fallback
         const currentLoc = selectedLocation || (locations?.[0]);
         const center = currentLoc?.coords || [parseFloat(currentLoc?.longitude) || -79.3832, parseFloat(currentLoc?.latitude) || 43.6532];
@@ -123,7 +124,7 @@ const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocation
                 <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E8E8] shrink-0">
                     <div className="flex items-center gap-3">
                         {view === 'details' && locations && locations.length > 1 && (
-                            <button 
+                            <button
                                 onClick={() => setView('list')}
                                 className="w-8 h-8 flex items-center justify-center bg-[#F1F5F9] hover:bg-[#E5E7EB] rounded-full transition-colors"
                             >
@@ -149,27 +150,26 @@ const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocation
                             {locations.map((loc, idx) => {
                                 const isSelected = selectedLocation ? (selectedLocation === loc) : (idx === 0);
                                 return (
-                                    <div 
-                                        key={idx} 
-                                        className={`p-5 rounded-xl border transition-all ${isSelected ? 'border-[#E93E2B] bg-white' : 'border-[#E8E8E8] bg-white'}`}
+                                    <div
+                                        key={idx}
+                                        className={`p-3 rounded-md border-2 transition-all ${isSelected ? 'border-[#EA3D2A] bg-white' : 'border-[#E2E8F0] bg-white'}`}
                                     >
                                         <div className="flex justify-between items-start mb-0.5">
-                                            <h3 className="text-[17px] font-bold text-[#181211]">{loc.city || loc.storeName || 'Store Location'}</h3>
-                                            <span className="bg-[#E93E2B] text-white text-[11px] font-bold px-2.5 py-1 rounded-md shrink-0">1.2 miles</span>
+                                            <h3 className="text-base font-bold text-[#181211]">{loc.city || loc.storeName || 'Store Location'}</h3>
+                                            <span className="bg-[#EA3D2A] text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">1.2 miles</span>
                                         </div>
-                                        <p className="text-[14px] text-[#64748B] mb-1.5">{loc.streetAddress || loc.storeAddress || '123 Irving St. San Francisco, CA'}</p>
-                                        <div className="flex items-center gap-1.5 text-[#219653] text-[14px] font-medium mb-5">
-                                            <Icon icon="ph:clock" width={16} />
+                                        <p className="text-sm text-[#344054] font-medium mb-1.5">{loc.streetAddress || loc.storeAddress || '123 Irving St. San Francisco, CA'}</p>
+                                        <div className="flex items-center gap-1.5 text-[#219653] text-sm font-medium mb-5">
+                                            <Icon icon="ri:time-line" width={16} />
                                             <span>Open Until 9PM</span>
                                         </div>
-                                        
-                                        <button 
+
+                                        <button
                                             onClick={() => handleSelectLocationFromList(loc, idx)}
-                                            className={`w-full py-2.5 rounded-xl border text-[15px] font-bold transition-all ${
-                                                isSelected 
-                                                ? 'bg-[#FEF3F2] border-[#E93E2B] text-[#E93E2B]' 
+                                            className={`w-full py-2.5 rounded-sm border text-sm font-bold transition-all shadow-[0px_4px_6px_-4px_#EA3D2A33,0px_10px_15px_-3px_#EA3D2A33] ${isSelected
+                                                ? 'bg-[#FFEDEB] border-[#EA3D2A] text-[#EA3D2A]'
                                                 : 'bg-white border-[#E93E2B] text-[#E93E2B]'
-                                            }`}
+                                                }`}
                                         >
                                             {isSelected ? 'Selected Store' : 'Select Store'}
                                         </button>
@@ -180,151 +180,151 @@ const StoreAboutDrawer = ({ open, onClose, storeData, locations = [], onLocation
                     ) : (
                         <>
 
-                    {/* Cover & Logo block */}
-                    <div className="relative mb-10">
-                        {/* Cover */}
-                        <div className="w-full h-[120px] rounded-md overflow-hidden bg-gray-200">
-                            <img
-                                src={storeData?.coverImage}
-                                alt="Store Cover"
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                        {/* Logo */}
-                        <div className="absolute -bottom-8 left-4">
-                            <div className="w-18 h-18 bg-white rounded-md shadow-[0px_4px_16px_rgba(0,0,0,0.1)] p-1.5 flex items-center justify-center">
-                                {storeData?.logo ? (
-                                    <img src={storeData.logo} alt="Logo" className="w-full h-full object-contain rounded-lg" />
-                                ) : (
-                                    <span className="font-bold text-xl text-[#0F3540]">FO</span>
-                                )}
-                            </div>
-                        </div>
-                        {/* Top Rated Badge */}
-                        <div className="absolute  left-24 -bottom-6 flex">
-                            <Icon icon="solar:verified-check-bold" width={16} className="text-[#E93E2B]" />
-                            <span className="text-[11px] font-bold text-[#E93E2B] uppercase tracking-wider">Top Rated Seller</span>
-                        </div>
-                    </div>
-
-
-
-                    {/* Store Name & Desc */}
-                    <div className="mb-4">
-                        <h1 className="text-2xl font-bold text-[#181211] mb-1">{storeData?.name || "Forest Oasis"}</h1>
-                        <p className="text-[13px] text-[#64748B]">Farm-to-table grocer & community sustainable hub.</p>
-                    </div>
-
-                    {/* Est. Delivery */}
-                    <div className="bg-[#F8F9FA] px-4 py-2.5 rounded-lg mb-6 flex items-center gap-2">
-                        <span className="text-[#9CA3AF] text-[13px] font-medium">Est. Delivery:</span>
-                        <span className="text-[13px] font-bold text-[#181211]">{storeData?.deliveryTime || "Under 2 hours"}</span>
-                    </div>
-
-                    {/* ABOUT US */}
-                    <div className="mb-6">
-                        <h3 className="text-[#94A3B8] text-[12px] font-bold tracking-widest uppercase mb-3 flex items-center gap-2">
-                            About Us
-                        </h3>
-                        <p className="text-[14px] font-medium text-[#475569] leading-relaxed">
-                            {storeData?.description || "Forest Oasis is a premium magic mushroom wellness store inspired by the purity and mystery of the forest. Our mission is to provide high-quality, carefully sourced psilocybin mushroom products in a safe, informed, and responsible environment."}
-                        </p>
-                    </div>
-
-                    {/* STORE REVIEWS */}
-                    <div className="bg-[#F8FAFC] rounded-xl p-5 mb-6 border border-[#F1F5F9]">
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-[#94A3B8] text-[12px] font-bold tracking-widest uppercase">Store Reviews</h3>
-                            <button className="text-[#E93E2B] text-[12px] font-bold hover:underline">View All</button>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                            {/* Left side overall rating */}
-                            <div className="flex flex-col items-center">
-                                <h4 className="text-[42px] font-extrabold text-[#111827] leading-none mb-1">
-                                    {storeData?.rating || "4.9"}
-                                </h4>
-                                <div className="flex items-center gap-0.5 mb-1 text-[#FFE100]">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Icon key={i} icon="flowbite:star-solid" width={14} />
-                                    ))}
+                            {/* Cover & Logo block */}
+                            <div className="relative mb-10">
+                                {/* Cover */}
+                                <div className="w-full h-[120px] rounded-md overflow-hidden bg-gray-200">
+                                    <img
+                                        src={storeData?.coverImage}
+                                        alt="Store Cover"
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
-                                <span className="text-[11px] text-[#181211]">Based on {storeData?.reviewCount || 24}</span>
-                                <span className="text-[11px] text-[#181211]">verified reviews</span>
+                                {/* Logo */}
+                                <div className="absolute -bottom-8 left-4">
+                                    <div className="w-18 h-18 bg-white rounded-md shadow-[0px_4px_16px_rgba(0,0,0,0.1)] p-1.5 flex items-center justify-center">
+                                        {storeData?.logo ? (
+                                            <img src={storeData.logo} alt="Logo" className="w-full h-full object-contain rounded-lg" />
+                                        ) : (
+                                            <span className="font-bold text-xl text-[#0F3540]">FO</span>
+                                        )}
+                                    </div>
+                                </div>
+                                {/* Top Rated Badge */}
+                                <div className="absolute  left-24 -bottom-6 flex">
+                                    <Icon icon="solar:verified-check-bold" width={16} className="text-[#E93E2B]" />
+                                    <span className="text-[11px] font-bold text-[#E93E2B] uppercase tracking-wider">Top Rated Seller</span>
+                                </div>
                             </div>
 
-                            {/* Right side bars */}
-                            <div className="w-[180px] flex flex-col gap-1.5">
-                                {[
-                                    { stars: "05", p: 90, bar: "w-[90%]" },
-                                    { stars: "04", p: 60, bar: "w-[60%]" },
-                                    { stars: "03", p: 40, bar: "w-[40%]" },
-                                    { stars: "02", p: 30, bar: "w-[30%]" },
-                                    { stars: "01", p: 0, bar: "w-[0%]" }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-2">
-                                        <span className="text-[12px] font-bold text-[#374151] w-4">{item.stars}</span>
-                                        <Icon icon="flowbite:star-solid" width={11} className="text-[#FFE100]" />
-                                        <div className="flex-1 h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
-                                            <div className={`h-full ${item.p > 0 ? 'bg-[#FFE100]' : 'bg-transparent'} ${item.bar} rounded-full`}></div>
+
+
+                            {/* Store Name & Desc */}
+                            <div className="mb-4">
+                                <h1 className="text-2xl font-bold text-[#181211] mb-1">{storeData?.name || "Forest Oasis"}</h1>
+                                <p className="text-[13px] text-[#64748B]">Farm-to-table grocer & community sustainable hub.</p>
+                            </div>
+
+                            {/* Est. Delivery */}
+                            <div className="bg-[#F8F9FA] px-4 py-2.5 rounded-lg mb-6 flex items-center gap-2">
+                                <span className="text-[#9CA3AF] text-[13px] font-medium">Est. Delivery:</span>
+                                <span className="text-[13px] font-bold text-[#181211]">{storeData?.deliveryTime || "Under 2 hours"}</span>
+                            </div>
+
+                            {/* ABOUT US */}
+                            <div className="mb-6">
+                                <h3 className="text-[#94A3B8] text-[12px] font-bold tracking-widest uppercase mb-3 flex items-center gap-2">
+                                    About Us
+                                </h3>
+                                <p className="text-[14px] font-medium text-[#475569] leading-relaxed">
+                                    {storeData?.description || "Forest Oasis is a premium magic mushroom wellness store inspired by the purity and mystery of the forest. Our mission is to provide high-quality, carefully sourced psilocybin mushroom products in a safe, informed, and responsible environment."}
+                                </p>
+                            </div>
+
+                            {/* STORE REVIEWS */}
+                            <div className="bg-[#F8FAFC] rounded-xl p-5 mb-6 border border-[#F1F5F9]">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-[#94A3B8] text-[12px] font-bold tracking-widest uppercase">Store Reviews</h3>
+                                    <button className="text-[#E93E2B] text-[12px] font-bold hover:underline">View All</button>
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    {/* Left side overall rating */}
+                                    <div className="flex flex-col items-center">
+                                        <h4 className="text-[42px] font-extrabold text-[#111827] leading-none mb-1">
+                                            {storeData?.rating || "4.9"}
+                                        </h4>
+                                        <div className="flex items-center gap-0.5 mb-1 text-[#FFE100]">
+                                            {[...Array(5)].map((_, i) => (
+                                                <Icon key={i} icon="flowbite:star-solid" width={14} />
+                                            ))}
                                         </div>
-                                        <span className="text-[11px] font-semibold text-[#181211] w-[26px] text-right font-medium">{item.p}%</span>
+                                        <span className="text-[11px] text-[#181211]">Based on {storeData?.reviewCount || 24}</span>
+                                        <span className="text-[11px] text-[#181211]">verified reviews</span>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* OPERATING HOURS */}
-                    <div className="mb-6">
-                        <h3 className="text-[#9CA3AF] text-[12px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
-                            <Icon icon="ph:clock" width={16} /> Operating Hours
-                        </h3>
-                        <div className="space-y-3">
-                            <div className="flex justify-between items-center text-[13px]">
-                                <span className="text-[#64748B]">Monday - Friday</span>
-                                <span className="text-[#111827] font-bold">08:00 AM - 08:00 PM</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[13px]">
-                                <span className="text-[#64748B]">Saturday</span>
-                                <span className="text-[#111827] font-bold">09:00 AM - 06:00 PM</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[13px]">
-                                <span className="text-[#64748B]">Sunday</span>
-                                <span className="text-[#E93E2B] font-bold">Closed</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* LOCATION */}
-                    <div>
-                        <h3 className="text-[#9CA3AF] text-[12px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
-                            <Icon icon="carbon:map" width={16} /> Location
-                        </h3>
-                        <div className="bg-[#F9FAFB] border border-[#F3F4F6] rounded-xl overflow-hidden">
-                            <div className="w-full h-40 relative overflow-hidden">
-                                {import.meta.env.VITE_MAPBOX_ACCESS_TOKEN ? (
-                                    <div ref={mapContainerRef} className="w-full h-full" />
-                                ) : (
-                                    <div className="w-full h-full bg-[#E5F1E8] flex items-center justify-center">
-                                        <Icon icon="carbon:location-filled" width={32} className="text-[#3B82F6]" />
+                                    {/* Right side bars */}
+                                    <div className="w-[180px] flex flex-col gap-1.5">
+                                        {[
+                                            { stars: "05", p: 90, bar: "w-[90%]" },
+                                            { stars: "04", p: 60, bar: "w-[60%]" },
+                                            { stars: "03", p: 40, bar: "w-[40%]" },
+                                            { stars: "02", p: 30, bar: "w-[30%]" },
+                                            { stars: "01", p: 0, bar: "w-[0%]" }
+                                        ].map((item, i) => (
+                                            <div key={i} className="flex items-center gap-2">
+                                                <span className="text-[12px] font-bold text-[#374151] w-4">{item.stars}</span>
+                                                <Icon icon="flowbite:star-solid" width={11} className="text-[#FFE100]" />
+                                                <div className="flex-1 h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
+                                                    <div className={`h-full ${item.p > 0 ? 'bg-[#FFE100]' : 'bg-transparent'} ${item.bar} rounded-full`}></div>
+                                                </div>
+                                                <span className="text-[11px] font-semibold text-[#181211] w-[26px] text-right font-medium">{item.p}%</span>
+                                            </div>
+                                        ))}
                                     </div>
-                                )}
-                            </div>
-                            <div className="p-4 flex gap-3 items-start bg-white">
-                                <div className="p-1.5 rounded-full bg-red-50 text-[#E93E2B] shrink-0 mt-0.5">
-                                    <Icon icon="mi:location" width={18} />
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-[13px] font-bold text-[#111827]">{currentData?.address || "123 Organic Lane"}</span>
-                                    <span className="text-[12px] text-[#6B7280]">2.4 km away • Toronto Central</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
+
+                            {/* OPERATING HOURS */}
+                            <div className="mb-6">
+                                <h3 className="text-[#9CA3AF] text-[12px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                                    <Icon icon="ph:clock" width={16} /> Operating Hours
+                                </h3>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center text-[13px]">
+                                        <span className="text-[#64748B]">Monday - Friday</span>
+                                        <span className="text-[#111827] font-bold">08:00 AM - 08:00 PM</span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-[13px]">
+                                        <span className="text-[#64748B]">Saturday</span>
+                                        <span className="text-[#111827] font-bold">09:00 AM - 06:00 PM</span>
+                                    </div>
+                                    <div className="flex justify-between items-center text-[13px]">
+                                        <span className="text-[#64748B]">Sunday</span>
+                                        <span className="text-[#E93E2B] font-bold">Closed</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* LOCATION */}
+                            <div>
+                                <h3 className="text-[#9CA3AF] text-[12px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                                    <Icon icon="carbon:map" width={16} /> Location
+                                </h3>
+                                <div className="bg-[#F9FAFB] border border-[#F3F4F6] rounded-xl overflow-hidden">
+                                    <div className="w-full h-40 relative overflow-hidden">
+                                        {import.meta.env.VITE_MAPBOX_ACCESS_TOKEN ? (
+                                            <div ref={mapContainerRef} className="w-full h-full" />
+                                        ) : (
+                                            <div className="w-full h-full bg-[#E5F1E8] flex items-center justify-center">
+                                                <Icon icon="carbon:location-filled" width={32} className="text-[#3B82F6]" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="p-4 flex gap-3 items-start bg-white">
+                                        <div className="p-1.5 rounded-full bg-red-50 text-[#E93E2B] shrink-0 mt-0.5">
+                                            <Icon icon="mi:location" width={18} />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-[13px] font-bold text-[#111827]">{currentData?.address || "123 Organic Lane"}</span>
+                                            <span className="text-[12px] text-[#6B7280]">2.4 km away • Toronto Central</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
 
                 {/* Fixed Footer Buttons (Only in details view) */}
                 {view === 'details' && (

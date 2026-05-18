@@ -8,7 +8,7 @@ import { Eye, Trash2 } from "lucide-react";
 export const getOrdersColumns = (onView, onDelete, onStatusClick, onCustomerClick, onCourierClick, onPaymentStatusClick) => [
   {
     accessorKey: "orderId",
-    header: "Order#",
+    header: "Order No.",
     cell: (info) => (
       <Link
         to={`/orders/${info.getValue()}`}
@@ -20,7 +20,7 @@ export const getOrdersColumns = (onView, onDelete, onStatusClick, onCustomerClic
   },
   {
     accessorKey: "customer",
-    header: "Details",
+    header: "Order Detail",
     cell: (info) => (
       <div className="leading-tight">
         <button

@@ -47,7 +47,7 @@ const StoreLocationDrawer = ({ open, onClose, locations, onSelectLocation, selec
                     {locations && locations.map((location, idx) => (
                         <div
                             key={idx}
-                            className={`p-5 rounded-2xl border transition-all ${selectedIndex === idx ? 'border-[#E93E2B] bg-white' : 'border-[#E8E8E8] bg-white'}`}
+                            className={`p-2 rounded-md border transition-all ${selectedIndex === idx ? 'border-[#EA3D2A] bg-white' : 'border-[#E2E8F0] bg-white'}`}
                         >
                             <div className="flex justify-between items-start mb-2">
                                 <h3 className="font-bold text-[#181211] text-lg">{location.storeName || location.name || "Location"}</h3>
@@ -55,11 +55,11 @@ const StoreLocationDrawer = ({ open, onClose, locations, onSelectLocation, selec
                                     {location.distance || "1.2 miles"}
                                 </span>
                             </div>
-                            
+
                             <p className="text-sm text-[#64748B] mb-2 leading-tight">
                                 {location.storeAddress || location.address || "123 Irving St. San Francisco, CA"}
                             </p>
-                            
+
                             <div className="flex items-center gap-1.5 text-[13px] text-[#219653] font-medium mb-5">
                                 <Icon icon="ph:clock" width={16} />
                                 <span>Open Until 9PM</span>
@@ -67,11 +67,10 @@ const StoreLocationDrawer = ({ open, onClose, locations, onSelectLocation, selec
 
                             <button
                                 onClick={() => onSelectLocation(idx)}
-                                className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all border ${
-                                    selectedIndex === idx 
-                                    ? 'bg-[#FEF3F2] border-[#E93E2B] text-[#E93E2B]' 
+                                className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all border ${selectedIndex === idx
+                                    ? 'bg-[#FEF3F2] border-[#E93E2B] text-[#E93E2B]'
                                     : 'bg-white border-[#E93E2B] text-[#E93E2B] hover:bg-gray-50'
-                                }`}
+                                    }`}
                             >
                                 {selectedIndex === idx ? 'Selected Store' : 'Select Store'}
                             </button>
